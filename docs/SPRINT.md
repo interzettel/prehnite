@@ -13,7 +13,7 @@
 | Backlog | 5 |
 | Ready | 1 |
 | In progress | 2 |
-| In review | 1 |
+| In review | 2 |
 | Blocked | 1 |
 | Done | 1 |
 
@@ -47,6 +47,7 @@
 | Priority | Work item | Stream | Handoff / blocker |
 | --- | --- | --- | --- |
 | P0 | [PR #10 — Fail-closed paid recovery and evidence chart](https://github.com/interzettel/prehnite/pull/10) | Reliability | Tests pass; awaiting review and merge. |
+| P1 | [PR #13 — Agile delivery board and release governance](https://github.com/interzettel/prehnite/pull/13) | Governance | Source-of-truth version, Unreleased changelog, templates and CI. |
 
 ## Blocked
 

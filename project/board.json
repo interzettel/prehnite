@@ -95,6 +95,15 @@
       "note": "Tests pass; awaiting review and merge."
     },
     {
+      "type": "pr",
+      "number": 13,
+      "title": "Agile delivery board and release governance",
+      "lane": "In review",
+      "priority": "P1",
+      "stream": "Governance",
+      "note": "Source-of-truth version, Unreleased changelog, templates and CI."
+    },
+    {
       "type": "issue",
       "number": 7,
       "title": "Real fal/Haiku credentialed integration",
