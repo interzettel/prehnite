@@ -64,3 +64,18 @@ def test_full_mask_rejected(tmp_path):
     Image.new("L", (64, 64), 255).save(mask)
     with pytest.raises(ValueError):
         make_cutout(src, mask, tmp_path/"out.png")
+
+
+@pytest.mark.parametrize("path", ["CON.jpg", "PRN/file.png", "a. ", "foo/bar.", "a\nb.jpg", "data.gif"])
+def test_invalid_windows_or_unsupported_paths(path):
+    m = manifest()
+    m["assets"][0]["output"]["image"] = path
+    with pytest.raises(ValidationError):
+        Manifest.model_validate(m)
+
+
+def test_case_insensitive_duplicates_rejected():
+    m = manifest()
+    m["assets"][1]["output"]["image"] = "PHOTOS/A.JPG"
+    with pytest.raises(ValidationError):
+        Manifest.model_validate(m)

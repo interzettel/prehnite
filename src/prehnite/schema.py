@@ -17,6 +17,13 @@ def relative_name(value: str) -> str:
         part in ("", ".", "..") for part in value.split("/")
     ):
         raise ValueError("Path traversal / non-canonical output path")
+    reserved = {"CON", "PRN", "AUX", "NUL"}
+    reserved.update(f"COM{i}" for i in range(1, 10))
+    reserved.update(f"LPT{i}" for i in range(1, 10))
+    for part in p.parts:
+        if (part.rstrip(" .") != part or part.split(".")[0].upper() in reserved
+                or any(ord(char) < 32 for char in part)):
+            raise ValueError("Unsafe or Windows-reserved path component")
     return str(p)
 
 
@@ -31,7 +38,10 @@ class Output(Strict):
     @field_validator("image")
     @classmethod
     def image_path(cls, value: str) -> str:
-        return relative_name(value)
+        path = relative_name(value)
+        if not path.lower().endswith((".png", ".jpg", ".jpeg", ".webp")):
+            raise ValueError("Image exports must be PNG, JPEG or WebP")
+        return path
 
     @field_validator("cutouts")
     @classmethod
@@ -96,7 +106,7 @@ class Manifest(Strict):
             raise ValueError("Duplicate asset IDs")
         paths = [a.output.image for a in self.assets]
         paths += [p for a in self.assets for p in a.output.cutouts.values()]
-        if len(paths) != len(set(paths)):
+        if len(paths) != len(set(path.casefold() for path in paths)):
             raise ValueError("Duplicate destination paths")
         return self
 

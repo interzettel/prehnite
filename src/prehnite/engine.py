@@ -170,7 +170,8 @@ class Engine:
                target_output: Path) -> dict:
         ep = self.profile.segmentation
         provider = get_provider(ep)
-        root = self.journal.root / "intermediates" / asset.id / "cutouts" / name
+        target_key = hashlib.sha256(name.encode("utf-8")).hexdigest()[:12]
+        root = self.journal.root / "intermediates" / asset.id / "cutouts" / target_key
         mask = root / "mask.png"
         key = f"{asset.id}:cutout:{name}:mask"
         self.stage(key, "segmentation", ep, mask,
