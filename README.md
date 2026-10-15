@@ -22,6 +22,7 @@ Prehnite turns a structured asset specification into generated images, optional 
     .\.venv\Scripts\Activate.ps1
     pip install -e ".[dev]"
     prehnite validate examples/manifest.yaml --profile examples/profile-demo.yaml
+    prehnite estimate examples/manifest.yaml --profile examples/profile-demo.yaml
     prehnite run examples/manifest.yaml --profile examples/profile-demo.yaml --workspace workspace
 
 This demo generates synthetic fixtures, not AI photographs. Review the output under workspace and inspect the CSV, JSON, HTML and ZIP report artifacts.
@@ -50,6 +51,7 @@ Jobs have separate source/variant/selected/derived stages. Only accepted images 
     prehnite models
     prehnite validate MANIFEST --profile PROFILE
     prehnite run MANIFEST --profile PROFILE --workspace workspace
+    prehnite estimate MANIFEST --profile PROFILE
     prehnite status BATCH_ID --workspace workspace
     prehnite export BATCH_ID --workspace workspace
     prehnite-mcp

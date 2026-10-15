@@ -21,6 +21,15 @@ def models():
     typer.echo(json.dumps(list_models(), indent=2))
 
 @app.command()
+def estimate(manifest: Path, profile: Path = typer.Option(...),
+             inputs: Path = typer.Option(Path("inputs"))):
+    """Print estimated maximum-request cost before a batch starts."""
+    from .costing import estimate_costs
+    m, p = load_manifest(manifest), load_profile(profile)
+    validate_job(m, p, inputs)
+    typer.echo(json.dumps(estimate_costs(m, p), indent=2))
+
+@app.command()
 def run(manifest: Path, profile: Path = typer.Option(...),
         workspace: Path = typer.Option(Path("workspace")),
         inputs: Path = typer.Option(Path("inputs"))):

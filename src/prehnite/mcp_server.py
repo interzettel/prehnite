@@ -43,6 +43,15 @@ def server():
                 "paid_allowed": p.costs.allow_paid, "budget_usd": p.costs.max_usd}
 
     @mcp.tool()
+    def estimate_cost(manifest_filename: str, profile_filename: str) -> dict:
+        """Estimate billable calls and hypothetical spend without executing them."""
+        from .costing import estimate_costs
+        m = load_manifest(allowed(requests, manifest_filename))
+        p = load_profile(allowed(profiles, profile_filename))
+        validate_job(m, p, inputs)
+        return estimate_costs(m, p)
+
+    @mcp.tool()
     def submit_batch(manifest_filename: str, profile_filename: str) -> dict:
         """Start a batch subprocess, returning a durable job identifier."""
         info = validate_manifest(manifest_filename, profile_filename)
