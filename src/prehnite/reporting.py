@@ -1,0 +1,85 @@
+"""Export truthful production telemetry without inventing provider billing totals."""
+from __future__ import annotations
+
+import csv
+import html
+import json
+import zipfile
+from pathlib import Path
+
+from .images import image_info
+from .store import Journal
+
+
+def export_report(journal: Journal) -> dict:
+    rows = journal.tasks()
+    results = journal.fact("results", {})
+    data = {
+        "batch_id": journal.root.name,
+        "cost_estimated_or_reserved_usd": round(journal.reserved(), 5),
+        "cost_is_actual_invoice": False,
+        "tokens_in": sum(r["tokens_in"] for r in rows),
+        "tokens_out": sum(r["tokens_out"] for r in rows),
+        "operations": len(rows),
+        "completed_operations": sum(r["status"] == "completed" for r in rows),
+        "asset_results": results,
+        "operations_detail": rows,
+    }
+    (journal.root / "report.json").write_text(
+        json.dumps(data, indent=2, ensure_ascii=False), encoding="utf-8")
+    with (journal.root / "operations.csv").open("w", newline="", encoding="utf-8") as f:
+        fields = ("task_key", "stage", "status", "provider", "model",
+                  "reserved_usd", "tokens_in", "tokens_out", "request_id", "path")
+        writer = csv.DictWriter(f, fieldnames=fields)
+        writer.writeheader()
+        for row in rows:
+            writer.writerow({k: row.get(k) for k in fields})
+    table_rows = "".join(
+        "<tr><td>" + "</td><td>".join(html.escape(str(row.get(key, ""))) for key in
+            ("task_key", "stage", "status", "provider", "reserved_usd", "tokens_in",
+             "tokens_out")) + "</td></tr>" for row in rows
+    )
+    page = (
+        "<!doctype html><html lang='en'><meta charset='utf-8'>"
+        "<meta name='viewport' content='width=device-width'><title>Prehnite report</title>"
+        "<style>body{font:15px system-ui;max-width:1150px;margin:40px auto;padding:0 16px}"
+        "table{border-collapse:collapse;width:100%}td,th{padding:8px;text-align:left;"
+        "border-bottom:1px solid #ccc}tr:nth-child(even){background:#eee}"
+        "code{overflow-wrap:anywhere}</style><h1>Prehnite · "
+        + html.escape(journal.root.name)
+        + "</h1><p>Reserved/estimated spend: $"
+        + str(data["cost_estimated_or_reserved_usd"])
+        + " (NOT verified provider billing). Tokens in/out: "
+        + str(data["tokens_in"]) + "/" + str(data["tokens_out"])
+        + "</p><p>Acceptance state and errors: see report.json.</p><table><thead><tr>"
+        + "".join(f"<th>{x}</th>" for x in ("Task", "Stage", "Status", "Provider",
+                                            "Reserved USD", "Input tokens", "Output tokens"))
+        + "</tr></thead><tbody>" + table_rows + "</tbody></table></html>"
+    )
+    (journal.root / "report.html").write_text(page, encoding="utf-8")
+    return data
+
+
+def package(journal: Journal) -> Path:
+    """Create only explicitly accepted deliverables; reject corrupt / missing files."""
+    results = journal.fact("results", {})
+    selected = journal.root / "selected"
+    expected = [p for asset in results.values() if asset.get("status") == "accepted"
+                for p in asset.get("outputs", [])]
+    if len(expected) != len(set(expected)):
+        raise ValueError("Duplicate archive target")
+    path = journal.root / f"prehnite-{journal.root.name}.zip"
+    with zipfile.ZipFile(path, "w", zipfile.ZIP_DEFLATED, compresslevel=6) as z:
+        for item in sorted(expected):
+            target = (selected / item).resolve()
+            if not target.is_relative_to(selected.resolve()) or not target.is_file():
+                raise ValueError(f"Missing or unsafe archive asset: {item}")
+            image_info(target)
+            z.write(target, item)
+        for name in ("report.json", "operations.csv", "report.html"):
+            if (journal.root / name).is_file():
+                z.write(journal.root / name, "_prehnite/" + name)
+    with zipfile.ZipFile(path) as z:
+        if z.testzip() is not None:
+            raise ValueError("ZIP verification failed")
+    return path

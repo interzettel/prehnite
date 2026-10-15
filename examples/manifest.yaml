@@ -1,0 +1,20 @@
+id: portrait-pilot
+assets:
+  - id: street-001
+    prompt: "A natural candid handheld smartphone photograph of a rainy Berlin street at dusk."
+    aspect_ratio: "9:16"
+    target_size: [2160, 3840]
+    seed: 42
+    targets: []
+    output:
+      image: photos/street-001.jpg
+      cutouts: {}
+  - id: interior-001
+    prompt: "A sunlit apartment interior, realistic phone camera exposure, natural colors."
+    aspect_ratio: "3:4"
+    target_size: [3024, 4032]
+    seed: 43
+    targets: []
+    output:
+      image: photos/interior-001.jpg
+      cutouts: {}

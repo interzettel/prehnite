@@ -1,0 +1,15 @@
+# Zero external calls and zero API fees. Synthetic testing only.
+variants: [enhanced_2k, native_4k]
+generation: {provider: demo, model: synthetic}
+upscale: {provider: demo, model: pillow}
+segmentation: {provider: disabled}
+judge: {provider: demo, model: technical}
+policy:
+  minimum_score: 0.75
+  maximum_attempts: 2
+  uncertain: accept_unverified
+costs:
+  allow_paid: false
+  allow_cloud_uploads: false
+  max_usd: 0
+  estimates_usd: {}

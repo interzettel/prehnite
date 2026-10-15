@@ -1,0 +1,28 @@
+# WARNING: fal stages incur charges. Update estimates against current pricing.
+# This is an opt-in template, not the default profile.
+variants: [enhanced_2k, native_4k]
+generation:
+  provider: fal
+  model: blackforestlabs/flux-3/klein/text-to-image
+  options:
+    enable_prompt_expansion: false
+upscale:
+  provider: fal
+  model: fal-ai/esrgan
+  options:
+    model: RealESRGAN_x2plus
+    scale: 2
+segmentation: {provider: disabled}
+judge: {provider: disabled}
+policy:
+  minimum_score: 0.75
+  maximum_attempts: 2
+  uncertain: accept_unverified
+costs:
+  allow_paid: true
+  allow_cloud_uploads: true
+  max_usd: 10
+  estimates_usd:
+    generation:2k: 0.014
+    generation:4k: 0.036
+    upscale: 0.015
