@@ -1,0 +1,28 @@
+# Agent instructions for Prehnite
+
+## Mission
+Deliver reliable, quality-gated visual assets at low cost. This repository is an MIT-licensed, local-first integration layer. Model weights and external inference are optional and separately licensed.
+
+## Engineering invariants
+- Never introduce mandatory paid SaaS, platform, database, analytics or hosting dependencies.
+- Do not submit a billable request without explicit profile authorization, an operation estimate and a remaining batch budget.
+- Never log keys, base64 image inputs, private prompts in public CI, or provider authentication headers.
+- Treat paths and remote payloads as untrusted. No archive traversal or arbitrary client-chosen server paths.
+- Do not claim an estimated spend is actual billed usage. Distinguish visual judgments from deterministic pixel checks.
+- Preserve source artifacts, prompts, seeds, request IDs, intermediate steps and quality decisions.
+- Retry a failed stage without invalidating unrelated accepted artifacts. Respect hard maximum attempts.
+- Uncertain paid submissions must not be blindly retried. Keep provider request IDs for recovery.
+- Client MCP disconnect must not cancel batch execution; jobs use a persistent worker.
+- No proprietary or separately licensed model weights are committed to this repository.
+
+## Development
+Run:
+    python -m pip install -e ".[dev]"
+    python -m compileall -q src
+    pytest -q
+
+Use demo mode for CI and integration tests. Never spend API credits in CI.
+Any model adapter needs capability metadata, schema validation, licence notes, mocked tests and a documented paid smoke-test procedure.
+
+## Status honesty
+If a feature is roadmap-only, document it as such. ComfyUI execution, local CUDA judges and robust mask refinement are planned but not production-certified in v0.1. The demo renderer is not a photorealistic generator.
