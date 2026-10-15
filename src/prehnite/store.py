@@ -2,7 +2,9 @@
 from __future__ import annotations
 
 import json
+import os
 import sqlite3
+from contextlib import contextmanager
 from pathlib import Path
 from typing import Any
 
@@ -68,6 +70,39 @@ class Journal:
     def reserved(self) -> float:
         return float(self.db.execute("SELECT COALESCE(SUM(reserved_usd),0) FROM tasks")
                      .fetchone()[0])
+
+    @contextmanager
+    def exclusive(self):
+        """One active worker per batch, across processes (Windows and Unix).
+
+        Kernel locks are automatically released when the worker crashes.
+        The lock file is intentionally persistent; its existence does NOT
+        indicate the batch is running.
+        """
+        path = self.root / "run.lock"
+        with path.open("a+b") as handle:
+            try:
+                if os.name == "nt":
+                    import msvcrt
+                    if path.stat().st_size == 0:
+                        handle.write(b"0")
+                        handle.flush()
+                    handle.seek(0)
+                    msvcrt.locking(handle.fileno(), msvcrt.LK_NBLCK, 1)
+                else:
+                    import fcntl
+                    fcntl.flock(handle.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
+            except OSError as exc:
+                raise RuntimeError(
+                    "Batch already has a running worker; refusing concurrent execution"
+                ) from exc
+            try:
+                yield
+            finally:
+                if os.name == "nt":
+                    msvcrt.locking(handle.fileno(), msvcrt.LK_UNLCK, 1)
+                else:
+                    fcntl.flock(handle.fileno(), fcntl.LOCK_UN)
 
     def close(self):
         self.db.close()

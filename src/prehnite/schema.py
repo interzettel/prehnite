@@ -1,6 +1,7 @@
 """Strict, documented configuration and manifest contracts."""
 from __future__ import annotations
 
+import math
 import re
 from pathlib import PurePosixPath
 from typing import Literal
@@ -127,7 +128,14 @@ class QualityPolicy(Strict):
 class CostPolicy(Strict):
     allow_paid: bool = False
     allow_cloud_uploads: bool = False
-    max_usd: float = Field(default=0.0, ge=0)
+    max_usd: float = Field(default=0.0, ge=0, allow_inf_nan=False)
+
+    @field_validator("estimates_usd")
+    @classmethod
+    def validate_estimates(cls, estimates: dict[str, float]) -> dict[str, float]:
+        if any(not math.isfinite(value) or value <= 0 for value in estimates.values()):
+            raise ValueError("Billable estimates must be finite and strictly positive")
+        return estimates
     # Fixed estimates; update with actual provider pricing before paid runs.
     estimates_usd: dict[str, float] = Field(default_factory=dict)
 
