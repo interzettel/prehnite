@@ -19,6 +19,8 @@ def estimate_costs(manifest: Manifest, profile: Profile) -> dict:
                         counts["upscale"] = counts.get("upscale", 0) + 1
                 if profile.judge.provider == "anthropic":
                     counts["judge"] = counts.get("judge", 0) + 2
+        if asset.source and profile.judge.provider == "anthropic":
+            counts["judge"] = counts.get("judge", 0) + 1
         # A successful image is segmented once per named object. Cutout
         # refinement can trigger two judge calls, without regenerating its mask.
         if profile.segmentation.provider == "fal":

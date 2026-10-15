@@ -67,8 +67,8 @@ class HaikuJudge:
             "background contamination of the cutout preview relative to the source."
         )
         content.append({"type": "text", "text": instructions + "\n"
-                        "Return ONLY JSON with keys winner (A/B/tie/neither), "
-                        "scores (mapping A and B to values 0..1), reason (brief). "
+                        "Return ONLY JSON with keys winner (one of candidate labels/tie/neither), "
+                        f"scores (mapping {list(keys)} to values 0..1), reason (brief). "
                         "Scores measure rubric satisfaction, not certainty. "
                         + (f"Exact prompt: {prompt}" if prompt else "")})
         for key, path in images.items():

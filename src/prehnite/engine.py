@@ -270,6 +270,8 @@ class Engine:
                 break
             if winner is None:
                 last_reason = reason
+                if asset.source:
+                    break  # A fixed source cannot improve by repeating an identical judge call.
                 continue
             final_output.parent.mkdir(parents=True, exist_ok=True)
             resize_to(candidates[winner], final_output, asset.target_size)

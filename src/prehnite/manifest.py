@@ -25,6 +25,15 @@ def resolve_input(input_root: Path, relative: str) -> Path:
 
 
 def validate_job(manifest: Manifest, profile: Profile, input_root: Path) -> None:
+    supported = {
+        "generation": {"demo", "fal", "comfyui", "disabled"},
+        "upscale": {"demo", "fal", "comfyui", "disabled"},
+        "segmentation": {"demo", "fal", "comfyui", "disabled"},
+        "judge": {"demo", "anthropic", "disabled"},
+    }
+    for name, allowed in supported.items():
+        if getattr(profile, name).provider not in allowed:
+            raise ValueError(f"Unsupported {name} provider: {getattr(profile, name).provider}")
     for a in manifest.assets:
         if a.source:
             resolve_input(input_root, a.source)
