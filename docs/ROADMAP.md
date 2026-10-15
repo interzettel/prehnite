@@ -13,7 +13,8 @@
 - [ ] Production validation on Windows AORUS RTX 4070 Laptop
 
 ## v0.2: robust production
-- [ ] ComfyUI graph adapter with remote queue and local model offloading
+- [x] Generic ComfyUI API graph/queue/history adapter (not hardware-validated)
+- [ ] Tested ComfyUI graphs, model offloading, GPU resource management and cancellation
 - [ ] Local ESRGAN/SAM/BiRefNet adapters with version-pinned checkpoints
 - [ ] Local HPS/Q-ReAlign judges and crop-aware 4K QA
 - [ ] Region-level detection, multi-object instance handling and proper alpha matting

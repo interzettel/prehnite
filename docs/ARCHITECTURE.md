@@ -30,4 +30,4 @@ The pairwise Haiku judge runs a blind visual review and an exact-prompt review i
 Generation quality failure changes the attempt seed, creating a genuinely new candidate. Cutout failures attempt a different local edge treatment using the same previously generated mask; this cannot fix a completely wrong object selection, which remains rejected. No unlimited retry loop.
 
 ## Deferred integrations
-ComfyUI execution adapter (GPU-model lifecycle and graph parameter maps), non-demo local inference, local typed quality/preference judges, multiple cutout segmentation backends, robust visual region-level evaluation, a browser dashboard, parquet reports, cancellation and fine-grained progress APIs. See ROADMAP.
+Hardware-tested ComfyUI inference and model lifecycle (generic API adapter exists), non-demo local inference, local typed quality/preference judges, multiple cutout segmentation backends, robust visual region-level evaluation, a browser dashboard, parquet reports, cancellation and fine-grained progress APIs. See ROADMAP.

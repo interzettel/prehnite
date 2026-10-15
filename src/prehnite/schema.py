@@ -102,7 +102,7 @@ class Manifest(Strict):
 
 
 class Endpoint(Strict):
-    provider: Literal["demo", "fal", "anthropic", "disabled"] = "demo"
+    provider: Literal["demo", "fal", "anthropic", "comfyui", "disabled"] = "demo"
     model: str = ""
     options: dict[str, str | int | float | bool] = Field(default_factory=dict)
 

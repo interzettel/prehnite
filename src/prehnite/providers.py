@@ -145,4 +145,7 @@ def get_provider(endpoint: Endpoint):
         return Demo()
     if endpoint.provider == "fal":
         return Fal()
+    if endpoint.provider == "comfyui":
+        from .comfy import Comfy
+        return Comfy()
     raise ValueError(f"No installed adapter for {endpoint.provider}")

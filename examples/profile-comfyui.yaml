@@ -1,0 +1,31 @@
+# Local GPU example. Supply your own ComfyUI API-format workflows with matching node IDs.
+# Install and run ComfyUI separately. Workflows must exist in PREHNITE_WORKFLOWS.
+# Replace the example node IDs after inspecting exported workflow JSON.
+variants: [enhanced_2k, native_4k]
+generation:
+  provider: comfyui
+  model: local-flux
+  options:
+    base_url: http://127.0.0.1:8188
+    workflow: flux_api.json
+    prompt_node: "6"
+    seed_node: "3"
+    size_node: "5"
+upscale:
+  provider: comfyui
+  model: local-esrgan
+  options:
+    base_url: http://127.0.0.1:8188
+    workflow: upscale_api.json
+    input_node: "10"
+segmentation: {provider: disabled}
+judge: {provider: demo, model: technical}
+policy:
+  minimum_score: 0.75
+  maximum_attempts: 2
+  uncertain: accept_unverified
+costs:
+  allow_paid: false
+  allow_cloud_uploads: false
+  max_usd: 0
+  estimates_usd: {}

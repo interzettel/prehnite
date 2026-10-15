@@ -26,6 +26,8 @@ Prehnite turns a structured asset specification into generated images, optional 
 
 This demo generates synthetic fixtures, not AI photographs. Review the output under workspace and inspect the CSV, JSON, HTML and ZIP report artifacts.
 
+For local ComfyUI, run a separate ComfyUI server, export your workflows in API format into PREHNITE_WORKFLOWS, and configure matching node IDs in examples/profile-comfyui.yaml. Example node IDs are placeholders; a tested model graph is not bundled.
+
 To enable fal inference, install the optional dependency and set FAL_KEY:
 
     pip install -e ".[fal]"
