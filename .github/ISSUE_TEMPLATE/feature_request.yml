@@ -1,0 +1,28 @@
+name: Feature proposal
+description: New adapter, workflow stage or other capability
+title: "feat: "
+body:
+  - type: textarea
+    id: request
+    attributes:
+      label: Problem to solve
+      description: What user problem remains with the current version?
+    validations:
+      required: true
+  - type: textarea
+    id: outcome
+    attributes:
+      label: Proposed outcome
+      description: Feature behavior, not an implementation prescription
+    validations:
+      required: true
+  - type: textarea
+    id: tests
+    attributes:
+      label: Acceptance evidence
+      description: How can this be tested for free before any authorized paid pilot?
+  - type: textarea
+    id: economics
+    attributes:
+      label: Economics and licensing
+      description: Any mandatory SaaS, separate model license, billed inference, or proprietary dependency? Default must be none.

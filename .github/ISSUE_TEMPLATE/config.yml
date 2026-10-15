@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Project work board
+    url: https://github.com/interzettel/prehnite/blob/main/docs/SPRINT.md
+    about: Current iteration, prioritization, blockers and workflow
+  - name: Agent coordination
+    url: https://github.com/interzettel/prehnite/issues/9
+    about: Cross-session handoffs, ownership claims and implementation updates

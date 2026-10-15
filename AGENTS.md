@@ -15,6 +15,14 @@ Deliver reliable, quality-gated visual assets at low cost. This repository is an
 - Client MCP disconnect must not cancel batch execution; jobs use a persistent worker.
 - No proprietary or separately licensed model weights are committed to this repository.
 
+## Project governance (read before taking work)
+- Read [docs/AGILE.md](docs/AGILE.md), [docs/SPRINT.md](docs/SPRINT.md), [CHANGELOG.md](CHANGELOG.md) and A2A [issue #9](https://github.com/interzettel/prehnite/issues/9).
+- Claim one scope on issue #9, and update an existing GitHub issue before opening a duplicate.
+- Work through Backlog → Ready → In progress → Review → Done; flag Blocked separately.
+- Do not merge another agent's PR, or auto-merge unfinished work. Every merged user-visible change gets an Unreleased changelog entry.
+- Version changes require a dedicated PR and follow docs/VERSIONING.md. Never make a Git tag or publish packages without owner approval.
+- Keep docs/SPRINT.md as a current snapshot when moving a ticket between states.
+
 ## Development
 Run:
     python -m pip install -e ".[dev]"

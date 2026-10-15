@@ -1,0 +1,116 @@
+{
+  "schema_version": 1,
+  "iteration": {
+    "id": "I-01",
+    "name": "Reliability and project governance",
+    "start": "2026-10-16",
+    "review_target": "2026-10-30",
+    "goal": "Make the local-first engine dependable and give every future change traceable issue, PR, version, and evidence."
+  },
+  "limits": {
+    "max_in_progress": 2,
+    "max_in_review": 3,
+    "default_story_size": "One reviewable PR; split work exceeding the limit."
+  },
+  "cards": [
+    {
+      "type": "issue",
+      "number": 2,
+      "title": "ComfyUI integration on real hardware",
+      "lane": "Backlog",
+      "priority": "P2",
+      "stream": "Local GPU",
+      "note": "Generic adapter exists; hardware and actual workflow integration remain."
+    },
+    {
+      "type": "issue",
+      "number": 3,
+      "title": "Reliable segmentation and matting",
+      "lane": "Backlog",
+      "priority": "P1",
+      "stream": "Quality",
+      "note": "Blocked downstream on model contracts and sample corpus."
+    },
+    {
+      "type": "issue",
+      "number": 4,
+      "title": "Local quality judges and crop QA",
+      "lane": "Backlog",
+      "priority": "P2",
+      "stream": "Quality",
+      "note": "Must calibrate before quality gates use local scores."
+    },
+    {
+      "type": "issue",
+      "number": 6,
+      "title": "Offline visual reports and exports",
+      "lane": "Backlog",
+      "priority": "P2",
+      "stream": "Delivery",
+      "note": "Need contact sheets, per-asset comparators and analytics."
+    },
+    {
+      "type": "issue",
+      "number": 8,
+      "title": "Windows MCP lifecycle and packaging",
+      "lane": "Backlog",
+      "priority": "P2",
+      "stream": "Runtime",
+      "note": "Process cancellation, reconnection and Windows tests."
+    },
+    {
+      "type": "issue",
+      "number": 12,
+      "title": "Mocked fal API conformance contract",
+      "lane": "Ready",
+      "priority": "P1",
+      "stream": "Providers",
+      "note": "No credentials or paid calls; use recorded fixture schemas."
+    },
+    {
+      "type": "issue",
+      "number": 5,
+      "title": "Crash recovery, pricing and billing hardening",
+      "lane": "In progress",
+      "priority": "P0",
+      "stream": "Reliability",
+      "note": "Safety tranche in PR #10; remainder stays open."
+    },
+    {
+      "type": "issue",
+      "number": 11,
+      "title": "Agile tracking and release governance",
+      "lane": "In progress",
+      "priority": "P1",
+      "stream": "Governance",
+      "note": "This change on chore/agile-version-governance."
+    },
+    {
+      "type": "pr",
+      "number": 10,
+      "title": "Fail-closed paid recovery and evidence chart",
+      "lane": "In review",
+      "priority": "P0",
+      "stream": "Reliability",
+      "note": "Tests pass; awaiting review and merge."
+    },
+    {
+      "type": "issue",
+      "number": 7,
+      "title": "Real fal/Haiku credentialed integration",
+      "lane": "Blocked",
+      "priority": "P1",
+      "stream": "Providers",
+      "note": "Owner must authorize actual paid/API calls separately."
+    },
+    {
+      "type": "pr",
+      "number": 1,
+      "title": "Initial MIT engine foundation",
+      "lane": "Done",
+      "priority": "P0",
+      "stream": "Foundation",
+      "note": "Merged; synthetic demo CI passed."
+    }
+  ]
+}
