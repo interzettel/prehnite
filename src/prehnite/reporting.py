@@ -63,7 +63,9 @@ def export_report(journal: Journal) -> dict:
     )
     atomic_text(journal.root / "report.html", page)
     from .gallery import export_gallery
+    from .provenance import export_provenance
     export_gallery(journal)
+    export_provenance(journal)
     return data
 
 
