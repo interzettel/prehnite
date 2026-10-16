@@ -218,3 +218,9 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Private, owner-authorized image corpora and source manifests (never upload)
+/private-r2-pilot/
+/private-r2-*.json
+/prehnite-private-corpus/
+/prehnite-private-reports/
