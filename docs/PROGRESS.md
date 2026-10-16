@@ -1,5 +1,7 @@
 # Prehnite — delivery readiness and work limits
 
+See also the [granular milestone tracker](progress/STATUS.md), generated from 61 independently verifiable work units. This 16-gate matrix is deliberately separate: passing small tasks does not prove release readiness.
+
 **Baseline:** 2026-10-16 · Source of truth: GitHub [issues](https://github.com/interzettel/prehnite/issues), [PRs](https://github.com/interzettel/prehnite/pulls), [CI](https://github.com/interzettel/prehnite/actions), and [A2A log #9](https://github.com/interzettel/prehnite/issues/9).
 
 ![Delivery release-gate chart](./progress.svg)

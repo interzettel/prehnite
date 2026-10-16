@@ -39,7 +39,7 @@ def render(board: dict) -> str:
     rows = [
         "# Prehnite — agile iteration board",
         "",
-        "> Generated from [`project/board.json`](../project/board.json); use `python scripts/board.py --write` to refresh. GitHub issues and PRs are the authoritative live evidence. This is an offline planning snapshot, **not** a native GitHub Projects board.",
+        "> Generated from [`project/board.json`](../project/board.json); use `python scripts/board.py --write` to refresh. GitHub issues and PRs are the authoritative live evidence. The native [organization GitHub Project #1](https://github.com/orgs/interzettel/projects/1) exists but sync is not automated. This checked-in snapshot may differ from live card fields; see issue #44.",
         "",
         f"**Iteration:** {iteration['id']} — {iteration['name']}  ",
         f"**Planning window:** {iteration['start']} → {iteration['review_target']} (review, **not** release deadline)  ",

@@ -1,0 +1,114 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1029" viewBox="0 0 1200 1029" role="img" aria-label="Prehnite evidence-backed milestone progress">
+<rect width="1200" height="1029" fill="#f6f7f4"/>
+<g font-family="system-ui,Segoe UI,sans-serif">
+<text x="35" y="48" font-size="27" font-weight="700" fill="#182a27">PREHNITE / DEVELOPMENT PROGRESS</text>
+<text x="35" y="79" font-size="16" fill="#5c6c65">18 / 61 scoped units done · 29.5%</text>
+<text x="1160" y="49" text-anchor="end" font-size="17" fill="#277e74">1/7 milestone gates</text>
+<text x="35" y="106" font-size="13" fill="#5c6c65">Unweighted work units · evidence required for completion · not a product quality score</text>
+<rect x="35" y="126" width="13" height="13" rx="2" fill="#277e74"/>
+<text x="56" y="138" font-size="13" fill="#283832">Done 18</text>
+<rect x="223" y="126" width="13" height="13" rx="2" fill="#c28b4a"/>
+<text x="244" y="138" font-size="13" fill="#283832">Active 2</text>
+<rect x="411" y="126" width="13" height="13" rx="2" fill="#b8534e"/>
+<text x="432" y="138" font-size="13" fill="#283832">Blocked 10</text>
+<rect x="599" y="126" width="13" height="13" rx="2" fill="#dce0dd"/>
+<text x="620" y="138" font-size="13" fill="#283832">Planned 31</text>
+<rect x="35" y="171" width="1130" height="103" rx="10" fill="#fff" stroke="#d8ddd7"/>
+<text x="55" y="196" font-size="17" font-weight="650" fill="#1d302b">M0 · Runnable foundation</text>
+<text x="1140" y="196" font-size="16" text-anchor="end" font-weight="650" fill="#277e74">6/6 · 100.0%</text>
+<text x="55" y="219" font-size="12" fill="#65756e">An installable local-first Python CLI with a free, offline batch demonstration and transparent provenance limits.</text>
+<g><title>F01: MIT repository and installable Python package [done] issue/PR #1</title><rect x="55" y="236" width="178" height="16" rx="2" fill="#277e74"/></g>
+<g><title>F02: Strict manifest/output path validation [done] issue/PR #1</title><rect x="236" y="236" width="178" height="16" rx="2" fill="#277e74"/></g>
+<g><title>F03: Free synthetic batch generator and 2-tier orchestration [done] issue/PR #1</title><rect x="417" y="236" width="178" height="16" rx="2" fill="#277e74"/></g>
+<g><title>F04: SQLite stage journal and basic resume [done] issue/PR #1</title><rect x="598" y="236" width="178" height="16" rx="2" fill="#277e74"/></g>
+<g><title>F05: JSON/CSV/HTML reports and checked ZIP export [done] issue/PR #1</title><rect x="779" y="236" width="178" height="16" rx="2" fill="#277e74"/></g>
+<g><title>F06: Offline pytest + CLI validation on GitHub Actions [done] issue/PR #1</title><rect x="960" y="236" width="178" height="16" rx="2" fill="#277e74"/></g>
+<text x="1140" y="266" text-anchor="end" font-size="11" fill="#6b7972">Gate reached</text>
+<rect x="35" y="283" width="1130" height="103" rx="10" fill="#fff" stroke="#d8ddd7"/>
+<text x="55" y="308" font-size="17" font-weight="650" fill="#1d302b">M1 · Safe production engine</text>
+<text x="1140" y="308" font-size="16" text-anchor="end" font-weight="650" fill="#277e74">3/10 · 30.0%</text>
+<text x="55" y="331" font-size="12" fill="#65756e">A restartable cost-controlled pipeline that never silently spends twice and never exports corrupt artifacts.</text>
+<g><title>C01: Paid call budget authorization gate [done] issue/PR #10</title><rect x="55" y="348" width="105" height="16" rx="2" fill="#277e74"/></g>
+<g><title>C02: Fail-closed uncertain request recovery [done] issue/PR #10</title><rect x="163" y="348" width="105" height="16" rx="2" fill="#277e74"/></g>
+<g><title>C03: Single-batch worker lock (offline test) [done] issue/PR #10</title><rect x="271" y="348" width="105" height="16" rx="2" fill="#277e74"/></g>
+<g><title>C04: Cross-process kill-and-restart fault matrix [planned] issue/PR #15</title><rect x="379" y="348" width="105" height="16" rx="2" fill="#dce0dd"/></g>
+<g><title>C05: Atomic output writes and checksum replay checks [planned] issue/PR #16</title><rect x="487" y="348" width="105" height="16" rx="2" fill="#dce0dd"/></g>
+<g><title>C06: Versioned pricing quotes and bill reconciliation [blocked] issue/PR #17</title><rect x="595" y="348" width="105" height="16" rx="2" fill="#b8534e"/></g>
+<g><title>C07: Content-addressed, privacy-scoped stage cache [planned] issue/PR #18</title><rect x="703" y="348" width="105" height="16" rx="2" fill="#dce0dd"/></g>
+<g><title>C08: Resumable cross-platform interrupted 90-item batch [planned] issue/PR #15</title><rect x="811" y="348" width="105" height="16" rx="2" fill="#dce0dd"/></g>
+<g><title>C09: Actual provider charges reconciled to reserves [blocked] issue/PR #17</title><rect x="919" y="348" width="105" height="16" rx="2" fill="#b8534e"/></g>
+<g><title>C10: Machine-readable stage-level failure taxonomy [planned] issue/PR #15</title><rect x="1027" y="348" width="105" height="16" rx="2" fill="#dce0dd"/></g>
+<text x="1140" y="378" text-anchor="end" font-size="11" fill="#6b7972">Open gate: C08, C09</text>
+<rect x="35" y="395" width="1130" height="103" rx="10" fill="#fff" stroke="#d8ddd7"/>
+<text x="55" y="420" font-size="17" font-weight="650" fill="#1d302b">M2 · Models and local compute</text>
+<text x="1140" y="420" font-size="16" text-anchor="end" font-weight="650" fill="#277e74">2/10 · 20.0%</text>
+<text x="55" y="443" font-size="12" fill="#65756e">Choose providers independently, run useful local graph workflows, and verify hosted adapters without making API access mandatory.</text>
+<g><title>P01: Demo and optional hosted provider adapter scaffold [done] issue/PR #1</title><rect x="55" y="460" width="105" height="16" rx="2" fill="#277e74"/></g>
+<g><title>P02: Generic local ComfyUI graph/queue scaffold [done] issue/PR #1</title><rect x="163" y="460" width="105" height="16" rx="2" fill="#277e74"/></g>
+<g><title>P03: Offline FLUX tier/upscale contract fixtures [planned] issue/PR #19</title><rect x="271" y="460" width="105" height="16" rx="2" fill="#dce0dd"/></g>
+<g><title>P04: SAM response-shape fixtures and validation [planned] issue/PR #20</title><rect x="379" y="460" width="105" height="16" rx="2" fill="#dce0dd"/></g>
+<g><title>P05: Typed provider capability/price discovery [planned] issue/PR #21</title><rect x="487" y="460" width="105" height="16" rx="2" fill="#dce0dd"/></g>
+<g><title>P06: Tested ComfyUI graph fixture and mapping [planned] issue/PR #22</title><rect x="595" y="460" width="105" height="16" rx="2" fill="#dce0dd"/></g>
+<g><title>P07: ComfyUI queue/recovery without duplicate submits [planned] issue/PR #23</title><rect x="703" y="460" width="105" height="16" rx="2" fill="#dce0dd"/></g>
+<g><title>P08: 8GB VRAM local model feasibility benchmark [blocked] issue/PR #24</title><rect x="811" y="460" width="105" height="16" rx="2" fill="#b8534e"/></g>
+<g><title>P09: User-approved end-to-end live inference pilot [blocked] issue/PR #7</title><rect x="919" y="460" width="105" height="16" rx="2" fill="#b8534e"/></g>
+<g><title>P10: Provider-choice plan by cost, hardware and quality [planned] issue/PR #21</title><rect x="1027" y="460" width="105" height="16" rx="2" fill="#dce0dd"/></g>
+<text x="1140" y="490" text-anchor="end" font-size="11" fill="#6b7972">Open gate: P07, P09</text>
+<rect x="35" y="507" width="1130" height="103" rx="10" fill="#fff" stroke="#d8ddd7"/>
+<text x="55" y="532" font-size="17" font-weight="650" fill="#1d302b">M3 · Photographic quality gates</text>
+<text x="1140" y="532" font-size="16" text-anchor="end" font-weight="650" fill="#277e74">1/8 · 12.5%</text>
+<text x="55" y="555" font-size="12" fill="#65756e">Prefer usable assets rather than raw generations, with transparent, calibrated judgments at native resolution.</text>
+<g><title>Q01: Dimension and file-decodability technical checks [done] issue/PR #1</title><rect x="55" y="572" width="133" height="16" rx="2" fill="#277e74"/></g>
+<g><title>Q02: Judge schema + invalid response handling [planned] issue/PR #25</title><rect x="191" y="572" width="133" height="16" rx="2" fill="#dce0dd"/></g>
+<g><title>Q03: Order-bias and independent-rubric A/B tests [planned] issue/PR #25</title><rect x="327" y="572" width="133" height="16" rx="2" fill="#dce0dd"/></g>
+<g><title>Q04: Lossless 4K crop panel comparisons [planned] issue/PR #26</title><rect x="463" y="572" width="133" height="16" rx="2" fill="#dce0dd"/></g>
+<g><title>Q05: Optional local quality judge plugin contract [planned] issue/PR #27</title><rect x="599" y="572" width="133" height="16" rx="2" fill="#dce0dd"/></g>
+<g><title>Q06: Rights-cleared human-rated reference set [blocked] issue/PR #28</title><rect x="735" y="572" width="133" height="16" rx="2" fill="#b8534e"/></g>
+<g><title>Q07: Calibration report for accepted/rejected quality [blocked] issue/PR #28</title><rect x="871" y="572" width="133" height="16" rx="2" fill="#b8534e"/></g>
+<g><title>Q08: Rejection/repair behavior validated across judges [planned] issue/PR #31</title><rect x="1007" y="572" width="133" height="16" rx="2" fill="#dce0dd"/></g>
+<text x="1140" y="602" text-anchor="end" font-size="11" fill="#6b7972">Open gate: Q07, Q08</text>
+<rect x="35" y="619" width="1130" height="103" rx="10" fill="#fff" stroke="#d8ddd7"/>
+<text x="55" y="644" font-size="17" font-weight="650" fill="#1d302b">M4 · Cutouts and corrections</text>
+<text x="1140" y="644" font-size="16" text-anchor="end" font-weight="650" fill="#277e74">1/7 · 14.3%</text>
+<text x="55" y="667" font-size="12" fill="#65756e">Extract requested subjects cleanly, detect common mask failures and repair failed cuts without repeating good images.</text>
+<g><title>S01: Demo mask-to-RGBA conversion and coverage checks [done] issue/PR #1</title><rect x="55" y="684" width="152" height="16" rx="2" fill="#277e74"/></g>
+<g><title>S02: Hosted SAM image/mask dimensional conformance [planned] issue/PR #20</title><rect x="210" y="684" width="152" height="16" rx="2" fill="#dce0dd"/></g>
+<g><title>S03: Foreground matte cleanup and edge decontamination [planned] issue/PR #29</title><rect x="365" y="684" width="152" height="16" rx="2" fill="#dce0dd"/></g>
+<g><title>S04: Multiple-instance selection and named outputs [planned] issue/PR #30</title><rect x="520" y="684" width="152" height="16" rx="2" fill="#dce0dd"/></g>
+<g><title>S05: Failure classification and bounded targeted repair [planned] issue/PR #31</title><rect x="675" y="684" width="152" height="16" rx="2" fill="#dce0dd"/></g>
+<g><title>S06: Transparent cutout benchmark with alpha metrics [blocked] issue/PR #32</title><rect x="830" y="684" width="152" height="16" rx="2" fill="#b8534e"/></g>
+<g><title>S07: Human-accepted cutout samples across tricky materials [blocked] issue/PR #32</title><rect x="985" y="684" width="152" height="16" rx="2" fill="#b8534e"/></g>
+<text x="1140" y="714" text-anchor="end" font-size="11" fill="#6b7972">Open gate: S06, S07</text>
+<rect x="35" y="731" width="1130" height="103" rx="10" fill="#fff" stroke="#d8ddd7"/>
+<text x="55" y="756" font-size="17" font-weight="650" fill="#1d302b">M5 · Delivery and usability</text>
+<text x="1140" y="756" font-size="16" text-anchor="end" font-weight="650" fill="#277e74">2/10 · 20.0%</text>
+<text x="55" y="779" font-size="12" fill="#65756e">A practical CLI and MCP experience with inspectable results, robust archives, and an effortless first run.</text>
+<g><title>D01: CLI validation, run, estimate and export commands [done] issue/PR #1</title><rect x="55" y="796" width="105" height="16" rx="2" fill="#277e74"/></g>
+<g><title>D02: Machine-readable JSON/CSV plus basic HTML report [done] issue/PR #1</title><rect x="163" y="796" width="105" height="16" rx="2" fill="#277e74"/></g>
+<g><title>D03: Interactive-free, static results gallery [planned] issue/PR #33</title><rect x="271" y="796" width="105" height="16" rx="2" fill="#dce0dd"/></g>
+<g><title>D04: Accepted asset efficiency and latency breakdown [planned] issue/PR #34</title><rect x="379" y="796" width="105" height="16" rx="2" fill="#dce0dd"/></g>
+<g><title>D05: Versioned provenance and exact input/output hashes [planned] issue/PR #35</title><rect x="487" y="796" width="105" height="16" rx="2" fill="#dce0dd"/></g>
+<g><title>D06: Deterministic ZIP ordering and digest manifest [planned] issue/PR #36</title><rect x="595" y="796" width="105" height="16" rx="2" fill="#dce0dd"/></g>
+<g><title>D07: Prehnite init/doctor self-check onboarding [planned] issue/PR #37</title><rect x="703" y="796" width="105" height="16" rx="2" fill="#dce0dd"/></g>
+<g><title>D08: Safe MCP pause/cancel/reconnect semantics [planned] issue/PR #38</title><rect x="811" y="796" width="105" height="16" rx="2" fill="#dce0dd"/></g>
+<g><title>D09: Clean Windows and Linux installation smoke matrix [planned] issue/PR #39</title><rect x="919" y="796" width="105" height="16" rx="2" fill="#dce0dd"/></g>
+<g><title>D10: 90-asset no-cost CLI/MCP fixture bundle [planned] issue/PR #41</title><rect x="1027" y="796" width="105" height="16" rx="2" fill="#dce0dd"/></g>
+<text x="1140" y="826" text-anchor="end" font-size="11" fill="#6b7972">Open gate: D09, D10</text>
+<rect x="35" y="843" width="1130" height="103" rx="10" fill="#fff" stroke="#d8ddd7"/>
+<text x="55" y="868" font-size="17" font-weight="650" fill="#1d302b">M6 · Community and first release</text>
+<text x="1140" y="868" font-size="16" text-anchor="end" font-weight="650" fill="#277e74">3/10 · 30.0%</text>
+<text x="55" y="891" font-size="12" fill="#65756e">An honest, maintainable MIT project with useful docs, accepted license boundaries and a reproducible first release.</text>
+<g><title>R01: Keep a Changelog and canonical PEP 440 version [done] issue/PR #13</title><rect x="55" y="908" width="105" height="16" rx="2" fill="#277e74"/></g>
+<g><title>R02: Issue-driven Kanban, PR/issue templates and WIP limits [done] issue/PR #13</title><rect x="163" y="908" width="105" height="16" rx="2" fill="#277e74"/></g>
+<g><title>R03: Persistent A2A coordination and ownership handoffs [done] issue/PR #9</title><rect x="271" y="908" width="105" height="16" rx="2" fill="#277e74"/></g>
+<g><title>R04: Evidence-ledger, milestone roadmap and SVG chart [active] issue/PR #14</title><rect x="379" y="908" width="105" height="16" rx="2" fill="#c28b4a"/></g>
+<g><title>R05: Human-first README, badge and original mark [active] issue/PR #43</title><rect x="487" y="908" width="105" height="16" rx="2" fill="#c28b4a"/></g>
+<g><title>R06: Audit dependencies and model-weight licensing [planned] issue/PR #40</title><rect x="595" y="908" width="105" height="16" rx="2" fill="#dce0dd"/></g>
+<g><title>R07: 90-asset offline production dry run [planned] issue/PR #41</title><rect x="703" y="908" width="105" height="16" rx="2" fill="#dce0dd"/></g>
+<g><title>R08: 90-asset live pilot and owner quality acceptance [blocked] issue/PR #42</title><rect x="811" y="908" width="105" height="16" rx="2" fill="#b8534e"/></g>
+<g><title>R09: Owner-approved version tag and first release [blocked] issue/PR #42</title><rect x="919" y="908" width="105" height="16" rx="2" fill="#b8534e"/></g>
+<g><title>R10: Native GitHub Projects issue/PR state sync [planned] issue/PR #44</title><rect x="1027" y="908" width="105" height="16" rx="2" fill="#dce0dd"/></g>
+<text x="1140" y="938" text-anchor="end" font-size="11" fill="#6b7972">Open gate: R08, R09</text>
+<text x="35" y="997" font-size="12" fill="#52665e">Details: docs/progress/STATUS.md · Canonical data: progress/ledger.json · 2026-10-16</text>
+</g>
+</svg>
