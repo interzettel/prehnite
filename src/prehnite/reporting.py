@@ -13,12 +13,16 @@ from .artifacts import ArtifactIntegrityError, atomic_text, temporary_sibling, v
 from .schema import relative_name
 from .store import Journal
 from .economics import batch_economics
+from .analytics import build_analytics, write_analytics
 
 
 def export_report(journal: Journal) -> dict:
     rows = journal.tasks()
     results = journal.fact("results", {})
-    economics = batch_economics(rows, results, journal.attempts())
+    attempts = journal.attempts()
+    economics = batch_economics(rows, results, attempts)
+    analytics = build_analytics(journal.fact("manifest", {}), results,
+                                rows, attempts, economics)
     data = {
         "batch_id": journal.root.name,
         "cost_estimated_or_reserved_usd": round(journal.reserved(), 5),
@@ -30,6 +34,7 @@ def export_report(journal: Journal) -> dict:
         "asset_results": results,
         "operations_detail": rows,
         "economics": economics,
+        "analytics": analytics,
     }
     atomic_text(journal.root / "report.json",
                 json.dumps(data, indent=2, ensure_ascii=False))
@@ -84,7 +89,10 @@ def export_report(journal: Journal) -> dict:
         + stage_rows + "</tbody></table>"
         + "<p>Local measured invocation/publish time is not provider inference "
         + "latency or time spent waiting after a crash.</p>"
-        + "<p>Acceptance state and errors: see report.json.</p><table><thead><tr>"
+        + "<p>Acceptance state and errors: see report.json. "
+          "Open gallery.html for the self-contained analytics and image dashboard. "
+          "Exported analytics.json / analytics.csv use schema version 1.</p>"
+          "<table><thead><tr>"
         + "".join(f"<th>{x}</th>" for x in ("Task", "Stage", "Status", "Provider",
                                             "Reserved USD", "Input tokens", "Output tokens"))
         + "</tr></thead><tbody>" + table_rows + "</tbody></table></html>"
@@ -92,7 +100,8 @@ def export_report(journal: Journal) -> dict:
     atomic_text(journal.root / "report.html", page)
     from .gallery import export_gallery
     from .provenance import export_provenance
-    export_gallery(journal)
+    write_analytics(journal.root, analytics)
+    export_gallery(journal, analytics=analytics)
     export_provenance(journal)
     return data
 
@@ -136,7 +145,7 @@ def package(journal: Journal) -> Path:
             raise ArtifactIntegrityError("Output changed during ZIP preflight: " + name)
         entries[name] = data
     for name in ("report.json", "operations.csv", "report.html", "gallery.html",
-                 "provenance.json"):
+                 "analytics.json", "analytics.csv", "provenance.json"):
         source = journal.root / name
         if source.is_file():
             entries["_prehnite/" + name] = source.read_bytes()
