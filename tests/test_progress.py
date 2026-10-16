@@ -51,8 +51,8 @@ def test_dependency_cycle_is_rejected():
     module = progress_module()
     data = ledger()
     # Two planned units with otherwise valid prerequisites may not depend on each other.
-    a = data["milestones"][1]["units"][6]  # C07 planned
-    b = data["milestones"][1]["units"][9]  # C10 planned
+    a = data["milestones"][4]["units"][2]  # S03 planned
+    b = data["milestones"][4]["units"][3]  # S04 planned
     a["dependsOn"] = [b["id"]]
     b["dependsOn"] = [a["id"]]
     with pytest.raises(ValueError, match="Dependency cycle"):
@@ -96,7 +96,15 @@ def test_milestone_percent_and_gates():
     data = ledger()
     stats = module.stats(module.units(data))
     assert stats["total"] == 61
-    assert stats["done"] == 37
+    # Progress can grow without requiring another brittle exact-count edit.
+    # The regression contract is that already evidenced unit IDs stay done.
+    assert stats["done"] >= 40
+    by_id = {u["id"]: u for u in module.units(data)}
+    for unit_id in ("D08", "D10", "R07"):
+        assert by_id[unit_id]["state"] == "done"
+        assert by_id[unit_id]["evidence"].endswith("/" + (
+            "83" if unit_id == "D08" else "84"))
+    assert all(by_id[g]["state"] == "done" for g in data["milestones"][5]["gate"])
     assert module.stats(data["milestones"][0]["units"])["pct"] == 100
     assert all(unit["state"] == "done" for unit in data["milestones"][0]["units"])
     assert data["milestones"][0]["gate"] == ["F06"]

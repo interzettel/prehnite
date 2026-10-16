@@ -39,3 +39,40 @@ jobs:
         run: python -m pip install build
       - name: Build wheel/sdist and exercise clean free CLI install
         run: python scripts/smoke_install.py
+
+  mcp-windows:
+    name: MCP lifecycle (windows-latest)
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Install package and offline test dependencies
+        run: python -m pip install -e ".[dev]"
+      - name: Check subprocess, kernel lock and reconnect lifecycle on Windows
+        run: python -m pytest -q tests/test_mcp_lifecycle.py
+
+  offline-90:
+    name: 90-asset offline benchmark (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Install no-cost Python engine
+        run: python -m pip install -e ".[dev]"
+      - name: Execute reproducible pause/crash/reconnect/replay and ZIP checks
+        run: python scripts/offline_90_benchmark.py --result-file benchmark-90.json
+      - name: Publish sanitized benchmark evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: offline-90-${{ matrix.os }}
+          path: benchmark-90.json
+          if-no-files-found: error
+          retention-days: 14

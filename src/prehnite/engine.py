@@ -18,11 +18,10 @@ from .manifest import resolve_input, validate_job
 from .providers import get_provider
 from .reporting import export_report, package
 from .schema import Asset, Endpoint, Manifest, Profile
-from .store import Journal
+from .store import Journal, JobStopped
+from .failures import (BudgetExceeded, RecoveryBlocked, classify_exception,
+                       classify_asset)
 
-
-class BudgetExceeded(RuntimeError):
-    pass
 
 
 def fingerprint(manifest: Manifest, profile: Profile) -> str:
@@ -32,14 +31,22 @@ def fingerprint(manifest: Manifest, profile: Profile) -> str:
 
 class Engine:
     def __init__(self, manifest: Manifest, profile: Profile, workspace: Path,
-                 inputs: Path = Path("inputs")):
+                 inputs: Path = Path("inputs"), job_token: str | None = None):
         validate_job(manifest, profile, inputs)
         self.manifest = manifest
+        self.job_token = job_token
         self.profile = profile
         self.inputs = inputs
         self.journal = Journal(workspace, manifest.id)
         self.cache = StageCache(workspace, profile.cache) if profile.cache.enabled else None
         checksum = fingerprint(manifest, profile)
+        if job_token is not None:
+            launch = self.journal.job_record()
+            if (not launch or launch["token"] != job_token
+                    or launch["config_sha256"] != checksum):
+                raise ValueError(
+                    "MCP launch identity or staged configuration changed since preflight"
+                )
         previous = self.journal.fact("configuration_sha256")
         if previous is not None and previous != checksum:
             raise ValueError("Batch ID reused with changed manifest/profile; choose a new ID")
@@ -85,6 +92,7 @@ class Engine:
     def stage(self, key: str, stage: str, endpoint: Endpoint, output: Path,
               invoke: Callable, price_key: str = "",
               cache_request: dict | None = None) -> Path:
+        self.journal.job_checkpoint(self.job_token)
         previous = self.journal.get(key)
         if previous and previous["status"] == "completed":
             try:
@@ -96,12 +104,12 @@ class Engine:
                 pass
         paid = endpoint.provider in ("fal", "anthropic")
         if previous and previous["status"] == "uncertain":
-            raise RuntimeError(f"Ambiguous remote submission {key}: reconcile before retry")
+            raise RecoveryBlocked(f"Ambiguous remote submission {key}: reconcile before retry")
         # The journal commits 'submitting' BEFORE the external call. If a
         # process dies between remote submission and receipt of a request ID,
         # assuming that no charge occurred would risk paying twice.
         if previous and paid and not previous["request_id"]:
-            raise RuntimeError(
+            raise RecoveryBlocked(
                 f"Paid request {key} has no recoverable provider ID; "
                 "reconcile it manually before retrying"
             )
@@ -167,7 +175,10 @@ class Engine:
             self.journal.put(key, stage, status, request_id=resume_id,
                              path=str(output), provider=endpoint.provider,
                              model=endpoint.model, reserved_usd=estimate,
-                             data={"error": str(exc)[:500]})
+                             data={"error": str(exc)[:500],
+                                   "failure": classify_exception(
+                                       exc, stage=stage, provider=endpoint.provider,
+                                       request_id_present=bool(resume_id))})
             self.journal.finish_attempt(
                 attempt_id, "failed", (time.perf_counter() - started) * 1000)
             raise
@@ -230,10 +241,11 @@ class Engine:
             elif record:
                 # Anthropic's message endpoint has no resumable request ID.
                 # A crash/timeout after dispatch may have billed the call.
-                raise RuntimeError(
+                raise RecoveryBlocked(
                     f"Paid judge {key} has uncertain status; reconcile manually"
                 )
             else:
+                self.journal.job_checkpoint(self.job_token)
                 estimate = self.cost("judge")
                 self.journal.put(key, "judge", "submitting", provider="anthropic",
                                  model=judge.model, reserved_usd=estimate)
@@ -252,7 +264,9 @@ class Engine:
                 except Exception as exc:
                     self.journal.put(key, "judge", "uncertain", provider="anthropic",
                                      model=judge.model, reserved_usd=estimate,
-                                     data={"error": str(exc)[:500]})
+                                     data={"error": str(exc)[:500],
+                                           "failure": classify_exception(
+                                               exc, stage="judge", provider="anthropic")})
                     self.journal.finish_attempt(
                         attempt_id, "failed", (time.perf_counter() - started) * 1000)
                     raise
@@ -292,6 +306,7 @@ class Engine:
         # Retry is a real edge-refinement alternative, not a redundant paid model call.
         problems = []
         for refine in (False, True)[:self.profile.policy.maximum_attempts]:
+            self.journal.job_checkpoint(self.job_token)
             output = root / ("refined.png" if refine else "raw.png")
             try:
                 stats = make_cutout(selected, mask, output, refine=refine)
@@ -312,8 +327,9 @@ class Engine:
                     if old and old["status"] == "completed":
                         score = float(old["data"]["score"])
                     elif old:
-                        raise RuntimeError("Ambiguous paid cutout judgment; reconcile first")
+                        raise RecoveryBlocked("Ambiguous paid cutout judgment; reconcile first")
                     else:
+                        self.journal.job_checkpoint(self.job_token)
                         estimate = self.cost("judge")
                         self.journal.put(eval_key, "cutout_judge", "submitting",
                                          provider="anthropic", model=self.profile.judge.model,
@@ -328,7 +344,11 @@ class Engine:
                         except Exception as exc:
                             self.journal.put(eval_key, "cutout_judge", "uncertain",
                                              provider="anthropic", model=self.profile.judge.model,
-                                             reserved_usd=estimate, data={"error": str(exc)[:500]})
+                                             reserved_usd=estimate,
+                                              data={"error": str(exc)[:500],
+                                                    "failure": classify_exception(
+                                                        exc, stage="cutout_judge",
+                                                        provider="anthropic")})
                             self.journal.finish_attempt(
                                 attempt_id, "failed",
                                 (time.perf_counter() - started) * 1000)
@@ -392,11 +412,17 @@ class Engine:
                     outputs.append(asset.output.cutouts[target])
                 except ValueError as exc:
                     failures.append(str(exc))
-            return {**saved, "status": "failed_cutouts" if failures else "accepted",
-                    "outputs": outputs, "outputs_sha256": self.selected_checksums(outputs),
-                    "reason": "; ".join(failures)}
+            updated = {**saved, "status": "failed_cutouts" if failures else "accepted",
+                       "outputs": outputs, "outputs_sha256": self.selected_checksums(outputs),
+                       "reason": "; ".join(failures)}
+            if failures:
+                updated["failure"] = classify_asset("failed_cutouts")
+            else:
+                updated.pop("failure", None)
+            return updated
         last_reason = "No acceptable candidate"
         for attempt in range(1, self.profile.policy.maximum_attempts + 1):
+            self.journal.job_checkpoint(self.job_token)
             candidates: dict[str, Path] = {}
             if asset.source:
                 candidates["source"] = resolve_input(self.inputs, asset.source)
@@ -434,28 +460,55 @@ class Engine:
                 return {"status": "failed_cutouts", "outputs": outputs,
                         "outputs_sha256": self.selected_checksums(outputs),
                         "reason": "; ".join(cutout_failures),
+                        "failure": classify_asset("failed_cutouts"),
                         "winning_variant": winner, "quality_score": score}
             return {"status": "accepted", "outputs": outputs,
                     "outputs_sha256": self.selected_checksums(outputs),
                     "winning_variant": winner, "quality_score": score,
                     "visual_quality_verified": score is not None,
                     "reason": reason, "attempt": attempt}
-        return {"status": "rejected", "outputs": [], "reason": last_reason}
+        return {"status": "rejected", "outputs": [], "reason": last_reason,
+                "failure": classify_asset("rejected")}
 
     def run(self) -> dict:
         with self.journal.exclusive():
-            return self._run_locked()
+            if self.job_token is not None:
+                self.journal.job_start(self.job_token)
+            try:
+                result = self._run_locked()
+            except JobStopped as stop:
+                if self.job_token is not None and stop.status in ("paused", "cancelled"):
+                    self.journal.job_finish(self.job_token, stop.status)
+                    export_report(self.journal)
+                    return {"job_status": stop.status,
+                            "asset_results": self.journal.fact("results", {})}
+                raise
+            except Exception:
+                if self.job_token is not None:
+                    self.journal.job_finish(self.job_token, "failed",
+                                            "Worker raised an exception; inspect local log")
+                raise
+            else:
+                if self.job_token is not None:
+                    self.journal.job_finish(self.job_token, "completed")
+                return result
 
     def _run_locked(self) -> dict:
         self.verify_input_sources()
+        self.journal.job_checkpoint(self.job_token)
         results = self.journal.fact("results", {})
         for asset in self.manifest.assets:
+            self.journal.job_checkpoint(self.job_token, asset.id)
             if results.get(asset.id, {}).get("status") == "accepted":
                 try:
                     self.validate_saved_outputs(results[asset.id])
                 except ArtifactIntegrityError as exc:
-                    results[asset.id] = {"status": "error", "outputs": [],
-                                         "integrity_error": True, "reason": str(exc)}
+                    results[asset.id] = {
+                        "status": "error", "outputs": [],
+                        "integrity_error": True, "reason": str(exc),
+                        "failure": classify_exception(
+                            exc, stage="asset", provider="local"),
+                    }
                     self.journal.set_fact("results", results)
                     export_report(self.journal)
                     continue
@@ -463,18 +516,35 @@ class Engine:
                     continue
             try:
                 result = self.process(asset)
-            except BudgetExceeded:
+            except BudgetExceeded as exc:
+                self.journal.set_fact("batch_failure", classify_exception(
+                    exc, stage="budget", provider="local"))
                 self.journal.set_fact("results", results)
                 export_report(self.journal)
                 raise
+            except JobStopped:
+                self.journal.set_fact("results", results)
+                raise
             except ArtifactIntegrityError as exc:
                 result = {"status": "error", "outputs": [], "integrity_error": True,
-                          "reason": str(exc)[:500]}
+                          "reason": str(exc)[:500],
+                          "failure": classify_exception(exc, stage="asset", provider="local")}
             except Exception as exc:
-                result = {"status": "error", "outputs": [], "reason": str(exc)[:500]}
+                context = next((task for task in reversed(self.journal.tasks())
+                                if task["task_key"].startswith(asset.id + ":")
+                                and task["status"] != "completed"), None)
+                result = {
+                    "status": "error", "outputs": [], "reason": str(exc)[:500],
+                    "failure": classify_exception(
+                        exc, stage=context["stage"] if context else "asset",
+                        provider=context["provider"] if context else "local",
+                        request_id_present=bool(context and context.get("request_id"))),
+                }
             results[asset.id] = result
             self.journal.set_fact("results", results)
             export_report(self.journal)
+            self.journal.job_checkpoint(self.job_token)
+        self.journal.job_checkpoint(self.job_token)
         report = export_report(self.journal)
         package(self.journal)
         return report

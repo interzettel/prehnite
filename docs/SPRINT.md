@@ -10,12 +10,12 @@
 
 | Lane | Cards |
 | --- | ---: |
-| Backlog | 17 |
+| Backlog | 14 |
 | Ready | 2 |
 | In progress | 0 |
-| In review | 2 |
+| In review | 0 |
 | Blocked | 6 |
-| Done | 39 |
+| Done | 49 |
 
 **WIP limits:** In progress ≤ 2; In review ≤ 3. Counts are issue/PR cards, not unique completed engineering features or a percentage.
 
@@ -30,15 +30,12 @@
 | P2 | [Issue #8 — Windows MCP lifecycle and packaging](https://github.com/interzettel/prehnite/issues/8) | Runtime | Process cancellation, reconnection and Windows tests. |
 | P0 | [Issue #5 — Crash recovery, pricing and billing hardening](https://github.com/interzettel/prehnite/issues/5) | Reliability | Safety tranche #10 merged; remaining tasks #15–#18, ownership unclaimed. |
 | P2 | [Issue #44 — Synchronize canonical issue ledger with organization GitHub Projects v2](https://github.com/interzettel/prehnite/issues/44) | Tracking | GitHub Project #1 sync needs Projects v2 write permission |
-| P1 | [Issue #41 — Pre-release 90-asset dry run and budget projection](https://github.com/interzettel/prehnite/issues/41) | Benchmark | 90-asset offline dry-run |
 | P1 | [Issue #40 — Model, dependency and artifact licensing inventory](https://github.com/interzettel/prehnite/issues/40) | Licensing | Dependency/model weight terms inventory |
-| P1 | [Issue #38 — MCP cancellation, worker reconnection and status telemetry](https://github.com/interzettel/prehnite/issues/38) | MCP | Cancellation and reconnection |
 | P1 | [Issue #33 — Self-contained offline HTML gallery and comparisons](https://github.com/interzettel/prehnite/issues/33) | Reporting | Offline thumbnail gallery #67 merged; opt-in private original comparisons remain issue #68 |
 | P1 | [Issue #31 — Targeted repair planner for failed cutouts](https://github.com/interzettel/prehnite/issues/31) | Cutouts | Bounded repair planner |
 | P2 | [Issue #30 — Multi-instance object cutout selection](https://github.com/interzettel/prehnite/issues/30) | Cutouts | Multi-instance target matching |
 | P1 | [Issue #29 — Transparent alpha matting and halo removal](https://github.com/interzettel/prehnite/issues/29) | Cutouts | Edge alpha matting |
 | P2 | [Issue #27 — Local aesthetic and fidelity judge plugin boundary](https://github.com/interzettel/prehnite/issues/27) | Quality | Optional local weights and licenses |
-| P1 | [Issue #18 — Content-addressed cache with privacy isolation](https://github.com/interzettel/prehnite/issues/18) | Runtime | Cache with privacy-scoped keys |
 | P1 | [Issue #68 — Opt-in original-input gallery comparison with privacy consent](https://github.com/interzettel/prehnite/issues/68) | Delivery | Follow-up to #33: never embed private originals without opt-in |
 
 ## Ready
@@ -58,8 +55,7 @@
 
 | Priority | Work item | Stream | Handoff / blocker |
 | --- | --- | --- | --- |
-| P1 | [Issue #81 — Batch objective modes and Pareto evaluation RFC](https://github.com/interzettel/prehnite/issues/81) | Product strategy | Produce-first design; defines comparable Pareto metrics. Documentation PR #82; no runtime credit. |
-| P1 | [PR #82 — Produce/Explore/Experiment and Pareto reporting RFC](https://github.com/interzettel/prehnite/pull/82) | Product strategy | Documentation-only PR; CI/review required. No release or quality evidence. |
+| — | No cards currently | — | — |
 
 ## Blocked
 
@@ -81,7 +77,9 @@
 | P1 | [PR #13 — Agile delivery board and release governance](https://github.com/interzettel/prehnite/pull/13) | Governance | Merged to main; single-source versioning and governance CI. |
 | P0 | [PR #1 — Initial MIT engine foundation](https://github.com/interzettel/prehnite/pull/1) | Foundation | Merged; synthetic demo CI passed. |
 | P1 | [Issue #43 — Human-centered README, original vector identity and first-run guide](https://github.com/interzettel/prehnite/issues/43) | Onboarding | Merged in PR #45; evidence ledger / README published on main. |
+| P1 | [Issue #41 — Pre-release 90-asset dry run and budget projection](https://github.com/interzettel/prehnite/issues/41) | Benchmark | PR #84 merged; 90/90 offline benchmark passed on Ubuntu & Windows, 108 verified ZIP image entries. |
 | P1 | [Issue #39 — Cross-platform installer and Python packaging smoke checks](https://github.com/interzettel/prehnite/issues/39) | Packaging | Merged PR #72; validated free CLI and clean Windows/Linux wheel install, GPU not benchmarked |
+| P1 | [Issue #38 — MCP cancellation, worker reconnection and status telemetry](https://github.com/interzettel/prehnite/issues/38) | MCP | PR #83 merged as 38113a7; four-job CI green (290 tests), issue closed. |
 | P1 | [Issue #37 — Prehnite init and doctor CLI onboarding](https://github.com/interzettel/prehnite/issues/37) | Onboarding | Merged PR #71; validated free CLI and clean Windows/Linux wheel install, GPU not benchmarked |
 | P1 | [Issue #36 — Deterministic validated archive and manifest hashes](https://github.com/interzettel/prehnite/issues/36) | Reporting | Implemented and verified in merged PR #76, zero inference spend |
 | P1 | [Issue #35 — Versioned provenance and reproducible output manifest](https://github.com/interzettel/prehnite/issues/35) | Reporting | Implemented and verified in merged PR #74, zero inference spend |
@@ -92,6 +90,7 @@
 | P1 | [Issue #21 — Provider capability and price registry contract](https://github.com/interzettel/prehnite/issues/21) | Providers | Typed adapter registry and user-estimate provenance merged in PR #55; real quote audit remains #17 |
 | P1 | [Issue #20 — Normalize fal segmentation output and mask orientation](https://github.com/interzettel/prehnite/issues/20) | Segmentation | Offline CI tests merged in PR #53; real paid/live validation remains open |
 | P1 | [Issue #19 — Mocked FLUX tier and upscale response shapes](https://github.com/interzettel/prehnite/issues/19) | Providers | Mocked and subprocess CI evidence in merged PR #50 |
+| P1 | [Issue #18 — Content-addressed cache with privacy isolation](https://github.com/interzettel/prehnite/issues/18) | Runtime | Cache code merged #80; evidence reconciliation #88 merged. |
 | P0 | [Issue #16 — Atomic artifacts and integrity-aware resume](https://github.com/interzettel/prehnite/issues/16) | Runtime | Offline CI tests merged in PR #52; real paid/live validation remains open |
 | P0 | [Issue #15 — Crash-injection matrix for billed request recovery](https://github.com/interzettel/prehnite/issues/15) | Runtime | Mocked and subprocess CI evidence in merged PR #49 |
 | P1 | [Issue #14 — Granular evidence-ledger and generated milestone progress tracker](https://github.com/interzettel/prehnite/issues/14) | Tracking | Merged in PR #45; evidence ledger / README published on main. |
@@ -115,6 +114,13 @@
 | P1 | [PR #74 — Privacy-minimized provenance manifest](https://github.com/interzettel/prehnite/pull/74) | Delivery | Merged with green CI and offline regression tests |
 | P1 | [PR #76 — Deterministic ZIP and SHA256 receipt](https://github.com/interzettel/prehnite/pull/76) | Delivery | Merged with green CI and offline regression tests |
 | P1 | [PR #78 — Evidence-based accepted-asset economics and stage timing](https://github.com/interzettel/prehnite/pull/78) | Reporting | Merged; 264 offline tests and Windows/Ubuntu smoke green; invoices remain unverified |
+| P1 | [PR #83 — Durable MCP pause/cancel/reconnect and worker ownership](https://github.com/interzettel/prehnite/pull/83) | MCP | Merged into main; durable MCP controls verified with Windows lifecycle regression. |
+| P1 | [PR #84 — 90-slot offline pause/crash/recovery benchmark](https://github.com/interzettel/prehnite/pull/84) | Benchmark | Merged PR #84; cross-platform CI synthetic recovery benchmark evidence; no paid inference. |
+| P1 | [Issue #86 — Machine-readable stage failure and recovery taxonomy](https://github.com/interzettel/prehnite/issues/86) | Runtime | Typed error taxonomy code merged PR #87; C10 ledger credit pending. |
+| P1 | [PR #87 — Typed fail-closed failure classification and report telemetry](https://github.com/interzettel/prehnite/pull/87) | Runtime | Merged PR #87 with validated CI; ledger credit C10 pending. |
+| P1 | [PR #88 — Reconcile C07 merged cache evidence and progress tracker](https://github.com/interzettel/prehnite/pull/88) | Tracking | Evidence PR #88 merged after preserving #87; C07 credited. |
+| P1 | [Issue #81 — Batch objective modes and Pareto evaluation RFC](https://github.com/interzettel/prehnite/issues/81) | Product strategy | RFC PR #82 merged; produce-first design only, no runtime gate credit. |
+| P1 | [PR #82 — Produce/Explore/Experiment and Pareto reporting RFC](https://github.com/interzettel/prehnite/pull/82) | Product strategy | Documentation RFC integrated; human quality and comparable cohorts still future. |
 
 ## How to update this board
 
