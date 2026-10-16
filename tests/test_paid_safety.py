@@ -38,12 +38,12 @@ def profile(*, budget=0.2, price=0.04, judge="demo"):
 
 
 def fake_stage(output, request_id, seen):
-    def run(on_submit, resume_id):
+    def run(on_submit, resume_id, staged_output):
         seen.append(resume_id)
         if not resume_id:
             on_submit(request_id)
-        Image.new("RGB", (192, 256), "blue").save(output)
-        return Result(output, request_id, {"fixture": True})
+        Image.new("RGB", (192, 256), "blue").save(staged_output)
+        return Result(staged_output, request_id, {"fixture": True})
     return run
 
 

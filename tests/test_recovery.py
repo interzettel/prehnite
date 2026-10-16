@@ -31,7 +31,7 @@ def test_ambiguous_remote_submit_is_not_billed_twice(tmp_path):
     engine = Engine(sample(), profile(), tmp_path)
     ep = Endpoint(provider="fal", model="mock-remote")
     invoked = []
-    def timeout(on_submit, resume):
+    def timeout(on_submit, resume, staged_output):
         invoked.append(1)
         raise TimeoutError("Network connection lost before receipt")
     with pytest.raises(TimeoutError):

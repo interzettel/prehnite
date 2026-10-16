@@ -58,7 +58,7 @@ if phase == "live_lock":
         while True:
             time.sleep(0.1)
 
-def invoke(on_submit, resume_id):
+def invoke(on_submit, resume_id, staged_output):
     assert resume_id is None
     if phase == "before_dispatch":
         os._exit(70)
@@ -70,10 +70,10 @@ def invoke(on_submit, resume_id):
     on_submit("fake-remote-request-id")
     if phase == "after_id_commit":
         os._exit(72)
-    Image.new("RGB", (192,256), "blue").save(output)
+    Image.new("RGB", (192,256), "blue").save(staged_output)
     if phase == "after_result_before_completion":
         os._exit(73)
-    return Result(output, "fake-remote-request-id")
+    return Result(staged_output, "fake-remote-request-id")
 
 engine.stage("one:generate", "generation",
              Endpoint(provider="fal", model="synthetic-remote"),
@@ -144,14 +144,14 @@ def test_process_crash_points_are_durable_and_do_not_rebill(
 
         observed = []
         output = engine.journal.root / "fake.png"
-        def recover(on_submit, resume_id):
+        def recover(on_submit, resume_id, staged_output):
             observed.append(resume_id)
             # The only safe action after saving a remote ID is lookup of
             # the existing request. A new submit is forbidden.
             assert resume_id == "fake-remote-request-id"
             from PIL import Image
-            Image.new("RGB", (192, 256), "blue").save(output)
-            return Result(output, resume_id, {"recovered": True})
+            Image.new("RGB", (192, 256), "blue").save(staged_output)
+            return Result(staged_output, resume_id, {"recovered": True})
 
         if request_id is None:
             with pytest.raises(RuntimeError, match="no recoverable provider ID"):
