@@ -141,6 +141,8 @@ def evaluate(manifest: dict, data_root: Path) -> dict:
         cand = _open_image(selected["candidate"], role="candidate")
         if source.size != ref.size or ref.size != cand.size:
             raise EvaluationRefused("source_reference_candidate_dimensions_mismatch")
+        if ref.getextrema() == (0, 0):
+            raise EvaluationRefused("empty_reference_mask_cannot_establish_quality")
         output.append({
             "index": ordinal,
             "cohort": item["cohort"],
