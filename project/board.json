@@ -236,7 +236,7 @@
       "lane": "Blocked",
       "priority": "P1",
       "stream": "Cutouts",
-      "note": "Owner authorized 23 AI-generated R2 product inputs; private WebP preflight #122 pending exact-byte export. Ground-truth alpha mattes and independent human review remain blocked."
+      "note": "84 owner-approved AI-generated JPEGs inspected, 50 unreviewed candidate masks. PR #123 archive tester in review; independently reviewed gold alpha still absent."
     },
     {
       "type": "issue",
@@ -899,10 +899,19 @@
       "type": "pr",
       "number": 122,
       "title": "Rights-aware local real-image alpha benchmark intake",
+      "lane": "Done",
+      "priority": "P1",
+      "stream": "Cutouts",
+      "note": "Merged 463d3c2; local rights-aware alpha scorer, source-only R2 WebP preflight. No reference-alpha production claims."
+    },
+    {
+      "type": "pr",
+      "number": 123,
+      "title": "Private apparel ZIP inspection and unreviewed mask probe",
       "lane": "In review",
       "priority": "P1",
       "stream": "Cutouts",
-      "note": "Offline scoring+rights attestation framework; tests in PR CI; no real photographs redistributed or quality threshold claimed."
+      "note": "Owner ZIP: 84 RGB JPEG inputs, 50 unreviewed GrabCut baselines; no actual gold IoU, original photos or masks committed."
     }
   ]
 }
