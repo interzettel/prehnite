@@ -150,6 +150,10 @@ def package(journal: Journal, *, include_parquet: bool = False) -> Path:
         if source.is_file():
             entries["_prehnite/" + name] = source.read_bytes()
 
+    if include_parquet:
+        from .parquet_export import verified_parquet_entries
+        entries.update(verified_parquet_entries(journal.root))
+
     # A portable digest list also covers the included reports; the top-level
     # manifest does not hash itself.
     manifest = {
