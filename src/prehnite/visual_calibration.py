@@ -52,7 +52,10 @@ def evaluate_binary_visual_gold(
     """
     if declared_source not in ("synthetic_fixture", "caller_declared_human_gold"):
         raise ValueError("Explicit synthetic or caller-declared gold provenance required")
-    lo, hi = _numeric(lower), _numeric(upper)
+    try:
+        lo, hi = _numeric(lower), _numeric(upper)
+    except ValueError as exc:
+        raise ValueError("Invalid calibration thresholds") from exc
     if not 0 <= lo < 0.5 < hi <= 1:
         raise ValueError("Require disjoint negative/abstain/positive thresholds")
     if not isinstance(observations, list) or not 1 <= len(observations) <= 100_000:
