@@ -15,7 +15,7 @@
 | In progress | 2 |
 | In review | 1 |
 | Blocked | 6 |
-| Done | 67 |
+| Done | 68 |
 
 **WIP limits:** In progress ≤ 2; In review ≤ 3. Counts are issue/PR cards, not unique completed engineering features or a percentage.
 
@@ -51,13 +51,13 @@
 | Priority | Work item | Stream | Handoff / blocker |
 | --- | --- | --- | --- |
 | P2 | [Issue #100 — Provenance-bound transforms and tiled 4K comparison](https://github.com/interzettel/prehnite/issues/100) | Delivery | Integer 4K tiles + SHA-bound affine v2 validator merged; real affine warp/execution still open. |
-| P1 | [Issue #111 — Jev Stage B mock wire fixtures and gold-set calibration](https://github.com/interzettel/prehnite/issues/111) | Quality | Official-shape Jev mock request/response fixtures in PR #113; gold-set calibration remains open. |
+| P1 | [Issue #111 — Jev Stage B mock wire fixtures and gold-set calibration](https://github.com/interzettel/prehnite/issues/111) | Quality | PR #113 merged; PR #114 adds offline Brier/ECE, abstention and gold-label cost evidence. Real labeled cohort still needed. |
 
 ## In review
 
 | Priority | Work item | Stream | Handoff / blocker |
 | --- | --- | --- | --- |
-| P1 | [PR #113 — Documented TypeSafe Jev official-shape offline wire fixtures](https://github.com/interzettel/prehnite/pull/113) | Quality | Probability/level semantics and Box absence masking; 8-job CI pending, no API/paid transport. |
+| P1 | [PR #114 — Jev Noul offline gold-set calibration and aggregate reports](https://github.com/interzettel/prehnite/pull/114) | Quality | No inference; synthetic labeled regression tests, owner review and CI pending. |
 
 ## Blocked
 
@@ -141,6 +141,7 @@
 | P1 | [Issue #109 — Jev experimental visual-judge typed contract, media and budget preflight](https://github.com/interzettel/prehnite/issues/109) | Quality | Mock-only Jev Stage A merged #110, eight green checks, no spend; parent #107 open. |
 | P1 | [PR #110 — Offline typed visual judge mock and Jev opt-in preflight](https://github.com/interzettel/prehnite/pull/110) | Quality | Merged PR #110: typed Jev mock/media/price preflight, 403 tests passed, 8/8 CI. |
 | P2 | [PR #112 — Close Jev Stage A sprint cards and queue Stage B](https://github.com/interzettel/prehnite/pull/112) | Governance | Merged Stage A board closeout PR #112, all CI checks passed. |
+| P1 | [PR #113 — Documented TypeSafe Jev official-shape offline wire fixtures](https://github.com/interzettel/prehnite/pull/113) | Quality | Merged PR #113, 424 tests + 8/8 green CI; no vendor transport. |
 
 ## How to update this board
 
