@@ -47,7 +47,7 @@
       "lane": "Backlog",
       "priority": "P2",
       "stream": "Delivery",
-      "note": "Offline analytics, Riso-branded native inspection and pixel-grid v1 merged; #100 typed transform/tiled diagnostics tranche in review; human calibration remains open."
+      "note": "Offline dashboard, Parquet, native inspection and translated 4K diagnostics merged; future #105 affine and human quality calibration still open."
     },
     {
       "type": "issue",
@@ -749,7 +749,7 @@
       "lane": "In progress",
       "priority": "P2",
       "stream": "Delivery",
-      "note": "First tranche: attested integer translation, 4K+ tile diagnostics PR #104; arbitrary affine separately deferred."
+      "note": "First #104 translation+tile slice merged; next affine contract #105 remains research/development, with strict decoding still open."
     },
     {
       "type": "issue",
@@ -773,10 +773,19 @@
       "type": "pr",
       "number": 104,
       "title": "Provenance-bound translated 4K tile diagnostics",
-      "lane": "In review",
+      "lane": "Done",
       "priority": "P1",
       "stream": "Delivery",
-      "note": "First bounded #100 implementation; CI and peer review pending, no live GPU or quality claim."
+      "note": "Merged PR #104, 8/8 cross-platform CI; attested SHA-bound integer shifts and 4K tile diagnostics."
+    },
+    {
+      "type": "issue",
+      "number": 105,
+      "title": "Attested affine transform and overlap validation contract",
+      "lane": "Backlog",
+      "priority": "P2",
+      "stream": "Delivery",
+      "note": "#100 follow-up: typed affine schema and deterministic overlap before any resampling; no inference."
     }
   ]
 }
