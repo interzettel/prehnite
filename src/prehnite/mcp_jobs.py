@@ -200,7 +200,13 @@ class JobManager:
                 record = journal.job_record()
                 if record and record["status"] == "launching" and self._fresh_launch(record):
                     raise RuntimeError("Worker still launching: cannot export yet")
-                export_report(journal)
-                return {"archive": str(package(journal))}
+                report = export_report(journal)
+                if include_parquet:
+                    from .parquet_export import write_parquet_exports
+                    write_parquet_exports(journal.root, report["analytics"],
+                                          journal.fact("manifest", {}),
+                                          journal.fact("results", {}))
+                return {"archive": str(package(journal, include_parquet=include_parquet)),
+                        "parquet_included": include_parquet}
         finally:
             journal.close()
