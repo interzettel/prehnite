@@ -165,10 +165,10 @@ def test_no_report_can_replace_private_source_or_matte(tmp_path):
 
 def test_empty_and_unbounded_corpus_refused(tmp_path):
     root, manifest, _ = example(tmp_path)
+    manifest_original_item = manifest["items"][0]
     manifest["items"] = []
     with pytest.raises(EvaluationRefused, match="invalid_manifest_item_count"):
         evaluate(manifest, root)
-    manifest["items"] = [example(tmp_path.parent / ("extra" + str(i)))[1]["items"][0]
-                         for i in range(201)]
+    manifest["items"] = [manifest_original_item] * 201
     with pytest.raises(EvaluationRefused, match="invalid_manifest_item_count"):
         evaluate(manifest, root)
