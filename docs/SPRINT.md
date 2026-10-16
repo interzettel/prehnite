@@ -10,10 +10,10 @@
 
 | Lane | Cards |
 | --- | ---: |
-| Backlog | 15 |
+| Backlog | 14 |
 | Ready | 2 |
 | In progress | 0 |
-| In review | 0 |
+| In review | 2 |
 | Blocked | 6 |
 | Done | 43 |
 
@@ -36,7 +36,6 @@
 | P2 | [Issue #30 — Multi-instance object cutout selection](https://github.com/interzettel/prehnite/issues/30) | Cutouts | Multi-instance target matching |
 | P1 | [Issue #29 — Transparent alpha matting and halo removal](https://github.com/interzettel/prehnite/issues/29) | Cutouts | Edge alpha matting |
 | P2 | [Issue #27 — Local aesthetic and fidelity judge plugin boundary](https://github.com/interzettel/prehnite/issues/27) | Quality | Optional local weights and licenses |
-| P1 | [Issue #18 — Content-addressed cache with privacy isolation](https://github.com/interzettel/prehnite/issues/18) | Runtime | Cache with privacy-scoped keys |
 | P1 | [Issue #68 — Opt-in original-input gallery comparison with privacy consent](https://github.com/interzettel/prehnite/issues/68) | Delivery | Follow-up to #33: never embed private originals without opt-in |
 
 ## Ready
@@ -56,7 +55,8 @@
 
 | Priority | Work item | Stream | Handoff / blocker |
 | --- | --- | --- | --- |
-| — | No cards currently | — | — |
+| P1 | [Issue #18 — Content-addressed cache with privacy isolation](https://github.com/interzettel/prehnite/issues/18) | Runtime | Stage cache merged in PR #80 and tests passed; C07 ledger evidence reconciliation pending docs PR #88. |
+| P1 | [PR #88 — Reconcile C07 merged cache evidence and progress tracker](https://github.com/interzettel/prehnite/pull/88) | Tracking | Docs-only: C07 credit from merged PR #80; CI and review required. |
 
 ## Blocked
 
