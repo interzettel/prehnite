@@ -10,7 +10,7 @@
 
 | Lane | Cards |
 | --- | ---: |
-| Backlog | 21 |
+| Backlog | 22 |
 | Ready | 3 |
 | In progress | 0 |
 | In review | 0 |
@@ -44,6 +44,7 @@
 | P1 | [Issue #29 — Transparent alpha matting and halo removal](https://github.com/interzettel/prehnite/issues/29) | Cutouts | Edge alpha matting |
 | P2 | [Issue #27 — Local aesthetic and fidelity judge plugin boundary](https://github.com/interzettel/prehnite/issues/27) | Quality | Optional local weights and licenses |
 | P1 | [Issue #18 — Content-addressed cache with privacy isolation](https://github.com/interzettel/prehnite/issues/18) | Runtime | Cache with privacy-scoped keys |
+| P1 | [Issue #63 — Controlled A/B positional-bias protocol and disagreement calibration](https://github.com/interzettel/prehnite/issues/63) | Quality | Controlled fixed-rubric order-swap measurement; human calibration and any paid pilot remain separately gated |
 
 ## Ready
 

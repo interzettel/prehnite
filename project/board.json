@@ -498,6 +498,15 @@
       "priority": "P1",
       "stream": "Quality",
       "note": "Merged; 185 offline tests passed. Real judge calibration unresolved."
+    },
+    {
+      "type": "issue",
+      "number": 63,
+      "title": "Controlled A/B positional-bias protocol and disagreement calibration",
+      "lane": "Backlog",
+      "priority": "P1",
+      "stream": "Quality",
+      "note": "Controlled fixed-rubric order-swap measurement; human calibration and any paid pilot remain separately gated"
     }
   ]
 }
