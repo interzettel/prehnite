@@ -68,7 +68,7 @@
 | --- | --- | --- | --- | --- | --- |
 | `Q01` | Dimension and file-decodability technical checks | done | Agent cloud | F03 | [Evidence](https://github.com/interzettel/prehnite/pull/1) |
 | `Q02` | Judge schema + invalid response handling | done | Agent cloud | Q01 | [Evidence](https://github.com/interzettel/prehnite/pull/61) |
-| `Q03` | Order-bias and independent-rubric A/B tests | planned | Agent cloud | Q02 | [#25](https://github.com/interzettel/prehnite/issues/25) |
+| `Q03` | Order-bias and independent-rubric A/B tests | planned | Agent cloud | Q02 | [#63](https://github.com/interzettel/prehnite/issues/63) |
 | `Q04` | Lossless 4K crop panel comparisons | planned | Agent cloud | Q02 | [#26](https://github.com/interzettel/prehnite/issues/26) |
 | `Q05` | Optional local quality judge plugin contract | planned | Agent local | Q02 | [#27](https://github.com/interzettel/prehnite/issues/27) |
 | `Q06` | Rights-cleared human-rated reference set | blocked | Owner | Q02 | [#28](https://github.com/interzettel/prehnite/issues/28) |
