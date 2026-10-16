@@ -217,3 +217,33 @@ def test_demo_generates_reference_independent_report_and_portrait_review(tmp_pat
     assert second["product_iou_after"] == first["product_iou_after"]
     replay = json.loads(Path(second["json"]).read_text())
     assert replay["product"]["reason"] == "verified_replay"
+
+def test_multiple_product_instances_must_be_selected_by_human(tmp_path):
+    image = Image.new("RGB", (160, 160), "#4aaf87")
+    alpha = Image.new("L", image.size, 0)
+    for bounds in ((22, 44, 63, 111), (97, 47, 139, 118)):
+        ImageDraw.Draw(image).rectangle(bounds, fill="#e8b17d")
+        ImageDraw.Draw(alpha).rectangle(bounds, fill=255)
+    source, mask = tmp_path / "two-products.png", tmp_path / "two-masks.png"
+    image.save(source)
+    alpha.filter(ImageFilter.MaxFilter(5)).save(mask)
+    result = execute(tmp_path, source=source, mask=mask)
+    assert result["status"] == "human_review"
+    assert result["reason"] == "multiple_mask_islands_require_selection"
+
+
+def test_changed_input_sha_cannot_reset_single_target_attempt_cap(tmp_path):
+    from PIL.PngImagePlugin import PngInfo
+    source, mask = images(tmp_path)
+    initial = execute(tmp_path, source=source, mask=mask)
+    assert initial["status"] == "technically_accepted"
+    with Image.open(mask) as old:
+        metadata = PngInfo()
+        metadata.add_text("synthetic_revision", "same pixels different bytes")
+        old.save(mask, pnginfo=metadata)
+    result = execute(tmp_path, source=source, mask=mask)
+    assert result["status"] == "human_review"
+    assert result["reason"] == "target_repair_attempt_exhausted"
+    db = sqlite3.connect(tmp_path / "batches/offline-repair-test/state.sqlite3")
+    assert db.execute("SELECT COUNT(*) FROM local_repairs").fetchone()[0] == 1
+    db.close()
