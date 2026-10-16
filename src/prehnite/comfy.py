@@ -143,6 +143,9 @@ class Comfy:
                 on_submit=None, resume_id=None) -> Result:
         graph = graph_file(endpoint)
         if not resume_id:
+            # Check the graph mapping before uploading private bytes, even to
+            # localhost. The adapter should fail before observable side effects.
+            put_node(graph, endpoint.options.get("input_node"), "image", "__preflight__")
             name = self._upload(source, endpoint)
             put_node(graph, endpoint.options.get("input_node"), "image", name)
         return self._render(graph, endpoint, output, on_submit, resume_id)
@@ -151,7 +154,9 @@ class Comfy:
                 on_submit=None, resume_id=None) -> Result:
         graph = graph_file(endpoint)
         if not resume_id:
+            # Fail fast on *both* node mappings before sending an image upload.
+            put_node(graph, endpoint.options.get("input_node"), "image", "__preflight__")
+            put_node(graph, endpoint.options.get("target_node"), "text", target)
             name = self._upload(source, endpoint)
             put_node(graph, endpoint.options.get("input_node"), "image", name)
-            put_node(graph, endpoint.options.get("target_node"), "text", target)
         return self._render(graph, endpoint, output, on_submit, resume_id)
