@@ -133,12 +133,13 @@
         {
           "id": "C04",
           "name": "Cross-process kill-and-restart fault matrix",
-          "state": "planned",
+          "state": "done",
           "issue": 15,
           "owner": "Agent cloud",
           "dependsOn": [
             "C02"
-          ]
+          ],
+          "evidence": "https://github.com/interzettel/prehnite/pull/49"
         },
         {
           "id": "C05",
@@ -237,12 +238,13 @@
         {
           "id": "P03",
           "name": "Offline FLUX tier/upscale contract fixtures",
-          "state": "planned",
+          "state": "done",
           "issue": 19,
           "owner": "Agent cloud",
           "dependsOn": [
             "P01"
-          ]
+          ],
+          "evidence": "https://github.com/interzettel/prehnite/pull/50"
         },
         {
           "id": "P04",
