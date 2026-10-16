@@ -12,6 +12,7 @@ import httpx
 from PIL import Image, ImageDraw, ImageFilter
 
 from .schema import Endpoint
+from .images import validate_segmentation_mask
 
 
 @dataclass
@@ -159,6 +160,8 @@ class Fal:
         entries = result.get(select)
         if isinstance(entries, list) and not entries:
             raise ValueError("Unexpected fal response: empty image list")
+        if select == "masks" and (not isinstance(entries, list) or len(entries) != 1):
+            raise ValueError("SAM must return exactly one unambiguous mask")
         item = entries[0] if isinstance(entries, list) else entries
         if not isinstance(item, dict) or not item.get("url"):
             raise ValueError("Unexpected fal response: missing image URL")
@@ -192,6 +195,8 @@ class Fal:
 
     def segment(self, source: Path, target: str, output: Path, endpoint: Endpoint,
                 on_submit=None, resume_id=None) -> Result:
+        if endpoint.model != "fal-ai/sam-3-1/image":
+            raise ValueError("Unsupported fal segmentation model; use documented SAM 3.1 image endpoint")
         fal_client = self._client()
         inputs = {} if resume_id else {
             "image_url": fal_client.upload_file(str(source)),
@@ -202,6 +207,8 @@ class Fal:
             "output_format": "png",
         }
         result = self._execute(endpoint, inputs, output, "masks", on_submit, resume_id)
+        checked = validate_segmentation_mask(source, output)
+        result.metadata["mask_validation"] = checked
         return result
 
 

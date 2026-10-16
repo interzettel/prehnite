@@ -41,26 +41,58 @@ def resize_to(source: Path, destination: Path, size: tuple[int, int]) -> dict:
     return image_info(destination)
 
 
+
+def _mask_alpha(mask: Image.Image, source_size: tuple[int, int]) -> Image.Image:
+    """Normalize one mask without silently stretching a different aspect ratio."""
+    oriented = ImageOps.exif_transpose(mask)
+    w, h = source_size
+    if abs(oriented.width / oriented.height - w / h) > 0.015:
+        raise ValueError("Mask and source have different aspect ratios; alignment unknown")
+    if oriented.mode == "RGBA":
+        channel = oriented.getchannel("A")
+        if channel.getextrema() == (255, 255):
+            oriented = oriented.convert("RGB")
+        else:
+            alpha = channel
+            extrema = alpha.getextrema()
+            if extrema in ((0, 0), (255, 255)):
+                raise ValueError("Empty or entire-frame mask cannot be accepted as cutout")
+            return alpha.resize(source_size, Image.Resampling.LANCZOS)
+    if oriented.mode == "RGB":
+        red, green, blue = oriented.split()
+        if ImageChops.difference(red, green).getbbox() or ImageChops.difference(red, blue).getbbox():
+            raise ValueError("Colored mask channels cannot be treated as grayscale alpha")
+        alpha = red
+    elif oriented.mode in ("1", "L"):
+        alpha = oriented.convert("L")
+    else:
+        raise ValueError(f"Unsupported mask mode: {oriented.mode}")
+    if alpha.getextrema() in ((0, 0), (255, 255)):
+        raise ValueError("Empty or entire-frame mask cannot be accepted as cutout")
+    return alpha.resize(source_size, Image.Resampling.LANCZOS)
+
+
+def validate_segmentation_mask(source: Path, mask_path: Path) -> dict:
+    """Validate one-mask geometry and channel semantics before stage acceptance."""
+    with Image.open(source) as original, Image.open(mask_path) as mask:
+        size = ImageOps.exif_transpose(original).size
+        alpha = _mask_alpha(mask, size)
+        extrema = alpha.getextrema()
+        return {"width": size[0], "height": size[1], "alpha_extrema": extrema}
+
+
 def make_cutout(source: Path, mask_path: Path, destination: Path,
                 *, refine: bool = False) -> dict:
     destination.parent.mkdir(parents=True, exist_ok=True)
     with Image.open(source) as image, Image.open(mask_path) as mask:
         image = ImageOps.exif_transpose(image).convert("RGBA")
-        # SAM endpoints generally return grayscale RGB masks; never use JPEG alpha.
-        if mask.mode == "RGBA":
-            alpha = mask.getchannel("A")
-            # Transparent-background masks use their alpha; opaque masks use luminance.
-            if alpha.getextrema() == (255, 255):
-                alpha = mask.convert("RGB").convert("L")
-        else:
-            alpha = mask.convert("L")
-        alpha = alpha.resize(image.size, Image.Resampling.LANCZOS)
+        # SAM can return RGB grayscale or RGBA alpha; reject mismatched
+        # coordinate geometry and ambiguous colorized segmentation maps.
+        alpha = _mask_alpha(mask, image.size)
         if refine:
             alpha = alpha.filter(ImageFilter.MedianFilter(size=3))
             alpha = alpha.filter(ImageFilter.GaussianBlur(radius=0.65))
         extrema = alpha.getextrema()
-        if extrema == (0, 0) or extrema == (255, 255):
-            raise ValueError("Empty or entire-frame mask cannot be accepted as cutout")
         image.putalpha(alpha)
         image.save(destination, "PNG", optimize=True)
         coverage = sum(1 for n in alpha.resize((128, 128)).tobytes() if n > 127) / 16384

@@ -17,6 +17,7 @@ This project follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) an
 - Original Prehnite vector mark, improved first-run documentation and truthful provider status matrix.
 
 ### Fixed
+- Validate SAM 3.1 mask geometry and grayscale/alpha semantics before cutout acceptance; reject ambiguous multiple masks and undocumented endpoint aliases (#20; mocked only).
 - Atomic staging/promotion for provider images, selected images and ZIP delivery; SHA256 verification on accepted stage reuse and exports; invalid accepted assets fail closed instead of silently shipping corrupted bytes (#16). Legacy batches without output digests require revalidation.
 - fal generation uses model-specific size payloads (Klein explicit image_size vs FLUX.3 Image ratio/tier); queue fixtures validate response parsing, unknown-model refusal and resume without re-uploading source images (#19).
 - Offline subprocess crash-injection tests cover paid-call journal boundaries, safe resume and cross-process lock release (#15); real provider billing is not tested.

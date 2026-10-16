@@ -51,3 +51,28 @@ inference** and does not use a valid FAL_KEY.
   capability negotiation is the next task (#21).
 - The generic FLUX.3 Image API does not document a controllable seed here.
   Do not promise deterministic replay based solely on the requested seed.
+
+## SAM 3.1 segmentation contract (offline)
+
+The documented fal image endpoint is
+[fal-ai/sam-3-1/image](https://fal.ai/models/fal-ai/sam-3-1/image/api).
+Do not substitute an undocumented alias such as `fal-ai/sam3.1`.
+The adapter requests a single text-prompted PNG mask, with `apply_mask=false`,
+`return_multiple_masks=false` and `include_scores=true`. The response
+schema documents a list of masks and optional metadata/scores/boxes.
+
+Prehnite **rejects ambiguous multiple masks** instead of silently taking the
+first. It validates that the source and mask have the same displayed aspect
+ratio (the mask may have proportionally different pixel dimensions), refuses
+empty or full-frame masks, and accepts either grayscale L/1, equal-channel
+grayscale RGB, or a meaningful RGBA alpha. Colorized RGB masks are rejected,
+not interpreted as luminance. EXIF source orientation is applied before
+comparing mask geometry. An unknown coordinate transform or padding strategy
+is not guessed, since stretching a square mask onto a portrait can misplace
+the subject.
+
+This provides deterministic technical *mask-format safety*, **not semantic
+segmentation accuracy**. SAM could still select the wrong person. Production
+proof requires source/ground-truth evaluation (#32) and an explicitly
+authorized real-provider pilot (#7). The tests use synthetic input masks with
+no API requests or invoices.
