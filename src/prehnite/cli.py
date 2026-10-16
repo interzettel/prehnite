@@ -30,6 +30,27 @@ def estimate(manifest: Path, profile: Path = typer.Option(...),
     typer.echo(json.dumps(estimate_costs(m, p), indent=2))
 
 @app.command()
+def crops(source: Path, output: Path = typer.Option(..., help="Local evidence folder"),
+          edge: int = typer.Option(768, help="Native pixel size of each square crop"),
+          anchor_x: float | None = typer.Option(None, help="Normalized subject X, 0–1"),
+          anchor_y: float | None = typer.Option(None, help="Normalized subject Y, 0–1")):
+    """Inspect image corners, center and optional manually selected subject at 1:1."""
+    from .crops import make_detail_crops
+    if (anchor_x is None) != (anchor_y is None):
+        raise typer.BadParameter("Both --anchor-x and --anchor-y are required together")
+    evidence = make_detail_crops(
+        source, output, edge=edge,
+        anchor=(anchor_x, anchor_y) if anchor_x is not None else None,
+    )
+    typer.echo(json.dumps({
+        "source": str(source), "source_sha256": evidence["source_sha256"],
+        "native_crops": len(evidence["crops"]), "manifest": str(output / "crops.json"),
+        "overview": str(output / "overview.png"),
+        "quality_judgment": "none; inspect crops with a human or configured judge",
+    }, indent=2))
+
+
+@app.command()
 def run(manifest: Path, profile: Path = typer.Option(...),
         workspace: Path = typer.Option(Path("workspace")),
         inputs: Path = typer.Option(Path("inputs"))):
