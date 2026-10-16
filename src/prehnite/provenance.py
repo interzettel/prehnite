@@ -106,7 +106,7 @@ def build_provenance(journal: Journal) -> dict:
             "input_sha256": fingerprints.get(asset_id) if asset.get("source") else None,
             "source_reference_sha256": _digest(asset["source"]) if asset.get("source") else None,
             "prompt_sha256": _digest(asset["prompt"]) if asset.get("prompt") else None,
-            "requested_target_size": asset["target_size"],
+            "requested_target_size": asset.get("target_size"),
             "status": result.get("status", "not_processed"),
             "winning_variant": result.get("winning_variant"),
             "attempt": result.get("attempt"),
