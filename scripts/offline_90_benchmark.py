@@ -218,6 +218,18 @@ def run_benchmark(home: Path) -> dict:
         assert final["cost_estimated_or_reserved_usd"] == 0.0
         e = final["economics"]
         assert e["accepted_assets"] == COUNT
+        analytics = final["analytics"]
+        assert analytics["schema_version"] == 1
+        assert analytics["required_assets"] == COUNT
+        assert analytics["accepted_assets"] == COUNT
+        assert analytics["asset_status_counts"]["pending"] == 0
+        assert analytics["asset_status_counts"]["error"] == 0
+        assert analytics["accepted_percent_of_required"] == 100.0
+        assert sum(x["requested"] for x in analytics["input_mode"]) == COUNT
+        assert sum(x["accepted"] for x in analytics["aspect_ratio"]) == COUNT
+        assert analytics["actual_invoiced_usd"] is None
+        assert analytics["retry_distribution"]["one_invocation"] == 48
+        assert analytics["retry_distribution"]["no_invocation_recorded"] == 0
         assert e["reserved_usd_total"] == 0.0
         assert e["actual_invoiced_usd_total"] is None
         assert e["attempts_without_finished_timing"] == 0
@@ -234,6 +246,14 @@ def run_benchmark(home: Path) -> dict:
                 for n in range(1, COUNT + 1) if n % 5 == 0
             }
             assert expected_images <= set(names)
+            assert {"_prehnite/analytics.json", "_prehnite/analytics.csv"} <= set(names)
+            assert json.loads(z.read("_prehnite/analytics.json")) == analytics
+            assert b"schema_version,section,group,measure,value,unit" in z.read(
+                "_prehnite/analytics.csv")
+            gallery = z.read("_prehnite/gallery.html")
+            assert b"BATCH INTELLIGENCE / V1" in gallery
+            assert b"Production snapshot" in gallery
+            assert b"connect-src 'none'" in gallery
             assert len(expected_images) == COUNT + CUTOUTS
             assert names == sorted(names)
             assert z.testzip() is None
