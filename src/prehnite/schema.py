@@ -140,6 +140,28 @@ class CostPolicy(Strict):
     estimates_usd: dict[str, float] = Field(default_factory=dict)
 
 
+class CachePolicy(Strict):
+    """Opt-in local cross-batch cache; namespace is an ownership boundary."""
+    enabled: bool = False
+    namespace: str = ""
+    allow_paid: bool = False
+    model_revisions: dict[str, str] = Field(default_factory=dict)
+
+    @model_validator(mode="after")
+    def validate_cache(self) -> "CachePolicy":
+        if self.enabled and not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_.-]{0,63}",
+                                              self.namespace):
+            raise ValueError("Enabled cache needs an explicit namespace (1-64 safe characters)")
+        if self.allow_paid and not self.enabled:
+            raise ValueError("allow_paid cache requires cache.enabled")
+        for stage, revision in self.model_revisions.items():
+            if stage not in ("generation", "upscaling", "segmentation"):
+                raise ValueError("Unknown cache model revision stage")
+            if not isinstance(revision, str) or not re.fullmatch(r"[A-Za-z0-9._-]{1,128}", revision):
+                raise ValueError("Cache model revision must be an immutable safe label")
+        return self
+
+
 class Profile(Strict):
     variants: list[Literal["enhanced_2k", "native_4k"]] = Field(
         default_factory=lambda: ["enhanced_2k", "native_4k"]
@@ -150,6 +172,7 @@ class Profile(Strict):
     judge: Endpoint = Field(default_factory=lambda: Endpoint(provider="disabled"))
     policy: QualityPolicy = Field(default_factory=QualityPolicy)
     costs: CostPolicy = Field(default_factory=CostPolicy)
+    cache: CachePolicy = Field(default_factory=CachePolicy)
 
     @model_validator(mode="after")
     def valid_profile(self) -> "Profile":
