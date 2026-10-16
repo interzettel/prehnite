@@ -10,6 +10,36 @@ from .reporting import export_report, package
 app = typer.Typer(help="Batch-first, quality-gated visual asset production.")
 
 @app.command()
+def init(destination: Path = typer.Option(Path("."), "--destination",
+                                      help="Directory for demo manifest and profile"),
+         batch_id: str = typer.Option("starter-batch", "--batch-id",
+                                      help="Identifier for this demo batch")):
+    """Create a free, offline starter batch without replacing existing files."""
+    from .onboarding import init_example
+    try:
+        manifest, profile = init_example(destination, batch_id)
+    except (FileExistsError, ValueError) as exc:
+        raise typer.BadParameter(str(exc)) from exc
+    typer.echo(f"Created {manifest} and {profile}")
+    typer.echo(f'Next: prehnite validate "{manifest}" --profile "{profile}"')
+    typer.echo(f'Then: prehnite run "{manifest}" --profile "{profile}" --workspace workspace')
+
+
+@app.command()
+def doctor(check_comfyui: bool = typer.Option(False, "--check-comfyui",
+                                               help="Opt in to localhost-only health check"),
+           comfyui_url: str = typer.Option("http://127.0.0.1:8188", "--comfyui-url",
+                                          help="Loopback-only local ComfyUI address")):
+    """Print key-presence-only environment diagnostics; never spend or upload."""
+    from .onboarding import doctor_report
+    try:
+        report = doctor_report(check_comfyui=check_comfyui, comfyui_url=comfyui_url)
+    except ValueError as exc:
+        raise typer.BadParameter(str(exc)) from exc
+    typer.echo(json.dumps(report, indent=2))
+
+
+@app.command()
 def validate(manifest: Path, profile: Path = typer.Option(...),
              inputs: Path = typer.Option(Path("inputs"))):
     m, p = load_manifest(manifest), load_profile(profile)

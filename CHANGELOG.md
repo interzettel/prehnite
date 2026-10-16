@@ -7,6 +7,7 @@ This project follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) an
 ## [Unreleased]
 
 ### Added
+- No-overwrite `prehnite init` demo scaffolding and secret-safe `prehnite doctor` checks, including an opt-in localhost-only ComfyUI health probe (#37); no GPU/Windows installation certification.
 - Controlled fixed-rubric A/B then B/A positional-bias audit with identity-remapped scores, abstention tracking, deterministic JSON and synthetic zero-cost demonstration (#63); does not claim calibrated judge quality.
 - Self-contained offline `gallery.html` visual result browser, with hashed accepted-image thumbnails, checkerboard cutouts, intermediate previews and escaped rejection notes; packaged in the ZIP without CDN/JavaScript or network dependencies (#33).
 - Native 1:1 pixel crop evidence (corners, center, optional manual focal anchor), annotated downsampled overview, hash-verified PNG/JSON manifest and offline `prehnite crops` CLI (#26). Crops are evidence, not automatic quality scores.
