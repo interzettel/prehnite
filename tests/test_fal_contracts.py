@@ -46,7 +46,7 @@ class FakeFalClient:
     def submit(self, endpoint, arguments):
         self.submissions.append((endpoint, arguments))
         result = self.upscaled if endpoint == ESRGAN else (
-            self.masks if endpoint.endswith("/sam3.1") else self.output
+            self.masks if endpoint == "fal-ai/sam-3-1/image" else self.output
         )
         return FakeHandle(None if self.invalid_id else "queue-opaque-1", result)
 
@@ -54,7 +54,7 @@ class FakeFalClient:
         self.lookups.append((endpoint, request_id))
         assert request_id == "queue-opaque-1"
         result = self.upscaled if endpoint == ESRGAN else (
-            self.masks if endpoint.endswith("/sam3.1") else self.output
+            self.masks if endpoint == "fal-ai/sam-3-1/image" else self.output
         )
         return FakeHandle(request_id, result)
 
@@ -74,7 +74,13 @@ def fal_stub(monkeypatch):
         assert url.startswith("https://v3b.fal.media/")
         downloads.append(url)
         destination.parent.mkdir(parents=True, exist_ok=True)
-        Image.new("RGB", (192, 256), "olive").save(destination)
+        if "mask.png" in url:
+            from PIL import ImageDraw
+            mask = Image.new("L", (192, 256), 0)
+            ImageDraw.Draw(mask).ellipse((20, 30, 170, 200), fill=255)
+            mask.save(destination)
+        else:
+            Image.new("RGB", (192, 256), "olive").save(destination)
 
     monkeypatch.setattr(providers, "download_image", save_fixture_image)
     return stub, downloads
@@ -175,8 +181,8 @@ def test_esrgan_input_contract_and_no_source_upload_on_resume(
 def test_segment_resume_never_reuploads_private_source(fal_stub, tmp_path):
     stub, _ = fal_stub
     src = tmp_path/"source.png"
-    Image.new("RGB", (16, 16), "blue").save(src)
-    ep = Endpoint(provider="fal", model="fal-ai/sam3.1")
+    Image.new("RGB", (192, 256), "blue").save(src)
+    ep = Endpoint(provider="fal", model="fal-ai/sam-3-1/image")
     Fal().segment(src, "person", tmp_path/"mask.png", ep, lambda _: None)
     assert len(stub.uploads) == 1
     Fal().segment(src, "person", tmp_path/"mask.png", ep,
