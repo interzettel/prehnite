@@ -45,8 +45,11 @@ def export_native_inspection(
             "accepted", "failed_cutouts"):
         raise ValueError("Native inspection requires an accepted base delivery")
     outputs = result.get("outputs", [])
-    if not isinstance(outputs, list) or not 1 <= len(outputs) <= MAX_PANELS:
-        raise ValueError("Expected 1-12 selected outputs for single-slot inspection")
+    if not isinstance(outputs, list) or not 1 <= len(outputs):
+        raise ValueError("Expected at least one selected output for single-slot inspection")
+    # The explicit original occupies a panel too; never exceed the combined cap.
+    if len(outputs) + (1 if inputs is not None else 0) > MAX_PANELS:
+        raise ValueError("Native inspection exceeds the 12-panel limit")
     checksums = result.get("outputs_sha256", {})
     if not isinstance(checksums, dict):
         raise ArtifactIntegrityError("Missing selected output hashes")
