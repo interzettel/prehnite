@@ -12,8 +12,8 @@
 | --- | ---: |
 | Backlog | 15 |
 | Ready | 2 |
-| In progress | 1 |
-| In review | 0 |
+| In progress | 2 |
+| In review | 1 |
 | Blocked | 6 |
 | Done | 62 |
 
@@ -37,7 +37,7 @@
 | P1 | [Issue #29 — Transparent alpha matting and halo removal](https://github.com/interzettel/prehnite/issues/29) | Cutouts | Edge alpha matting |
 | P2 | [Issue #27 — Local aesthetic and fidelity judge plugin boundary](https://github.com/interzettel/prehnite/issues/27) | Quality | Optional local weights and licenses |
 | P1 | [Issue #68 — Opt-in original-input gallery comparison with privacy consent](https://github.com/interzettel/prehnite/issues/68) | Delivery | Follow-up to #33: never embed private originals without opt-in |
-| P2 | [Issue #105 — Attested affine transform and overlap validation contract](https://github.com/interzettel/prehnite/issues/105) | Delivery | #100 follow-up: typed affine schema and deterministic overlap before any resampling; no inference. |
+| P2 | [Issue #107 — Experimental Jev typed image/Box judge and staged frame evaluation](https://github.com/interzettel/prehnite/issues/107) | Quality | Research issue: TypeSafe 1.14 danger-zone vision + no native video; opt-in, budget-gated and human-calibrated before production. |
 
 ## Ready
 
@@ -51,12 +51,13 @@
 | Priority | Work item | Stream | Handoff / blocker |
 | --- | --- | --- | --- |
 | P2 | [Issue #100 — Provenance-bound transforms and tiled 4K comparison](https://github.com/interzettel/prehnite/issues/100) | Delivery | First #104 translation+tile slice merged; next affine contract #105 remains research/development, with strict decoding still open. |
+| P2 | [Issue #105 — Attested affine transform and overlap validation contract](https://github.com/interzettel/prehnite/issues/105) | Delivery | V2 operator-attested affine validator in PR #108; no pixel resampling in this tranche. |
 
 ## In review
 
 | Priority | Work item | Stream | Handoff / blocker |
 | --- | --- | --- | --- |
-| — | No cards currently | — | — |
+| P1 | [PR #108 — Provenance-bound affine v2 matrix validator](https://github.com/interzettel/prehnite/pull/108) | Delivery | Review CLI/overlap/orientation and SHA fixtures; 8-job CI pending. No quality calibration. |
 
 ## Blocked
 
