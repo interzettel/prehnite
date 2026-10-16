@@ -12,8 +12,8 @@
 | --- | ---: |
 | Backlog | 15 |
 | Ready | 2 |
-| In progress | 2 |
-| In review | 0 |
+| In progress | 1 |
+| In review | 1 |
 | Blocked | 6 |
 | Done | 71 |
 
@@ -50,14 +50,13 @@
 
 | Priority | Work item | Stream | Handoff / blocker |
 | --- | --- | --- | --- |
-| P1 | [Issue #31 — Targeted repair planner for failed cutouts](https://github.com/interzettel/prehnite/issues/31) | Cutouts | Journal-backed offline product fringe repair demo in progress; portrait refusal; full S03/S05 remain unverified. |
 | P2 | [Issue #100 — Provenance-bound transforms and tiled 4K comparison](https://github.com/interzettel/prehnite/issues/100) | Delivery | Integer 4K tiles + SHA-bound affine v2 validator merged; real affine warp/execution still open. |
 
 ## In review
 
 | Priority | Work item | Stream | Handoff / blocker |
 | --- | --- | --- | --- |
-| — | No cards currently | — | — |
+| P1 | [Issue #31 — Targeted repair planner for failed cutouts](https://github.com/interzettel/prehnite/issues/31) | Cutouts | PR #119 review-ready: journaled offline product correction and portrait refusal, 516 unit passed; full S03/S05 still open. |
 
 ## Blocked
 
