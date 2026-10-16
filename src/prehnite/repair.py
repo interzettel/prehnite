@@ -105,6 +105,11 @@ def _fringe(source: Image.Image, alpha: Image.Image) -> tuple[tuple[int, int, in
     # interior holes or distant similarly colored product details.
     exterior = alpha.point(lambda value: 255 if value == 0 else 0)
     ImageDraw.floodfill(exterior, (0, 0), 128, thresh=0)
+    # Any transparent region disconnected from the frame is an internal hole,
+    # missing part or complex topology. This strict solid-product algorithm
+    # cannot establish whether it should be preserved or repaired.
+    if 255 in exterior.tobytes():
+        raise RepairRefused("interior_transparency_requires_review")
     exterior = exterior.point(lambda value: 255 if value == 128 else 0)
     near_exterior = exterior.filter(ImageFilter.MaxFilter(2 * MAX_FRINGE + 1))
 
