@@ -216,9 +216,14 @@ def test_input_validation_and_no_arbitrary_path_or_shell(monkeypatch, tmp_path):
     for bad in ("../fixture.yaml", "/etc/passwd", ".hidden", "a\\b", ""):
         with pytest.raises(ValueError):
             manager.submit(bad, "demo.yaml")
-    (manager.requests / "outside.yaml").symlink_to(tmp_path / "elsewhere")
-    with pytest.raises(ValueError):
-        manager.submit("outside.yaml", "demo.yaml")
+    try:
+        (manager.requests / "outside.yaml").symlink_to(tmp_path / "elsewhere")
+    except (OSError, NotImplementedError):
+        # Non-elevated Windows accounts may not be allowed to create symlinks.
+        pass
+    else:
+        with pytest.raises(ValueError):
+            manager.submit("outside.yaml", "demo.yaml")
     with pytest.raises(ValueError):
         manager.status("../mcp-fixture")
 
