@@ -37,6 +37,54 @@ def _record(code: str, category: str, action: str, *,
     }
 
 
+# Reconstitute saved error metadata from a fixed vocabulary. The journal is
+# persistent input; neither a tampered next_action nor an embedded raw string
+# should become an agent instruction or leak into an aggregated report.
+_KNOWN_CODES = {
+    "budget_limit": ("policy", "request_budget_review"),
+    "authorization_required": ("policy", "obtain_explicit_consent"),
+    "artifact_integrity": ("integrity", "inspect_and_restore_artifact"),
+    "local_transport_failure": ("execution", "inspect_and_retry_nonpaid"),
+    "stage_execution_error": ("execution", "inspect_and_retry_nonpaid"),
+    "local_stage_incomplete": ("execution", "inspect_and_retry_nonpaid"),
+    "local_stage_failed": ("execution", "inspect_and_retry_nonpaid"),
+    "technical_validation": ("validation", "inspect_invalid_artifact"),
+    "cutout_validation_failed": ("quality", "inspect_or_repair_cutout"),
+    "asset_rejected": ("quality", "inspect_or_adjust_quality_policy"),
+    "asset_processing_error": ("execution", "inspect_asset_stages"),
+    "asset_incomplete": ("unknown", "inspect_asset"),
+    "unknown_stage_state": ("unknown", "manual_review"),
+}
+_REMOTE_CODES = {
+    "remote_transport_uncertain", "remote_reconciliation_required",
+    "remote_submission_ambiguous", "remote_request_pending",
+}
+_ALLOWED_STAGES = {"asset", "budget", "generation", "upscaling", "segmentation",
+                   "judge", "cutout_judge", "cutout"}
+_ALLOWED_PROVIDERS = {"local", "demo", "fal", "anthropic", "comfyui", "disabled"}
+
+
+def _safe_saved_failure(data: dict) -> dict | None:
+    """Rebuild trusted code/category/action fields, never echo arbitrary data."""
+    code = data.get("code")
+    if not isinstance(code, str):
+        return None
+    stage = data.get("stage")
+    provider = data.get("provider")
+    stage = stage if stage in _ALLOWED_STAGES else "unknown"
+    provider = provider if provider in _ALLOWED_PROVIDERS else "unknown"
+    rid = data.get("request_id_present") is True
+    if code in _REMOTE_CODES:
+        action = ("inspect_existing_request" if rid
+                  else "manual_reconcile_before_retry")
+        return _record(code, "remote_recovery", action, stage=stage,
+                       provider=provider, request_id_present=rid)
+    if code not in _KNOWN_CODES:
+        return None
+    category, action = _KNOWN_CODES[code]
+    return _record(code, category, action, stage=stage, provider=provider)
+
+
 def classify_exception(exc: Exception, *, stage: str, provider: str,
                        request_id_present: bool = False) -> dict:
     """Classify typed exceptions; no secrets, raw paths or exception strings."""
@@ -108,11 +156,12 @@ def classify_task(task: dict) -> dict | None:
         data = task.get("data") or {}
         if status == "failed" and isinstance(data.get("failure"), dict):
             failure = data["failure"]
-            if failure.get("code") in (
+            checked = _safe_saved_failure(failure)
+            if checked is not None and checked["code"] in (
                     "local_transport_failure", "technical_validation",
                     "stage_execution_error", "artifact_integrity"):
-                return _record(failure["code"], failure["category"],
-                               failure["next_action"], stage=stage, provider=provider)
+                return _record(checked["code"], checked["category"],
+                               checked["next_action"], stage=stage, provider=provider)
         if paid:
             return _record("remote_submission_ambiguous", "remote_recovery",
                            "manual_reconcile_before_retry",
@@ -168,7 +217,9 @@ def summarize_failures(tasks: list[dict], results: dict) -> dict:
         if not isinstance(row, dict):
             raise ValueError("Invalid asset result")
         failure = row.get("failure")
-        if not isinstance(failure, dict) or row.get("status") == "accepted":
+        failure = (_safe_saved_failure(failure)
+                   if isinstance(failure, dict) else None)
+        if failure is None or row.get("status") == "accepted":
             failure = classify_asset(row.get("status", "not_processed"),
                                      integrity_error=bool(row.get("integrity_error")))
         if failure is None:
