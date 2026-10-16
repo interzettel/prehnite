@@ -104,12 +104,8 @@ def test_pause_before_start_then_explicit_resume(monkeypatch, tmp_path):
     assert manager.resume("mcp-fixture")["status"] == "launching"
     second_token = token(manager)
     assert second_token != first_token
-    stale = simulate_worker(manager, first_token)
-    try:
-        with pytest.raises(JobStopped, match="superseded"):
-            stale.run()
-    finally:
-        stale.journal.close()
+    with pytest.raises(ValueError, match="launch identity"):
+        simulate_worker(manager, first_token)
     live = simulate_worker(manager, second_token)
     try:
         assert len(live.run()["asset_results"]) == 2
@@ -197,12 +193,8 @@ def test_launch_token_change_does_not_let_stale_worker_overwrite(monkeypatch, tm
         journal.close()
     assert manager.status("mcp-fixture")["status"] == "interrupted"
     assert manager.resume("mcp-fixture")["status"] == "launching"
-    stale = simulate_worker(manager, old_token)
-    try:
-        with pytest.raises(JobStopped, match="superseded"):
-            stale.run()
-    finally:
-        stale.journal.close()
+    with pytest.raises(ValueError, match="launch identity"):
+        simulate_worker(manager, old_token)
     assert manager.status("mcp-fixture")["status"] == "launching"
 
 
@@ -269,6 +261,7 @@ def test_mutated_staged_configuration_is_rejected_before_worker_writes(monkeypat
 
 
 def test_active_subprocess_survives_client_reconnect_and_honors_cancel(monkeypatch, tmp_path):
+    real_popen = subprocess.Popen
     manager = setup(tmp_path, assets=1)
     fake_launch(monkeypatch)
     manager.submit("fixture.yaml", "demo.yaml")
@@ -295,7 +288,7 @@ try:
 finally:
     journal.close()
 """
-    process = subprocess.Popen(
+    process = real_popen(
         [sys.executable, "-c", script, str(manager.workspace), launch_token, str(ready)],
         stdin=subprocess.DEVNULL, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
     )
