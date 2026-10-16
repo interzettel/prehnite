@@ -87,7 +87,11 @@ def test_pause_before_start_then_explicit_resume(monkeypatch, tmp_path):
     calls = fake_launch(monkeypatch)
     manager.submit("fixture.yaml", "demo.yaml")
     first_token = token(manager)
-    assert manager.control("mcp-fixture", "pause")["status"] == "pause_requested"
+    pause_reply = manager.control("mcp-fixture", "pause")
+    assert pause_reply["status"] == "pause_requested"
+    assert pause_reply["accepted"] is True
+    assert pause_reply["already_requested"] is False
+    assert manager.control("mcp-fixture", "pause")["already_requested"] is True
     engine = simulate_worker(manager, first_token)
     try:
         assert engine.run()["job_status"] == "paused"
@@ -158,8 +162,11 @@ def test_cancel_during_stage_does_not_kill_provider_or_continue(monkeypatch, tmp
         def generate(self, prompt, ratio, tier, seed, destination, endpoint,
                      on_submit, resume):
             seen.append(seed)
-            assert manager.control("mcp-fixture", "cancel")["status"] == "cancel_requested"
-            assert manager.control("mcp-fixture", "cancel")["status"] == "cancel_requested"
+            first = manager.control("mcp-fixture", "cancel")
+            second = manager.control("mcp-fixture", "cancel")
+            assert first["accepted"] and first["status"] == "cancel_requested"
+            assert not first["already_requested"]
+            assert second["accepted"] and second["already_requested"]
             with pytest.raises(RuntimeError, match="Worker active"):
                 manager.export("mcp-fixture")
             Image.new("RGB", (192, 256), "red").save(destination)
