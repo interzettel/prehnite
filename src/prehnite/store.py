@@ -264,6 +264,10 @@ class Journal:
                 status = current
             elif current == "paused":
                 status = current
+            elif current == "pause_requested":
+                # Repeated pause is idempotent while launch could still start.
+                fresh_pending = time.time() - row["launched_at"] < 30
+                status = "pause_requested" if worker_active or fresh_pending else "paused"
             else:
                 live_launch = (current == "launching" and
                                time.time() - row["launched_at"] < 30)
