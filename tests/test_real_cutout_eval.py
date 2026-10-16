@@ -172,3 +172,10 @@ def test_empty_and_unbounded_corpus_refused(tmp_path):
     manifest["items"] = [manifest_original_item] * 201
     with pytest.raises(EvaluationRefused, match="invalid_manifest_item_count"):
         evaluate(manifest, root)
+
+def test_empty_reference_matte_never_scores_as_perfect_iou(tmp_path):
+    root, manifest, files = example(tmp_path)
+    Image.new("L", (48, 48), 0).save(files["reference"])
+    manifest["items"][0]["sha256"]["reference"] = _sha(files["reference"])
+    with pytest.raises(EvaluationRefused, match="empty_reference_mask_cannot_establish_quality"):
+        evaluate(manifest, root)
