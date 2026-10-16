@@ -188,7 +188,7 @@ class JobManager:
         finally:
             journal.close()
 
-    def export(self, job_id: str) -> dict:
+    def export(self, job_id: str, *, include_parquet: bool = False) -> dict:
         from .reporting import export_report, package
         journal = self._existing(job_id)
         if journal is None:
