@@ -24,6 +24,10 @@ This is a *visual inspection instrument*, not a numerical quality score or a cla
 
 ## Evidence
 
+`python -m pytest -q tests/test_native_inspection.py tests/test_source_inspection.py`
+
+To generate a **fixed synthetic preview**, run `python scripts/offline_90_benchmark.py --native-preview-file benchmark-native.html --result-file benchmark-90.json` and open `benchmark-native.html` locally. The Windows/Ubuntu CI offline-90 jobs also attach this HTML alongside the normal synthetic gallery preview. It is labelled SYNTHETIC DEMO and contains no user images. **Never attach a real owner's full-resolution review HTML to public CI artifacts.**
+
 `python -m pytest -q tests/test_native_inspection.py` covers byte-for-byte embedded originals, 1:1/fit toggles, named alpha cutouts, output tampering, symlinks escaping the workspace, blocked rejected slots, oversized images, CLI usage and only-one-slot preview from a 90-slot manifest. Existing Windows and Ubuntu offline 90-asset CI must remain green.
 
 ## Future
