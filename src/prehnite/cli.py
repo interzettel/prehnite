@@ -143,6 +143,43 @@ def inspect(batch_id: str,
     finally:
         journal.close()
 
+
+@app.command()
+def compare(batch_id: str,
+            asset_id: str = typer.Option(..., "--asset",
+                                         help="One accepted slot ID"),
+            workspace: Path = typer.Option(Path("workspace")),
+            inputs: Path | None = typer.Option(
+                None, "--inputs", help="Explicit historical input root"),
+            cutout: str | None = typer.Option(
+                None, "--cutout", help="Named accepted cutout target"),
+            assume_same_grid: bool = typer.Option(
+                False, "--assume-same-grid",
+                help="Required explicit attestation; no automatic alignment")):
+    """Compare verified pixels without claiming visual quality or registration."""
+    from .schema import Asset
+    from .pixel_comparison import compare_slot
+    Asset.check_id(batch_id)
+    Asset.check_id(asset_id)
+    if not (workspace / "batches" / batch_id / "state.sqlite3").is_file():
+        raise typer.BadParameter("No such batch")
+    j = Journal(workspace, batch_id)
+    try:
+        with j.launch_exclusive():
+            if j.worker_active():
+                raise typer.BadParameter("Cannot compare while a worker is active")
+            record = j.job_record()
+            if record and record["status"] in (
+                    "launching", "pause_requested", "cancel_requested"):
+                raise typer.BadParameter(
+                    "Worker launch/control state unresolved; compare after safe stop")
+            result = compare_slot(j, asset_id, inputs=inputs, cutout=cutout,
+                                  same_grid_asserted=assume_same_grid)
+        typer.echo(json.dumps(result, sort_keys=True, indent=2))
+    finally:
+        j.close()
+
+
 @app.command()
 def export(batch_id: str, workspace: Path = typer.Option(Path("workspace")),
            parquet: bool = typer.Option(False, "--parquet",
