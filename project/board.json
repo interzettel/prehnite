@@ -236,7 +236,7 @@
       "lane": "Blocked",
       "priority": "P1",
       "stream": "Cutouts",
-      "note": "Private rights-aware evaluation intake in PR #122; ground-truth real photos, independent alpha references and human review remain blocked on authorized assets."
+      "note": "Owner authorized 23 AI-generated R2 product inputs; private WebP preflight #122 pending exact-byte export. Ground-truth alpha mattes and independent human review remain blocked."
     },
     {
       "type": "issue",
