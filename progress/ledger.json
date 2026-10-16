@@ -541,12 +541,13 @@
         {
           "id": "D03",
           "name": "Interactive-free, static results gallery",
-          "state": "planned",
+          "state": "done",
           "issue": 33,
           "owner": "Agent cloud",
           "dependsOn": [
             "D02"
-          ]
+          ],
+          "evidence": "https://github.com/interzettel/prehnite/pull/67"
         },
         {
           "id": "D04",

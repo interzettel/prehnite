@@ -10,12 +10,12 @@
 
 | Lane | Cards |
 | --- | ---: |
-| Backlog | 22 |
+| Backlog | 23 |
 | Ready | 2 |
 | In progress | 0 |
 | In review | 0 |
 | Blocked | 6 |
-| Done | 26 |
+| Done | 27 |
 
 **WIP limits:** In progress ≤ 2; In review ≤ 3. Counts are issue/PR cards, not unique completed engineering features or a percentage.
 
@@ -38,13 +38,14 @@
 | P1 | [Issue #36 — Deterministic validated archive and manifest hashes](https://github.com/interzettel/prehnite/issues/36) | Reporting | Archive manifest integrity |
 | P1 | [Issue #35 — Versioned provenance and reproducible output manifest](https://github.com/interzettel/prehnite/issues/35) | Reporting | Replay and artifact provenance |
 | P1 | [Issue #34 — Cost per accepted asset and stage latency report](https://github.com/interzettel/prehnite/issues/34) | Reporting | Cost per accepted asset analysis |
-| P1 | [Issue #33 — Self-contained offline HTML gallery and comparisons](https://github.com/interzettel/prehnite/issues/33) | Reporting | Offline HTML visual comparisons |
+| P1 | [Issue #33 — Self-contained offline HTML gallery and comparisons](https://github.com/interzettel/prehnite/issues/33) | Reporting | Offline thumbnail gallery #67 merged; opt-in private original comparisons remain issue #68 |
 | P1 | [Issue #31 — Targeted repair planner for failed cutouts](https://github.com/interzettel/prehnite/issues/31) | Cutouts | Bounded repair planner |
 | P2 | [Issue #30 — Multi-instance object cutout selection](https://github.com/interzettel/prehnite/issues/30) | Cutouts | Multi-instance target matching |
 | P1 | [Issue #29 — Transparent alpha matting and halo removal](https://github.com/interzettel/prehnite/issues/29) | Cutouts | Edge alpha matting |
 | P2 | [Issue #27 — Local aesthetic and fidelity judge plugin boundary](https://github.com/interzettel/prehnite/issues/27) | Quality | Optional local weights and licenses |
 | P1 | [Issue #18 — Content-addressed cache with privacy isolation](https://github.com/interzettel/prehnite/issues/18) | Runtime | Cache with privacy-scoped keys |
 | P1 | [Issue #63 — Controlled A/B positional-bias protocol and disagreement calibration](https://github.com/interzettel/prehnite/issues/63) | Quality | Controlled fixed-rubric order-swap measurement; human calibration and any paid pilot remain separately gated |
+| P1 | [Issue #68 — Opt-in original-input gallery comparison with privacy consent](https://github.com/interzettel/prehnite/issues/68) | Delivery | Follow-up to #33: never embed private originals without opt-in |
 
 ## Ready
 
@@ -106,6 +107,7 @@
 | P1 | [PR #59 — ComfyUI fail-closed queue recovery and bounded result download](https://github.com/interzettel/prehnite/pull/59) | Local GPU | Merged; 163 offline tests passed. No GPU/model conformance claimed. |
 | P1 | [PR #61 — Strict optional judge verdict schemas and rubric disagreement](https://github.com/interzettel/prehnite/pull/61) | Quality | Merged; 185 offline tests passed. Real judge calibration unresolved. |
 | P1 | [PR #65 — Native-pixel crop evidence and offline CLI](https://github.com/interzettel/prehnite/pull/65) | Quality | Merged to main; 207 tests passed. No model-quality certification. |
+| P1 | [PR #67 — Self-contained offline asset review gallery](https://github.com/interzettel/prehnite/pull/67) | Delivery | Merged; 212 offline tests. No external web resources or paid calls. |
 
 ## How to update this board
 

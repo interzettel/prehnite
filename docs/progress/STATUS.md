@@ -2,7 +2,7 @@
 
 > Generated from `progress/ledger.json` by `scripts/progress.py`. A unit counts only when done with evidence; percentages are not estimates of engineering time or visual quality.
 
-**30 / 61 units done (49.2%)** · 0 active · 10 blocked · 21 planned.
+**31 / 61 units done (50.8%)** · 0 active · 10 blocked · 20 planned.
 **Milestone gates reached:** 1 / 7.
 
 ![Milestone progress chart](progress.svg)
@@ -16,7 +16,7 @@
 | M2 · Models and local compute | 7/10 (70.0%) | 0 | 2 | 1 | Open: P09 |
 | M3 · Photographic quality gates | 3/8 (37.5%) | 0 | 2 | 3 | Open: Q07, Q08 |
 | M4 · Cutouts and corrections | 2/7 (28.6%) | 0 | 2 | 3 | Open: S06, S07 |
-| M5 · Delivery and usability | 2/10 (20.0%) | 0 | 0 | 8 | Open: D09, D10 |
+| M5 · Delivery and usability | 3/10 (30.0%) | 0 | 0 | 7 | Open: D09, D10 |
 | M6 · Community and first release | 5/10 (50.0%) | 0 | 2 | 3 | Open: R08, R09 |
 
 ## Work units
@@ -93,7 +93,7 @@
 | --- | --- | --- | --- | --- | --- |
 | `D01` | CLI validation, run, estimate and export commands | done | Agent cloud | F03 | [Evidence](https://github.com/interzettel/prehnite/pull/1) |
 | `D02` | Machine-readable JSON/CSV plus basic HTML report | done | Agent cloud | F05 | [Evidence](https://github.com/interzettel/prehnite/pull/1) |
-| `D03` | Interactive-free, static results gallery | planned | Agent cloud | D02 | [#33](https://github.com/interzettel/prehnite/issues/33) |
+| `D03` | Interactive-free, static results gallery | done | Agent cloud | D02 | [Evidence](https://github.com/interzettel/prehnite/pull/67) |
 | `D04` | Accepted asset efficiency and latency breakdown | planned | Agent cloud | D02, C06 | [#34](https://github.com/interzettel/prehnite/issues/34) |
 | `D05` | Versioned provenance and exact input/output hashes | planned | Agent cloud | C05 | [#35](https://github.com/interzettel/prehnite/issues/35) |
 | `D06` | Deterministic ZIP ordering and digest manifest | planned | Agent cloud | D05 | [#36](https://github.com/interzettel/prehnite/issues/36) |

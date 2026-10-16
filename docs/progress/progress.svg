@@ -2,17 +2,17 @@
 <rect width="1200" height="1029" fill="#f6f7f4"/>
 <g font-family="system-ui,Segoe UI,sans-serif">
 <text x="35" y="48" font-size="27" font-weight="700" fill="#182a27">PREHNITE / DEVELOPMENT PROGRESS</text>
-<text x="35" y="79" font-size="16" fill="#5c6c65">30 / 61 scoped units done · 49.2%</text>
+<text x="35" y="79" font-size="16" fill="#5c6c65">31 / 61 scoped units done · 50.8%</text>
 <text x="1160" y="49" text-anchor="end" font-size="17" fill="#277e74">1/7 milestone gates</text>
 <text x="35" y="106" font-size="13" fill="#5c6c65">Unweighted work units · evidence required for completion · not a product quality score</text>
 <rect x="35" y="126" width="13" height="13" rx="2" fill="#277e74"/>
-<text x="56" y="138" font-size="13" fill="#283832">Done 30</text>
+<text x="56" y="138" font-size="13" fill="#283832">Done 31</text>
 <rect x="223" y="126" width="13" height="13" rx="2" fill="#c28b4a"/>
 <text x="244" y="138" font-size="13" fill="#283832">Active 0</text>
 <rect x="411" y="126" width="13" height="13" rx="2" fill="#b8534e"/>
 <text x="432" y="138" font-size="13" fill="#283832">Blocked 10</text>
 <rect x="599" y="126" width="13" height="13" rx="2" fill="#dce0dd"/>
-<text x="620" y="138" font-size="13" fill="#283832">Planned 21</text>
+<text x="620" y="138" font-size="13" fill="#283832">Planned 20</text>
 <rect x="35" y="171" width="1130" height="103" rx="10" fill="#fff" stroke="#d8ddd7"/>
 <text x="55" y="196" font-size="17" font-weight="650" fill="#1d302b">M0 · Runnable foundation</text>
 <text x="1140" y="196" font-size="16" text-anchor="end" font-weight="650" fill="#277e74">6/6 · 100.0%</text>
@@ -81,11 +81,11 @@
 <text x="1140" y="714" text-anchor="end" font-size="11" fill="#6b7972">Open gate: S06, S07</text>
 <rect x="35" y="731" width="1130" height="103" rx="10" fill="#fff" stroke="#d8ddd7"/>
 <text x="55" y="756" font-size="17" font-weight="650" fill="#1d302b">M5 · Delivery and usability</text>
-<text x="1140" y="756" font-size="16" text-anchor="end" font-weight="650" fill="#277e74">2/10 · 20.0%</text>
+<text x="1140" y="756" font-size="16" text-anchor="end" font-weight="650" fill="#277e74">3/10 · 30.0%</text>
 <text x="55" y="779" font-size="12" fill="#65756e">A practical CLI and MCP experience with inspectable results, robust archives, and an effortless first run.</text>
 <g><title>D01: CLI validation, run, estimate and export commands [done] issue/PR #1</title><rect x="55" y="796" width="105" height="16" rx="2" fill="#277e74"/></g>
 <g><title>D02: Machine-readable JSON/CSV plus basic HTML report [done] issue/PR #1</title><rect x="163" y="796" width="105" height="16" rx="2" fill="#277e74"/></g>
-<g><title>D03: Interactive-free, static results gallery [planned] issue/PR #33</title><rect x="271" y="796" width="105" height="16" rx="2" fill="#dce0dd"/></g>
+<g><title>D03: Interactive-free, static results gallery [done] issue/PR #33</title><rect x="271" y="796" width="105" height="16" rx="2" fill="#277e74"/></g>
 <g><title>D04: Accepted asset efficiency and latency breakdown [planned] issue/PR #34</title><rect x="379" y="796" width="105" height="16" rx="2" fill="#dce0dd"/></g>
 <g><title>D05: Versioned provenance and exact input/output hashes [planned] issue/PR #35</title><rect x="487" y="796" width="105" height="16" rx="2" fill="#dce0dd"/></g>
 <g><title>D06: Deterministic ZIP ordering and digest manifest [planned] issue/PR #36</title><rect x="595" y="796" width="105" height="16" rx="2" fill="#dce0dd"/></g>
