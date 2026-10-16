@@ -41,6 +41,13 @@ class Engine:
         self.journal = Journal(workspace, manifest.id)
         self.cache = StageCache(workspace, profile.cache) if profile.cache.enabled else None
         checksum = fingerprint(manifest, profile)
+        if job_token is not None:
+            launch = self.journal.job_record()
+            if (not launch or launch["token"] != job_token
+                    or launch["config_sha256"] != checksum):
+                raise ValueError(
+                    "MCP launch identity or staged configuration changed since preflight"
+                )
         previous = self.journal.fact("configuration_sha256")
         if previous is not None and previous != checksum:
             raise ValueError("Batch ID reused with changed manifest/profile; choose a new ID")
