@@ -13,6 +13,7 @@ from PIL import Image, ImageDraw, ImageFilter
 
 from .schema import Endpoint
 from .images import validate_segmentation_mask
+from .registry import KLEIN_2K_DIMENSIONS, validate_capability
 
 
 @dataclass
@@ -91,13 +92,7 @@ ESRGAN = "fal-ai/esrgan"
 
 # Klein accepts explicit image_size dimensions. Values are a long-edge
 # target, NOT proof of the exact pixels a remote model will return.
-_KLEIN_2K = {
-    "9:16": (1152, 2048),
-    "3:4": (1536, 2048),
-    "4:3": (2048, 1536),
-    "16:9": (2048, 1152),
-    "1:1": (2048, 2048),
-}
+_KLEIN_2K = KLEIN_2K_DIMENSIONS
 
 
 def fal_generation_inputs(endpoint: Endpoint, prompt: str, ratio: str,
@@ -172,6 +167,7 @@ class Fal:
 
     def generate(self, prompt: str, aspect_ratio: str, tier: str, seed: int,
                  output: Path, endpoint: Endpoint, on_submit=None, resume_id=None) -> Result:
+        validate_capability(endpoint, "generate", ratio=aspect_ratio, tier=tier)
         # On a resume the queue ID is authoritative; never construct a new
         # generation request or submit it to another endpoint.
         inputs = {} if resume_id else fal_generation_inputs(
@@ -180,6 +176,7 @@ class Fal:
 
     def upscale(self, source: Path, output: Path, endpoint: Endpoint,
                 on_submit=None, resume_id=None) -> Result:
+        validate_capability(endpoint, "upscale", allow_cloud_uploads=True)
         if endpoint.model != ESRGAN:
             raise ValueError("Unsupported fal upscale model; require a tested schema")
         fal_client = self._client()
@@ -195,6 +192,7 @@ class Fal:
 
     def segment(self, source: Path, target: str, output: Path, endpoint: Endpoint,
                 on_submit=None, resume_id=None) -> Result:
+        validate_capability(endpoint, "segment", allow_cloud_uploads=True)
         if endpoint.model != "fal-ai/sam-3-1/image":
             raise ValueError("Unsupported fal segmentation model; use documented SAM 3.1 image endpoint")
         fal_client = self._client()

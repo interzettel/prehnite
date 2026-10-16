@@ -41,6 +41,8 @@ def estimate_costs(manifest: Manifest, profile: Profile) -> dict:
         "estimated_costs_usd": estimates,
         "estimated_upper_scenario_usd": total,
         "configured_batch_limit_usd": profile.costs.max_usd,
+        "price_provenance": "user_configured_unverified_not_live",
+        "model_rates_are_live": False,
         "missing_price_estimates": unavailable,
         "may_hit_budget_limit": total > profile.costs.max_usd if profile.costs.allow_paid else False,
         "warning": (

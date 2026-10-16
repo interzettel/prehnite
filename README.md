@@ -116,6 +116,15 @@ The **manifest** says *what* to make. A separate **profile** says *how*: which p
 
 No paid stage can be enabled by simply running the demo. Real cloud profiles require explicit `allow_paid` and, where images leave your machine, `allow_cloud_uploads`. They also require per-stage cost estimates and a positive `max_usd` cap. **Reserved amounts are estimates, not provider invoices or guaranteed billing ceilings.**
 
+You can inspect what each adapter is actually prepared to run using
+`prehnite models`. The [typed capability catalogue](docs/PROVIDER_CONTRACTS.md)
+lists operation/input types, supported tiers and formats, upload requirements,
+schema references, licensing cautions, and unimplemented candidates. Preflight
+checks unsupported paid models and incompatible options **before an API call**;
+custom ComfyUI graphs remain user-defined. The catalogue never supplies a
+live price: all paid quotes in example profiles must be verified and updated
+by you.
+
 For the locally hosted route, start with [the ComfyUI example profile](examples/profile-comfyui.yaml). For pay-per-use hosting, review [the fal profile](examples/profile-fal.yaml), verify endpoint contracts and current prices, and provide your own `FAL_KEY`. Do not use the sample prices as a quote.
 
 ## Where things stand
