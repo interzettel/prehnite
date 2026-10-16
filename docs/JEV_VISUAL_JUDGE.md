@@ -36,3 +36,23 @@ Image bytes and request references may expand inside TypeSafe's system. Our curr
 Run `python -m pytest -q tests/test_typed_visual.py`; normal CI runs the same test suite across the existing Windows/Ubuntu matrix. Fixtures are generated **locally from colored PIL pixels**, not owner assets. Cases cover malformed and unknown typed decisions, all consent switches, immutable SHA receipts, source traversal/symlink, EXIF and ICC, RGB/RGBA media preparation, image dimensions, budget floor, price unknown, Box-on-absent and malicious extra fields. **No provider network tests, screenshots of private user images or cloud-based evaluations.**
 
 **Next PRs:** vendor-specific request/response mapping with deterministic mocked HTTP fixtures; human-reviewed gold dataset and calibration/error/cost comparisons; only then an explicitly approved live smoke test under a separately configured budget. TypeSafe experimental vision must not automatically approve, reject, delete or replace an existing Prehnite accepted original without the owner's policy decision.
+
+
+## Stage B — official-shape **offline fixtures**, still no API transport
+
+[Issue #111](https://github.com/interzettel/prehnite/issues/111) adds `src/prehnite/jev_wire_fixture.py`: an **inert request JSON builder** and strict parser of vendor-shaped **synthetic** responses. It uses published TypeSafe 1.14 [Noul](https://docs.typesafe.ai/primitives/noul), [Choice](https://docs.typesafe.ai/primitives/choice), [Score](https://docs.typesafe.ai/primitives/score), [Box](https://docs.typesafe.ai/primitives/box), and [Images](https://docs.typesafe.ai/images) documentation. There is still **no TypeSafe HTTP client, SDK import, API key read, request send, provider billing or automatic decision integration**.
+
+The internal Stage A `parse_mock_answers` uses a deliberately simplified Boolean Noul / 0–1 rubric-score shape and should **never** be sent to or confused with TypeSafe. Stage B instead understands the actual documented response fields:
+
+- **Noul**: `{"type":"noul","noul":0.91}` is *yes probability*; the vendor does not return a Boolean and does not include a separate confidence field. Thresholding requires an explicit cost-sensitive policy.
+- **Choice**: one declared option name plus the probability distribution over **all** declared options, and a separate `confidence`. The selected option must match the distribution.
+- **Score**: numeric position across the *declared ordered levels* (for three levels the range is **0–2**, not 0–1), plus per-level probabilities, legend and confidence; verifies the position against the probability-weighted mean.
+- **Box**: `left/top/right/bottom` in normalized 0–1 coordinates, plus confidence. The provider returns a box **even for absent objects**. Stage B refuses malformed edges and masks the box if its linked Noul presence probability is below an operator-supplied threshold (default 0.85, **not calibrated**).
+
+`build_offline_request_fixture` requires a Stage A media receipt and non-dispatch `Preflight` permit already bound to its image SHA256, question count, pinned model and approvals. It constructs an **in-memory fixture only** with one reference to one sanitized image in `state.image`. Instructions point to that state field rather than repeating the raw asset ref, avoiding unnecessary image re-expansion. Candidate danger-zone headers remain inert dictionary values. The serialized body must be within 32 MiB, with a conservative extra media expansion allowance; a future wire transport must re-validate actual measured token count and re-encoding.
+
+`parse_official_mock_response` fails closed on model mismatch, missing/extra question IDs, malformed token counts, invalid probabilities/confidence, inconsistent Choice distributions or Score expected values, and invalid or un-gated boxes. It emits `automatic_acceptance_authorized=false` and `confidence_calibrated_on_our_images=false`.
+
+The tests in `tests/test_jev_wire_fixture.py` use fixed **synthetic response objects** (no provider output is presented as real or personally sourced), including experimental Box and score examples. These tests verify **parsing behavior**, not Jev's visual accuracy, cost, latency, actual calibrated probabilities, data retention, or billing.
+
+**Remaining #111 work:** create an owner-reviewed matched image-and-label evaluation dataset, implement Brier/ECE, false-accept/false-reject and abstention analysis with uncertainty bands and reproducible reports. Only after those are reviewed should a separately approved live smoke test or image/video-frame workflow be considered.
