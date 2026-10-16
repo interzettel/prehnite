@@ -197,19 +197,19 @@
       "type": "issue",
       "number": 36,
       "title": "Deterministic validated archive and manifest hashes",
-      "lane": "Backlog",
+      "lane": "Done",
       "priority": "P1",
       "stream": "Reporting",
-      "note": "Archive manifest integrity"
+      "note": "Implemented and verified in merged PR #76, zero inference spend"
     },
     {
       "type": "issue",
       "number": 35,
       "title": "Versioned provenance and reproducible output manifest",
-      "lane": "Ready",
+      "lane": "Done",
       "priority": "P1",
       "stream": "Reporting",
-      "note": "Next offline stage-level provenance and manifest hashes; distinguish reproducible replay from provider determinism"
+      "note": "Implemented and verified in merged PR #74, zero inference spend"
     },
     {
       "type": "issue",
@@ -561,6 +561,24 @@
       "priority": "P1",
       "stream": "Packaging",
       "note": "Merged; Windows + Ubuntu CI clean installs passed"
+    },
+    {
+      "type": "pr",
+      "number": 74,
+      "title": "Privacy-minimized provenance manifest",
+      "lane": "Done",
+      "priority": "P1",
+      "stream": "Delivery",
+      "note": "Merged with green CI and offline regression tests"
+    },
+    {
+      "type": "pr",
+      "number": 76,
+      "title": "Deterministic ZIP and SHA256 receipt",
+      "lane": "Done",
+      "priority": "P1",
+      "stream": "Delivery",
+      "note": "Merged with green CI and offline regression tests"
     }
   ]
 }
