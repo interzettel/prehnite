@@ -94,7 +94,7 @@ def test_reference_never_alters_runtime_decision(tmp_path):
     ("color-collision", "interior_background_collision_or_hole"),
     ("interior-mask-hole", "interior_transparency_requires_review"),
     ("furniture-hole", "interior_transparency_requires_review"),
-    ("thick-halo", "technical_validation_failed"),
+    ("thick-halo", "interior_background_collision_or_hole"),
     ("clean-mask", "no_verifiable_background_fringe"),
     ("glass", "material_not_qualified_for_opaque_repair"),
     ("sheer-fabric", "material_not_qualified_for_opaque_repair"),
