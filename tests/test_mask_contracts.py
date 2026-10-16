@@ -67,6 +67,6 @@ def test_wrong_fal_segmentation_model_rejected_before_upload(monkeypatch, source
     from prehnite.providers import Fal
     from prehnite.schema import Endpoint
     monkeypatch.delenv("FAL_KEY", raising=False)
-    with pytest.raises(ValueError, match="Unsupported fal segmentation"):
+    with pytest.raises(ValueError, match="Unsupported segment adapter .*; available:"):
         Fal().segment(source, "person", tmp_path/"mask.png",
                       Endpoint(provider="fal", model="fal-ai/sam3.1"))
