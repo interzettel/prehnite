@@ -227,7 +227,7 @@
       "lane": "Backlog",
       "priority": "P1",
       "stream": "Reporting",
-      "note": "Offline HTML visual comparisons"
+      "note": "Offline thumbnail gallery #67 merged; opt-in private original comparisons remain issue #68"
     },
     {
       "type": "issue",
@@ -516,6 +516,24 @@
       "priority": "P1",
       "stream": "Quality",
       "note": "Merged to main; 207 tests passed. No model-quality certification."
+    },
+    {
+      "type": "issue",
+      "number": 68,
+      "title": "Opt-in original-input gallery comparison with privacy consent",
+      "lane": "Backlog",
+      "priority": "P1",
+      "stream": "Delivery",
+      "note": "Follow-up to #33: never embed private originals without opt-in"
+    },
+    {
+      "type": "pr",
+      "number": 67,
+      "title": "Self-contained offline asset review gallery",
+      "lane": "Done",
+      "priority": "P1",
+      "stream": "Delivery",
+      "note": "Merged; 212 offline tests. No external web resources or paid calls."
     }
   ]
 }
