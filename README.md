@@ -4,10 +4,10 @@
   An open-source Python engine for generating, checking, refining and exporting visual assets.</p>
   <p>
     <a href="https://github.com/interzettel/prehnite/actions/workflows/ci.yml"><img alt="Tests" src="https://github.com/interzettel/prehnite/actions/workflows/ci.yml/badge.svg" /></a>
-    <a href="LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-296d60" /></a>
-    <img alt="Python 3.11 or newer" src="https://img.shields.io/badge/python-3.11%2B-40564d" />
-    <img alt="Development version" src="https://img.shields.io/badge/status-development-c28b4a" />
-    <img alt="Mandatory platform fees: zero" src="https://img.shields.io/badge/platform%20fees-%240-296d60" />
+    <a href="LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-075231" /></a>
+    <img alt="Python 3.11 or newer" src="https://img.shields.io/badge/python-3.11%2B-53675a" />
+    <img alt="Development version" src="https://img.shields.io/badge/status-development-a63d35" />
+    <img alt="Mandatory platform fees: zero" src="https://img.shields.io/badge/platform%20fees-%240-075231" />
   </p>
   <p>
     <a href="#try-it-in-two-minutes">Quick start</a> ·
