@@ -74,7 +74,6 @@
 
 | Priority | Work item | Stream | Handoff / blocker |
 | --- | --- | --- | --- |
-| P1 | [PR #123 — Private apparel ZIP inspection and unreviewed mask probe](https://github.com/interzettel/prehnite/pull/123) | Cutouts | Merged 39c84d3 with 14/14 CI: verified 84 private JPEG inputs and 50 unreviewed local masks; no independent alpha references or QA acceptance. |
 | P1 | [Issue #11 — Agile tracking and release governance](https://github.com/interzettel/prehnite/issues/11) | Governance | Issue/PR templates, changelog and version policy merged via #13. |
 | P0 | [PR #10 — Fail-closed paid recovery and evidence chart](https://github.com/interzettel/prehnite/pull/10) | Reliability | Merged into main; offline safety regression tests passed. |
 | P1 | [PR #13 — Agile delivery board and release governance](https://github.com/interzettel/prehnite/pull/13) | Governance | Merged to main; single-source versioning and governance CI. |
@@ -149,6 +148,7 @@
 | P1 | [PR #119 — Journaled product self-correction synthetic demo](https://github.com/interzettel/prehnite/pull/119) | Cutouts | Merged commit 78f47d1; zero-network one-attempt product fringe demo with cross-platform evidence; no S05 ledger credit. |
 | P1 | [PR #120 — Twenty challenging cutout fixtures and safety guards](https://github.com/interzettel/prehnite/pull/120) | Cutouts | Merged as e3026a1 after 12/12 green CI; synthetic-only, no S03/S05 evidence completion. |
 | P1 | [PR #122 — Rights-aware local real-image alpha benchmark intake](https://github.com/interzettel/prehnite/pull/122) | Cutouts | Merged 463d3c2; local rights-aware alpha scorer, source-only R2 WebP preflight. No reference-alpha production claims. |
+| P1 | [PR #123 — Private apparel ZIP inspection and unreviewed mask probe](https://github.com/interzettel/prehnite/pull/123) | Cutouts | Merged 39c84d3 with 14/14 CI: verified 84 private JPEG inputs and 50 unreviewed local masks; no independent alpha references or QA acceptance. |
 
 ## How to update this board
 
