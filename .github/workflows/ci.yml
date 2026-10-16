@@ -140,3 +140,30 @@ jobs:
             repair-demo-evidence/evidence/experiment-001/
           if-no-files-found: error
           retention-days: 14
+
+  cutout-challenge-matrix:
+    name: Hard cutout synthetic matrix (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Install offline dependencies
+        run: python -m pip install -e ".[dev]"
+      - name: Verify original repair plus hard-case refusal and reference metrics
+        run: python -m pytest -q tests/test_repair.py tests/test_repair_challenges.py
+      - name: Generate 20-case interactive-free HTML/JSON evidence
+        run: python scripts/repair_challenge_benchmark.py --workspace synthetic-challenge-evidence
+      - name: Upload synthetic-only challenge receipts
+        uses: actions/upload-artifact@v4
+        with:
+          name: synthetic-challenges-${{ matrix.os }}
+          path: |
+            synthetic-challenge-evidence/evidence/experiment-002/
+          if-no-files-found: error
+          retention-days: 14
