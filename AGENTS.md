@@ -13,6 +13,10 @@ Deliver reliable, quality-gated visual assets at low cost. This repository is an
 - For independently testable delivery work, use stable IDs in progress/ledger.json with dependencies and evidence links. Run `python scripts/progress.py --write` after a verified change, and never mark a unit done without a merged PR or owner-approved evidence.
 - The native organization Project #1 exists, but automatic field synchronization is not implemented: compare live cards before claiming agreement.
 
+## Visual identity rules
+- Use the user-selected forest-green / coral / warm-paper Riso artwork in the README and the canonical light/dark palette from `src/prehnite/brand.py` and `docs/BRAND_PALETTE.md` for all new branded interfaces and editorial illustrations.
+- Keep diagnostic/semantic image-data colors meaningful: never recolor heatmaps or quality/error measurements solely for brand consistency. Bright coral on paper is decorative, not small body text; use the accessible text token instead.
+
 ## Engineering invariants
 - Never introduce mandatory paid SaaS, platform, database, analytics or hosting dependencies.
 - Do not submit a billable request without explicit profile authorization, an operation estimate and a remaining batch budget.
