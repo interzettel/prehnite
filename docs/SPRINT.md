@@ -12,10 +12,10 @@
 | --- | ---: |
 | Backlog | 15 |
 | Ready | 2 |
-| In progress | 1 |
-| In review | 1 |
+| In progress | 0 |
+| In review | 0 |
 | Blocked | 6 |
-| Done | 41 |
+| Done | 43 |
 
 **WIP limits:** In progress ≤ 2; In review ≤ 3. Counts are issue/PR cards, not unique completed engineering features or a percentage.
 
@@ -50,13 +50,13 @@
 
 | Priority | Work item | Stream | Handoff / blocker |
 | --- | --- | --- | --- |
-| P1 | [Issue #41 — Pre-release 90-asset dry run and budget projection](https://github.com/interzettel/prehnite/issues/41) | Benchmark | Offline 90-slot cross-platform fixture passes on PR #84; awaiting latest-head CI/merge. |
+| — | No cards currently | — | — |
 
 ## In review
 
 | Priority | Work item | Stream | Handoff / blocker |
 | --- | --- | --- | --- |
-| P1 | [PR #84 — 90-slot offline pause/crash/recovery benchmark](https://github.com/interzettel/prehnite/pull/84) | Benchmark | 90/90 accepted on Ubuntu+Windows CI; merge and evidence credit pending. |
+| — | No cards currently | — | — |
 
 ## Blocked
 
@@ -78,6 +78,7 @@
 | P1 | [PR #13 — Agile delivery board and release governance](https://github.com/interzettel/prehnite/pull/13) | Governance | Merged to main; single-source versioning and governance CI. |
 | P0 | [PR #1 — Initial MIT engine foundation](https://github.com/interzettel/prehnite/pull/1) | Foundation | Merged; synthetic demo CI passed. |
 | P1 | [Issue #43 — Human-centered README, original vector identity and first-run guide](https://github.com/interzettel/prehnite/issues/43) | Onboarding | Merged in PR #45; evidence ledger / README published on main. |
+| P1 | [Issue #41 — Pre-release 90-asset dry run and budget projection](https://github.com/interzettel/prehnite/issues/41) | Benchmark | PR #84 merged; 90/90 offline benchmark passed on Ubuntu & Windows, 108 verified ZIP image entries. |
 | P1 | [Issue #39 — Cross-platform installer and Python packaging smoke checks](https://github.com/interzettel/prehnite/issues/39) | Packaging | Merged PR #72; validated free CLI and clean Windows/Linux wheel install, GPU not benchmarked |
 | P1 | [Issue #38 — MCP cancellation, worker reconnection and status telemetry](https://github.com/interzettel/prehnite/issues/38) | MCP | PR #83 merged as 38113a7; four-job CI green (290 tests), issue closed. |
 | P1 | [Issue #37 — Prehnite init and doctor CLI onboarding](https://github.com/interzettel/prehnite/issues/37) | Onboarding | Merged PR #71; validated free CLI and clean Windows/Linux wheel install, GPU not benchmarked |
@@ -114,6 +115,7 @@
 | P1 | [PR #76 — Deterministic ZIP and SHA256 receipt](https://github.com/interzettel/prehnite/pull/76) | Delivery | Merged with green CI and offline regression tests |
 | P1 | [PR #78 — Evidence-based accepted-asset economics and stage timing](https://github.com/interzettel/prehnite/pull/78) | Reporting | Merged; 264 offline tests and Windows/Ubuntu smoke green; invoices remain unverified |
 | P1 | [PR #83 — Durable MCP pause/cancel/reconnect and worker ownership](https://github.com/interzettel/prehnite/pull/83) | MCP | Merged into main; durable MCP controls verified with Windows lifecycle regression. |
+| P1 | [PR #84 — 90-slot offline pause/crash/recovery benchmark](https://github.com/interzettel/prehnite/pull/84) | Benchmark | Merged PR #84; cross-platform CI synthetic recovery benchmark evidence; no paid inference. |
 
 ## How to update this board
 

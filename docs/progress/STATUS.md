@@ -2,8 +2,8 @@
 
 > Generated from `progress/ledger.json` by `scripts/progress.py`. A unit counts only when done with evidence; percentages are not estimates of engineering time or visual quality.
 
-**37 / 61 units done (60.7%)** · 0 active · 10 blocked · 14 planned.
-**Milestone gates reached:** 1 / 7.
+**40 / 61 units done (65.6%)** · 0 active · 10 blocked · 11 planned.
+**Milestone gates reached:** 2 / 7.
 
 ![Milestone progress chart](progress.svg)
 
@@ -16,8 +16,8 @@
 | M2 · Models and local compute | 7/10 (70.0%) | 0 | 2 | 1 | Open: P09 |
 | M3 · Photographic quality gates | 4/8 (50.0%) | 0 | 2 | 2 | Open: Q07, Q08 |
 | M4 · Cutouts and corrections | 2/7 (28.6%) | 0 | 2 | 3 | Open: S06, S07 |
-| M5 · Delivery and usability | 8/10 (80.0%) | 0 | 0 | 2 | Open: D10 |
-| M6 · Community and first release | 5/10 (50.0%) | 0 | 2 | 3 | Open: R08, R09 |
+| M5 · Delivery and usability | 10/10 (100.0%) | 0 | 0 | 0 | Reached |
+| M6 · Community and first release | 6/10 (60.0%) | 0 | 2 | 2 | Open: R08, R09 |
 
 ## Work units
 
@@ -98,9 +98,9 @@
 | `D05` | Versioned provenance and exact input/output hashes | done | Agent cloud | C05 | [Evidence](https://github.com/interzettel/prehnite/pull/74) |
 | `D06` | Deterministic ZIP ordering and digest manifest | done | Agent cloud | D05 | [Evidence](https://github.com/interzettel/prehnite/pull/76) |
 | `D07` | Safe offline init and secret-safe doctor CLI | done | Agent cloud | D01 | [Evidence](https://github.com/interzettel/prehnite/pull/71) |
-| `D08` | Safe MCP pause/cancel/reconnect semantics | planned | Agent cloud | C04 | [#38](https://github.com/interzettel/prehnite/issues/38) |
+| `D08` | Safe MCP pause/cancel/reconnect semantics | done | Agent cloud | C04 | [Evidence](https://github.com/interzettel/prehnite/pull/83) |
 | `D09` | Clean Windows and Linux wheel/sdist install smoke matrix | done | Agent local | D07 | [Evidence](https://github.com/interzettel/prehnite/pull/72) |
-| `D10` | 90-asset no-cost CLI/MCP fixture bundle | planned | Agent cloud | D06, D08 | [#41](https://github.com/interzettel/prehnite/issues/41) |
+| `D10` | 90-asset no-cost CLI/MCP fixture bundle | done | Agent cloud | D06, D08 | [Evidence](https://github.com/interzettel/prehnite/pull/84) |
 
 ### M6 · Community and first release
 
@@ -112,7 +112,7 @@
 | `R04` | Evidence-ledger, milestone roadmap and SVG chart | done | Agent cloud | R02 | [Evidence](https://github.com/interzettel/prehnite/pull/45) |
 | `R05` | Human-first README, badge and original mark | done | Agent cloud | R02 | [Evidence](https://github.com/interzettel/prehnite/pull/45) |
 | `R06` | Audit dependencies and model-weight licensing | planned | Agent cloud | R01 | [#40](https://github.com/interzettel/prehnite/issues/40) |
-| `R07` | 90-asset offline production dry run | planned | Agent cloud | D10 | [#41](https://github.com/interzettel/prehnite/issues/41) |
+| `R07` | 90-asset offline production dry run | done | Agent cloud | D10 | [Evidence](https://github.com/interzettel/prehnite/pull/84) |
 | `R08` | 90-asset live pilot and owner quality acceptance | blocked | Owner | R07, S07, P09 | [#42](https://github.com/interzettel/prehnite/issues/42) |
 | `R09` | Owner-approved version tag and first release | blocked | Owner | R08, R06 | [#42](https://github.com/interzettel/prehnite/issues/42) |
 | `R10` | Native GitHub Projects issue/PR state sync | planned | Agent cloud | R02 | [#44](https://github.com/interzettel/prehnite/issues/44) |
