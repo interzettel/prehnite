@@ -47,7 +47,7 @@ def inventory(source: Path) -> tuple[dict, list[tuple[str, str, bytes]]]:
             # of its final components. A prefix of ".." previously matched
             # the optional top-level folder even though no extraction occurs.
             parts = entry.filename.split("/")
-            if (entry.filename.startswith("/") or "\\\\" in entry.filename
+            if (entry.filename.startswith("/") or chr(92) in entry.filename
                     or any(part in ("", ".", "..") for part in parts)):
                 raise PilotRefused("unexpected_or_encrypted_member")
             match = _PATTERN.fullmatch(entry.filename)
