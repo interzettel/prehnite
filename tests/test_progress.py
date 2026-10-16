@@ -96,7 +96,7 @@ def test_milestone_percent_and_gates():
     data = ledger()
     stats = module.stats(module.units(data))
     assert stats["total"] == 61
-    assert stats["done"] == 31
+    assert stats["done"] == 34
     assert module.stats(data["milestones"][0]["units"])["pct"] == 100
     assert all(unit["state"] == "done" for unit in data["milestones"][0]["units"])
     assert data["milestones"][0]["gate"] == ["F06"]
