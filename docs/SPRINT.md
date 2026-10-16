@@ -145,4 +145,4 @@
 4. CI verifies that status snapshot matches the machine-readable board and WIP caps.
 5. Track **release evidence** separately in `docs/PROGRESS.md` (introduced by PR #10); this board tracks workflow, not model performance.
 
-**Release policy:** No tags, releases or uploads have been authorized. See [versioning](VERSIONING.md), [changelog](../CHANGELOG.md) and [release process](docs/RELEASING.md).
+**Release policy:** No tags, releases or uploads have been authorized. See [versioning](VERSIONING.md), [changelog](../CHANGELOG.md) and [release process](RELEASING.md).
