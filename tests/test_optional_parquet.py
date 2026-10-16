@@ -11,6 +11,7 @@ import pytest
 from typer.testing import CliRunner
 
 from prehnite.analytics import build_analytics, write_analytics
+from prehnite.artifacts import ArtifactIntegrityError
 from prehnite.cli import app
 from prehnite.engine import Engine
 from prehnite.mcp_jobs import JobManager
@@ -284,7 +285,7 @@ def test_symlinked_parquet_file_outside_batch_is_rejected_even_if_digest_matches
             source.symlink_to(outside)
         except (OSError, NotImplementedError):
             pytest.skip("Symlinks not allowed on this Windows account")
-        with pytest.raises(Exception, match="batch root"):
+        with pytest.raises(ArtifactIntegrityError, match="integrity check failed"):
             verified_parquet_entries(root)
         # Default export does not include optional datasets regardless.
         assert package(engine.journal).is_file()
