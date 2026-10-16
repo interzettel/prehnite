@@ -16,6 +16,7 @@ from pathlib import Path
 from PIL import Image, ImageChops, ImageStat
 
 from .artifacts import ArtifactIntegrityError, atomic_text, verified_image
+from .brand import embedded_theme_css
 from .manifest import resolve_input
 from .schema import Asset, relative_name
 from .store import Journal
@@ -163,7 +164,7 @@ def _comparison_html(reference: bytes, candidate: bytes, heatmap: bytes,
         + img(candidate, candidate_mime, "Candidate")
         + img(heatmap, "image/png", "Encoded delta heatmap")
         + '</div></main></body></html>'
-    )
+    ).replace('</style>', embedded_theme_css() + '</style>', 1)
 
 
 def compare_slot(
