@@ -174,7 +174,7 @@ The tracker distinguishes implemented scaffolding from independently evidenced c
 
 [![Prehnite evidence-backed progress by milestone](docs/progress/progress.svg)](docs/progress/STATUS.md)
 
-[Read the 61-unit work ledger](docs/progress/STATUS.md) · [90-asset no-cost benchmark](docs/OFFLINE_90_BENCHMARK.md) · [Technical release gates](docs/PROGRESS.md) · [Offline production analytics](docs/OFFLINE_ANALYTICS.md) · [Current sprint](docs/SPRINT.md) · [Roadmap](docs/ROADMAP.md)
+[Read the 61-unit work ledger](docs/progress/STATUS.md) · [90-asset no-cost benchmark](docs/OFFLINE_90_BENCHMARK.md) · [Technical release gates](docs/PROGRESS.md) · [Offline production analytics](docs/OFFLINE_ANALYTICS.md) · [Optional Parquet export](docs/PARQUET_EXPORT.md) · [Current sprint](docs/SPRINT.md) · [Roadmap](docs/ROADMAP.md)
 
 GitHub [Project #1](https://github.com/orgs/interzettel/projects/1) tracks workflow; the version-controlled [ledger](progress/ledger.json) tracks evidence. They answer different questions. Native Project field syncing is still [planned](https://github.com/interzettel/prehnite/issues/44).
 
