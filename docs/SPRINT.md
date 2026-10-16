@@ -12,8 +12,8 @@
 | --- | ---: |
 | Backlog | 15 |
 | Ready | 2 |
-| In progress | 0 |
-| In review | 0 |
+| In progress | 1 |
+| In review | 1 |
 | Blocked | 6 |
 | Done | 59 |
 
@@ -50,13 +50,13 @@
 
 | Priority | Work item | Stream | Handoff / blocker |
 | --- | --- | --- | --- |
-| — | No cards currently | — | — |
+| P1 | [Issue #102 — Selected forest/coral Riso identity and shared accessible palette](https://github.com/interzettel/prehnite/issues/102) | Design | Owner-selected actual artwork, theme and tests in PR #103. |
 
 ## In review
 
 | Priority | Work item | Stream | Handoff / blocker |
 | --- | --- | --- | --- |
-| — | No cards currently | — | — |
+| P1 | [PR #103 — README Riso hero and shared green/coral theme](https://github.com/interzettel/prehnite/pull/103) | Design | Binary image verified; Ubuntu/Windows CI and contrast tests pending. |
 
 ## Blocked
 
@@ -141,4 +141,4 @@
 4. CI verifies that status snapshot matches the machine-readable board and WIP caps.
 5. Track **release evidence** separately in `docs/PROGRESS.md` (introduced by PR #10); this board tracks workflow, not model performance.
 
-**Release policy:** No tags, releases or uploads have been authorized. See [versioning](VERSIONING.md), [changelog](../CHANGELOG.md) and [release process](RELEASING.md).
+**Release policy:** No tags, releases or uploads have been authorized. See [versioning](VERSIONING.md), [changelog](../CHANGELOG.md) and [release process](docs/RELEASING.md).
