@@ -17,6 +17,7 @@ from .artifacts import atomic_text, verified_image
 from .images import image_info
 from .schema import relative_name
 from .store import Journal
+from .brand import embedded_theme_css
 from .analytics import build_analytics, render_analytics
 from .economics import batch_economics
 
@@ -236,5 +237,6 @@ footer{color:var(--sub);margin:28px 0;font-size:.85rem}
           "not embedded · no remote content loaded.</footer></main></body></html>"
     )
     location = root / "gallery.html"
+    page = page.replace('</style>', embedded_theme_css() + '</style>', 1)
     atomic_text(location, page)
     return location
