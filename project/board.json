@@ -314,19 +314,19 @@
       "type": "issue",
       "number": 23,
       "title": "ComfyUI queue resume and error-state contract",
-      "lane": "Backlog",
+      "lane": "Ready",
       "priority": "P1",
       "stream": "Local GPU",
-      "note": "ComfyUI history/error semantics"
+      "note": "Next: ComfyUI queue error/cancellation/history replay state contracts"
     },
     {
       "type": "issue",
       "number": 22,
       "title": "ComfyUI reproducible API graph fixtures",
-      "lane": "Ready",
+      "lane": "Done",
       "priority": "P1",
       "stream": "Local GPU",
-      "note": "Next offline local ComfyUI API graph schema and node mapping fixtures"
+      "note": "Offline API graph/node mapping and queue fixtures merged in PR #57; no GPU benchmark"
     },
     {
       "type": "issue",
@@ -471,6 +471,15 @@
       "priority": "P1",
       "stream": "Providers",
       "note": "Merged to main; 127 offline tests passed; no live pricing"
+    },
+    {
+      "type": "pr",
+      "number": 57,
+      "title": "ComfyUI offline graph and HTTP fixtures",
+      "lane": "Done",
+      "priority": "P1",
+      "stream": "Local GPU",
+      "note": "Merged; 139 offline tests passed, no local model weights"
     }
   ]
 }

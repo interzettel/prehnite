@@ -10,12 +10,12 @@
 
 | Lane | Cards |
 | --- | ---: |
-| Backlog | 24 |
+| Backlog | 23 |
 | Ready | 2 |
 | In progress | 0 |
 | In review | 0 |
 | Blocked | 6 |
-| Done | 19 |
+| Done | 21 |
 
 **WIP limits:** In progress ≤ 2; In review ≤ 3. Counts are issue/PR cards, not unique completed engineering features or a percentage.
 
@@ -45,7 +45,6 @@
 | P2 | [Issue #27 — Local aesthetic and fidelity judge plugin boundary](https://github.com/interzettel/prehnite/issues/27) | Quality | Optional local weights and licenses |
 | P1 | [Issue #26 — Full-resolution crops for visual quality gating](https://github.com/interzettel/prehnite/issues/26) | Quality | 4K crop validation |
 | P1 | [Issue #25 — Judge schema and A/B order-bias tests](https://github.com/interzettel/prehnite/issues/25) | Quality | A/B judge schema/order bias |
-| P1 | [Issue #23 — ComfyUI queue resume and error-state contract](https://github.com/interzettel/prehnite/issues/23) | Local GPU | ComfyUI history/error semantics |
 | P1 | [Issue #18 — Content-addressed cache with privacy isolation](https://github.com/interzettel/prehnite/issues/18) | Runtime | Cache with privacy-scoped keys |
 
 ## Ready
@@ -53,7 +52,7 @@
 | Priority | Work item | Stream | Handoff / blocker |
 | --- | --- | --- | --- |
 | P1 | [Issue #12 — Mocked fal API conformance contract](https://github.com/interzettel/prehnite/issues/12) | Providers | No credentials or paid calls; use recorded fixture schemas. |
-| P1 | [Issue #22 — ComfyUI reproducible API graph fixtures](https://github.com/interzettel/prehnite/issues/22) | Local GPU | Next offline local ComfyUI API graph schema and node mapping fixtures |
+| P1 | [Issue #23 — ComfyUI queue resume and error-state contract](https://github.com/interzettel/prehnite/issues/23) | Local GPU | Next: ComfyUI queue error/cancellation/history replay state contracts |
 
 ## In progress
 
@@ -87,6 +86,7 @@
 | P1 | [PR #13 — Agile delivery board and release governance](https://github.com/interzettel/prehnite/pull/13) | Governance | Merged to main; single-source versioning and governance CI. |
 | P0 | [PR #1 — Initial MIT engine foundation](https://github.com/interzettel/prehnite/pull/1) | Foundation | Merged; synthetic demo CI passed. |
 | P1 | [Issue #43 — Human-centered README, original vector identity and first-run guide](https://github.com/interzettel/prehnite/issues/43) | Onboarding | Merged in PR #45; evidence ledger / README published on main. |
+| P1 | [Issue #22 — ComfyUI reproducible API graph fixtures](https://github.com/interzettel/prehnite/issues/22) | Local GPU | Offline API graph/node mapping and queue fixtures merged in PR #57; no GPU benchmark |
 | P1 | [Issue #21 — Provider capability and price registry contract](https://github.com/interzettel/prehnite/issues/21) | Providers | Typed adapter registry and user-estimate provenance merged in PR #55; real quote audit remains #17 |
 | P1 | [Issue #20 — Normalize fal segmentation output and mask orientation](https://github.com/interzettel/prehnite/issues/20) | Segmentation | Offline CI tests merged in PR #53; real paid/live validation remains open |
 | P1 | [Issue #19 — Mocked FLUX tier and upscale response shapes](https://github.com/interzettel/prehnite/issues/19) | Providers | Mocked and subprocess CI evidence in merged PR #50 |
@@ -101,6 +101,7 @@
 | P0 | [PR #52 — Atomic accepted assets and SHA256 integrity](https://github.com/interzettel/prehnite/pull/52) | Runtime | Merged, 90 offline tests passed |
 | P1 | [PR #53 — SAM 3.1 mask geometry and channel contracts](https://github.com/interzettel/prehnite/pull/53) | Cutouts | Merged, 100 offline tests passed |
 | P1 | [PR #55 — Typed provider capability preflight](https://github.com/interzettel/prehnite/pull/55) | Providers | Merged to main; 127 offline tests passed; no live pricing |
+| P1 | [PR #57 — ComfyUI offline graph and HTTP fixtures](https://github.com/interzettel/prehnite/pull/57) | Local GPU | Merged; 139 offline tests passed, no local model weights |
 
 ## How to update this board
 

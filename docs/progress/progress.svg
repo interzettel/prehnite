@@ -2,17 +2,17 @@
 <rect width="1200" height="1029" fill="#f6f7f4"/>
 <g font-family="system-ui,Segoe UI,sans-serif">
 <text x="35" y="48" font-size="27" font-weight="700" fill="#182a27">PREHNITE / DEVELOPMENT PROGRESS</text>
-<text x="35" y="79" font-size="16" fill="#5c6c65">26 / 61 scoped units done · 42.6%</text>
+<text x="35" y="79" font-size="16" fill="#5c6c65">27 / 61 scoped units done · 44.3%</text>
 <text x="1160" y="49" text-anchor="end" font-size="17" fill="#277e74">1/7 milestone gates</text>
 <text x="35" y="106" font-size="13" fill="#5c6c65">Unweighted work units · evidence required for completion · not a product quality score</text>
 <rect x="35" y="126" width="13" height="13" rx="2" fill="#277e74"/>
-<text x="56" y="138" font-size="13" fill="#283832">Done 26</text>
+<text x="56" y="138" font-size="13" fill="#283832">Done 27</text>
 <rect x="223" y="126" width="13" height="13" rx="2" fill="#c28b4a"/>
 <text x="244" y="138" font-size="13" fill="#283832">Active 0</text>
 <rect x="411" y="126" width="13" height="13" rx="2" fill="#b8534e"/>
 <text x="432" y="138" font-size="13" fill="#283832">Blocked 10</text>
 <rect x="599" y="126" width="13" height="13" rx="2" fill="#dce0dd"/>
-<text x="620" y="138" font-size="13" fill="#283832">Planned 25</text>
+<text x="620" y="138" font-size="13" fill="#283832">Planned 24</text>
 <rect x="35" y="171" width="1130" height="103" rx="10" fill="#fff" stroke="#d8ddd7"/>
 <text x="55" y="196" font-size="17" font-weight="650" fill="#1d302b">M0 · Runnable foundation</text>
 <text x="1140" y="196" font-size="16" text-anchor="end" font-weight="650" fill="#277e74">6/6 · 100.0%</text>
@@ -41,14 +41,14 @@
 <text x="1140" y="378" text-anchor="end" font-size="11" fill="#6b7972">Open gate: C08, C09</text>
 <rect x="35" y="395" width="1130" height="103" rx="10" fill="#fff" stroke="#d8ddd7"/>
 <text x="55" y="420" font-size="17" font-weight="650" fill="#1d302b">M2 · Models and local compute</text>
-<text x="1140" y="420" font-size="16" text-anchor="end" font-weight="650" fill="#277e74">5/10 · 50.0%</text>
+<text x="1140" y="420" font-size="16" text-anchor="end" font-weight="650" fill="#277e74">6/10 · 60.0%</text>
 <text x="55" y="443" font-size="12" fill="#65756e">Choose providers independently, run useful local graph workflows, and verify hosted adapters without making API access mandatory.</text>
 <g><title>P01: Demo and optional hosted provider adapter scaffold [done] issue/PR #1</title><rect x="55" y="460" width="105" height="16" rx="2" fill="#277e74"/></g>
 <g><title>P02: Generic local ComfyUI graph/queue scaffold [done] issue/PR #1</title><rect x="163" y="460" width="105" height="16" rx="2" fill="#277e74"/></g>
 <g><title>P03: Offline FLUX tier/upscale contract fixtures [done] issue/PR #19</title><rect x="271" y="460" width="105" height="16" rx="2" fill="#277e74"/></g>
 <g><title>P04: SAM response-shape fixtures and validation [done] issue/PR #20</title><rect x="379" y="460" width="105" height="16" rx="2" fill="#277e74"/></g>
 <g><title>P05: Typed adapter capabilities and price-estimate provenance [done] issue/PR #21</title><rect x="487" y="460" width="105" height="16" rx="2" fill="#277e74"/></g>
-<g><title>P06: Tested ComfyUI graph fixture and mapping [planned] issue/PR #22</title><rect x="595" y="460" width="105" height="16" rx="2" fill="#dce0dd"/></g>
+<g><title>P06: Offline ComfyUI graph mapping and mock queue fixtures [done] issue/PR #22</title><rect x="595" y="460" width="105" height="16" rx="2" fill="#277e74"/></g>
 <g><title>P07: ComfyUI queue/recovery without duplicate submits [planned] issue/PR #23</title><rect x="703" y="460" width="105" height="16" rx="2" fill="#dce0dd"/></g>
 <g><title>P08: 8GB VRAM local model feasibility benchmark [blocked] issue/PR #24</title><rect x="811" y="460" width="105" height="16" rx="2" fill="#b8534e"/></g>
 <g><title>P09: User-approved end-to-end live inference pilot [blocked] issue/PR #7</title><rect x="919" y="460" width="105" height="16" rx="2" fill="#b8534e"/></g>

@@ -271,13 +271,14 @@
         },
         {
           "id": "P06",
-          "name": "Tested ComfyUI graph fixture and mapping",
-          "state": "planned",
+          "name": "Offline ComfyUI graph mapping and mock queue fixtures",
+          "state": "done",
           "issue": 22,
           "owner": "Agent cloud",
           "dependsOn": [
             "P02"
-          ]
+          ],
+          "evidence": "https://github.com/interzettel/prehnite/pull/57"
         },
         {
           "id": "P07",
