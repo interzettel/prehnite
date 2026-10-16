@@ -178,3 +178,43 @@ def test_private_aggregate_json_export_is_deterministic(tmp_path):
     assert b"provider_request_id" not in first
     with pytest.raises(ValueError):
         write_aggregate_gold_report(tmp_path/"private.csv",report)
+
+
+def test_public_cli_emits_only_private_aggregate_report(tmp_path):
+    from typer.testing import CliRunner
+    from prehnite.cli import app
+    source=tmp_path/"raw-gold-private.json"
+    records=[row(1,True,cohort="product"),row(0,False,cohort="cutout")]
+    source.write_text(json.dumps({
+        "schema_version":1,"declared_source":"synthetic_fixture",
+        "observations":records
+    }),encoding="utf-8")
+    target=tmp_path/"summary.json"
+    result=CliRunner().invoke(app,[
+        "evaluate-visual-gold","--input",str(source),
+        "--output",str(target),
+    ])
+    assert result.exit_code==0,result.output
+    report=json.loads(target.read_text(encoding="utf-8"))
+    assert report["examples"]==2
+    assert report["human_aesthetic_quality_certified"] is False
+    assert "raw-gold-private" not in target.read_text()
+    assert "gold_yes" not in target.read_text()
+    assert "no transport" not in target.read_text()
+    assert source.exists()
+
+
+def test_cli_rejects_malicious_extra_gold_fields(tmp_path):
+    from typer.testing import CliRunner
+    from prehnite.cli import app
+    source=tmp_path/"private.json"
+    source.write_text(json.dumps({
+        "schema_version":1,"declared_source":"synthetic_fixture",
+        "observations":[row(.9,True)],
+        "secret_api_key":"DO_NOT_COPY"
+    }))
+    out=tmp_path/"out.json"
+    result=CliRunner().invoke(app,[
+        "evaluate-visual-gold","--input",str(source),"--output",str(out)])
+    assert result.exit_code!=0
+    assert not out.exists()
