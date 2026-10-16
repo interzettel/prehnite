@@ -146,7 +146,7 @@ def expected_projection() -> list[dict]:
     ]
 
 
-def run_benchmark(home: Path) -> dict:
+def run_benchmark(home: Path, preview_file: Path | None = None) -> dict:
     manager = prepare(home)
     # Fake *only launch*, actual Engine workers execute independently below.
     # This eliminates timing races without weakening real OS run-lock tests.
@@ -280,6 +280,18 @@ def run_benchmark(home: Path) -> dict:
             replay.journal.close()
         assert not any("INJECTED_OFFLINE_TEST_FAILURE" in str(row)
                        for row in resumed_report["asset_results"].values())
+        if preview_file is not None:
+            # Safe for *this fixed synthetic fixture only*. Never upload an
+            # arbitrary user's gallery; it embeds thumbnail pixels.
+            preview_file.parent.mkdir(parents=True, exist_ok=True)
+            gallery_html = (engine.journal.root / "gallery.html").read_text(
+                encoding="utf-8")
+            assert "<script" not in gallery_html
+            gallery_html = gallery_html.replace(
+                "Prehnite / offline production dashboard</h1>",
+                "Prehnite / offline production dashboard · SYNTHETIC DEMO</h1>",
+                1)
+            preview_file.write_text(gallery_html, encoding="utf-8")
         return {
             "schema_version": 1,
             "scenario": "synthetic_offline_no_paid_inference",
@@ -317,6 +329,8 @@ def main():
     parser.add_argument("--token", type=str)
     parser.add_argument("--crash-worker", action="store_true")
     parser.add_argument("--result-file", type=Path)
+    parser.add_argument("--preview-file", type=Path,
+                        help="Write a safe embedded HTML preview (synthetic demo only)")
     args = parser.parse_args()
     if args.crash_worker:
         if args.home is None or args.token is None:
@@ -324,7 +338,7 @@ def main():
         crash_worker(JobManager(args.home), args.token)
         raise AssertionError("Injected worker should have exited with status 73")
     with tempfile.TemporaryDirectory(prefix="prehnite-benchmark-90-") as directory:
-        report = run_benchmark(Path(directory))
+        report = run_benchmark(Path(directory), args.preview_file)
     serialized = json.dumps(report, indent=2, sort_keys=True) + "\n"
     if args.result_file:
         args.result_file.parent.mkdir(parents=True, exist_ok=True)
