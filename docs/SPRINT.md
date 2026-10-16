@@ -12,8 +12,8 @@
 | --- | ---: |
 | Backlog | 15 |
 | Ready | 2 |
-| In progress | 0 |
-| In review | 0 |
+| In progress | 1 |
+| In review | 1 |
 | Blocked | 6 |
 | Done | 59 |
 
@@ -50,13 +50,13 @@
 
 | Priority | Work item | Stream | Handoff / blocker |
 | --- | --- | --- | --- |
-| — | No cards currently | — | — |
+| P1 | [Issue #102 — Selected forest/coral Riso identity and shared accessible palette](https://github.com/interzettel/prehnite/issues/102) | Design | Owner-selected actual artwork, theme and tests in PR #103. |
 
 ## In review
 
 | Priority | Work item | Stream | Handoff / blocker |
 | --- | --- | --- | --- |
-| — | No cards currently | — | — |
+| P1 | [PR #103 — README Riso hero and shared green/coral theme](https://github.com/interzettel/prehnite/pull/103) | Design | Binary image verified; Ubuntu/Windows CI and contrast tests pending. |
 
 ## Blocked
 

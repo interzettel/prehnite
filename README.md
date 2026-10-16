@@ -1,13 +1,13 @@
 <div align="center">
-  <img src="assets/prehnite-lockup.svg" alt="Prehnite — Make the batch. Keep the best." width="620" />
+  <img src="assets/prehnite-riso-green-coral.webp" alt="Prehnite — Make the batch. Keep the best. Forest-green and coral Riso identity on warm paper." width="680" />
   <p><strong>Batch image production without the platform tax.</strong><br />
   An open-source Python engine for generating, checking, refining and exporting visual assets.</p>
   <p>
     <a href="https://github.com/interzettel/prehnite/actions/workflows/ci.yml"><img alt="Tests" src="https://github.com/interzettel/prehnite/actions/workflows/ci.yml/badge.svg" /></a>
-    <a href="LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-296d60" /></a>
-    <img alt="Python 3.11 or newer" src="https://img.shields.io/badge/python-3.11%2B-40564d" />
-    <img alt="Development version" src="https://img.shields.io/badge/status-development-c28b4a" />
-    <img alt="Mandatory platform fees: zero" src="https://img.shields.io/badge/platform%20fees-%240-296d60" />
+    <a href="LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-075231" /></a>
+    <img alt="Python 3.11 or newer" src="https://img.shields.io/badge/python-3.11%2B-53675a" />
+    <img alt="Development version" src="https://img.shields.io/badge/status-development-a63d35" />
+    <img alt="Mandatory platform fees: zero" src="https://img.shields.io/badge/platform%20fees-%240-075231" />
   </p>
   <p>
     <a href="#try-it-in-two-minutes">Quick start</a> ·
@@ -17,6 +17,8 @@
     <a href="https://github.com/orgs/interzettel/projects/1">Project board</a>
   </p>
 </div>
+
+The visual identity uses the owner-selected **forest green / coral / warm paper** Riso colorway. Shared [brand color tokens](docs/BRAND_PALETTE.md) apply to project UI surfaces, with contrast-adjusted text colors and dark-mode variants. The original vector logo remains available as [a fallback](assets/prehnite-lockup.svg).
 
 ---
 
