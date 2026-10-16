@@ -5,11 +5,12 @@ import io
 import json
 import zipfile
 from pathlib import Path
+import os
 
 import pytest
 from PIL import Image, ImageDraw
 
-from prehnite.review_intake import ReviewIntakeRefused, inspect, validate_export, write_report
+from prehnite.review_intake import ReviewIntakeRefused, _allowed_member, inspect, validate_export, write_report
 
 
 def _mask(size=(60, 84), *, empty=False, grayscale=False) -> bytes:
@@ -150,9 +151,15 @@ def test_missing_and_extra_alpha_mattes_refused(tmp_path):
     r"reviewed_masks\WH-S005_human_reviewed.png",
 ])
 def test_traversal_and_unexpected_zip_paths_refused(tmp_path, path):
+    assert not _allowed_member(path)  # Literal unsafe path is always rejected.
     files = _files()
     files[path] = b"x"
-    with pytest.raises(ReviewIntakeRefused, match="unsafe_or_unexpected_archive_member"):
+    # Windows' zipfile writer normalizes backslashes to '/'. In that case
+    # the extra now-valid-looking alpha member must still be rejected.
+    reason = ("unexpected_or_missing_review_masks"
+              if os.name == "nt" and "\\" in path
+              else "unsafe_or_unexpected_archive_member")
+    with pytest.raises(ReviewIntakeRefused, match=reason):
         inspect(_zip(tmp_path, files))
 
 
