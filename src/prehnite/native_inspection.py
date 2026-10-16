@@ -123,7 +123,7 @@ def export_native_inspection(journal: Journal, asset_id: str) -> Path:
         'linear-gradient(-45deg,transparent 75%,#bbb 75%);'
         'background-size:24px 24px;background-position:0 0,0 12px,12px -12px,-12px 0}'
         '.viewport img{display:block;max-width:100%;height:auto}'
-        '#actual:checked ~ .panels .viewport img{max-width:none;width:auto;height:auto}'
+        'main:has(#actual:checked) .viewport img{max-width:none;width:auto;height:auto}'
         '</style></head><body><main><h1>Prehnite / Native inspection</h1>'
         '<p class="hint">Private local evidence · no quality certification · '
         'no network, script, or resampling. Actual pixels means one image pixel '
