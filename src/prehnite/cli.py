@@ -112,6 +112,29 @@ def status(batch_id: str, workspace: Path = typer.Option(Path("workspace"))):
     finally:
         j.close()
 
+
+@app.command()
+def inspect(batch_id: str,
+            asset_id: str = typer.Option(..., "--asset",
+                                         help="One accepted asset slot ID"),
+            workspace: Path = typer.Option(Path("workspace"))):
+    """Generate a private, offline 1:1 inspection page for one verified slot."""
+    from .schema import Asset
+    from .native_inspection import export_native_inspection
+    Asset.check_id(batch_id)
+    Asset.check_id(asset_id)
+    if not (workspace / "batches" / batch_id / "state.sqlite3").is_file():
+        raise typer.BadParameter("No such batch")
+    journal = Journal(workspace, batch_id)
+    try:
+        with journal.launch_exclusive():
+            if journal.worker_active():
+                raise typer.BadParameter("Cannot inspect while a worker is active")
+            path = export_native_inspection(journal, asset_id)
+        typer.echo(str(path))
+    finally:
+        journal.close()
+
 @app.command()
 def export(batch_id: str, workspace: Path = typer.Option(Path("workspace")),
            parquet: bool = typer.Option(False, "--parquet",

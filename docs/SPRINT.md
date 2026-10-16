@@ -12,10 +12,10 @@
 | --- | ---: |
 | Backlog | 14 |
 | Ready | 2 |
-| In progress | 0 |
-| In review | 2 |
+| In progress | 1 |
+| In review | 1 |
 | Blocked | 6 |
-| Done | 51 |
+| Done | 53 |
 
 **WIP limits:** In progress ≤ 2; In review ≤ 3. Counts are issue/PR cards, not unique completed engineering features or a percentage.
 
@@ -49,14 +49,13 @@
 
 | Priority | Work item | Stream | Handoff / blocker |
 | --- | --- | --- | --- |
-| — | No cards currently | — | — |
+| P1 | [Issue #93 — Private native-pixel image and cutout inspection](https://github.com/interzettel/prehnite/issues/93) | Delivery | Code in PR #94; verify native bytes, integrity and no external data. |
 
 ## In review
 
 | Priority | Work item | Stream | Handoff / blocker |
 | --- | --- | --- | --- |
-| P2 | [Issue #91 — Optional typed Parquet exports for offline analytics](https://github.com/interzettel/prehnite/issues/91) | Delivery | Optional Parquet branch reconciled after dashboard merge; latest CI pending. |
-| P2 | [PR #92 — Typed opt-in Parquet metric and slot datasets](https://github.com/interzettel/prehnite/pull/92) | Delivery | Optional Parquet branch reconciled after dashboard merge; latest CI pending. |
+| P1 | [PR #94 — Single-slot native 1:1 comparison and alpha inspection](https://github.com/interzettel/prehnite/pull/94) | Delivery | PR #94 builds private, on-demand full-resolution HTML; CI pending. |
 
 ## Blocked
 
@@ -124,6 +123,8 @@
 | P1 | [PR #82 — Produce/Explore/Experiment and Pareto reporting RFC](https://github.com/interzettel/prehnite/pull/82) | Product strategy | Documentation RFC integrated; human quality and comparable cohorts still future. |
 | P1 | [Issue #89 — Offline analytics panels and versioned summary exports](https://github.com/interzettel/prehnite/issues/89) | Delivery | Integrated offline analytics in #90; CI green. |
 | P1 | [PR #90 — Offline analytics dashboard and summary exports](https://github.com/interzettel/prehnite/pull/90) | Delivery | Integrated offline analytics in #90; CI green. |
+| P2 | [Issue #91 — Optional typed Parquet exports for offline analytics](https://github.com/interzettel/prehnite/issues/91) | Delivery | Optional PyArrow Parquet exports merged PR #92; 8/8 CI green. |
+| P2 | [PR #92 — Typed opt-in Parquet metric and slot datasets](https://github.com/interzettel/prehnite/pull/92) | Delivery | Optional PyArrow Parquet exports merged PR #92; 8/8 CI green. |
 
 ## How to update this board
 

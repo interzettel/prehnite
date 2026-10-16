@@ -674,19 +674,37 @@
       "type": "issue",
       "number": 91,
       "title": "Optional typed Parquet exports for offline analytics",
-      "lane": "In review",
+      "lane": "Done",
       "priority": "P2",
       "stream": "Delivery",
-      "note": "Optional Parquet branch reconciled after dashboard merge; latest CI pending."
+      "note": "Optional PyArrow Parquet exports merged PR #92; 8/8 CI green."
     },
     {
       "type": "pr",
       "number": 92,
       "title": "Typed opt-in Parquet metric and slot datasets",
-      "lane": "In review",
+      "lane": "Done",
       "priority": "P2",
       "stream": "Delivery",
-      "note": "Optional Parquet branch reconciled after dashboard merge; latest CI pending."
+      "note": "Optional PyArrow Parquet exports merged PR #92; 8/8 CI green."
+    },
+    {
+      "type": "issue",
+      "number": 93,
+      "title": "Private native-pixel image and cutout inspection",
+      "lane": "In progress",
+      "priority": "P1",
+      "stream": "Delivery",
+      "note": "Code in PR #94; verify native bytes, integrity and no external data."
+    },
+    {
+      "type": "pr",
+      "number": 94,
+      "title": "Single-slot native 1:1 comparison and alpha inspection",
+      "lane": "In review",
+      "priority": "P1",
+      "stream": "Delivery",
+      "note": "PR #94 builds private, on-demand full-resolution HTML; CI pending."
     }
   ]
 }
