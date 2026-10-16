@@ -157,6 +157,8 @@ class Fal:
         if not isinstance(result, dict):
             raise ValueError("fal queue returned an invalid response object")
         entries = result.get(select)
+        if isinstance(entries, list) and not entries:
+            raise ValueError("Unexpected fal response: empty image list")
         item = entries[0] if isinstance(entries, list) else entries
         if not isinstance(item, dict) or not item.get("url"):
             raise ValueError("Unexpected fal response: missing image URL")
