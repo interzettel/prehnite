@@ -782,10 +782,28 @@
       "type": "issue",
       "number": 105,
       "title": "Attested affine transform and overlap validation contract",
-      "lane": "Backlog",
+      "lane": "In progress",
       "priority": "P2",
       "stream": "Delivery",
-      "note": "#100 follow-up: typed affine schema and deterministic overlap before any resampling; no inference."
+      "note": "V2 operator-attested affine validator in PR #108; no pixel resampling in this tranche."
+    },
+    {
+      "type": "pr",
+      "number": 108,
+      "title": "Provenance-bound affine v2 matrix validator",
+      "lane": "In review",
+      "priority": "P1",
+      "stream": "Delivery",
+      "note": "Review CLI/overlap/orientation and SHA fixtures; 8-job CI pending. No quality calibration."
+    },
+    {
+      "type": "issue",
+      "number": 107,
+      "title": "Experimental Jev typed image/Box judge and staged frame evaluation",
+      "lane": "Backlog",
+      "priority": "P2",
+      "stream": "Quality",
+      "note": "Research issue: TypeSafe 1.14 danger-zone vision + no native video; opt-in, budget-gated and human-calibrated before production."
     }
   ]
 }
