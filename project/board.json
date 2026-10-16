@@ -47,7 +47,7 @@
       "lane": "Backlog",
       "priority": "P2",
       "stream": "Delivery",
-      "note": "Offline dashboards, Parquet and native inspection merged; #98/#99 introduces technical same-grid pixel diagnostics, no perceptual quality."
+      "note": "Offline charts/Parquet/native inspection and conservative pixel-grid v1 merged; human quality calibration and #100 known transform+4K remain."
     },
     {
       "type": "issue",
@@ -728,19 +728,28 @@
       "type": "issue",
       "number": 98,
       "title": "Conservative registered pixel diagnostics",
-      "lane": "In progress",
+      "lane": "Done",
       "priority": "P1",
       "stream": "Delivery",
-      "note": "Initial operator-attested same-grid comparator in PR #99; dynamic registration and tiled 4K deferred."
+      "note": "Completed bounded pixel-grid v1, PR #99 merged, CI green; operator assertion is not automatic registration."
     },
     {
       "type": "pr",
       "number": 99,
       "title": "Verified pixel-grid delta and private diagnostics",
-      "lane": "In review",
+      "lane": "Done",
       "priority": "P1",
       "stream": "Delivery",
-      "note": "Regression tests and Windows/Ubuntu CI pending; no quality-grade claim."
+      "note": "Merged PR #99, 8/8 Windows/Ubuntu CI green; 349 unit tests and synthetic diff artifacts."
+    },
+    {
+      "type": "issue",
+      "number": 100,
+      "title": "Provenance-bound transforms and tiled 4K comparison",
+      "lane": "Backlog",
+      "priority": "P2",
+      "stream": "Delivery",
+      "note": "Follow-up: alignment transforms and 4K memory-bounded metrics; avoid unverified quality labels."
     }
   ]
 }
