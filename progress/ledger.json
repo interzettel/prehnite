@@ -657,22 +657,24 @@
         {
           "id": "R04",
           "name": "Evidence-ledger, milestone roadmap and SVG chart",
-          "state": "active",
+          "state": "done",
           "issue": 14,
           "owner": "Agent cloud",
           "dependsOn": [
             "R02"
-          ]
+          ],
+          "evidence": "https://github.com/interzettel/prehnite/pull/45"
         },
         {
           "id": "R05",
           "name": "Human-first README, badge and original mark",
-          "state": "active",
+          "state": "done",
           "issue": 43,
           "owner": "Agent cloud",
           "dependsOn": [
             "R02"
-          ]
+          ],
+          "evidence": "https://github.com/interzettel/prehnite/pull/45"
         },
         {
           "id": "R06",

@@ -32,10 +32,15 @@ def test_sprint_snapshot_is_reproducible():
 def test_kanban_limit_enforced():
     board_script = load_script("board")
     data = json.loads((ROOT / "project/board.json").read_text(encoding="utf-8"))
-    extra = dict(data["cards"][0])
-    extra["number"] = 99998
-    extra["lane"] = "In progress"
-    data["cards"].append(extra)
+    # The test must not assume the live sprint already fills its WIP slots.
+    for item in data["cards"]:
+        if item["lane"] == "In progress":
+            item["lane"] = "Backlog"
+    for n in range(data["limits"]["max_in_progress"] + 1):
+        extra = dict(data["cards"][0])
+        extra["number"] = 99980 + n
+        extra["lane"] = "In progress"
+        data["cards"].append(extra)
     with pytest.raises(ValueError, match="WIP limit"):
         board_script.validate_board(data)
 

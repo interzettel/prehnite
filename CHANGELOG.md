@@ -19,6 +19,8 @@ This project follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) an
 ### Fixed
 - Fail-closed recovery of uncertain paid calls, single-batch worker locking, and mandatory positive pricing estimates ([PR #10](https://github.com/interzettel/prehnite/pull/10)).
 
+- Reconciled progress evidence after the README and tracker merge; modernized Node 24 GitHub Actions and removed Pillow alpha-coverage deprecation.
+
 ### Security
 - Default no-paid-inference policy; cloud uploads are opt-in.
 - Strict output path confinement, model-licensing separation and untrusted input handling.

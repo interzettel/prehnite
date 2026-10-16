@@ -63,7 +63,7 @@ def make_cutout(source: Path, mask_path: Path, destination: Path,
             raise ValueError("Empty or entire-frame mask cannot be accepted as cutout")
         image.putalpha(alpha)
         image.save(destination, "PNG", optimize=True)
-        coverage = sum(1 for n in alpha.resize((128, 128)).getdata() if n > 127) / 16384
+        coverage = sum(1 for n in alpha.resize((128, 128)).tobytes() if n > 127) / 16384
         return {**image_info(destination), "coverage": coverage, "alpha_extrema": extrema}
 
 

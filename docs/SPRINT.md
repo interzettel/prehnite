@@ -12,10 +12,10 @@
 | --- | ---: |
 | Backlog | 30 |
 | Ready | 1 |
-| In progress | 2 |
+| In progress | 1 |
 | In review | 0 |
 | Blocked | 6 |
-| Done | 4 |
+| Done | 7 |
 
 **WIP limits:** In progress ≤ 2; In review ≤ 3. Counts are issue/PR cards, not unique completed engineering features or a percentage.
 
@@ -64,8 +64,7 @@
 
 | Priority | Work item | Stream | Handoff / blocker |
 | --- | --- | --- | --- |
-| P1 | [Issue #43 — Human-centered README, original vector identity and first-run guide](https://github.com/interzettel/prehnite/issues/43) | Onboarding | Human README, mark and example workflow |
-| P1 | [Issue #14 — Granular evidence-ledger and generated milestone progress tracker](https://github.com/interzettel/prehnite/issues/14) | Tracking | Canonical evidence ledger and generated visual report |
+| P1 | [Issue #46 — Merge-state reconciliation and CI hygiene](https://github.com/interzettel/prehnite/issues/46) | Maintenance | Pillow and GitHub Actions Node runtime warnings. |
 
 ## In review
 
@@ -92,6 +91,9 @@
 | P0 | [PR #10 — Fail-closed paid recovery and evidence chart](https://github.com/interzettel/prehnite/pull/10) | Reliability | Merged into main; offline safety regression tests passed. |
 | P1 | [PR #13 — Agile delivery board and release governance](https://github.com/interzettel/prehnite/pull/13) | Governance | Merged to main; single-source versioning and governance CI. |
 | P0 | [PR #1 — Initial MIT engine foundation](https://github.com/interzettel/prehnite/pull/1) | Foundation | Merged; synthetic demo CI passed. |
+| P1 | [Issue #43 — Human-centered README, original vector identity and first-run guide](https://github.com/interzettel/prehnite/issues/43) | Onboarding | Merged in PR #45; evidence ledger / README published on main. |
+| P1 | [Issue #14 — Granular evidence-ledger and generated milestone progress tracker](https://github.com/interzettel/prehnite/issues/14) | Tracking | Merged in PR #45; evidence ledger / README published on main. |
+| P1 | [PR #45 — Original identity and evidence-based milestone ledger](https://github.com/interzettel/prehnite/pull/45) | Governance | Merged to main; 47 offline tests passed. |
 
 ## How to update this board
 

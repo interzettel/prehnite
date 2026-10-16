@@ -134,10 +134,10 @@
       "type": "issue",
       "number": 43,
       "title": "Human-centered README, original vector identity and first-run guide",
-      "lane": "In progress",
+      "lane": "Done",
       "priority": "P1",
       "stream": "Onboarding",
-      "note": "Human README, mark and example workflow"
+      "note": "Merged in PR #45; evidence ledger / README published on main."
     },
     {
       "type": "issue",
@@ -395,10 +395,28 @@
       "type": "issue",
       "number": 14,
       "title": "Granular evidence-ledger and generated milestone progress tracker",
-      "lane": "In progress",
+      "lane": "Done",
       "priority": "P1",
       "stream": "Tracking",
-      "note": "Canonical evidence ledger and generated visual report"
+      "note": "Merged in PR #45; evidence ledger / README published on main."
+    },
+    {
+      "type": "pr",
+      "number": 45,
+      "title": "Original identity and evidence-based milestone ledger",
+      "lane": "Done",
+      "priority": "P1",
+      "stream": "Governance",
+      "note": "Merged to main; 47 offline tests passed."
+    },
+    {
+      "type": "issue",
+      "number": 46,
+      "title": "Merge-state reconciliation and CI hygiene",
+      "lane": "In progress",
+      "priority": "P1",
+      "stream": "Maintenance",
+      "note": "Pillow and GitHub Actions Node runtime warnings."
     }
   ]
 }
