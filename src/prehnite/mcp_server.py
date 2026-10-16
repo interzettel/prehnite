@@ -61,7 +61,7 @@ def server():
         return jobs.resume(job_id)
 
     @mcp.tool()
-    def export_batch(job_id: str) -> dict:
+    def export_batch(job_id: str, include_parquet: bool = False) -> dict:
         """Export accepted outputs when no worker is writing them."""
         return jobs.export(job_id)
 
