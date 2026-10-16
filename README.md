@@ -30,6 +30,14 @@ The ambition is simple: **spend less per *usable* asset, not merely less per gen
 
 **Free orchestration is non-negotiable.** Prehnite is MIT licensed, runs locally, and has no required account, hosted workflow subscription, or per-seat platform fee. Use a local model where practical; connect to a paid image API *only when you choose to*, with a budget you set.
 
+## Start with a zero-cost local batch
+
+Run `prehnite init --destination my-first-batch` to get two safe sample
+YAML files, then `prehnite doctor` to inspect your Python environment
+without revealing any keys or contacting a service. For details, see
+[the first-run guide](docs/ONBOARDING.md). These commands do not run AI
+image generation or incur any inference costs.
+
 ## Try it in two minutes
 
 You can test the complete workflow without a GPU, credentials, subscription, or inference charge. **The demo creates simple synthetic test images, not AI photographs.**
