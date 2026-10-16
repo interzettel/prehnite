@@ -7,6 +7,7 @@ This project follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) an
 ## [Unreleased]
 
 ### Added
+- Deterministic local provenance.json with verified output geometry/SHA256, provider-stage trace, requested seeds and privacy-minimized source/prompt hashes; changed original source bytes block unsafe resume (#35).
 - Clean wheel/sdist metadata and isolated wheel-install smoke checks on Ubuntu and Windows CI, including init/doctor/validate/run, optional-extras isolation and development-only packaging (#39).
 - No-overwrite `prehnite init` demo scaffolding and secret-safe `prehnite doctor` checks, including an opt-in localhost-only ComfyUI health probe (#37); no GPU/Windows installation certification.
 - Controlled fixed-rubric A/B then B/A positional-bias audit with identity-remapped scores, abstention tracking, deterministic JSON and synthetic zero-cost demonstration (#63); does not claim calibrated judge quality.

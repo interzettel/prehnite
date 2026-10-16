@@ -8,7 +8,7 @@ import shutil
 from pathlib import Path
 from typing import Callable
 
-from .images import image_info, make_cutout, preview_cutout, resize_to
+from .images import image_info, make_cutout, preview_cutout, resize_to, sha256
 from .artifacts import (ArtifactIntegrityError, atomic_copy_image, atomic_resize,
                         temporary_sibling, verified_image)
 from .judges import HaikuJudge, check_verdict, technical
@@ -43,6 +43,29 @@ class Engine:
         self.journal.set_fact("configuration_sha256", checksum)
         self.journal.set_fact("manifest", manifest.model_dump())
         self.journal.set_fact("profile", profile.model_dump())
+        self.verify_input_sources()
+
+    def verify_input_sources(self) -> None:
+        # The manifest/profile fingerprint does not include original-image bytes.
+        # Without this guard a cached accepted export might be represented as
+        # deriving from a different source than the one originally processed.
+        fingerprints = {
+            asset.id: sha256(resolve_input(self.inputs, asset.source))
+            for asset in self.manifest.assets if asset.source
+        }
+        old = self.journal.fact("input_file_sha256")
+        if old is None:
+            if fingerprints and self.journal.fact("results", {}):
+                raise ArtifactIntegrityError(
+                    "Legacy accepted batch has no original-input fingerprints; "
+                    "verify it manually and start a new batch ID"
+                )
+            self.journal.set_fact("input_file_sha256", fingerprints)
+        elif old != fingerprints:
+            raise ArtifactIntegrityError(
+                "Original input bytes changed since batch started; "
+                "start a new batch ID to protect provenance"
+            )
 
     def cost(self, stage: str) -> float:
         if not self.profile.costs.allow_paid:
@@ -369,6 +392,7 @@ class Engine:
             return self._run_locked()
 
     def _run_locked(self) -> dict:
+        self.verify_input_sources()
         results = self.journal.fact("results", {})
         for asset in self.manifest.assets:
             if results.get(asset.id, {}).get("status") == "accepted":
