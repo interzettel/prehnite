@@ -256,9 +256,9 @@ class Journal:
             if current in ("completed", "cancelled", "failed", "superseded"):
                 status = current
             elif command == "cancel":
-                live_launch = (current == "launching" and
-                               time.time() - row["launched_at"] < 30)
-                status = ("cancel_requested" if worker_active or live_launch
+                fresh_pending = (current in ("launching", "cancel_requested")
+                                 and time.time() - row["launched_at"] < 30)
+                status = ("cancel_requested" if worker_active or fresh_pending
                           else "cancelled")
             elif current == "cancel_requested":
                 status = current
