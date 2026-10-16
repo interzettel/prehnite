@@ -296,10 +296,10 @@
       "type": "issue",
       "number": 25,
       "title": "Judge schema and A/B order-bias tests",
-      "lane": "Backlog",
+      "lane": "Ready",
       "priority": "P1",
       "stream": "Quality",
-      "note": "A/B judge schema/order bias"
+      "note": "Next independent offline quality judge/schema and A/B order-bias contracts"
     },
     {
       "type": "issue",
@@ -314,10 +314,10 @@
       "type": "issue",
       "number": 23,
       "title": "ComfyUI queue resume and error-state contract",
-      "lane": "Ready",
+      "lane": "Done",
       "priority": "P1",
       "stream": "Local GPU",
-      "note": "Next: ComfyUI queue error/cancellation/history replay state contracts"
+      "note": "Merged PR #59: offline ComfyUI queue recovery; 163 tests passed"
     },
     {
       "type": "issue",
@@ -480,6 +480,15 @@
       "priority": "P1",
       "stream": "Local GPU",
       "note": "Merged; 139 offline tests passed, no local model weights"
+    },
+    {
+      "type": "pr",
+      "number": 59,
+      "title": "ComfyUI fail-closed queue recovery and bounded result download",
+      "lane": "Done",
+      "priority": "P1",
+      "stream": "Local GPU",
+      "note": "Merged; 163 offline tests passed. No GPU/model conformance claimed."
     }
   ]
 }

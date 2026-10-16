@@ -283,13 +283,14 @@
         {
           "id": "P07",
           "name": "ComfyUI queue/recovery without duplicate submits",
-          "state": "planned",
+          "state": "done",
           "issue": 23,
           "owner": "Agent cloud",
           "dependsOn": [
             "P06",
             "C02"
-          ]
+          ],
+          "evidence": "https://github.com/interzettel/prehnite/pull/59"
         },
         {
           "id": "P08",
