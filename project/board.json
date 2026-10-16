@@ -858,6 +858,24 @@
       "priority": "P1",
       "stream": "Quality",
       "note": "Merged offline gold Brier/ECE/abstention/cost evaluation in #114; 459 passed, 8/8 CI."
+    },
+    {
+      "type": "issue",
+      "number": 116,
+      "title": "Unified decision-model contract and bounded offline auto-repair policy",
+      "lane": "In progress",
+      "priority": "P1",
+      "stream": "Quality",
+      "note": "Owner approved mixed assets and bounded local repair; policy contract and synthetic fixture PR #117, no provider calls."
+    },
+    {
+      "type": "pr",
+      "number": 117,
+      "title": "Provider-neutral typed decisions and bounded local candidate policy",
+      "lane": "In review",
+      "priority": "P1",
+      "stream": "Quality",
+      "note": "Testing capability guards, product/portrait synthetic actions, spend/accepted protection. Not yet connected to production executor."
     }
   ]
 }
