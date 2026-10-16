@@ -166,7 +166,13 @@ class Journal:
                 "launching", "pause_requested", "cancel_requested"):
             raise JobStopped("superseded")
         if record["status"] == "launching":
-            self._job_update(token, "running")
+            cursor = self.db.execute(
+                """UPDATE job_control SET status='running',updated_at=?
+                   WHERE singleton=1 AND token=? AND status='launching'""",
+                (time.time(), token))
+            self.db.commit()
+            if cursor.rowcount != 1:
+                self.job_checkpoint(token)
 
     def _job_update(self, token: str, status: str, *,
                     current_asset: str | None = None,
@@ -193,19 +199,37 @@ class Journal:
         if record["status"] != "running":
             raise JobStopped("superseded")
         if asset_id is not None:
-            self._job_update(token, "running", current_asset=asset_id)
+            # Do not overwrite a concurrent stop request with a stale 'running'.
+            cursor = self.db.execute(
+                """UPDATE job_control SET current_asset=?,updated_at=?
+                   WHERE singleton=1 AND token=? AND status='running'""",
+                (asset_id, time.time(), token))
+            self.db.commit()
+            if cursor.rowcount != 1:
+                self.job_checkpoint(token)
 
     def job_finish(self, token: str, status: str, detail: str | None = None) -> None:
         if status not in ("paused", "cancelled", "completed", "failed"):
             raise ValueError("Invalid terminal state")
-        record = self.job_record()
-        if not record or record["token"] != token:
-            raise JobStopped("superseded")
-        if record["status"] == "cancel_requested":
-            status = "cancelled"
-        elif record["status"] == "pause_requested" and status == "completed":
-            status = "paused"
-        self._job_update(token, status, detail=(detail or "")[:240] or None)
+        self.db.execute("BEGIN IMMEDIATE")
+        try:
+            record = self.job_record()
+            if not record or record["token"] != token:
+                raise JobStopped("superseded")
+            if record["status"] == "cancel_requested":
+                status = "cancelled"
+            elif record["status"] == "pause_requested" and status == "completed":
+                status = "paused"
+            cursor = self.db.execute(
+                """UPDATE job_control SET status=?,updated_at=?,current_asset=NULL,detail=?
+                   WHERE singleton=1 AND token=?""",
+                (status, time.time(), (detail or "")[:240] or None, token))
+            if cursor.rowcount != 1:
+                raise JobStopped("superseded")
+            self.db.commit()
+        except BaseException:
+            self.db.rollback()
+            raise
 
     def job_command(self, command: str, *, worker_active: bool) -> dict:
         """Serialize concurrent controls; commands are requests, not kill signals."""
@@ -244,7 +268,7 @@ class Journal:
             raise
 
     @contextmanager
-    def _file_lock(self, name: str):
+    def _file_lock(self, name: str, *, blocking: bool = False):
         """Nonblocking kernel lock; persistent files are not liveness signals."""
         path = self.root / name
         with path.open("a+b") as handle:
@@ -255,10 +279,10 @@ class Journal:
                         handle.write(b"0")
                         handle.flush()
                     handle.seek(0)
-                    msvcrt.locking(handle.fileno(), msvcrt.LK_NBLCK, 1)
+                    msvcrt.locking(handle.fileno(), (msvcrt.LK_LOCK if blocking else msvcrt.LK_NBLCK), 1)
                 else:
                     import fcntl
-                    fcntl.flock(handle.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
+                    fcntl.flock(handle.fileno(), fcntl.LOCK_EX | (0 if blocking else fcntl.LOCK_NB))
             except OSError as exc:
                 raise RuntimeError(
                     "Batch already has a running worker; refusing concurrent execution"
@@ -278,7 +302,7 @@ class Journal:
 
     @contextmanager
     def launch_exclusive(self):
-        with self._file_lock("launch.lock"):
+        with self._file_lock("launch.lock", blocking=True):
             yield
 
     def worker_active(self) -> bool:
