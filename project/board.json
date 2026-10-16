@@ -359,10 +359,10 @@
       "type": "issue",
       "number": 18,
       "title": "Content-addressed cache with privacy isolation",
-      "lane": "Backlog",
+      "lane": "In review",
       "priority": "P1",
       "stream": "Runtime",
-      "note": "Cache with privacy-scoped keys"
+      "note": "Stage cache merged in PR #80 and tests passed; C07 ledger evidence reconciliation pending docs PR #88."
     },
     {
       "type": "issue",
@@ -606,6 +606,15 @@
       "priority": "P1",
       "stream": "Benchmark",
       "note": "Merged PR #84; cross-platform CI synthetic recovery benchmark evidence; no paid inference."
+    },
+    {
+      "type": "pr",
+      "number": 88,
+      "title": "Reconcile C07 merged cache evidence and progress tracker",
+      "lane": "In review",
+      "priority": "P1",
+      "stream": "Tracking",
+      "note": "Docs-only: C07 credit from merged PR #80; CI and review required."
     }
   ]
 }
