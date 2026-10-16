@@ -242,10 +242,10 @@
       "type": "issue",
       "number": 31,
       "title": "Targeted repair planner for failed cutouts",
-      "lane": "In progress",
+      "lane": "In review",
       "priority": "P1",
       "stream": "Cutouts",
-      "note": "Journal-backed offline product fringe repair demo in progress; portrait refusal; full S03/S05 remain unverified."
+      "note": "PR #119 review-ready: journaled offline product correction and portrait refusal, 516 unit passed; full S03/S05 still open."
     },
     {
       "type": "issue",
