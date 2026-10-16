@@ -3,11 +3,14 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 import shutil
 from pathlib import Path
 from typing import Callable
 
 from .images import image_info, make_cutout, preview_cutout, resize_to
+from .artifacts import (ArtifactIntegrityError, atomic_copy_image, atomic_resize,
+                        temporary_sibling, verified_image)
 from .judges import HaikuJudge, technical
 from .manifest import resolve_input, validate_job
 from .providers import get_provider
@@ -56,9 +59,14 @@ class Engine:
     def stage(self, key: str, stage: str, endpoint: Endpoint, output: Path,
               invoke: Callable, price_key: str = "") -> Path:
         previous = self.journal.get(key)
-        if previous and previous["status"] == "completed" and output.is_file():
-            image_info(output)
-            return output
+        if previous and previous["status"] == "completed":
+            try:
+                verified_image(output, previous["data"].get("artifact_sha256"))
+                return output
+            except ArtifactIntegrityError:
+                # A completed stage with a lost/corrupt output must never be
+                # trusted. A known paid request ID permits *retrieval*, not resubmit.
+                pass
         paid = endpoint.provider in ("fal", "anthropic")
         if previous and previous["status"] == "uncertain":
             raise RuntimeError(f"Ambiguous remote submission {key}: reconcile before retry")
@@ -84,12 +92,20 @@ class Engine:
                              path=str(output), provider=endpoint.provider,
                              model=endpoint.model, reserved_usd=estimate)
         try:
-            result = invoke(on_submit, resume_id)
-            image_info(result.path)
+            with temporary_sibling(output) as temp:
+                result = invoke(on_submit, resume_id, temp)
+                if result.path.resolve() != temp.resolve():
+                    raise ValueError("Provider wrote outside the atomic staging target")
+                info = image_info(temp)
+                # The existing published output survives an interrupted provider
+                # write, and only fully decoded bytes cross this atomic boundary.
+                os.replace(temp, output)
+            metadata = {**result.metadata, "artifact_sha256": info["sha256"],
+                        "artifact_bytes": output.stat().st_size}
             self.journal.put(key, stage, "completed", request_id=resume_id,
                              path=str(output), provider=endpoint.provider,
                              model=endpoint.model, reserved_usd=estimate,
-                             data=result.metadata)
+                             data=metadata)
             return output
         except Exception as exc:
             # A failed remote get() with a request ID can be resumed without rebilling.
@@ -109,21 +125,19 @@ class Engine:
         seed = (asset.seed if asset.seed is not None else
                 int(hashlib.sha256(asset.id.encode()).hexdigest()[:8], 16)) + attempt - 1
         self.stage(prefix + ":generate", "generation", ep, original,
-                   lambda on_submit, resume: provider.generate(
-                       asset.prompt, asset.aspect_ratio, tier, seed, original, ep,
+                   lambda on_submit, resume, temp: provider.generate(
+                       asset.prompt, asset.aspect_ratio, tier, seed, temp, ep,
                        on_submit, resume), f"generation:{tier}")
         if variant == "enhanced_2k":
             ep = self.profile.upscale
             provider = get_provider(ep)
             up = root / "upscaled.png"
             self.stage(prefix + ":upscale", "upscaling", ep, up,
-                       lambda on_submit, resume: provider.upscale(
-                           original, up, ep, on_submit, resume), "upscale")
+                       lambda on_submit, resume, temp: provider.upscale(
+                           original, temp, ep, on_submit, resume), "upscale")
             original = up
         final = root / "final.png"
-        if not final.is_file():
-            resize_to(original, final, asset.target_size)
-        image_info(final)
+        atomic_resize(original, final, asset.target_size)
         return final
 
     def adjudicate(self, asset: Asset, candidates: dict[str, Path],
@@ -189,8 +203,8 @@ class Engine:
         mask = root / "mask.png"
         key = f"{asset.id}:cutout:{name}:mask"
         self.stage(key, "segmentation", ep, mask,
-                   lambda on_submit, resume: provider.segment(
-                       selected, name, mask, ep, on_submit, resume), "segmentation")
+                   lambda on_submit, resume, temp: provider.segment(
+                       selected, name, temp, ep, on_submit, resume), "segmentation")
         # Retry is a real edge-refinement alternative, not a redundant paid model call.
         problems = []
         for refine in (False, True)[:self.profile.policy.maximum_attempts]:
@@ -237,21 +251,42 @@ class Engine:
                                          data={"score": score, "reason": verdict.reason})
                     if score < self.profile.policy.minimum_score:
                         raise ValueError("Cutout visual score below configured threshold")
-                target_output.parent.mkdir(parents=True, exist_ok=True)
-                shutil.copy2(output, target_output)
+                atomic_copy_image(output, target_output)
                 return {"status": "accepted", "stats": stats, "refined": refine}
             except ValueError as exc:
                 problems.append(str(exc))
         raise ValueError("Cutout rejected: " + "; ".join(problems))
 
+    def selected_checksums(self, outputs: list[str]) -> dict[str, str]:
+        root = (self.journal.root / "selected").resolve()
+        hashes = {}
+        for name in outputs:
+            path = (root / name).resolve()
+            if not path.is_relative_to(root):
+                raise ArtifactIntegrityError("Selected output escapes batch directory")
+            hashes[name] = image_info(path)["sha256"]
+        return hashes
+
+    def validate_saved_outputs(self, saved: dict) -> None:
+        root = (self.journal.root / "selected").resolve()
+        hashes = saved.get("outputs_sha256", {})
+        for name in saved.get("outputs", []):
+            path = (root / name).resolve()
+            if not path.is_relative_to(root):
+                raise ArtifactIntegrityError("Selected output escapes batch directory")
+            verified_image(path, hashes.get(name))
+
     def process(self, asset: Asset) -> dict:
         output_root = self.journal.root / "selected"
         final_output = output_root / asset.output.image
         saved = self.journal.fact("results", {}).get(asset.id)
-        if saved and saved.get("status") == "accepted" and all(
-            (output_root / path).is_file() for path in saved["outputs"]):
+        if saved and saved.get("integrity_error"):
+            raise ArtifactIntegrityError(saved["reason"])
+        if saved and saved.get("status") == "accepted":
+            self.validate_saved_outputs(saved)
             return saved
-        if saved and saved.get("status") == "failed_cutouts" and final_output.is_file():
+        if saved and saved.get("status") == "failed_cutouts":
+            self.validate_saved_outputs(saved)
             outputs = [asset.output.image]
             failures = []
             for target in asset.targets:
@@ -265,7 +300,8 @@ class Engine:
                 except ValueError as exc:
                     failures.append(str(exc))
             return {**saved, "status": "failed_cutouts" if failures else "accepted",
-                    "outputs": outputs, "reason": "; ".join(failures)}
+                    "outputs": outputs, "outputs_sha256": self.selected_checksums(outputs),
+                    "reason": "; ".join(failures)}
         last_reason = "No acceptable candidate"
         for attempt in range(1, self.profile.policy.maximum_attempts + 1):
             candidates: dict[str, Path] = {}
@@ -288,8 +324,7 @@ class Engine:
                 if asset.source:
                     break  # A fixed source cannot improve by repeating an identical judge call.
                 continue
-            final_output.parent.mkdir(parents=True, exist_ok=True)
-            resize_to(candidates[winner], final_output, asset.target_size)
+            atomic_resize(candidates[winner], final_output, asset.target_size)
             outputs = [asset.output.image]
             cutout_failures = []
             for target in asset.targets:
@@ -302,9 +337,11 @@ class Engine:
             if cutout_failures:
                 # Keep accepted image; next run can retry only failed cutout.
                 return {"status": "failed_cutouts", "outputs": outputs,
+                        "outputs_sha256": self.selected_checksums(outputs),
                         "reason": "; ".join(cutout_failures),
                         "winning_variant": winner, "quality_score": score}
             return {"status": "accepted", "outputs": outputs,
+                    "outputs_sha256": self.selected_checksums(outputs),
                     "winning_variant": winner, "quality_score": score,
                     "visual_quality_verified": score is not None,
                     "reason": reason, "attempt": attempt}
@@ -317,16 +354,26 @@ class Engine:
     def _run_locked(self) -> dict:
         results = self.journal.fact("results", {})
         for asset in self.manifest.assets:
-            if results.get(asset.id, {}).get("status") == "accepted" and all(
-                (self.journal.root / "selected" / path).is_file()
-                for path in results[asset.id].get("outputs", [])):
-                continue
+            if results.get(asset.id, {}).get("status") == "accepted":
+                try:
+                    self.validate_saved_outputs(results[asset.id])
+                except ArtifactIntegrityError as exc:
+                    results[asset.id] = {"status": "error", "outputs": [],
+                                         "integrity_error": True, "reason": str(exc)}
+                    self.journal.set_fact("results", results)
+                    export_report(self.journal)
+                    continue
+                else:
+                    continue
             try:
                 result = self.process(asset)
             except BudgetExceeded:
                 self.journal.set_fact("results", results)
                 export_report(self.journal)
                 raise
+            except ArtifactIntegrityError as exc:
+                result = {"status": "error", "outputs": [], "integrity_error": True,
+                          "reason": str(exc)[:500]}
             except Exception as exc:
                 result = {"status": "error", "outputs": [], "reason": str(exc)[:500]}
             results[asset.id] = result
