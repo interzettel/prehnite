@@ -43,6 +43,13 @@ def inventory(source: Path) -> tuple[dict, list[tuple[str, str, bytes]]]:
         inspected = []
         rows = []
         for entry in members:
+            # Validate the literal ZIP member path, not merely the shape
+            # of its final components. A prefix of ".." previously matched
+            # the optional top-level folder even though no extraction occurs.
+            parts = entry.filename.split("/")
+            if (entry.filename.startswith("/") or "\\\\" in entry.filename
+                    or any(part in ("", ".", "..") for part in parts)):
+                raise PilotRefused("unexpected_or_encrypted_member")
             match = _PATTERN.fullmatch(entry.filename)
             if (not match or entry.flag_bits & 1 or entry.file_size < 1
                     or entry.file_size > _MAX_IMAGE):
