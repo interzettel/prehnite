@@ -33,9 +33,8 @@ def execute(tmp_path, *, source=None, mask=None, **kwargs):
     source, mask = (source, mask) if source is not None else images(tmp_path)
     journal = Journal(tmp_path, "offline-repair-test")
     try:
-        return run_product_repair(
-            journal, source, mask, asset_id="product-001",
-            target_id="cup", **kwargs)
+        options = {"asset_id": "product-001", "target_id": "cup", **kwargs}
+        return run_product_repair(journal, source, mask, **options)
     finally:
         journal.close()
 
