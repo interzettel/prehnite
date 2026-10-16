@@ -1,22 +1,22 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 184" role="img" aria-labelledby="name description">
 <title id="name">Prehnite</title>
 <desc id="description">Prehnite wordmark alongside an angular green mineral mark made of six asymmetric flat facets.</desc>
-<rect width="920" height="184" rx="15" fill="#f7f8f5"/>
+<rect width="920" height="184" rx="15" fill="#F6EFE2"/>
 <g transform="translate(26,15)">
-  <path d="M66 4 111 24 134 68 113 117 71 150 25 129 7 84 27 35Z" fill="#dbece2" stroke="#1c564e" stroke-width="3" stroke-linejoin="round"/>
-  <path d="M66 4 67 57 27 35Z" fill="#98cab5"/>
-  <path d="M66 4 111 24 93 66 67 57Z" fill="#5aaf92"/>
-  <path d="M111 24 134 68 93 66Z" fill="#266e61"/>
-  <path d="M134 68 113 117 75 94 93 66Z" fill="#77b59d"/>
-  <path d="M113 117 71 150 75 94Z" fill="#3b927b"/>
-  <path d="M71 150 25 129 7 84 44 82 75 94Z" fill="#bed8c7"/>
-  <path d="M7 84 27 35 67 57 44 82Z" fill="#eaf4e8"/>
-  <path d="M67 57 93 66 75 94 44 82Z" fill="#d8e9d5"/>
-  <path d="M67 57 75 94 44 82Z" fill="#abd0b6"/>
-  <path d="M67 57 93 66 75 94Z" fill="#c6dbbf"/>
-  <path d="M27 35 44 82" fill="none" stroke="#1c564e" stroke-width="1" opacity=".6"/>
+  <path d="M66 4 111 24 134 68 113 117 71 150 25 129 7 84 27 35Z" fill="#E9E0C8" stroke="#075231" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M66 4 67 57 27 35Z" fill="#F7655B"/>
+  <path d="M66 4 111 24 93 66 67 57Z" fill="#075231"/>
+  <path d="M111 24 134 68 93 66Z" fill="#06432B"/>
+  <path d="M134 68 113 117 75 94 93 66Z" fill="#C34F43"/>
+  <path d="M113 117 71 150 75 94Z" fill="#F7655B"/>
+  <path d="M71 150 25 129 7 84 44 82 75 94Z" fill="#E8D3BF"/>
+  <path d="M7 84 27 35 67 57 44 82Z" fill="#FFF9EC"/>
+  <path d="M67 57 93 66 75 94 44 82Z" fill="#F2A296"/>
+  <path d="M67 57 75 94 44 82Z" fill="#E9B19C"/>
+  <path d="M67 57 93 66 75 94Z" fill="#D8CBB8"/>
+  <path d="M27 35 44 82" fill="none" stroke="#075231" stroke-width="1" opacity=".6"/>
 </g>
-<text x="190" y="95" fill="#203e37" font-family="Inter,Segoe UI,Helvetica Neue,Arial,sans-serif" font-size="70" font-weight="650" letter-spacing="-4.6">prehnite</text>
-<path d="M190 113H843" stroke="#c4d9ce" stroke-width="2"/>
-<text x="194" y="143" fill="#61746a" font-family="Inter,Segoe UI,Helvetica Neue,Arial,sans-serif" font-size="19" font-weight="500" letter-spacing="1.25">MAKE THE BATCH. KEEP THE BEST.</text>
+<text x="190" y="95" fill="#075231" font-family="Inter,Segoe UI,Helvetica Neue,Arial,sans-serif" font-size="70" font-weight="650" letter-spacing="-4.6">prehnite</text>
+<path d="M190 113H843" stroke="#F7655B" stroke-width="2"/>
+<text x="194" y="143" fill="#A63D35" font-family="Inter,Segoe UI,Helvetica Neue,Arial,sans-serif" font-size="19" font-weight="500" letter-spacing="1.25">MAKE THE BATCH. KEEP THE BEST.</text>
 </svg>
