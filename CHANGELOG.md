@@ -7,6 +7,7 @@ This project follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) an
 ## [Unreleased]
 
 ### Added
+- Proposed batch-objective and Pareto evaluation RFC distinguishing distinct-deliverable production from creative exploration and controlled experiments; specifies offline chart provenance, comparable benchmark metrics and human-quality limitations (#81; planning only, no runtime or readiness credit).
 - Explicitly opt-in, privacy-scoped immutable stage cache keyed by exact input/model/version/options and SHA256; cached paid inference requires extra consent and pinned revision, with no retry of ambiguous prior paid requests (#18).
 - Offline batch economics and attempt-timing telemetry: append-only SQLite attempt evidence, per-stage retries/p95 local durations, reserved USD per accepted asset and explicitly unknown provider invoices (#34). Synthetic 90-asset regression fixtures; no paid runs.
 - Deterministic local provenance.json with verified output geometry/SHA256, provider-stage trace, requested seeds and privacy-minimized source/prompt hashes; changed original source bytes block unsafe resume (#35).
