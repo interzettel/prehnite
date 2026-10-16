@@ -93,7 +93,7 @@
 <g><title>D08: Safe MCP pause/cancel/reconnect semantics [planned] issue/PR #38</title><rect x="811" y="796" width="105" height="16" rx="2" fill="#dce0dd"/></g>
 <g><title>D09: Clean Windows and Linux wheel/sdist install smoke matrix [done] issue/PR #39</title><rect x="919" y="796" width="105" height="16" rx="2" fill="#277e74"/></g>
 <g><title>D10: 90-asset no-cost CLI/MCP fixture bundle [planned] issue/PR #41</title><rect x="1027" y="796" width="105" height="16" rx="2" fill="#dce0dd"/></g>
-<text x="1140" y="826" text-anchor="end" font-size="11" fill="#6b7972">Open gate: D09, D10</text>
+<text x="1140" y="826" text-anchor="end" font-size="11" fill="#6b7972">Open gate: D10</text>
 <rect x="35" y="843" width="1130" height="103" rx="10" fill="#fff" stroke="#d8ddd7"/>
 <text x="55" y="868" font-size="17" font-weight="650" fill="#1d302b">M6 · Community and first release</text>
 <text x="1140" y="868" font-size="16" text-anchor="end" font-weight="650" fill="#277e74">5/10 · 50.0%</text>
