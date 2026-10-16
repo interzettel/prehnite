@@ -651,6 +651,24 @@
       "priority": "P1",
       "stream": "Tracking",
       "note": "Other review-ready PR, all six CI checks passed; not merged."
+    },
+    {
+      "type": "issue",
+      "number": 91,
+      "title": "Optional typed Parquet exports for offline analytics",
+      "lane": "Blocked",
+      "priority": "P2",
+      "stream": "Delivery",
+      "note": "Stacked feature work implemented on draft PR #92; blocked on parent #90 and review slot, CI pending."
+    },
+    {
+      "type": "pr",
+      "number": 92,
+      "title": "Typed opt-in Parquet metric and slot datasets",
+      "lane": "Blocked",
+      "priority": "P2",
+      "stream": "Delivery",
+      "note": "Stacked draft against PR #90 branch; parent merge/rebase and optional CI checks required."
     }
   ]
 }
