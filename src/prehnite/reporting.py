@@ -118,7 +118,7 @@ def _zip_add(archive: zipfile.ZipFile, name: str, body: bytes) -> None:
     archive.writestr(info, body, compress_type=zipfile.ZIP_DEFLATED, compresslevel=6)
 
 
-def package(journal: Journal) -> Path:
+def package(journal: Journal, *, include_parquet: bool = False) -> Path:
     """Publish a deterministic archive with a digest manifest after verification."""
     results = journal.fact("results", {})
     selected = (journal.root / "selected").resolve()
