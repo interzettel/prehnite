@@ -15,7 +15,7 @@
 | In progress | 2 |
 | In review | 1 |
 | Blocked | 6 |
-| Done | 64 |
+| Done | 67 |
 
 **WIP limits:** In progress ≤ 2; In review ≤ 3. Counts are issue/PR cards, not unique completed engineering features or a percentage.
 
@@ -37,7 +37,7 @@
 | P1 | [Issue #29 — Transparent alpha matting and halo removal](https://github.com/interzettel/prehnite/issues/29) | Cutouts | Edge alpha matting |
 | P2 | [Issue #27 — Local aesthetic and fidelity judge plugin boundary](https://github.com/interzettel/prehnite/issues/27) | Quality | Optional local weights and licenses |
 | P1 | [Issue #68 — Opt-in original-input gallery comparison with privacy consent](https://github.com/interzettel/prehnite/issues/68) | Delivery | Follow-up to #33: never embed private originals without opt-in |
-| P2 | [Issue #107 — Experimental Jev typed image/Box judge and staged frame evaluation](https://github.com/interzettel/prehnite/issues/107) | Quality | Jev 1.14 visual judge is experimental; mock-only Stage A child #109 / PR #110, no live transport or spend. |
+| P2 | [Issue #107 — Experimental Jev typed image/Box judge and staged frame evaluation](https://github.com/interzettel/prehnite/issues/107) | Quality | Stage A mock merged, live Jev disabled; Stage B official wire fixtures/calibration #111 next. Vision/Box experimental. |
 
 ## Ready
 
@@ -50,14 +50,14 @@
 
 | Priority | Work item | Stream | Handoff / blocker |
 | --- | --- | --- | --- |
-| P2 | [Issue #100 — Provenance-bound transforms and tiled 4K comparison](https://github.com/interzettel/prehnite/issues/100) | Delivery | v1 tiled translation and v2 affine schema merged; actual affine executor and 4K resampling remain. |
-| P1 | [Issue #109 — Jev experimental visual-judge typed contract, media and budget preflight](https://github.com/interzettel/prehnite/issues/109) | Quality | PR #110 mock-only; verified no transport/paid calls, 8-job CI pending. |
+| P2 | [Issue #100 — Provenance-bound transforms and tiled 4K comparison](https://github.com/interzettel/prehnite/issues/100) | Delivery | Integer 4K tiles + SHA-bound affine v2 validator merged; real affine warp/execution still open. |
+| P1 | [Issue #111 — Jev Stage B mock wire fixtures and gold-set calibration](https://github.com/interzettel/prehnite/issues/111) | Quality | Official-shape Jev mock request/response fixtures in PR #113; gold-set calibration remains open. |
 
 ## In review
 
 | Priority | Work item | Stream | Handoff / blocker |
 | --- | --- | --- | --- |
-| P1 | [PR #110 — Offline typed visual judge mock and Jev opt-in preflight](https://github.com/interzettel/prehnite/pull/110) | Quality | Internal typed schemas and mock fixtures; no TypeSafe API calls or auto acceptance. |
+| P1 | [PR #113 — Documented TypeSafe Jev official-shape offline wire fixtures](https://github.com/interzettel/prehnite/pull/113) | Quality | Probability/level semantics and Box absence masking; 8-job CI pending, no API/paid transport. |
 
 ## Blocked
 
@@ -138,6 +138,9 @@
 | P1 | [PR #104 — Provenance-bound translated 4K tile diagnostics](https://github.com/interzettel/prehnite/pull/104) | Delivery | Merged PR #104, 8/8 cross-platform CI; attested SHA-bound integer shifts and 4K tile diagnostics. |
 | P2 | [Issue #105 — Attested affine transform and overlap validation contract](https://github.com/interzettel/prehnite/issues/105) | Delivery | Scoped affine v2 validation completed in merged #108 with 8/8 green CI; executor remains in #100. |
 | P1 | [PR #108 — Provenance-bound affine v2 matrix validator](https://github.com/interzettel/prehnite/pull/108) | Delivery | Merged #108, 381 unit tests and 8/8 checks; versioned SHA-bound operator affine validator. |
+| P1 | [Issue #109 — Jev experimental visual-judge typed contract, media and budget preflight](https://github.com/interzettel/prehnite/issues/109) | Quality | Mock-only Jev Stage A merged #110, eight green checks, no spend; parent #107 open. |
+| P1 | [PR #110 — Offline typed visual judge mock and Jev opt-in preflight](https://github.com/interzettel/prehnite/pull/110) | Quality | Merged PR #110: typed Jev mock/media/price preflight, 403 tests passed, 8/8 CI. |
+| P2 | [PR #112 — Close Jev Stage A sprint cards and queue Stage B](https://github.com/interzettel/prehnite/pull/112) | Governance | Merged Stage A board closeout PR #112, all CI checks passed. |
 
 ## How to update this board
 
