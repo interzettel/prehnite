@@ -12,9 +12,9 @@
 | --- | ---: |
 | Backlog | 14 |
 | Ready | 2 |
-| In progress | 0 |
-| In review | 0 |
-| Blocked | 6 |
+| In progress | 1 |
+| In review | 1 |
+| Blocked | 8 |
 | Done | 49 |
 
 **WIP limits:** In progress ≤ 2; In review ≤ 3. Counts are issue/PR cards, not unique completed engineering features or a percentage.
@@ -26,7 +26,7 @@
 | P2 | [Issue #2 — ComfyUI integration on real hardware](https://github.com/interzettel/prehnite/issues/2) | Local GPU | Generic adapter exists; hardware and actual workflow integration remain. |
 | P1 | [Issue #3 — Reliable segmentation and matting](https://github.com/interzettel/prehnite/issues/3) | Quality | Blocked downstream on model contracts and sample corpus. |
 | P2 | [Issue #4 — Local quality judges and crop QA](https://github.com/interzettel/prehnite/issues/4) | Quality | Must calibrate before quality gates use local scores. |
-| P2 | [Issue #6 — Offline visual reports and exports](https://github.com/interzettel/prehnite/issues/6) | Delivery | Need contact sheets, per-asset comparators and analytics. |
+| P2 | [Issue #6 — Offline visual reports and exports](https://github.com/interzettel/prehnite/issues/6) | Delivery | Analytics gallery implemented in PR #90; Parquet separately stacked #92. |
 | P2 | [Issue #8 — Windows MCP lifecycle and packaging](https://github.com/interzettel/prehnite/issues/8) | Runtime | Process cancellation, reconnection and Windows tests. |
 | P0 | [Issue #5 — Crash recovery, pricing and billing hardening](https://github.com/interzettel/prehnite/issues/5) | Reliability | Safety tranche #10 merged; remaining tasks #15–#18, ownership unclaimed. |
 | P2 | [Issue #44 — Synchronize canonical issue ledger with organization GitHub Projects v2](https://github.com/interzettel/prehnite/issues/44) | Tracking | GitHub Project #1 sync needs Projects v2 write permission |
@@ -49,13 +49,13 @@
 
 | Priority | Work item | Stream | Handoff / blocker |
 | --- | --- | --- | --- |
-| — | No cards currently | — | — |
+| P1 | [Issue #89 — Offline analytics panels and versioned summary exports](https://github.com/interzettel/prehnite/issues/89) | Delivery | Green cross-platform synthetic dashboard PR #90; merge pending. |
 
 ## In review
 
 | Priority | Work item | Stream | Handoff / blocker |
 | --- | --- | --- | --- |
-| — | No cards currently | — | — |
+| P1 | [PR #90 — Offline analytics dashboard and summary exports](https://github.com/interzettel/prehnite/pull/90) | Delivery | Reconciled after failure taxonomy #87; cross-platform CI required. |
 
 ## Blocked
 
@@ -67,6 +67,8 @@
 | P1 | [Issue #28 — Reference corpus and human calibration protocol](https://github.com/interzettel/prehnite/issues/28) | Quality | Owner-approved reference images / human calibration |
 | P1 | [Issue #24 — 8GB VRAM local inference feasibility benchmark](https://github.com/interzettel/prehnite/issues/24) | Local GPU | Await local RTX 4070 laptop benchmark |
 | P1 | [Issue #17 — Persist pricing assumptions and reconcile actual bills](https://github.com/interzettel/prehnite/issues/17) | Economics | Live billing access needs explicit authorization |
+| P2 | [Issue #91 — Optional typed Parquet exports for offline analytics](https://github.com/interzettel/prehnite/issues/91) | Delivery | Stacked PR #92 depends on #90; optional PyArrow. |
+| P2 | [PR #92 — Typed opt-in Parquet metric and slot datasets](https://github.com/interzettel/prehnite/pull/92) | Delivery | Green prior CI; rebase against main after #90 merge. |
 
 ## Done
 

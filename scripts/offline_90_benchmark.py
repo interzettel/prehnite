@@ -146,7 +146,7 @@ def expected_projection() -> list[dict]:
     ]
 
 
-def run_benchmark(home: Path) -> dict:
+def run_benchmark(home: Path, preview_file: Path | None = None) -> dict:
     manager = prepare(home)
     # Fake *only launch*, actual Engine workers execute independently below.
     # This eliminates timing races without weakening real OS run-lock tests.
@@ -224,12 +224,22 @@ def run_benchmark(home: Path) -> dict:
         assert final["cost_estimated_or_reserved_usd"] == 0.0
         e = final["economics"]
         assert e["accepted_assets"] == COUNT
-        # The injected failure is historical; the active fault snapshot must
-        # clear once the formerly rejected slot has been accepted on replay.
         assert final["failure_summary"]["schema_version"] == 1
         assert final["failure_summary"]["asset_failure_counts"] == {}
         assert final["failure_summary"]["stage_failure_counts"] == {}
         assert final["failure_summary"]["unresolved_operations"] == []
+        analytics = final["analytics"]
+        assert analytics["schema_version"] == 1
+        assert analytics["required_assets"] == COUNT
+        assert analytics["accepted_assets"] == COUNT
+        assert analytics["asset_status_counts"]["pending"] == 0
+        assert analytics["asset_status_counts"]["error"] == 0
+        assert analytics["accepted_percent_of_required"] == 100.0
+        assert sum(x["requested"] for x in analytics["input_mode"]) == COUNT
+        assert sum(x["accepted"] for x in analytics["aspect_ratio"]) == COUNT
+        assert analytics["actual_invoiced_usd"] is None
+        assert analytics["retry_distribution"]["one_invocation"] == 48
+        assert analytics["retry_distribution"]["no_invocation_recorded"] == 0
         assert e["reserved_usd_total"] == 0.0
         assert e["actual_invoiced_usd_total"] is None
         assert e["attempts_without_finished_timing"] == 0
@@ -246,6 +256,14 @@ def run_benchmark(home: Path) -> dict:
                 for n in range(1, COUNT + 1) if n % 5 == 0
             }
             assert expected_images <= set(names)
+            assert {"_prehnite/analytics.json", "_prehnite/analytics.csv"} <= set(names)
+            assert json.loads(z.read("_prehnite/analytics.json")) == analytics
+            assert b"schema_version,section,group,measure,value,unit" in z.read(
+                "_prehnite/analytics.csv")
+            gallery = z.read("_prehnite/gallery.html")
+            assert b"BATCH INTELLIGENCE / V1" in gallery
+            assert b"Production snapshot" in gallery
+            assert b"connect-src 'none'" in gallery
             assert len(expected_images) == COUNT + CUTOUTS
             assert names == sorted(names)
             assert z.testzip() is None
@@ -272,6 +290,18 @@ def run_benchmark(home: Path) -> dict:
             replay.journal.close()
         assert not any("INJECTED_OFFLINE_TEST_FAILURE" in str(row)
                        for row in resumed_report["asset_results"].values())
+        if preview_file is not None:
+            # Safe for *this fixed synthetic fixture only*. Never upload an
+            # arbitrary user's gallery; it embeds thumbnail pixels.
+            preview_file.parent.mkdir(parents=True, exist_ok=True)
+            gallery_html = (engine.journal.root / "gallery.html").read_text(
+                encoding="utf-8")
+            assert "<script" not in gallery_html
+            gallery_html = gallery_html.replace(
+                "Prehnite / offline production dashboard</h1>",
+                "Prehnite / offline production dashboard · SYNTHETIC DEMO</h1>",
+                1)
+            preview_file.write_text(gallery_html, encoding="utf-8")
         return {
             "schema_version": 1,
             "scenario": "synthetic_offline_no_paid_inference",
@@ -309,6 +339,8 @@ def main():
     parser.add_argument("--token", type=str)
     parser.add_argument("--crash-worker", action="store_true")
     parser.add_argument("--result-file", type=Path)
+    parser.add_argument("--preview-file", type=Path,
+                        help="Write a safe embedded HTML preview (synthetic demo only)")
     args = parser.parse_args()
     if args.crash_worker:
         if args.home is None or args.token is None:
@@ -316,7 +348,7 @@ def main():
         crash_worker(JobManager(args.home), args.token)
         raise AssertionError("Injected worker should have exited with status 73")
     with tempfile.TemporaryDirectory(prefix="prehnite-benchmark-90-") as directory:
-        report = run_benchmark(Path(directory))
+        report = run_benchmark(Path(directory), args.preview_file)
     serialized = json.dumps(report, indent=2, sort_keys=True) + "\n"
     if args.result_file:
         args.result_file.parent.mkdir(parents=True, exist_ok=True)
