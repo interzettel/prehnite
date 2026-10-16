@@ -14,3 +14,9 @@ Before opening a PR:
 - Avoid modifying unrelated accepted artifact metadata.
 - Update provider license and capabilities documentation.
 - Do not include real user images, API keys, prompts from private projects, or model weights.
+
+For a clean packaging check on a machine with Python 3.12 and network access
+to install ordinary Python dependencies, run `python -m pip install build`
+followed by `python scripts/smoke_install.py`. CI runs this on Ubuntu and
+Windows, using a new isolated venv and only the bundled synthetic generator.
+This is distinct from actual GPU model testing.
