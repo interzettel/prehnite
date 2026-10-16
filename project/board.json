@@ -863,19 +863,19 @@
       "type": "issue",
       "number": 116,
       "title": "Unified decision-model contract and bounded offline auto-repair policy",
-      "lane": "In progress",
+      "lane": "Done",
       "priority": "P1",
       "stream": "Quality",
-      "note": "Owner approved mixed assets and bounded local repair; policy contract and synthetic fixture PR #117, no provider calls."
+      "note": "Scoped provider-neutral offline decision contract complete; merged #117 with 500 tests, 8/8 CI. Local repair executor remains #31."
     },
     {
       "type": "pr",
       "number": 117,
       "title": "Provider-neutral typed decisions and bounded local candidate policy",
-      "lane": "In review",
+      "lane": "Done",
       "priority": "P1",
       "stream": "Quality",
-      "note": "Testing capability guards, product/portrait synthetic actions, spend/accepted protection. Not yet connected to production executor."
+      "note": "Merged PR #117 (abae806), 500 tests, 8/8 CI, postmerge main green; no paid inference."
     }
   ]
 }
