@@ -240,7 +240,10 @@ def verified_parquet_entries(root: Path) -> dict[str, bytes]:
         publication = json.loads(manifest_path.read_text(encoding="utf-8"))
         if publication["schema_version"] != PARQUET_SCHEMA_VERSION:
             raise ValueError("Unexpected Parquet export schema")
-        actual = hashlib.sha256((root / "analytics.json").read_bytes()).hexdigest()
+        aggregate = root / "analytics.json"
+        if not aggregate.resolve().is_relative_to(root.resolve()):
+            raise ValueError("Analytics snapshot escapes batch root")
+        actual = hashlib.sha256(aggregate.read_bytes()).hexdigest()
         if actual != publication["analytics_json_sha256"]:
             raise ValueError("Parquet metrics are stale relative to analytics.json")
         entries = {}
