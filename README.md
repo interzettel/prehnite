@@ -1,5 +1,6 @@
 <div align="center">
-  <img src="assets/prehnite-riso-green-coral.webp" alt="Prehnite — Make the batch. Keep the best. Forest-green and coral Riso identity on warm paper." width="680" />
+  <!-- GitHub strips inline radius styles; the PNG also has actual transparent rounded corners. -->
+  <img src="assets/prehnite-riso-green-coral.png" alt="Prehnite — Make the batch. Keep the best. Forest-green and coral Riso identity on warm paper." width="680" style="border-radius: 16px; clip-path: inset(0 round 16px);" />
   <p><strong>Batch image production without the platform tax.</strong><br />
   An open-source Python engine for generating, checking, refining and exporting visual assets.</p>
   <p>
@@ -18,7 +19,7 @@
   </p>
 </div>
 
-The visual identity uses the owner-selected **forest green / coral / warm paper** Riso colorway. Shared [brand color tokens](docs/BRAND_PALETTE.md) apply to project UI surfaces, with contrast-adjusted text colors and dark-mode variants. The original vector logo remains available as [a fallback](assets/prehnite-lockup.svg).
+The visual identity uses the owner-selected **forest green / coral / warm paper** Riso colorway. The hero is a [2020 × 779 rounded-corner PNG](assets/prehnite-riso-green-coral.png) with transparent corner clipping that survives GitHub's CSS sanitization. Shared [brand color tokens](docs/BRAND_PALETTE.md) apply to project UI surfaces, including accessible light/dark variants. A separate [mineral symbol](assets/prehnite-mark.svg) remains available for compact applications.
 
 ---
 
