@@ -12,6 +12,7 @@ from typing import Callable
 from .images import image_info, make_cutout, preview_cutout, resize_to, sha256
 from .artifacts import (ArtifactIntegrityError, atomic_copy_image, atomic_resize,
                         temporary_sibling, verified_image)
+from .cache import CacheIntegrityError, StageCache
 from .judges import HaikuJudge, check_verdict, technical
 from .manifest import resolve_input, validate_job
 from .providers import get_provider
@@ -37,6 +38,7 @@ class Engine:
         self.profile = profile
         self.inputs = inputs
         self.journal = Journal(workspace, manifest.id)
+        self.cache = StageCache(workspace, profile.cache) if profile.cache.enabled else None
         checksum = fingerprint(manifest, profile)
         previous = self.journal.fact("configuration_sha256")
         if previous is not None and previous != checksum:
@@ -81,7 +83,8 @@ class Engine:
         return estimate
 
     def stage(self, key: str, stage: str, endpoint: Endpoint, output: Path,
-              invoke: Callable, price_key: str = "") -> Path:
+              invoke: Callable, price_key: str = "",
+              cache_request: dict | None = None) -> Path:
         previous = self.journal.get(key)
         if previous and previous["status"] == "completed":
             try:
@@ -102,6 +105,21 @@ class Engine:
                 f"Paid request {key} has no recoverable provider ID; "
                 "reconcile it manually before retrying"
             )
+        # A previous remote stage always requires its own journal recovery;
+        # never conceal an ambiguous paid call by restoring an unrelated
+        # cached result under the same image-stage key.
+        cache_key = (self.cache.key(stage, endpoint, cache_request)
+                     if self.cache and cache_request is not None else None)
+        if previous is None and cache_key:
+            cached = self.cache.restore(cache_key, output)
+            if cached is not None:
+                self.journal.put(key, stage, "completed",
+                                 path=str(output), provider=endpoint.provider,
+                                 model=endpoint.model, reserved_usd=0.0,
+                                 data={"artifact_sha256": cached["sha256"],
+                                       "artifact_bytes": output.stat().st_size,
+                                       "cache_hit": True, "cache_key": cache_key})
+                return output
         resume_id = previous["request_id"] if previous else None
         estimate = (float(previous["reserved_usd"]) if previous else
                     self.cost(price_key) if paid else 0.0)
@@ -128,6 +146,14 @@ class Engine:
                 os.replace(temp, output)
             metadata = {**result.metadata, "artifact_sha256": info["sha256"],
                         "artifact_bytes": output.stat().st_size}
+            if cache_key:
+                try:
+                    metadata["cache_stored"] = self.cache.store(cache_key, output)
+                    metadata["cache_key"] = cache_key
+                except (OSError, ValueError):
+                    # Caching is optional; a failed cache write must never
+                    # invalidate a validated output or trigger a paid retry.
+                    metadata["cache_stored"] = False
             self.journal.put(key, stage, "completed", request_id=resume_id,
                              path=str(output), provider=endpoint.provider,
                              model=endpoint.model, reserved_usd=estimate,
@@ -157,14 +183,19 @@ class Engine:
         self.stage(prefix + ":generate", "generation", ep, original,
                    lambda on_submit, resume, temp: provider.generate(
                        asset.prompt, asset.aspect_ratio, tier, seed, temp, ep,
-                       on_submit, resume), f"generation:{tier}")
+                       on_submit, resume), f"generation:{tier}",
+                   cache_request={"prompt": asset.prompt,
+                                  "aspect_ratio": asset.aspect_ratio,
+                                  "tier": tier, "seed": seed})
         if variant == "enhanced_2k":
             ep = self.profile.upscale
             provider = get_provider(ep)
             up = root / "upscaled.png"
             self.stage(prefix + ":upscale", "upscaling", ep, up,
                        lambda on_submit, resume, temp: provider.upscale(
-                           original, temp, ep, on_submit, resume), "upscale")
+                           original, temp, ep, on_submit, resume), "upscale",
+                       cache_request={"source_sha256": sha256(original),
+                                      "scale": 2})
             original = up
         final = root / "final.png"
         atomic_resize(original, final, asset.target_size)
@@ -255,7 +286,9 @@ class Engine:
         key = f"{asset.id}:cutout:{name}:mask"
         self.stage(key, "segmentation", ep, mask,
                    lambda on_submit, resume, temp: provider.segment(
-                       selected, name, temp, ep, on_submit, resume), "segmentation")
+                       selected, name, temp, ep, on_submit, resume), "segmentation",
+                   cache_request={"source_sha256": sha256(selected),
+                                  "target": name})
         # Retry is a real edge-refinement alternative, not a redundant paid model call.
         problems = []
         for refine in (False, True)[:self.profile.policy.maximum_attempts]:

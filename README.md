@@ -147,6 +147,16 @@ prehnite crops my-photo.png --output detail-evidence --edge 1024
 
 The output includes five lossless corner/center crops and a SHA256 manifest. Add `--anchor-x 0.45 --anchor-y 0.35` for one manually chosen area. This creates review evidence, **not an automated quality score**. [Read the crop guide](docs/CROP_EVIDENCE.md).
 
+### Opt-in reuse for repeatable stages
+
+Prehnite can keep locally verified stage outputs in a
+[private, content-addressed cache](docs/CACHING.md). It is disabled unless
+you specify an explicit owner namespace; prompts, seeds, input hashes,
+model options, version and model revision participate in the cache key.
+Cloud-model reuse requires a separate cache opt-in and a pinned model
+revision. A cache hit has no *new* provider request, but it does not erase
+historical charges or prove previously billed amounts.
+
 ### Measure cost per usable asset, not raw generations
 
 The offline [economics report](docs/ECONOMICS.md) distinguishes
