@@ -56,6 +56,10 @@ Comparison refuses tampered accepted files, source hash mismatch, paths escaping
 
 The red heatmap is a **diagnostic data color**, not the project’s decorative Riso coral token; the rest of any future HTML interface should follow [the owner's forest/coral palette](BRAND_PALETTE.md).
 
+## Reproducible synthetic 4K example
+
+Run `python scripts/synthetic_alignment_demo.py --output alignment-4k-synthetic`. The script creates a **3840×2160** owner-palette-inspired *synthetic* source and shifted candidate with exactly one visible changed pixel. It writes the fixed attested transform, versioned metrics and RGBA overlap-masked delta PNG, plus SHA256 receipts. The GitHub Actions Windows/Ubuntu synthetic benchmark uploads these files under `alignment-4k-synthetic/` (14-day artifact retention). Never upload real owner batch imagery or transform provenance as public artifacts.
+
 ## Evidence and future increments
 
 Run `python -m pytest -q tests/test_tiled_alignment.py`. The fixtures cover correct and wrong translation, changed-pixel and alpha semantics, transform fingerprints, 4K (3840×2160) lossless identity, EXIF/ICC refusal, no-overlap, default ZIP parity and explicit CLI. CI must also pass all regular offline 90-slot pause/crash/recovery, PyArrow optional, MCP lifecycle and clean-install checks on Windows/Ubuntu.
