@@ -81,7 +81,7 @@ class Comfy:
         # An ID is created AND journaled *before* the request can reach a
         # local ComfyUI queue. If the connection dies midway, resume looks up
         # this same ID. A missing history record is never a reason to requeue.
-        prompt_id = str(resume_id) if resume_id else str(uuid.uuid4())
+        prompt_id = str(resume_id) if resume_id is not None else str(uuid.uuid4())
         if not re.fullmatch(r"[A-Za-z0-9_-]{1,128}", prompt_id):
             raise ValueError("Invalid ComfyUI prompt ID")
         with httpx.Client(timeout=40) as client:
