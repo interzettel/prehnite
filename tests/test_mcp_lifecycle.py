@@ -79,7 +79,7 @@ def test_duplicate_submission_and_reconnect_do_not_rely_on_pid(monkeypatch, tmp_
     assert reconnected.status("mcp-fixture")["status"] == "launching"
     assert len(calls) == 1
     assert calls[0][-2] == "--job-token"
-    assert reconnected.status("mcp-fixture")["required_assets"] == 0  # worker not initialized yet
+    assert reconnected.status("mcp-fixture")["required_assets"] == 2  # persisted at launch
 
 
 def test_pause_before_start_then_explicit_resume(monkeypatch, tmp_path):
