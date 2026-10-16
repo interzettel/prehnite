@@ -2,7 +2,7 @@
 
 > Generated from `progress/ledger.json` by `scripts/progress.py`. A unit counts only when done with evidence; percentages are not estimates of engineering time or visual quality.
 
-**25 / 61 units done (41.0%)** · 0 active · 10 blocked · 26 planned.
+**26 / 61 units done (42.6%)** · 0 active · 10 blocked · 25 planned.
 **Milestone gates reached:** 1 / 7.
 
 ![Milestone progress chart](progress.svg)
@@ -13,7 +13,7 @@
 | --- | ---: | ---: | ---: | ---: | --- |
 | M0 · Runnable foundation | 6/6 (100.0%) | 0 | 0 | 0 | Reached |
 | M1 · Safe production engine | 5/10 (50.0%) | 0 | 2 | 3 | Open: C08, C09 |
-| M2 · Models and local compute | 4/10 (40.0%) | 0 | 2 | 4 | Open: P07, P09 |
+| M2 · Models and local compute | 5/10 (50.0%) | 0 | 2 | 3 | Open: P07, P09 |
 | M3 · Photographic quality gates | 1/8 (12.5%) | 0 | 2 | 5 | Open: Q07, Q08 |
 | M4 · Cutouts and corrections | 2/7 (28.6%) | 0 | 2 | 3 | Open: S06, S07 |
 | M5 · Delivery and usability | 2/10 (20.0%) | 0 | 0 | 8 | Open: D09, D10 |
@@ -55,7 +55,7 @@
 | `P02` | Generic local ComfyUI graph/queue scaffold | done | Agent cloud | F03 | [Evidence](https://github.com/interzettel/prehnite/pull/1) |
 | `P03` | Offline FLUX tier/upscale contract fixtures | done | Agent cloud | P01 | [Evidence](https://github.com/interzettel/prehnite/pull/50) |
 | `P04` | SAM response-shape fixtures and validation | done | Agent cloud | P01 | [Evidence](https://github.com/interzettel/prehnite/pull/53) |
-| `P05` | Typed provider capability/price discovery | planned | Agent cloud | P03 | [#21](https://github.com/interzettel/prehnite/issues/21) |
+| `P05` | Typed adapter capabilities and price-estimate provenance | done | Agent cloud | P03 | [Evidence](https://github.com/interzettel/prehnite/pull/55) |
 | `P06` | Tested ComfyUI graph fixture and mapping | planned | Agent cloud | P02 | [#22](https://github.com/interzettel/prehnite/issues/22) |
 | `P07` | ComfyUI queue/recovery without duplicate submits | planned | Agent cloud | P06, C02 | [#23](https://github.com/interzettel/prehnite/issues/23) |
 | `P08` | 8GB VRAM local model feasibility benchmark | blocked | Agent local | P06 | [#24](https://github.com/interzettel/prehnite/issues/24) |

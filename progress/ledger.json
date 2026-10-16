@@ -260,13 +260,14 @@
         },
         {
           "id": "P05",
-          "name": "Typed provider capability/price discovery",
-          "state": "planned",
+          "name": "Typed adapter capabilities and price-estimate provenance",
+          "state": "done",
           "issue": 21,
           "owner": "Agent cloud",
           "dependsOn": [
             "P03"
-          ]
+          ],
+          "evidence": "https://github.com/interzettel/prehnite/pull/55"
         },
         {
           "id": "P06",
