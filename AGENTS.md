@@ -23,6 +23,12 @@ Deliver reliable, quality-gated visual assets at low cost. This repository is an
 - Client MCP disconnect must not cancel batch execution; jobs use a persistent worker.
 - No proprietary or separately licensed model weights are committed to this repository.
 
+## Persistent state and coordination
+- Read [docs/PROGRESS.md](docs/PROGRESS.md) for evidence-based release gates and hard work limits.
+- Post a dated handoff to [A2A issue #9](https://github.com/interzettel/prehnite/issues/9) after meaningful progress.
+- Treat a previous paid task lacking a persisted provider ID as ambiguous; never automatically resubmit.
+- Do not modify main or auto-merge later PRs without approval. A single batch ID must have only one active worker.
+
 ## Development
 Run:
     python -m pip install -e ".[dev]"

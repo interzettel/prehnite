@@ -59,10 +59,18 @@ class Engine:
         if previous and previous["status"] == "completed" and output.is_file():
             image_info(output)
             return output
+        paid = endpoint.provider in ("fal", "anthropic")
         if previous and previous["status"] == "uncertain":
             raise RuntimeError(f"Ambiguous remote submission {key}: reconcile before retry")
+        # The journal commits 'submitting' BEFORE the external call. If a
+        # process dies between remote submission and receipt of a request ID,
+        # assuming that no charge occurred would risk paying twice.
+        if previous and paid and not previous["request_id"]:
+            raise RuntimeError(
+                f"Paid request {key} has no recoverable provider ID; "
+                "reconcile it manually before retrying"
+            )
         resume_id = previous["request_id"] if previous else None
-        paid = endpoint.provider in ("fal", "anthropic")
         estimate = (float(previous["reserved_usd"]) if previous else
                     self.cost(price_key) if paid else 0.0)
         if not previous:
@@ -139,8 +147,14 @@ class Engine:
             record = self.journal.get(key)
             if record and record["status"] == "completed":
                 raw = record["data"]
+            elif record:
+                # Anthropic's message endpoint has no resumable request ID.
+                # A crash/timeout after dispatch may have billed the call.
+                raise RuntimeError(
+                    f"Paid judge {key} has uncertain status; reconcile manually"
+                )
             else:
-                estimate = self.cost("judge") if not record else record["reserved_usd"]
+                estimate = self.cost("judge")
                 self.journal.put(key, "judge", "submitting", provider="anthropic",
                                  model=judge.model, reserved_usd=estimate)
                 try:
@@ -297,6 +311,10 @@ class Engine:
         return {"status": "rejected", "outputs": [], "reason": last_reason}
 
     def run(self) -> dict:
+        with self.journal.exclusive():
+            return self._run_locked()
+
+    def _run_locked(self) -> dict:
         results = self.journal.fact("results", {})
         for asset in self.manifest.assets:
             if results.get(asset.id, {}).get("status") == "accepted" and all(

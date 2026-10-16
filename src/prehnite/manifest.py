@@ -41,10 +41,21 @@ def validate_job(manifest: Manifest, profile: Profile, input_root: Path) -> None
             raise ValueError("Generator disabled, but manifest contains prompts")
         if a.targets and profile.segmentation.provider == "disabled":
             raise ValueError("Targets requested but segmentation disabled")
+    paid_stages = ("generation", "upscale", "segmentation", "judge")
     if not profile.costs.allow_paid:
-        for stage in ("generation", "upscale", "segmentation", "judge"):
+        for stage in paid_stages:
             if getattr(profile, stage).provider in ("fal", "anthropic"):
-                raise ValueError("fal stages require allow_paid=true")
+                raise ValueError("Paid providers require allow_paid=true")
+    else:
+        from .costing import estimate_costs
+        estimate = estimate_costs(manifest, profile)
+        if estimate["missing_price_estimates"]:
+            raise ValueError(
+                "Missing price estimates for paid calls: "
+                + ", ".join(estimate["missing_price_estimates"])
+            )
+        if estimate["calls_by_billable_operation"] and profile.costs.max_usd <= 0:
+            raise ValueError("Paid batch requires a positive max_usd budget")
     if profile.judge.provider == "anthropic" and not profile.costs.allow_cloud_uploads:
         raise ValueError("Cloud judge needs upload permission")
     if not profile.costs.allow_cloud_uploads:

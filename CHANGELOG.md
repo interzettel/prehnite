@@ -14,6 +14,9 @@ This project follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) an
 - Agent coordination issue, documented development roadmap and initial CI.
 - GitHub Issues-based agile tracker, contributor templates, canonical package version source and release-process documentation (governance PR).
 
+### Fixed
+- Fail-closed recovery of uncertain paid calls, single-batch worker locking, and mandatory positive pricing estimates ([PR #10](https://github.com/interzettel/prehnite/pull/10)).
+
 ### Security
 - Default no-paid-inference policy; cloud uploads are opt-in.
 - Strict output path confinement, model-licensing separation and untrusted input handling.
@@ -21,6 +24,6 @@ This project follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) an
 ### Known limitations
 - No production-verified real-model quality gates, 4K GPU benchmark or invoice reconciliation yet.
 - This section is a development log, **not release notes for a published v0.1.0**.
-- Reliability fixes in [PR #10](https://github.com/interzettel/prehnite/pull/10) are **pending review**, not included on the default branch at the time this log was written.
+- No GPU-validated and paid-model integration has been completed.
 
 <!-- Move entries into a dated [X.Y.Z] section only after a real release is approved. -->

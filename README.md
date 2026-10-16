@@ -67,7 +67,7 @@ Jobs have separate source/variant/selected/derived stages. Only accepted images 
     prehnite export BATCH_ID --workspace workspace
     prehnite-mcp
 
-See [Architecture](docs/ARCHITECTURE.md), [Security](docs/SECURITY.md), [Evaluation](docs/EVALUATION.md), [Licensing](docs/LICENSING.md), and [Roadmap](docs/ROADMAP.md).
+See [Readiness and work limits](docs/PROGRESS.md), [Architecture](docs/ARCHITECTURE.md), [Security](docs/SECURITY.md), [Evaluation](docs/EVALUATION.md), [Licensing](docs/LICENSING.md), and [Roadmap](docs/ROADMAP.md).
 
 ## Licensing
 

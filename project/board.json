@@ -89,10 +89,10 @@
       "type": "pr",
       "number": 10,
       "title": "Fail-closed paid recovery and evidence chart",
-      "lane": "In review",
+      "lane": "Done",
       "priority": "P0",
       "stream": "Reliability",
-      "note": "Tests pass; awaiting review and merge."
+      "note": "Merged into main; offline safety regression tests passed."
     },
     {
       "type": "pr",
