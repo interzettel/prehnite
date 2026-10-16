@@ -7,6 +7,7 @@ This project follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) an
 ## [Unreleased]
 
 ### Added
+- Deterministic offline Noul binary visual-gold evaluation (#111): Brier/ECE, explicit abstention/coverage, false-accept/reject and Wilson intervals, private aggregate reports, and quoted reservation-cost evidence. Synthetic labels are not real visual-quality certification.
 - Local-only official-shape Jev 1.14 request/response **fixtures** (#111): preserve Noul probabilities, Choice categorical distributions, Score level-weighted positions and presence-gated Box coordinates; image references and experimental headers remain inert, without network transport or automatic acceptance.
 - Experimental Jev visual judgment Stage A (#109): offline-only typed mock decisions, presence-gated Box, historically SHA256-verified metadata-stripped PNG/JPEG prep, explicit danger-zone consent and Decimal token-budget preflight. No TypeSafe transport, API keys, paid calls or automatic quality acceptance.
 - Opt-in, read-only validation of SHA256-provenance-bound v2 operator-attested affine registration contracts (#105); forward/inverse consistency, bounded matrix and continuous overlap-domain checks, CLI command and synthetic Windows/Ubuntu tests. No resampling, perceived-quality rating, network use or new mandatory dependencies.

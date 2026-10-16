@@ -55,4 +55,23 @@ The internal Stage A `parse_mock_answers` uses a deliberately simplified Boolean
 
 The tests in `tests/test_jev_wire_fixture.py` use fixed **synthetic response objects** (no provider output is presented as real or personally sourced), including experimental Box and score examples. These tests verify **parsing behavior**, not Jev's visual accuracy, cost, latency, actual calibrated probabilities, data retention, or billing.
 
-**Remaining #111 work:** create an owner-reviewed matched image-and-label evaluation dataset, implement Brier/ECE, false-accept/false-reject and abstention analysis with uncertainty bands and reproducible reports. Only after those are reviewed should a separately approved live smoke test or image/video-frame workflow be considered.
+## Stage B — local binary gold-label evaluation (offline)
+
+`src/prehnite/visual_calibration.py` and `prehnite evaluate-visual-gold` evaluate **already supplied** Noul yes probabilities against Boolean reference labels. The evaluator never sees image files, executes the vendor model, infers labels or issues network calls. Example private input file:
+
+```json
+{
+  "schema_version": 1,
+  "declared_source": "synthetic_fixture",
+  "observations": [
+    {"yes_probability": 0.95, "gold_yes": true, "cohort": "cutout", "reserved_input_tokens": 8000},
+    {"yes_probability": 0.13, "gold_yes": false, "cohort": "cutout", "reserved_input_tokens": 8000}
+  ]
+}
+```
+
+Run `prehnite evaluate-visual-gold --input private-labels.json --output private-aggregate.json`. The local, opt-in output is **aggregate only**: Brier score, 10-bin expected calibration error, abstention/coverage, false-accept and false-reject counts/rates with Wilson 95% confidence intervals, cohort breakdowns and **quoted reserved** USD per correct non-abstaining decision. Unknown reservations yield `null`, not zero. The report never claims actual invoices, human-calibrated image aesthetics or independently verified label provenance. Input observations reject extra fields such as filenames, prompts, paths and request IDs; the private source input is not copied into the report.
+
+Thresholds default to accept ≥0.8 and reject ≤0.2; values in between abstain. These are **testing defaults, not scientifically calibrated production thresholds**. Empty result categories have `null` rates; small cohorts carry an explicit warning. Generated fixtures alone cannot demonstrate real-world provider accuracy.
+
+**Still needed under #107:** owner-reviewed licensed image sets and independently confirmed labels, confidence intervals and class balance across actual use cases, verified current Jev billing/data retention, production-calibrated abstention thresholds, and a separately owner-authorized budgeted live experiment. Video remains frame-sequence research only.
