@@ -68,7 +68,7 @@ jobs:
       - name: Install no-cost Python engine
         run: python -m pip install -e ".[dev]"
       - name: Execute reproducible pause/crash/reconnect/replay and ZIP checks
-        run: python scripts/offline_90_benchmark.py --result-file benchmark-90.json --preview-file benchmark-90.html
+        run: python scripts/offline_90_benchmark.py --result-file benchmark-90.json --preview-file benchmark-90.html --native-preview-file benchmark-native.html
       - name: Publish sanitized benchmark evidence
         uses: actions/upload-artifact@v4
         with:
@@ -76,6 +76,7 @@ jobs:
           path: |
             benchmark-90.json
             benchmark-90.html
+            benchmark-native.html
           if-no-files-found: error
           retention-days: 14
 

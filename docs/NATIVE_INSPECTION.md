@@ -8,7 +8,7 @@ The ordinary `gallery.html` uses downsampled embedded thumbnails so 90 assets do
 prehnite inspect my-batch --asset asset-014 --workspace workspace
 ```
 
-The output lives in `workspace/batches/my-batch/reviews/asset-014.html`. Open it locally in a browser. Select **Fit to panel** for a side-by-side overview or **Actual pixels (1:1)** for scrolling/panning at the original image's native pixel dimensions. Each named cutout is displayed against a checkerboard so alpha edges are visible. The browser can still apply OS display scaling; use 100% browser zoom for meaningful 1:1 inspection.
+The output lives in `workspace/batches/my-batch/reviews/asset-014.html`. For a **source-backed** slot, you may additionally run `prehnite inspect my-batch --asset asset-014 --workspace workspace --inputs /path/to/original-input-root` to show the recorded original alongside the base/cutouts. The original must match the **historical SHA256** stored when the batch was first processed; no source-root guessing, no implicit re-fingerprinting, and no original panel for prompt-generated slots. Open it locally in a browser. Select **Fit to panel** for a side-by-side overview or **Actual pixels (1:1)** for scrolling/panning at the original image's native pixel dimensions. Each named cutout is displayed against a checkerboard so alpha edges are visible. The browser can still apply OS display scaling; use 100% browser zoom for meaningful 1:1 inspection.
 
 ## Safety and fidelity
 
@@ -16,12 +16,17 @@ The output lives in `workspace/batches/my-batch/reviews/asset-014.html`. Open it
 - Verifies the original file with the recorded SHA256 and image decoder; embeds the *same original bytes*, **without resampling/reencoding**, and hashes bytes a second time before writing the HTML.
 - Rejects missing/changed/broken images and paths escaping `selected/`, including symlinked external files. Any previously generated detail remains unchanged when validation fails.
 - Caps embedded raw bytes to 64 MiB and displayed panels to 12 so a full 90×4K batch is **never** embedded into one document. The ordinary gallery, reports, data exports and accepted-output ZIP remain unchanged.
+- A CSS-only **Alpha checkerboard** control toggles cutout backgrounds; native 1:1 and fit modes remain available without JavaScript. A local stage table lists safe stage/provider/status labels, local attempt counts and **reserved estimates only**; raw operation keys, remote IDs, prompts, model names, filesystem paths and exception details are not included. A source-backed slot with `--inputs` verifies its historical original hash and pixel dimensions and respects a 24-million-pixel decoded-size bound as well as the aggregate 64 MiB embedded-byte limit.
 - Page has **no JavaScript, network fetches, remote CSS/fonts or external images**, and enforces a strict CSP (`connect-src 'none'`, `img-src data:`).
 - Only a local asset identifier and selected output labels are displayed. Raw prompts, provider request IDs and error strings are not added to the page. The page **does contain private image bytes and filenames**: don't publish or upload it without specific consent.
 
 This is a *visual inspection instrument*, not a numerical quality score or a claim that an AI model passed calibrated human review. No per-pixel image diff, color profile normalization or native-resolution browser screenshot automation is claimed.
 
 ## Evidence
+
+`python -m pytest -q tests/test_native_inspection.py tests/test_source_inspection.py`
+
+To generate a **fixed synthetic preview**, run `python scripts/offline_90_benchmark.py --native-preview-file benchmark-native.html --result-file benchmark-90.json` and open `benchmark-native.html` locally. The Windows/Ubuntu CI offline-90 jobs also attach this HTML alongside the normal synthetic gallery preview. It is labelled SYNTHETIC DEMO and contains no user images. **Never attach a real owner's full-resolution review HTML to public CI artifacts.**
 
 `python -m pytest -q tests/test_native_inspection.py` covers byte-for-byte embedded originals, 1:1/fit toggles, named alpha cutouts, output tampering, symlinks escaping the workspace, blocked rejected slots, oversized images, CLI usage and only-one-slot preview from a 90-slot manifest. Existing Windows and Ubuntu offline 90-asset CI must remain green.
 

@@ -695,16 +695,34 @@
       "lane": "In progress",
       "priority": "P1",
       "stream": "Delivery",
-      "note": "Code in PR #94; verify native bytes, integrity and no external data."
+      "note": "Native 1:1 base/cutout PR #94 merged; opt-in source comparison + drilldowns in #95/PR #96."
     },
     {
       "type": "pr",
       "number": 94,
       "title": "Single-slot native 1:1 comparison and alpha inspection",
+      "lane": "Done",
+      "priority": "P1",
+      "stream": "Delivery",
+      "note": "Merged PR #94, full-resolution verified one-slot review; CI green."
+    },
+    {
+      "type": "issue",
+      "number": 95,
+      "title": "Verified original source and private stage drilldown",
+      "lane": "In progress",
+      "priority": "P1",
+      "stream": "Delivery",
+      "note": "Implementation in PR #96, requires full CI and review."
+    },
+    {
+      "type": "pr",
+      "number": 96,
+      "title": "Original-vs-output native comparison with stage facts",
       "lane": "In review",
       "priority": "P1",
       "stream": "Delivery",
-      "note": "PR #94 builds private, on-demand full-resolution HTML; CI pending."
+      "note": "Testing opt-in trusted input root; stage notes limited to safe codes."
     }
   ]
 }

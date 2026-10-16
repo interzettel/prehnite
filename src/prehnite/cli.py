@@ -117,7 +117,10 @@ def status(batch_id: str, workspace: Path = typer.Option(Path("workspace"))):
 def inspect(batch_id: str,
             asset_id: str = typer.Option(..., "--asset",
                                          help="One accepted asset slot ID"),
-            workspace: Path = typer.Option(Path("workspace"))):
+            workspace: Path = typer.Option(Path("workspace")),
+            inputs: Path | None = typer.Option(
+                None, "--inputs",
+                help="Explicit original-input root; requires saved source SHA256")):
     """Generate a private, offline 1:1 inspection page for one verified slot."""
     from .schema import Asset
     from .native_inspection import export_native_inspection
@@ -130,7 +133,12 @@ def inspect(batch_id: str,
         with journal.launch_exclusive():
             if journal.worker_active():
                 raise typer.BadParameter("Cannot inspect while a worker is active")
-            path = export_native_inspection(journal, asset_id)
+            record = journal.job_record()
+            if record and record["status"] in (
+                    "launching", "pause_requested", "cancel_requested"):
+                raise typer.BadParameter(
+                    "Worker launch/control state unresolved; inspect after safe stop")
+            path = export_native_inspection(journal, asset_id, inputs=inputs)
         typer.echo(str(path))
     finally:
         journal.close()

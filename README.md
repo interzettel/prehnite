@@ -174,7 +174,7 @@ The tracker distinguishes implemented scaffolding from independently evidenced c
 
 [![Prehnite evidence-backed progress by milestone](docs/progress/progress.svg)](docs/progress/STATUS.md)
 
-[Read the 61-unit work ledger](docs/progress/STATUS.md) · [90-asset no-cost benchmark](docs/OFFLINE_90_BENCHMARK.md) · [Technical release gates](docs/PROGRESS.md) · [Offline production analytics](docs/OFFLINE_ANALYTICS.md) · [Optional Parquet export](docs/PARQUET_EXPORT.md) · [1:1 native image inspection](docs/NATIVE_INSPECTION.md) · [Failure codes and recovery actions](docs/FAILURE_TAXONOMY.md) · [Current sprint](docs/SPRINT.md) · [Roadmap](docs/ROADMAP.md)
+[Read the 61-unit work ledger](docs/progress/STATUS.md) · [90-asset no-cost benchmark](docs/OFFLINE_90_BENCHMARK.md) · [Technical release gates](docs/PROGRESS.md) · [Offline production analytics](docs/OFFLINE_ANALYTICS.md) · [Private native source/output inspection](docs/NATIVE_INSPECTION.md) · [Optional Parquet export](docs/PARQUET_EXPORT.md) · [1:1 native image inspection](docs/NATIVE_INSPECTION.md) · [Failure codes and recovery actions](docs/FAILURE_TAXONOMY.md) · [Current sprint](docs/SPRINT.md) · [Roadmap](docs/ROADMAP.md)
 
 The [Produce / Explore / Experiment evaluation RFC](docs/BATCH_OBJECTIVES.md) describes future batch modes and a measurement framework; v0.1 implements neither a general exploration planner nor a Pareto dashboard.
 
