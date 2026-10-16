@@ -1,0 +1,49 @@
+name: Engineering task
+description: Scoped, testable work for Prehnite
+title: "task: "
+body:
+  - type: textarea
+    id: goal
+    attributes:
+      label: Outcome
+      description: What observable behavior should change?
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      placeholder: |
+        - [ ] Verifiable behavior A
+        - [ ] Offline test of behavior A
+    validations:
+      required: true
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      options:
+        - P0 - Critical correctness, security or spending
+        - P1 - Core delivery
+        - P2 - Planned improvement
+        - P3 - Idea
+    validations:
+      required: true
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Dependencies and blockers
+      description: Hardware, provider, data, license, permissions or upstream PR
+  - type: textarea
+    id: testplan
+    attributes:
+      label: Offline verification plan
+      description: Tests runnable without billed inference
+    validations:
+      required: true
+  - type: checkboxes
+    id: guardrails
+    attributes:
+      label: Guardrails
+      options:
+        - label: No paid API call or external image upload is required for the default test path

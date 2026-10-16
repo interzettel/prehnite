@@ -6,6 +6,17 @@ Prehnite turns a structured asset specification into generated images, optional 
 
 > **Current status: v0.1 foundation.** The zero-cost demo backend is executable and intended for testing orchestration, not for producing photorealistic assets. The fal provider is opt-in and requires actual credentials and paid API calls. Advanced local GPU judges, ComfyUI execution and real-world image quality have not yet been validated. Do not mistake technical checks for human-calibrated visual quality.
 
+## Project tracking and development status
+
+- [Agile board and current iteration](docs/SPRINT.md) — work items, blockers, PR states and iteration focus.
+- [Workflow and contributor governance](docs/AGILE.md) — status transitions, WIP limits, definitions of ready/done.
+- [Changelog](CHANGELOG.md) — unreleased changes, not a claim that a release exists.
+- [Version policy](docs/VERSIONING.md) — canonical `src/prehnite/_version.py`, SemVer and PEP 440.
+- [Release procedure](docs/RELEASING.md) — future checklist; **no tags/releases have been created**.
+- [Agent handoff issue #9](https://github.com/interzettel/prehnite/issues/9).
+- [GitHub Issues](https://github.com/interzettel/prehnite/issues) is the authoritative task history; `docs/SPRINT.md` is a maintained, human-readable status snapshot.
+- [Reliability PR #10](https://github.com/interzettel/prehnite/pull/10) is under review and is not yet on `main`.
+
 ## Principles
 
 - Free MIT orchestration. No mandatory SaaS subscriptions or platform fees.

@@ -1,0 +1,35 @@
+name: Bug report
+description: Reproducible defect, quality-gate failure or spending anomaly
+title: "bug: "
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Observed behavior
+      description: Describe failure without disclosing private assets or tokens.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      description: Prefer zero-cost demo and mock providers.
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Package version, OS, Python, GPU and optional providers
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Sensitive data
+      options:
+        - label: I excluded API secrets and any private source images.

@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "prehnite"
-version = "0.1.0"
+dynamic = ["version"]
 description = "Local-first, quality-gated visual asset production with model-agnostic providers and MCP."
 readme = "README.md"
 license = "MIT"
@@ -27,6 +27,9 @@ dev = ["pytest>=8,<10", "ruff>=0.8,<1"]
 [project.scripts]
 prehnite = "prehnite.cli:app"
 prehnite-mcp = "prehnite.mcp_server:main"
+
+[tool.hatch.version]
+path = "src/prehnite/_version.py"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/prehnite"]
