@@ -10,12 +10,12 @@
 
 | Lane | Cards |
 | --- | ---: |
-| Backlog | 19 |
-| Ready | 3 |
+| Backlog | 18 |
+| Ready | 2 |
 | In progress | 0 |
 | In review | 0 |
 | Blocked | 6 |
-| Done | 33 |
+| Done | 37 |
 
 **WIP limits:** In progress ≤ 2; In review ≤ 3. Counts are issue/PR cards, not unique completed engineering features or a percentage.
 
@@ -33,7 +33,6 @@
 | P1 | [Issue #41 — Pre-release 90-asset dry run and budget projection](https://github.com/interzettel/prehnite/issues/41) | Benchmark | 90-asset offline dry-run |
 | P1 | [Issue #40 — Model, dependency and artifact licensing inventory](https://github.com/interzettel/prehnite/issues/40) | Licensing | Dependency/model weight terms inventory |
 | P1 | [Issue #38 — MCP cancellation, worker reconnection and status telemetry](https://github.com/interzettel/prehnite/issues/38) | MCP | Cancellation and reconnection |
-| P1 | [Issue #36 — Deterministic validated archive and manifest hashes](https://github.com/interzettel/prehnite/issues/36) | Reporting | Archive manifest integrity |
 | P1 | [Issue #34 — Cost per accepted asset and stage latency report](https://github.com/interzettel/prehnite/issues/34) | Reporting | Cost per accepted asset analysis |
 | P1 | [Issue #33 — Self-contained offline HTML gallery and comparisons](https://github.com/interzettel/prehnite/issues/33) | Reporting | Offline thumbnail gallery #67 merged; opt-in private original comparisons remain issue #68 |
 | P1 | [Issue #31 — Targeted repair planner for failed cutouts](https://github.com/interzettel/prehnite/issues/31) | Cutouts | Bounded repair planner |
@@ -48,7 +47,6 @@
 | Priority | Work item | Stream | Handoff / blocker |
 | --- | --- | --- | --- |
 | P1 | [Issue #12 — Mocked fal API conformance contract](https://github.com/interzettel/prehnite/issues/12) | Providers | No credentials or paid calls; use recorded fixture schemas. |
-| P1 | [Issue #35 — Versioned provenance and reproducible output manifest](https://github.com/interzettel/prehnite/issues/35) | Reporting | Next offline stage-level provenance and manifest hashes; distinguish reproducible replay from provider determinism |
 | P1 | [Issue #25 — Judge schema and A/B order-bias tests](https://github.com/interzettel/prehnite/issues/25) | Quality | Typed verdict tranche merged in #61; controlled same-rubric A/B positional-bias measurement (Q03) remains unverified |
 
 ## In progress
@@ -85,6 +83,8 @@
 | P1 | [Issue #43 — Human-centered README, original vector identity and first-run guide](https://github.com/interzettel/prehnite/issues/43) | Onboarding | Merged in PR #45; evidence ledger / README published on main. |
 | P1 | [Issue #39 — Cross-platform installer and Python packaging smoke checks](https://github.com/interzettel/prehnite/issues/39) | Packaging | Merged PR #72; validated free CLI and clean Windows/Linux wheel install, GPU not benchmarked |
 | P1 | [Issue #37 — Prehnite init and doctor CLI onboarding](https://github.com/interzettel/prehnite/issues/37) | Onboarding | Merged PR #71; validated free CLI and clean Windows/Linux wheel install, GPU not benchmarked |
+| P1 | [Issue #36 — Deterministic validated archive and manifest hashes](https://github.com/interzettel/prehnite/issues/36) | Reporting | Implemented and verified in merged PR #76, zero inference spend |
+| P1 | [Issue #35 — Versioned provenance and reproducible output manifest](https://github.com/interzettel/prehnite/issues/35) | Reporting | Implemented and verified in merged PR #74, zero inference spend |
 | P1 | [Issue #26 — Full-resolution crops for visual quality gating](https://github.com/interzettel/prehnite/issues/26) | Quality | Merged PR #65: native-pixel 4K crops, lossless PNG and verified hash evidence; 207 CI tests |
 | P1 | [Issue #23 — ComfyUI queue resume and error-state contract](https://github.com/interzettel/prehnite/issues/23) | Local GPU | Merged PR #59: offline ComfyUI queue recovery; 163 tests passed |
 | P1 | [Issue #22 — ComfyUI reproducible API graph fixtures](https://github.com/interzettel/prehnite/issues/22) | Local GPU | Offline API graph/node mapping and queue fixtures merged in PR #57; no GPU benchmark |
@@ -111,6 +111,8 @@
 | P1 | [PR #70 — Fixed-rubric A/B positional-bias protocol](https://github.com/interzettel/prehnite/pull/70) | Quality | Merged; 226 offline tests passed |
 | P1 | [PR #71 — Offline init and doctor CLI](https://github.com/interzettel/prehnite/pull/71) | Onboarding | Merged; 239 offline tests passed |
 | P1 | [PR #72 — Cross-platform clean wheel/sdist install verification](https://github.com/interzettel/prehnite/pull/72) | Packaging | Merged; Windows + Ubuntu CI clean installs passed |
+| P1 | [PR #74 — Privacy-minimized provenance manifest](https://github.com/interzettel/prehnite/pull/74) | Delivery | Merged with green CI and offline regression tests |
+| P1 | [PR #76 — Deterministic ZIP and SHA256 receipt](https://github.com/interzettel/prehnite/pull/76) | Delivery | Merged with green CI and offline regression tests |
 
 ## How to update this board
 

@@ -564,22 +564,24 @@
         {
           "id": "D05",
           "name": "Versioned provenance and exact input/output hashes",
-          "state": "planned",
+          "state": "done",
           "issue": 35,
           "owner": "Agent cloud",
           "dependsOn": [
             "C05"
-          ]
+          ],
+          "evidence": "https://github.com/interzettel/prehnite/pull/74"
         },
         {
           "id": "D06",
           "name": "Deterministic ZIP ordering and digest manifest",
-          "state": "planned",
+          "state": "done",
           "issue": 36,
           "owner": "Agent cloud",
           "dependsOn": [
             "D05"
-          ]
+          ],
+          "evidence": "https://github.com/interzettel/prehnite/pull/76"
         },
         {
           "id": "D07",
