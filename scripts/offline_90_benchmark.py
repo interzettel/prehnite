@@ -69,7 +69,7 @@ def prepare(home: Path) -> JobManager:
         "variants": ["native_4k"],
         "generation": {"provider": "demo", "model": "synthetic"},
         "upscale": {"provider": "disabled"},
-        "segmentation": {"provider": "demo", "model": "synthetic-mask"},
+        "segmentation": {"provider": "demo", "model": "simple-mask"},
         "judge": {"provider": "demo", "model": "technical"},
         "policy": {"uncertain": "accept_unverified", "maximum_attempts": 2},
         "costs": {"allow_paid": False, "allow_cloud_uploads": False,
