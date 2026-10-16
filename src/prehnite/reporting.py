@@ -12,11 +12,13 @@ from pathlib import Path
 from .artifacts import ArtifactIntegrityError, atomic_text, temporary_sibling, verified_image
 from .schema import relative_name
 from .store import Journal
+from .economics import batch_economics
 
 
 def export_report(journal: Journal) -> dict:
     rows = journal.tasks()
     results = journal.fact("results", {})
+    economics = batch_economics(rows, results, journal.attempts())
     data = {
         "batch_id": journal.root.name,
         "cost_estimated_or_reserved_usd": round(journal.reserved(), 5),
@@ -27,6 +29,7 @@ def export_report(journal: Journal) -> dict:
         "completed_operations": sum(r["status"] == "completed" for r in rows),
         "asset_results": results,
         "operations_detail": rows,
+        "economics": economics,
     }
     atomic_text(journal.root / "report.json",
                 json.dumps(data, indent=2, ensure_ascii=False))
@@ -44,6 +47,17 @@ def export_report(journal: Journal) -> dict:
             ("task_key", "stage", "status", "provider", "reserved_usd", "tokens_in",
              "tokens_out")) + "</td></tr>" for row in rows
     )
+    stage_rows = "".join(
+        "<tr><td>" + html.escape(name) + "</td><td>"
+        + "</td><td>".join(html.escape(str(values[field])) for field in (
+            "reserved_usd", "attempts_started", "retry_attempts",
+            "attempts_without_finished_timing", "observed_elapsed_ms_p95"))
+        + "</td></tr>"
+        for name, values in economics["stages"].items()
+    )
+    cost_per_accepted = economics["reserved_usd_per_accepted_asset"]
+    accepted_cost_label = ("undefined (no accepted assets)" if cost_per_accepted is None
+                           else "$" + str(cost_per_accepted))
     page = (
         "<!doctype html><html lang='en'><meta charset='utf-8'>"
         "<meta name='viewport' content='width=device-width'><title>Prehnite report</title>"
@@ -56,7 +70,21 @@ def export_report(journal: Journal) -> dict:
         + str(data["cost_estimated_or_reserved_usd"])
         + " (NOT verified provider billing). Tokens in/out: "
         + str(data["tokens_in"]) + "/" + str(data["tokens_out"])
-        + "</p><p>Acceptance state and errors: see report.json.</p><table><thead><tr>"
+        + "</p><p>Accepted assets: " + str(economics["accepted_assets"])
+        + "; reserved estimate per accepted asset: " + accepted_cost_label
+        + ". These are <strong>reservations, not actual invoices</strong>. "
+        + "Provider-billed amount: unknown. Observed local stage invocations: "
+        + str(economics["attempts_with_observed_duration"])
+        + "; unfinished/unknown timing: "
+        + str(economics["attempts_without_finished_timing"])
+        + ".</p><h2>Stage economics and local timing</h2>"
+        + "<table><thead><tr><th>Stage</th><th>Reserved USD</th>"
+        + "<th>Started attempts</th><th>Retries</th><th>Unknown timing</th>"
+        + "<th>Observed p95 ms</th></tr></thead><tbody>"
+        + stage_rows + "</tbody></table>"
+        + "<p>Local measured invocation/publish time is not provider inference "
+        + "latency or time spent waiting after a crash.</p>"
+        + "<p>Acceptance state and errors: see report.json.</p><table><thead><tr>"
         + "".join(f"<th>{x}</th>" for x in ("Task", "Stage", "Status", "Provider",
                                             "Reserved USD", "Input tokens", "Output tokens"))
         + "</tr></thead><tbody>" + table_rows + "</tbody></table></html>"

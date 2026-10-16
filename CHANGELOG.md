@@ -7,6 +7,7 @@ This project follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) an
 ## [Unreleased]
 
 ### Added
+- Offline batch economics and attempt-timing telemetry: append-only SQLite attempt evidence, per-stage retries/p95 local durations, reserved USD per accepted asset and explicitly unknown provider invoices (#34). Synthetic 90-asset regression fixtures; no paid runs.
 - Deterministic local provenance.json with verified output geometry/SHA256, provider-stage trace, requested seeds and privacy-minimized source/prompt hashes; changed original source bytes block unsafe resume (#35).
 - Clean wheel/sdist metadata and isolated wheel-install smoke checks on Ubuntu and Windows CI, including init/doctor/validate/run, optional-extras isolation and development-only packaging (#39).
 - No-overwrite `prehnite init` demo scaffolding and secret-safe `prehnite doctor` checks, including an opt-in localhost-only ComfyUI health probe (#37); no GPU/Windows installation certification.
