@@ -72,6 +72,16 @@ def _fringe(source: Image.Image, alpha: Image.Image) -> tuple[tuple[int, int, in
     if alpha.getextrema() == (255, 255):
         raise RepairRefused("mask_full_frame_unrecoverable")
 
+    # Mask is one unambiguous connected foreground candidate. Multiple
+    # independent islands may represent multiple products or detached parts,
+    # so do not guess which subject should be corrected.
+    connected = alpha.point(lambda value: 255 if value else 0)
+    data = connected.tobytes()
+    seed = data.index(255)
+    ImageDraw.floodfill(connected, (seed % width, seed // width), 128, thresh=0)
+    if 255 in connected.tobytes():
+        raise RepairRefused("multiple_mask_islands_require_selection")
+
     # Require a truly isolated target and a perfectly known synthetic-style
     # background around the entire frame. Never infer a background from an
     # arbitrary real photograph, and never use the benchmark reference here.
