@@ -13,7 +13,7 @@
 | Backlog | 16 |
 | Ready | 2 |
 | In progress | 1 |
-| In review | 0 |
+| In review | 1 |
 | Blocked | 6 |
 | Done | 75 |
 
@@ -57,7 +57,7 @@
 
 | Priority | Work item | Stream | Handoff / blocker |
 | --- | --- | --- | --- |
-| — | No cards currently | — | — |
+| P1 | [PR #125 — Validate offline Review Studio ZIP and import human feedback](https://github.com/interzettel/prehnite/pull/125) | Cutouts | Draft PR #125: private mask integrity, review counters, defect triage; synthetic-only tests. Owner's actual ratings and independent gold mattes pending. |
 
 ## Blocked
 
