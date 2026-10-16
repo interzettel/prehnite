@@ -70,7 +70,13 @@ def test_duplicate_unit_is_rejected():
 def test_premature_completion_is_rejected():
     module = progress_module()
     data = ledger()
-    item = next(x for x in data["milestones"][1]["units"] if x["id"] == "C08")
+    # Select a still-unfinished unit with a still-unfinished prerequisite.
+    # This remains meaningful as dependencies are progressively completed.
+    all_units = [u for m in data["milestones"] for u in m["units"]]
+    by_id = {u["id"]: u for u in all_units}
+    item = next(u for u in all_units
+                if u["state"] == "planned" and any(
+                    by_id[dep]["state"] != "done" for dep in u["dependsOn"]))
     item["state"] = "done"
     item["evidence"] = "https://github.com/interzettel/prehnite/issues/15"
     with pytest.raises(ValueError, match="Premature completion"):
