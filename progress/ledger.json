@@ -553,13 +553,13 @@
         {
           "id": "D04",
           "name": "Accepted asset efficiency and latency breakdown",
-          "state": "planned",
+          "state": "done",
           "issue": 34,
           "owner": "Agent cloud",
           "dependsOn": [
-            "D02",
-            "C06"
-          ]
+            "D02"
+          ],
+          "evidence": "https://github.com/interzettel/prehnite/pull/78"
         },
         {
           "id": "D05",

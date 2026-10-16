@@ -2,7 +2,7 @@
 
 > Generated from `progress/ledger.json` by `scripts/progress.py`. A unit counts only when done with evidence; percentages are not estimates of engineering time or visual quality.
 
-**36 / 61 units done (59.0%)** · 0 active · 10 blocked · 15 planned.
+**37 / 61 units done (60.7%)** · 0 active · 10 blocked · 14 planned.
 **Milestone gates reached:** 1 / 7.
 
 ![Milestone progress chart](progress.svg)
@@ -16,7 +16,7 @@
 | M2 · Models and local compute | 7/10 (70.0%) | 0 | 2 | 1 | Open: P09 |
 | M3 · Photographic quality gates | 4/8 (50.0%) | 0 | 2 | 2 | Open: Q07, Q08 |
 | M4 · Cutouts and corrections | 2/7 (28.6%) | 0 | 2 | 3 | Open: S06, S07 |
-| M5 · Delivery and usability | 7/10 (70.0%) | 0 | 0 | 3 | Open: D10 |
+| M5 · Delivery and usability | 8/10 (80.0%) | 0 | 0 | 2 | Open: D10 |
 | M6 · Community and first release | 5/10 (50.0%) | 0 | 2 | 3 | Open: R08, R09 |
 
 ## Work units
@@ -94,7 +94,7 @@
 | `D01` | CLI validation, run, estimate and export commands | done | Agent cloud | F03 | [Evidence](https://github.com/interzettel/prehnite/pull/1) |
 | `D02` | Machine-readable JSON/CSV plus basic HTML report | done | Agent cloud | F05 | [Evidence](https://github.com/interzettel/prehnite/pull/1) |
 | `D03` | Interactive-free, static results gallery | done | Agent cloud | D02 | [Evidence](https://github.com/interzettel/prehnite/pull/67) |
-| `D04` | Accepted asset efficiency and latency breakdown | planned | Agent cloud | D02, C06 | [#34](https://github.com/interzettel/prehnite/issues/34) |
+| `D04` | Accepted asset efficiency and latency breakdown | done | Agent cloud | D02 | [Evidence](https://github.com/interzettel/prehnite/pull/78) |
 | `D05` | Versioned provenance and exact input/output hashes | done | Agent cloud | C05 | [Evidence](https://github.com/interzettel/prehnite/pull/74) |
 | `D06` | Deterministic ZIP ordering and digest manifest | done | Agent cloud | D05 | [Evidence](https://github.com/interzettel/prehnite/pull/76) |
 | `D07` | Safe offline init and secret-safe doctor CLI | done | Agent cloud | D01 | [Evidence](https://github.com/interzettel/prehnite/pull/71) |

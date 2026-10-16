@@ -215,10 +215,10 @@
       "type": "issue",
       "number": 34,
       "title": "Cost per accepted asset and stage latency report",
-      "lane": "Backlog",
+      "lane": "Done",
       "priority": "P1",
       "stream": "Reporting",
-      "note": "Cost per accepted asset analysis"
+      "note": "Offline accepted-asset estimate economics and attempt timings, merged PR #78; invoice audit #17 blocked"
     },
     {
       "type": "issue",
@@ -579,6 +579,15 @@
       "priority": "P1",
       "stream": "Delivery",
       "note": "Merged with green CI and offline regression tests"
+    },
+    {
+      "type": "pr",
+      "number": 78,
+      "title": "Evidence-based accepted-asset economics and stage timing",
+      "lane": "Done",
+      "priority": "P1",
+      "stream": "Reporting",
+      "note": "Merged; 264 offline tests and Windows/Ubuntu smoke green; invoices remain unverified"
     }
   ]
 }
