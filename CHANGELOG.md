@@ -13,6 +13,8 @@ This project follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) an
 - Optional ComfyUI API, fal inference, Haiku judging and local MCP adapters (real-model behavior remains unverified).
 - Agent coordination issue, documented development roadmap and initial CI.
 - GitHub Issues-based agile tracker, contributor templates, canonical package version source and release-process documentation (governance PR).
+- Granular 61-unit evidence ledger with validated dependencies, generated progress dashboard and GitHub-linked work packages.
+- Original Prehnite vector mark, improved first-run documentation and truthful provider status matrix.
 
 ### Fixed
 - Fail-closed recovery of uncertain paid calls, single-batch worker locking, and mandatory positive pricing estimates ([PR #10](https://github.com/interzettel/prehnite/pull/10)).

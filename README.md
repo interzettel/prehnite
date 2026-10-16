@@ -1,76 +1,145 @@
-# Prehnite
+<div align="center">
+  <img src="assets/prehnite-lockup.svg" alt="Prehnite — Make the batch. Keep the best." width="620" />
+  <p><strong>Batch image production without the platform tax.</strong><br />
+  An open-source Python engine for generating, checking, refining and exporting visual assets.</p>
+  <p>
+    <a href="https://github.com/interzettel/prehnite/actions/workflows/ci.yml"><img alt="Tests" src="https://github.com/interzettel/prehnite/actions/workflows/ci.yml/badge.svg" /></a>
+    <a href="LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-296d60" /></a>
+    <img alt="Python 3.11 or newer" src="https://img.shields.io/badge/python-3.11%2B-40564d" />
+    <img alt="Development version" src="https://img.shields.io/badge/status-development-c28b4a" />
+    <img alt="Mandatory platform fees: zero" src="https://img.shields.io/badge/platform%20fees-%240-296d60" />
+  </p>
+  <p>
+    <a href="#try-it-in-two-minutes">Quick start</a> ·
+    <a href="#how-it-works">How it works</a> ·
+    <a href="#where-things-stand">Project status</a> ·
+    <a href="docs/progress/STATUS.md">Progress</a> ·
+    <a href="https://github.com/orgs/interzettel/projects/1">Project board</a>
+  </p>
+</div>
 
-**Quality-gated, batch-first visual asset production.** Open source, local-first, agent-accessible, with optional pay-per-inference model APIs. MIT licensed.
+---
 
-Prehnite turns a structured asset specification into generated images, optional cutouts, metadata, cost/quality reports, and an exact ZIP directory tree. Its purpose is producing *accepted, usable assets* rather than counting raw generations.
+## Ninety images is a different problem from one image
 
-> **Current status: v0.1 foundation.** The zero-cost demo backend is executable and intended for testing orchestration, not for producing photorealistic assets. The fal provider is opt-in and requires actual credentials and paid API calls. Advanced local GPU judges, ComfyUI execution and real-world image quality have not yet been validated. Do not mistake technical checks for human-calibrated visual quality.
+Generating a single good picture is easy to demonstrate. Making a *batch* of assets to a brief, with the correct dimensions, cutouts, filenames, and a predictable bill, is a different job.
 
-## Project tracking and development status
+Prehnite is an attempt to automate the boring, expensive middle: keeping track of prompts and seeds, trying variants, checking what worked, doing targeted repairs instead of blindly starting over, and handing back exactly the files you asked for.
 
-- [Agile board and current iteration](docs/SPRINT.md) — work items, blockers, PR states and iteration focus.
-- [Workflow and contributor governance](docs/AGILE.md) — status transitions, WIP limits, definitions of ready/done.
-- [Changelog](CHANGELOG.md) — unreleased changes, not a claim that a release exists.
-- [Version policy](docs/VERSIONING.md) — canonical `src/prehnite/_version.py`, SemVer and PEP 440.
-- [Release procedure](docs/RELEASING.md) — future checklist; **no tags/releases have been created**.
-- [Agent handoff issue #9](https://github.com/interzettel/prehnite/issues/9).
-- [GitHub Issues](https://github.com/interzettel/prehnite/issues) is the authoritative task history; `docs/SPRINT.md` is a maintained, human-readable status snapshot.
-- [Reliability PR #10](https://github.com/interzettel/prehnite/pull/10) is under review and is not yet on `main`.
+The ambition is simple: **spend less per *usable* asset, not merely less per generation.** It is a design target, not a claim we've already established with real-world benchmarks.
 
-## Principles
+**Free orchestration is non-negotiable.** Prehnite is MIT licensed, runs locally, and has no required account, hosted workflow subscription, or per-seat platform fee. Use a local model where practical; connect to a paid image API *only when you choose to*, with a budget you set.
 
-- Free MIT orchestration. No mandatory SaaS subscriptions or platform fees.
-- Explicit authorization and hard budget reservation for every paid stage.
-- Model/provider adapters rather than an application coupled to FLUX or ComfyUI.
-- Versioned manifests, strict output-path validation, immutable intermediates.
-- Per-asset quality thresholds, bounded targeted retries, no silently accepted failures.
-- SQLite state and provider request IDs for recovery, machine-readable telemetry.
-- Optional MCP tools for agent access; CLI remains fully usable without an agent.
+## Try it in two minutes
 
-## Quick start (Windows PowerShell)
+You can test the complete workflow without a GPU, credentials, subscription, or inference charge. **The demo creates simple synthetic test images, not AI photographs.**
 
-    py -3.12 -m venv .venv
-    .\.venv\Scripts\Activate.ps1
-    pip install -e ".[dev]"
-    prehnite validate examples/manifest.yaml --profile examples/profile-demo.yaml
-    prehnite estimate examples/manifest.yaml --profile examples/profile-demo.yaml
-    prehnite run examples/manifest.yaml --profile examples/profile-demo.yaml --workspace workspace
+Clone the repo, create a Python 3.11+ environment, and install:
 
-This demo generates synthetic fixtures, not AI photographs. Review the output under workspace and inspect the CSV, JSON, HTML and ZIP report artifacts.
+```bash
+git clone https://github.com/interzettel/prehnite.git
+cd prehnite
+python -m venv .venv
+# Windows PowerShell: .\.venv\Scripts\Activate.ps1
+# macOS/Linux:        source .venv/bin/activate
+python -m pip install -e .
+```
 
-For local ComfyUI, run a separate ComfyUI server, export your workflows in API format into PREHNITE_WORKFLOWS, and configure matching node IDs in examples/profile-comfyui.yaml. Example node IDs are placeholders; a tested model graph is not bundled.
+Run a preflight estimate, then the zero-cost sample batch:
 
-To enable fal inference, install the optional dependency and set FAL_KEY:
+```bash
+prehnite validate examples/manifest.yaml --profile examples/profile-demo.yaml
+prehnite estimate examples/manifest.yaml --profile examples/profile-demo.yaml
+prehnite run examples/manifest.yaml --profile examples/profile-demo.yaml --workspace workspace
+```
 
-    pip install -e ".[fal]"
-    $env:FAL_KEY = "<your API key>"
-    prehnite validate examples/manifest.yaml --profile examples/profile-fal.yaml
-    prehnite run examples/manifest.yaml --profile examples/profile-fal.yaml
+Look under `workspace/batches/portrait-pilot/`. You'll find the selected images, the state journal, a JSON/CSV/HTML report, and a ZIP with the requested output paths. A second run reuses completed stages.
 
-Real fal requests may incur costs. The example fal profile enables paid processing and has a $10 maximum estimated budget; adjust it before use. Cloud prompts and images are shared with the provider.
+<details>
+<summary><strong>What the output looks like</strong></summary>
 
-## Manifest and profiles
+```text
+workspace/
+└── batches/
+    └── portrait-pilot/
+        ├── state.sqlite3
+        ├── intermediates/
+        ├── selected/
+        │   └── photos/
+        │       ├── street-001.jpg
+        │       └── interior-001.jpg
+        ├── report.json
+        ├── operations.csv
+        ├── report.html
+        └── prehnite-portrait-pilot.zip
+```
 
-- [Example manifest](examples/manifest.yaml) defines asset IDs, prompts or local sources, 9:16/3:4 targets, filenames and optional named cutouts.
-- [Demo profile](examples/profile-demo.yaml) uses zero-cost synthetic workers.
-- [fal profile](examples/profile-fal.yaml) demonstrates cloud generation and 2× upscale; the price estimates are provisional configuration, **not live prices**.
+The ZIP preserves your requested relative filenames. Accepted cutouts, when configured, are transparent PNGs. Internally generated files stay separate from the deliverables.
 
-Jobs have separate source/variant/selected/derived stages. Only accepted images enter the requested output paths. Failed assets are explicitly recorded.
+</details>
 
-## Command surface
+## How it works
 
-    prehnite models
-    prehnite validate MANIFEST --profile PROFILE
-    prehnite run MANIFEST --profile PROFILE --workspace workspace
-    prehnite estimate MANIFEST --profile PROFILE
-    prehnite status BATCH_ID --workspace workspace
-    prehnite export BATCH_ID --workspace workspace
-    prehnite-mcp
+| | Stage | What Prehnite does |
+| :--- | :--- | :--- |
+| 01 | **Describe** | Read a structured manifest: prompts or existing images, exact sizes, targets and output filenames |
+| 02 | **Plan** | Choose model providers and variants; estimate request counts and spend before starting |
+| 03 | **Make** | Run generation and optional upscaling; preserve seeds, inputs and intermediate artifacts |
+| 04 | **Check** | Apply technical checks, and optional model-based judgments when configured |
+| 05 | **Repair** | Retry selectively under a hard attempt limit; cutout errors needn't regenerate accepted photos |
+| 06 | **Deliver** | Export accepted images, named cutouts, a ZIP and an inspectable report |
 
-See [Readiness and work limits](docs/PROGRESS.md), [Architecture](docs/ARCHITECTURE.md), [Security](docs/SECURITY.md), [Evaluation](docs/EVALUATION.md), [Licensing](docs/LICENSING.md), and [Roadmap](docs/ROADMAP.md).
+A small manifest can describe a portrait batch with precise delivery requirements:
 
-## Licensing
+```yaml
+id: street-pilot
+assets:
+  - id: rainy-street
+    prompt: "A candid smartphone photograph of a rainy street at dusk"
+    aspect_ratio: "9:16"
+    target_size: [2160, 3840]
+    output:
+      image: photos/rainy-street.jpg
+      cutouts: {}
+```
 
-Core source code: MIT, copyright 2026 Studio Zettlerei. Model weights, datasets, and external applications are **not bundled** and keep their own licenses. The fal client and other optional integrations are separately licensed dependencies. See docs/LICENSING.md.
+The **manifest** says *what* to make. A separate **profile** says *how*: which provider/model to use, whether to compare 2K-upscaled and 4K variants, what to accept, the retry limit, and whether cloud calls may cost money. See the [working examples](examples/).
 
-Contributions welcome after the contracts and security boundaries are stabilized.
+### Bring your own models, not your own orchestration subscription
+
+| Route | What it means today |
+| --- | --- |
+| **Demo (no-cost)** | Synthetic generator + Pillow resize and technical checks. Runs offline and is covered by CI. |
+| **Local ComfyUI** | Adapter for your own ComfyUI API-format workflows on localhost. You supply model weights and real graph/node mappings; no validated GPU workflow is bundled yet. |
+| **fal.ai (optional paid)** | Opt-in hosted image generation/upscaling/segmentation adapter. Interfaces exist, but real endpoint schemas, pricing and image results still require live integration tests. |
+| **Anthropic judge (optional paid)** | An opt-in image comparison/rubric adapter. It is not a calibrated or production-validated quality benchmark. |
+
+No paid stage can be enabled by simply running the demo. Real cloud profiles require explicit `allow_paid` and, where images leave your machine, `allow_cloud_uploads`. They also require per-stage cost estimates and a positive `max_usd` cap. **Reserved amounts are estimates, not provider invoices or guaranteed billing ceilings.**
+
+For the locally hosted route, start with [the ComfyUI example profile](examples/profile-comfyui.yaml). For pay-per-use hosting, review [the fal profile](examples/profile-fal.yaml), verify endpoint contracts and current prices, and provide your own `FAL_KEY`. Do not use the sample prices as a quote.
+
+## Where things stand
+
+**`0.1.0.dev0` · source-only development preview.** Not a tagged release or a published PyPI package. The core synthetic workflow works; **photorealistic quality, 4K GPU feasibility, segmentation accuracy and actual API billing have not been certified**.
+
+The tracker distinguishes implemented scaffolding from independently evidenced completions, and records issues blocked by local hardware, human calibration or paid-call authorization.
+
+[![Prehnite evidence-backed progress by milestone](docs/progress/progress.svg)](docs/progress/STATUS.md)
+
+[Read the 61-unit work ledger](docs/progress/STATUS.md) · [Technical release gates](docs/PROGRESS.md) · [Current sprint](docs/SPRINT.md) · [Roadmap](docs/ROADMAP.md)
+
+GitHub [Project #1](https://github.com/orgs/interzettel/projects/1) tracks workflow; the version-controlled [ledger](progress/ledger.json) tracks evidence. They answer different questions. Native Project field syncing is still [planned](https://github.com/interzettel/prehnite/issues/44).
+
+## Built for a maintainer and their agents
+
+Prehnite has a CLI first, optional [stdio MCP tools](src/prehnite/mcp_server.py) second. A person can run it directly; agents can submit preconfigured batches, check status, and request exports without being given arbitrary shell access.
+
+The project itself is managed the same way: small issue scopes, PR-based delivery, offline tests, and a persistent [agent-to-agent handoff thread](https://github.com/interzettel/prehnite/issues/9). One maintainer sets direction and approves spend and releases. Agents do the repeatable engineering work and leave evidence—not inflated status reports.
+
+To contribute or extend the engine, start with [Contributing](CONTRIBUTING.md), [Architecture](docs/ARCHITECTURE.md), [Security](docs/SECURITY.md), and [Versioning](docs/VERSIONING.md). Issues are welcome, particularly for adapters that remain optional and testable without network access.
+
+## License and boundaries
+
+**[MIT](LICENSE)** for Prehnite's own code. Image models, checkpoints, external APIs, datasets, and other installed applications retain **their own** terms; nothing about this repository grants a license to third-party weights. See [Licensing](docs/LICENSING.md) and the [release policy](docs/RELEASING.md).
+
+No model checkpoint ships with the repo. No mandatory hosted product or subscription. No release tags until a version has passed its gates and the maintainer approves it.

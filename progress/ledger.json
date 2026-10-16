@@ -1,0 +1,733 @@
+{
+  "schema_version": 1,
+  "updated": "2026-10-16",
+  "counting_rule": "Each stable unit is independently completable. Progress counts done units only, not active/blocked work or story points. Done requires concrete merged PR, committed tests or owner-accepted evidence. Stage achievement requires every named gate done. Unit counts do not estimate equal engineering effort.",
+  "states": {
+    "done": "Evidence-linked and verifiably completed within its explicitly scoped contract.",
+    "active": "In current execution or review; earns no completion credit.",
+    "blocked": "Waiting for stated hardware, authorization, license, or human decision.",
+    "planned": "Accepted scope that has not been demonstrated."
+  },
+  "lanes": {
+    "Agent cloud": "Offline implementation, PRs, CI and docs",
+    "Agent local": "Hardware- or Windows-specific execution on owner's computer",
+    "Owner": "Permissions, sample rights, acceptance and release decisions"
+  },
+  "milestones": [
+    {
+      "id": "M0",
+      "name": "Runnable foundation",
+      "goal": "An installable local-first Python CLI with a free, offline batch demonstration and transparent provenance limits.",
+      "gate": [
+        "F06"
+      ],
+      "units": [
+        {
+          "id": "F01",
+          "name": "MIT repository and installable Python package",
+          "state": "done",
+          "issue": 1,
+          "owner": "Agent cloud",
+          "dependsOn": [],
+          "evidence": "https://github.com/interzettel/prehnite/pull/1"
+        },
+        {
+          "id": "F02",
+          "name": "Strict manifest/output path validation",
+          "state": "done",
+          "issue": 1,
+          "owner": "Agent cloud",
+          "dependsOn": [
+            "F01"
+          ],
+          "evidence": "https://github.com/interzettel/prehnite/pull/1"
+        },
+        {
+          "id": "F03",
+          "name": "Free synthetic batch generator and 2-tier orchestration",
+          "state": "done",
+          "issue": 1,
+          "owner": "Agent cloud",
+          "dependsOn": [
+            "F02"
+          ],
+          "evidence": "https://github.com/interzettel/prehnite/pull/1"
+        },
+        {
+          "id": "F04",
+          "name": "SQLite stage journal and basic resume",
+          "state": "done",
+          "issue": 1,
+          "owner": "Agent cloud",
+          "dependsOn": [
+            "F03"
+          ],
+          "evidence": "https://github.com/interzettel/prehnite/pull/1"
+        },
+        {
+          "id": "F05",
+          "name": "JSON/CSV/HTML reports and checked ZIP export",
+          "state": "done",
+          "issue": 1,
+          "owner": "Agent cloud",
+          "dependsOn": [
+            "F03"
+          ],
+          "evidence": "https://github.com/interzettel/prehnite/pull/1"
+        },
+        {
+          "id": "F06",
+          "name": "Offline pytest + CLI validation on GitHub Actions",
+          "state": "done",
+          "issue": 1,
+          "owner": "Agent cloud",
+          "dependsOn": [
+            "F05"
+          ],
+          "evidence": "https://github.com/interzettel/prehnite/pull/1"
+        }
+      ]
+    },
+    {
+      "id": "M1",
+      "name": "Safe production engine",
+      "goal": "A restartable cost-controlled pipeline that never silently spends twice and never exports corrupt artifacts.",
+      "gate": [
+        "C08",
+        "C09"
+      ],
+      "units": [
+        {
+          "id": "C01",
+          "name": "Paid call budget authorization gate",
+          "state": "done",
+          "issue": 10,
+          "owner": "Agent cloud",
+          "dependsOn": [
+            "F04"
+          ],
+          "evidence": "https://github.com/interzettel/prehnite/pull/10"
+        },
+        {
+          "id": "C02",
+          "name": "Fail-closed uncertain request recovery",
+          "state": "done",
+          "issue": 10,
+          "owner": "Agent cloud",
+          "dependsOn": [
+            "F04"
+          ],
+          "evidence": "https://github.com/interzettel/prehnite/pull/10"
+        },
+        {
+          "id": "C03",
+          "name": "Single-batch worker lock (offline test)",
+          "state": "done",
+          "issue": 10,
+          "owner": "Agent cloud",
+          "dependsOn": [
+            "F04"
+          ],
+          "evidence": "https://github.com/interzettel/prehnite/pull/10"
+        },
+        {
+          "id": "C04",
+          "name": "Cross-process kill-and-restart fault matrix",
+          "state": "planned",
+          "issue": 15,
+          "owner": "Agent cloud",
+          "dependsOn": [
+            "C02"
+          ]
+        },
+        {
+          "id": "C05",
+          "name": "Atomic output writes and checksum replay checks",
+          "state": "planned",
+          "issue": 16,
+          "owner": "Agent cloud",
+          "dependsOn": [
+            "C02"
+          ]
+        },
+        {
+          "id": "C06",
+          "name": "Versioned pricing quotes and bill reconciliation",
+          "state": "blocked",
+          "issue": 17,
+          "owner": "Owner",
+          "dependsOn": [
+            "C01"
+          ]
+        },
+        {
+          "id": "C07",
+          "name": "Content-addressed, privacy-scoped stage cache",
+          "state": "planned",
+          "issue": 18,
+          "owner": "Agent cloud",
+          "dependsOn": [
+            "C05"
+          ]
+        },
+        {
+          "id": "C08",
+          "name": "Resumable cross-platform interrupted 90-item batch",
+          "state": "planned",
+          "issue": 15,
+          "owner": "Agent local",
+          "dependsOn": [
+            "C04",
+            "C05"
+          ]
+        },
+        {
+          "id": "C09",
+          "name": "Actual provider charges reconciled to reserves",
+          "state": "blocked",
+          "issue": 17,
+          "owner": "Owner",
+          "dependsOn": [
+            "C06"
+          ]
+        },
+        {
+          "id": "C10",
+          "name": "Machine-readable stage-level failure taxonomy",
+          "state": "planned",
+          "issue": 15,
+          "owner": "Agent cloud",
+          "dependsOn": [
+            "C04"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M2",
+      "name": "Models and local compute",
+      "goal": "Choose providers independently, run useful local graph workflows, and verify hosted adapters without making API access mandatory.",
+      "gate": [
+        "P07",
+        "P09"
+      ],
+      "units": [
+        {
+          "id": "P01",
+          "name": "Demo and optional hosted provider adapter scaffold",
+          "state": "done",
+          "issue": 1,
+          "owner": "Agent cloud",
+          "dependsOn": [
+            "F03"
+          ],
+          "evidence": "https://github.com/interzettel/prehnite/pull/1"
+        },
+        {
+          "id": "P02",
+          "name": "Generic local ComfyUI graph/queue scaffold",
+          "state": "done",
+          "issue": 1,
+          "owner": "Agent cloud",
+          "dependsOn": [
+            "F03"
+          ],
+          "evidence": "https://github.com/interzettel/prehnite/pull/1"
+        },
+        {
+          "id": "P03",
+          "name": "Offline FLUX tier/upscale contract fixtures",
+          "state": "planned",
+          "issue": 19,
+          "owner": "Agent cloud",
+          "dependsOn": [
+            "P01"
+          ]
+        },
+        {
+          "id": "P04",
+          "name": "SAM response-shape fixtures and validation",
+          "state": "planned",
+          "issue": 20,
+          "owner": "Agent cloud",
+          "dependsOn": [
+            "P01"
+          ]
+        },
+        {
+          "id": "P05",
+          "name": "Typed provider capability/price discovery",
+          "state": "planned",
+          "issue": 21,
+          "owner": "Agent cloud",
+          "dependsOn": [
+            "P03"
+          ]
+        },
+        {
+          "id": "P06",
+          "name": "Tested ComfyUI graph fixture and mapping",
+          "state": "planned",
+          "issue": 22,
+          "owner": "Agent cloud",
+          "dependsOn": [
+            "P02"
+          ]
+        },
+        {
+          "id": "P07",
+          "name": "ComfyUI queue/recovery without duplicate submits",
+          "state": "planned",
+          "issue": 23,
+          "owner": "Agent cloud",
+          "dependsOn": [
+            "P06",
+            "C02"
+          ]
+        },
+        {
+          "id": "P08",
+          "name": "8GB VRAM local model feasibility benchmark",
+          "state": "blocked",
+          "issue": 24,
+          "owner": "Agent local",
+          "dependsOn": [
+            "P06"
+          ]
+        },
+        {
+          "id": "P09",
+          "name": "User-approved end-to-end live inference pilot",
+          "state": "blocked",
+          "issue": 7,
+          "owner": "Owner",
+          "dependsOn": [
+            "P03",
+            "C09"
+          ]
+        },
+        {
+          "id": "P10",
+          "name": "Provider-choice plan by cost, hardware and quality",
+          "state": "planned",
+          "issue": 21,
+          "owner": "Agent cloud",
+          "dependsOn": [
+            "P05"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M3",
+      "name": "Photographic quality gates",
+      "goal": "Prefer usable assets rather than raw generations, with transparent, calibrated judgments at native resolution.",
+      "gate": [
+        "Q07",
+        "Q08"
+      ],
+      "units": [
+        {
+          "id": "Q01",
+          "name": "Dimension and file-decodability technical checks",
+          "state": "done",
+          "issue": 1,
+          "owner": "Agent cloud",
+          "dependsOn": [
+            "F03"
+          ],
+          "evidence": "https://github.com/interzettel/prehnite/pull/1"
+        },
+        {
+          "id": "Q02",
+          "name": "Judge schema + invalid response handling",
+          "state": "planned",
+          "issue": 25,
+          "owner": "Agent cloud",
+          "dependsOn": [
+            "Q01"
+          ]
+        },
+        {
+          "id": "Q03",
+          "name": "Order-bias and independent-rubric A/B tests",
+          "state": "planned",
+          "issue": 25,
+          "owner": "Agent cloud",
+          "dependsOn": [
+            "Q02"
+          ]
+        },
+        {
+          "id": "Q04",
+          "name": "Lossless 4K crop panel comparisons",
+          "state": "planned",
+          "issue": 26,
+          "owner": "Agent cloud",
+          "dependsOn": [
+            "Q02"
+          ]
+        },
+        {
+          "id": "Q05",
+          "name": "Optional local quality judge plugin contract",
+          "state": "planned",
+          "issue": 27,
+          "owner": "Agent local",
+          "dependsOn": [
+            "Q02"
+          ]
+        },
+        {
+          "id": "Q06",
+          "name": "Rights-cleared human-rated reference set",
+          "state": "blocked",
+          "issue": 28,
+          "owner": "Owner",
+          "dependsOn": [
+            "Q02"
+          ]
+        },
+        {
+          "id": "Q07",
+          "name": "Calibration report for accepted/rejected quality",
+          "state": "blocked",
+          "issue": 28,
+          "owner": "Owner",
+          "dependsOn": [
+            "Q06",
+            "Q03"
+          ]
+        },
+        {
+          "id": "Q08",
+          "name": "Rejection/repair behavior validated across judges",
+          "state": "planned",
+          "issue": 31,
+          "owner": "Agent cloud",
+          "dependsOn": [
+            "Q03",
+            "Q04"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M4",
+      "name": "Cutouts and corrections",
+      "goal": "Extract requested subjects cleanly, detect common mask failures and repair failed cuts without repeating good images.",
+      "gate": [
+        "S06",
+        "S07"
+      ],
+      "units": [
+        {
+          "id": "S01",
+          "name": "Demo mask-to-RGBA conversion and coverage checks",
+          "state": "done",
+          "issue": 1,
+          "owner": "Agent cloud",
+          "dependsOn": [
+            "F03"
+          ],
+          "evidence": "https://github.com/interzettel/prehnite/pull/1"
+        },
+        {
+          "id": "S02",
+          "name": "Hosted SAM image/mask dimensional conformance",
+          "state": "planned",
+          "issue": 20,
+          "owner": "Agent cloud",
+          "dependsOn": [
+            "S01",
+            "P04"
+          ]
+        },
+        {
+          "id": "S03",
+          "name": "Foreground matte cleanup and edge decontamination",
+          "state": "planned",
+          "issue": 29,
+          "owner": "Agent cloud",
+          "dependsOn": [
+            "S02"
+          ]
+        },
+        {
+          "id": "S04",
+          "name": "Multiple-instance selection and named outputs",
+          "state": "planned",
+          "issue": 30,
+          "owner": "Agent cloud",
+          "dependsOn": [
+            "S02"
+          ]
+        },
+        {
+          "id": "S05",
+          "name": "Failure classification and bounded targeted repair",
+          "state": "planned",
+          "issue": 31,
+          "owner": "Agent cloud",
+          "dependsOn": [
+            "S03",
+            "Q02"
+          ]
+        },
+        {
+          "id": "S06",
+          "name": "Transparent cutout benchmark with alpha metrics",
+          "state": "blocked",
+          "issue": 32,
+          "owner": "Owner",
+          "dependsOn": [
+            "S03",
+            "S04"
+          ]
+        },
+        {
+          "id": "S07",
+          "name": "Human-accepted cutout samples across tricky materials",
+          "state": "blocked",
+          "issue": 32,
+          "owner": "Owner",
+          "dependsOn": [
+            "S06"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M5",
+      "name": "Delivery and usability",
+      "goal": "A practical CLI and MCP experience with inspectable results, robust archives, and an effortless first run.",
+      "gate": [
+        "D09",
+        "D10"
+      ],
+      "units": [
+        {
+          "id": "D01",
+          "name": "CLI validation, run, estimate and export commands",
+          "state": "done",
+          "issue": 1,
+          "owner": "Agent cloud",
+          "dependsOn": [
+            "F03"
+          ],
+          "evidence": "https://github.com/interzettel/prehnite/pull/1"
+        },
+        {
+          "id": "D02",
+          "name": "Machine-readable JSON/CSV plus basic HTML report",
+          "state": "done",
+          "issue": 1,
+          "owner": "Agent cloud",
+          "dependsOn": [
+            "F05"
+          ],
+          "evidence": "https://github.com/interzettel/prehnite/pull/1"
+        },
+        {
+          "id": "D03",
+          "name": "Interactive-free, static results gallery",
+          "state": "planned",
+          "issue": 33,
+          "owner": "Agent cloud",
+          "dependsOn": [
+            "D02"
+          ]
+        },
+        {
+          "id": "D04",
+          "name": "Accepted asset efficiency and latency breakdown",
+          "state": "planned",
+          "issue": 34,
+          "owner": "Agent cloud",
+          "dependsOn": [
+            "D02",
+            "C06"
+          ]
+        },
+        {
+          "id": "D05",
+          "name": "Versioned provenance and exact input/output hashes",
+          "state": "planned",
+          "issue": 35,
+          "owner": "Agent cloud",
+          "dependsOn": [
+            "C05"
+          ]
+        },
+        {
+          "id": "D06",
+          "name": "Deterministic ZIP ordering and digest manifest",
+          "state": "planned",
+          "issue": 36,
+          "owner": "Agent cloud",
+          "dependsOn": [
+            "D05"
+          ]
+        },
+        {
+          "id": "D07",
+          "name": "Prehnite init/doctor self-check onboarding",
+          "state": "planned",
+          "issue": 37,
+          "owner": "Agent cloud",
+          "dependsOn": [
+            "D01"
+          ]
+        },
+        {
+          "id": "D08",
+          "name": "Safe MCP pause/cancel/reconnect semantics",
+          "state": "planned",
+          "issue": 38,
+          "owner": "Agent cloud",
+          "dependsOn": [
+            "C04"
+          ]
+        },
+        {
+          "id": "D09",
+          "name": "Clean Windows and Linux installation smoke matrix",
+          "state": "planned",
+          "issue": 39,
+          "owner": "Agent local",
+          "dependsOn": [
+            "D07"
+          ]
+        },
+        {
+          "id": "D10",
+          "name": "90-asset no-cost CLI/MCP fixture bundle",
+          "state": "planned",
+          "issue": 41,
+          "owner": "Agent cloud",
+          "dependsOn": [
+            "D06",
+            "D08"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M6",
+      "name": "Community and first release",
+      "goal": "An honest, maintainable MIT project with useful docs, accepted license boundaries and a reproducible first release.",
+      "gate": [
+        "R08",
+        "R09"
+      ],
+      "units": [
+        {
+          "id": "R01",
+          "name": "Keep a Changelog and canonical PEP 440 version",
+          "state": "done",
+          "issue": 13,
+          "owner": "Agent cloud",
+          "dependsOn": [
+            "F01"
+          ],
+          "evidence": "https://github.com/interzettel/prehnite/pull/13"
+        },
+        {
+          "id": "R02",
+          "name": "Issue-driven Kanban, PR/issue templates and WIP limits",
+          "state": "done",
+          "issue": 13,
+          "owner": "Agent cloud",
+          "dependsOn": [
+            "F01"
+          ],
+          "evidence": "https://github.com/interzettel/prehnite/pull/13"
+        },
+        {
+          "id": "R03",
+          "name": "Persistent A2A coordination and ownership handoffs",
+          "state": "done",
+          "issue": 9,
+          "owner": "Agent cloud",
+          "dependsOn": [
+            "F01"
+          ],
+          "evidence": "https://github.com/interzettel/prehnite/issues/9"
+        },
+        {
+          "id": "R04",
+          "name": "Evidence-ledger, milestone roadmap and SVG chart",
+          "state": "active",
+          "issue": 14,
+          "owner": "Agent cloud",
+          "dependsOn": [
+            "R02"
+          ]
+        },
+        {
+          "id": "R05",
+          "name": "Human-first README, badge and original mark",
+          "state": "active",
+          "issue": 43,
+          "owner": "Agent cloud",
+          "dependsOn": [
+            "R02"
+          ]
+        },
+        {
+          "id": "R06",
+          "name": "Audit dependencies and model-weight licensing",
+          "state": "planned",
+          "issue": 40,
+          "owner": "Agent cloud",
+          "dependsOn": [
+            "R01"
+          ]
+        },
+        {
+          "id": "R07",
+          "name": "90-asset offline production dry run",
+          "state": "planned",
+          "issue": 41,
+          "owner": "Agent cloud",
+          "dependsOn": [
+            "D10"
+          ]
+        },
+        {
+          "id": "R08",
+          "name": "90-asset live pilot and owner quality acceptance",
+          "state": "blocked",
+          "issue": 42,
+          "owner": "Owner",
+          "dependsOn": [
+            "R07",
+            "S07",
+            "P09"
+          ]
+        },
+        {
+          "id": "R09",
+          "name": "Owner-approved version tag and first release",
+          "state": "blocked",
+          "issue": 42,
+          "owner": "Owner",
+          "dependsOn": [
+            "R08",
+            "R06"
+          ]
+        },
+        {
+          "id": "R10",
+          "name": "Native GitHub Projects issue/PR state sync",
+          "state": "planned",
+          "issue": 44,
+          "owner": "Agent cloud",
+          "dependsOn": [
+            "R02"
+          ]
+        }
+      ]
+    }
+  ]
+}

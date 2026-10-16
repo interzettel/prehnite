@@ -1,21 +1,21 @@
 # Prehnite — agile iteration board
 
-> Generated from [`project/board.json`](../project/board.json); use `python scripts/board.py --write` to refresh. GitHub issues and PRs are the authoritative live evidence. This is an offline planning snapshot, **not** a native GitHub Projects board.
+> Generated from [`project/board.json`](../project/board.json); use `python scripts/board.py --write` to refresh. GitHub issues and PRs are the authoritative live evidence. The native [organization GitHub Project #1](https://github.com/orgs/interzettel/projects/1) exists but sync is not automated. This checked-in snapshot may differ from live card fields; see issue #44.
 
 **Iteration:** I-01 — Reliability and project governance  
 **Planning window:** 2026-10-16 → 2026-10-30 (review, **not** release deadline)  
-**Goal:** Make the local-first engine dependable and give every future change traceable issue, PR, version, and evidence.
+**Goal:** Publish credible development milestones, readable onboarding, and a recoverable low-cost batch-engine backlog.
 
 ## Flow overview
 
 | Lane | Cards |
 | --- | ---: |
-| Backlog | 5 |
+| Backlog | 30 |
 | Ready | 1 |
 | In progress | 2 |
-| In review | 1 |
-| Blocked | 1 |
-| Done | 2 |
+| In review | 0 |
+| Blocked | 6 |
+| Done | 4 |
 
 **WIP limits:** In progress ≤ 2; In review ≤ 3. Counts are issue/PR cards, not unique completed engineering features or a percentage.
 
@@ -28,6 +28,31 @@
 | P2 | [Issue #4 — Local quality judges and crop QA](https://github.com/interzettel/prehnite/issues/4) | Quality | Must calibrate before quality gates use local scores. |
 | P2 | [Issue #6 — Offline visual reports and exports](https://github.com/interzettel/prehnite/issues/6) | Delivery | Need contact sheets, per-asset comparators and analytics. |
 | P2 | [Issue #8 — Windows MCP lifecycle and packaging](https://github.com/interzettel/prehnite/issues/8) | Runtime | Process cancellation, reconnection and Windows tests. |
+| P0 | [Issue #5 — Crash recovery, pricing and billing hardening](https://github.com/interzettel/prehnite/issues/5) | Reliability | Safety tranche #10 merged; remaining tasks #15–#18, ownership unclaimed. |
+| P2 | [Issue #44 — Synchronize canonical issue ledger with organization GitHub Projects v2](https://github.com/interzettel/prehnite/issues/44) | Tracking | GitHub Project #1 sync needs Projects v2 write permission |
+| P1 | [Issue #41 — Pre-release 90-asset dry run and budget projection](https://github.com/interzettel/prehnite/issues/41) | Benchmark | 90-asset offline dry-run |
+| P1 | [Issue #40 — Model, dependency and artifact licensing inventory](https://github.com/interzettel/prehnite/issues/40) | Licensing | Dependency/model weight terms inventory |
+| P1 | [Issue #39 — Cross-platform installer and Python packaging smoke checks](https://github.com/interzettel/prehnite/issues/39) | Packaging | Windows/Linux smoke tests |
+| P1 | [Issue #38 — MCP cancellation, worker reconnection and status telemetry](https://github.com/interzettel/prehnite/issues/38) | MCP | Cancellation and reconnection |
+| P1 | [Issue #37 — Prehnite init and doctor CLI onboarding](https://github.com/interzettel/prehnite/issues/37) | Onboarding | init/doctor CLI |
+| P1 | [Issue #36 — Deterministic validated archive and manifest hashes](https://github.com/interzettel/prehnite/issues/36) | Reporting | Archive manifest integrity |
+| P1 | [Issue #35 — Versioned provenance and reproducible output manifest](https://github.com/interzettel/prehnite/issues/35) | Reporting | Replay and artifact provenance |
+| P1 | [Issue #34 — Cost per accepted asset and stage latency report](https://github.com/interzettel/prehnite/issues/34) | Reporting | Cost per accepted asset analysis |
+| P1 | [Issue #33 — Self-contained offline HTML gallery and comparisons](https://github.com/interzettel/prehnite/issues/33) | Reporting | Offline HTML visual comparisons |
+| P1 | [Issue #31 — Targeted repair planner for failed cutouts](https://github.com/interzettel/prehnite/issues/31) | Cutouts | Bounded repair planner |
+| P2 | [Issue #30 — Multi-instance object cutout selection](https://github.com/interzettel/prehnite/issues/30) | Cutouts | Multi-instance target matching |
+| P1 | [Issue #29 — Transparent alpha matting and halo removal](https://github.com/interzettel/prehnite/issues/29) | Cutouts | Edge alpha matting |
+| P2 | [Issue #27 — Local aesthetic and fidelity judge plugin boundary](https://github.com/interzettel/prehnite/issues/27) | Quality | Optional local weights and licenses |
+| P1 | [Issue #26 — Full-resolution crops for visual quality gating](https://github.com/interzettel/prehnite/issues/26) | Quality | 4K crop validation |
+| P1 | [Issue #25 — Judge schema and A/B order-bias tests](https://github.com/interzettel/prehnite/issues/25) | Quality | A/B judge schema/order bias |
+| P1 | [Issue #23 — ComfyUI queue resume and error-state contract](https://github.com/interzettel/prehnite/issues/23) | Local GPU | ComfyUI history/error semantics |
+| P1 | [Issue #22 — ComfyUI reproducible API graph fixtures](https://github.com/interzettel/prehnite/issues/22) | Local GPU | ComfyUI graph mocks |
+| P1 | [Issue #21 — Provider capability and price registry contract](https://github.com/interzettel/prehnite/issues/21) | Providers | Typed capability registry |
+| P1 | [Issue #20 — Normalize fal segmentation output and mask orientation](https://github.com/interzettel/prehnite/issues/20) | Segmentation | SAM response-shape fixtures |
+| P1 | [Issue #19 — Mocked FLUX tier and upscale response shapes](https://github.com/interzettel/prehnite/issues/19) | Providers | Offline FLUX conformance |
+| P1 | [Issue #18 — Content-addressed cache with privacy isolation](https://github.com/interzettel/prehnite/issues/18) | Runtime | Cache with privacy-scoped keys |
+| P0 | [Issue #16 — Atomic artifacts and integrity-aware resume](https://github.com/interzettel/prehnite/issues/16) | Runtime | Atomic writes / hash validation |
+| P0 | [Issue #15 — Crash-injection matrix for billed request recovery](https://github.com/interzettel/prehnite/issues/15) | Runtime | Fault-injection recovery |
 
 ## Ready
 
@@ -39,26 +64,33 @@
 
 | Priority | Work item | Stream | Handoff / blocker |
 | --- | --- | --- | --- |
-| P0 | [Issue #5 — Crash recovery, pricing and billing hardening](https://github.com/interzettel/prehnite/issues/5) | Reliability | Safety tranche in PR #10; remainder stays open. |
-| P1 | [Issue #11 — Agile tracking and release governance](https://github.com/interzettel/prehnite/issues/11) | Governance | This change on chore/agile-version-governance. |
+| P1 | [Issue #43 — Human-centered README, original vector identity and first-run guide](https://github.com/interzettel/prehnite/issues/43) | Onboarding | Human README, mark and example workflow |
+| P1 | [Issue #14 — Granular evidence-ledger and generated milestone progress tracker](https://github.com/interzettel/prehnite/issues/14) | Tracking | Canonical evidence ledger and generated visual report |
 
 ## In review
 
 | Priority | Work item | Stream | Handoff / blocker |
 | --- | --- | --- | --- |
-| P1 | [PR #13 — Agile delivery board and release governance](https://github.com/interzettel/prehnite/pull/13) | Governance | Source-of-truth version, Unreleased changelog, templates and CI. |
+| — | No cards currently | — | — |
 
 ## Blocked
 
 | Priority | Work item | Stream | Handoff / blocker |
 | --- | --- | --- | --- |
 | P1 | [Issue #7 — Real fal/Haiku credentialed integration](https://github.com/interzettel/prehnite/issues/7) | Providers | Owner must authorize actual paid/API calls separately. |
+| P1 | [Issue #42 — Owner-accepted production benchmark and release gate](https://github.com/interzettel/prehnite/issues/42) | Release | Owner acceptance and authorized live pilot |
+| P1 | [Issue #32 — Cutout quality benchmark with difficult materials](https://github.com/interzettel/prehnite/issues/32) | Cutouts | Rights-cleared alpha reference data |
+| P1 | [Issue #28 — Reference corpus and human calibration protocol](https://github.com/interzettel/prehnite/issues/28) | Quality | Owner-approved reference images / human calibration |
+| P1 | [Issue #24 — 8GB VRAM local inference feasibility benchmark](https://github.com/interzettel/prehnite/issues/24) | Local GPU | Await local RTX 4070 laptop benchmark |
+| P1 | [Issue #17 — Persist pricing assumptions and reconcile actual bills](https://github.com/interzettel/prehnite/issues/17) | Economics | Live billing access needs explicit authorization |
 
 ## Done
 
 | Priority | Work item | Stream | Handoff / blocker |
 | --- | --- | --- | --- |
+| P1 | [Issue #11 — Agile tracking and release governance](https://github.com/interzettel/prehnite/issues/11) | Governance | Issue/PR templates, changelog and version policy merged via #13. |
 | P0 | [PR #10 — Fail-closed paid recovery and evidence chart](https://github.com/interzettel/prehnite/pull/10) | Reliability | Merged into main; offline safety regression tests passed. |
+| P1 | [PR #13 — Agile delivery board and release governance](https://github.com/interzettel/prehnite/pull/13) | Governance | Merged to main; single-source versioning and governance CI. |
 | P0 | [PR #1 — Initial MIT engine foundation](https://github.com/interzettel/prehnite/pull/1) | Foundation | Merged; synthetic demo CI passed. |
 
 ## How to update this board

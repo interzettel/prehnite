@@ -4,7 +4,7 @@ Prehnite follows **issue-driven Kanban with two-week planning reviews**, not a p
 
 ## Agile board
 
-The tracked issue/PR list and its planning metadata live in [project/board.json](../project/board.json), which generates [docs/SPRINT.md](SPRINT.md) via \`python scripts/board.py --write\`. CI runs \`python scripts/board.py --check\`. It is a maintained *snapshot*: inspect GitHub links for live state, and update the board in the same PR as any lane change. A native GitHub Projects board can be added later; **none is configured by this change**.
+The tracked issue/PR list and its planning metadata live in [project/board.json](../project/board.json), which generates [docs/SPRINT.md](SPRINT.md) via \`python scripts/board.py --write\`. CI runs \`python scripts/board.py --check\`. It is a maintained *snapshot*: inspect GitHub links for live state, and update the board in the same PR as any lane change. The owner has created [organization GitHub Project #1](https://github.com/orgs/interzettel/projects/1). Automatic bidirectional field synchronization is **not** connected; follow [issue #44](https://github.com/interzettel/prehnite/issues/44) and verify the live project rather than treating a generated snapshot as a live update.
 
 Columns: **Backlog → Ready → In progress → In review → Done**, with **Blocked** when a dependency prevents progress. A GitHub issue and the PR implementing part of it may appear separately; don't treat card counts as features or percent complete.
 
@@ -45,6 +45,12 @@ Suggested optional GitHub labels, once created by a repository maintainer:
 - Priority: \`priority:p0\` (safety/blocker), \`priority:p1\` (critical path), \`priority:p2\` (planned), \`priority:p3\` (ideas).
 
 GitHub labels aren't provisioned automatically here. **Do not label an issue with an imaginary label or claim a native Projects board exists.** The checked-in board and live issue/PR links work without labels.
+
+## Evidence-ledger milestones
+
+[progress/ledger.json](../progress/ledger.json) defines stable, independently completable units with dependencies, execution lanes and evidence. [scripts/progress.py](../scripts/progress.py) generates [the SVG dashboard and work report](progress/STATUS.md). **Only done with evidence counts; issue cards, active work and PRs under review do not.** A milestone is reached only when named gate units are done. CI rejects unknown/duplicate dependencies, cycles, false completion and generated-file drift. The separate [production-readiness gate matrix](PROGRESS.md) is not a release claim.
+
+One human maintainer owns priorities, provider spend and final acceptance; agents own isolated implementation changes and write #9 handoffs. Hardware-heavy work stays in a local lane so a cloud agent cannot fabricate GPU measurements.
 
 ## Version and releases
 

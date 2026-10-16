@@ -5,7 +5,7 @@
     "name": "Reliability and project governance",
     "start": "2026-10-16",
     "review_target": "2026-10-30",
-    "goal": "Make the local-first engine dependable and give every future change traceable issue, PR, version, and evidence."
+    "goal": "Publish credible development milestones, readable onboarding, and a recoverable low-cost batch-engine backlog."
   },
   "limits": {
     "max_in_progress": 2,
@@ -71,19 +71,19 @@
       "type": "issue",
       "number": 5,
       "title": "Crash recovery, pricing and billing hardening",
-      "lane": "In progress",
+      "lane": "Backlog",
       "priority": "P0",
       "stream": "Reliability",
-      "note": "Safety tranche in PR #10; remainder stays open."
+      "note": "Safety tranche #10 merged; remaining tasks #15–#18, ownership unclaimed."
     },
     {
       "type": "issue",
       "number": 11,
       "title": "Agile tracking and release governance",
-      "lane": "In progress",
+      "lane": "Done",
       "priority": "P1",
       "stream": "Governance",
-      "note": "This change on chore/agile-version-governance."
+      "note": "Issue/PR templates, changelog and version policy merged via #13."
     },
     {
       "type": "pr",
@@ -98,10 +98,10 @@
       "type": "pr",
       "number": 13,
       "title": "Agile delivery board and release governance",
-      "lane": "In review",
+      "lane": "Done",
       "priority": "P1",
       "stream": "Governance",
-      "note": "Source-of-truth version, Unreleased changelog, templates and CI."
+      "note": "Merged to main; single-source versioning and governance CI."
     },
     {
       "type": "issue",
@@ -120,6 +120,285 @@
       "priority": "P0",
       "stream": "Foundation",
       "note": "Merged; synthetic demo CI passed."
+    },
+    {
+      "type": "issue",
+      "number": 44,
+      "title": "Synchronize canonical issue ledger with organization GitHub Projects v2",
+      "lane": "Backlog",
+      "priority": "P2",
+      "stream": "Tracking",
+      "note": "GitHub Project #1 sync needs Projects v2 write permission"
+    },
+    {
+      "type": "issue",
+      "number": 43,
+      "title": "Human-centered README, original vector identity and first-run guide",
+      "lane": "In progress",
+      "priority": "P1",
+      "stream": "Onboarding",
+      "note": "Human README, mark and example workflow"
+    },
+    {
+      "type": "issue",
+      "number": 42,
+      "title": "Owner-accepted production benchmark and release gate",
+      "lane": "Blocked",
+      "priority": "P1",
+      "stream": "Release",
+      "note": "Owner acceptance and authorized live pilot"
+    },
+    {
+      "type": "issue",
+      "number": 41,
+      "title": "Pre-release 90-asset dry run and budget projection",
+      "lane": "Backlog",
+      "priority": "P1",
+      "stream": "Benchmark",
+      "note": "90-asset offline dry-run"
+    },
+    {
+      "type": "issue",
+      "number": 40,
+      "title": "Model, dependency and artifact licensing inventory",
+      "lane": "Backlog",
+      "priority": "P1",
+      "stream": "Licensing",
+      "note": "Dependency/model weight terms inventory"
+    },
+    {
+      "type": "issue",
+      "number": 39,
+      "title": "Cross-platform installer and Python packaging smoke checks",
+      "lane": "Backlog",
+      "priority": "P1",
+      "stream": "Packaging",
+      "note": "Windows/Linux smoke tests"
+    },
+    {
+      "type": "issue",
+      "number": 38,
+      "title": "MCP cancellation, worker reconnection and status telemetry",
+      "lane": "Backlog",
+      "priority": "P1",
+      "stream": "MCP",
+      "note": "Cancellation and reconnection"
+    },
+    {
+      "type": "issue",
+      "number": 37,
+      "title": "Prehnite init and doctor CLI onboarding",
+      "lane": "Backlog",
+      "priority": "P1",
+      "stream": "Onboarding",
+      "note": "init/doctor CLI"
+    },
+    {
+      "type": "issue",
+      "number": 36,
+      "title": "Deterministic validated archive and manifest hashes",
+      "lane": "Backlog",
+      "priority": "P1",
+      "stream": "Reporting",
+      "note": "Archive manifest integrity"
+    },
+    {
+      "type": "issue",
+      "number": 35,
+      "title": "Versioned provenance and reproducible output manifest",
+      "lane": "Backlog",
+      "priority": "P1",
+      "stream": "Reporting",
+      "note": "Replay and artifact provenance"
+    },
+    {
+      "type": "issue",
+      "number": 34,
+      "title": "Cost per accepted asset and stage latency report",
+      "lane": "Backlog",
+      "priority": "P1",
+      "stream": "Reporting",
+      "note": "Cost per accepted asset analysis"
+    },
+    {
+      "type": "issue",
+      "number": 33,
+      "title": "Self-contained offline HTML gallery and comparisons",
+      "lane": "Backlog",
+      "priority": "P1",
+      "stream": "Reporting",
+      "note": "Offline HTML visual comparisons"
+    },
+    {
+      "type": "issue",
+      "number": 32,
+      "title": "Cutout quality benchmark with difficult materials",
+      "lane": "Blocked",
+      "priority": "P1",
+      "stream": "Cutouts",
+      "note": "Rights-cleared alpha reference data"
+    },
+    {
+      "type": "issue",
+      "number": 31,
+      "title": "Targeted repair planner for failed cutouts",
+      "lane": "Backlog",
+      "priority": "P1",
+      "stream": "Cutouts",
+      "note": "Bounded repair planner"
+    },
+    {
+      "type": "issue",
+      "number": 30,
+      "title": "Multi-instance object cutout selection",
+      "lane": "Backlog",
+      "priority": "P2",
+      "stream": "Cutouts",
+      "note": "Multi-instance target matching"
+    },
+    {
+      "type": "issue",
+      "number": 29,
+      "title": "Transparent alpha matting and halo removal",
+      "lane": "Backlog",
+      "priority": "P1",
+      "stream": "Cutouts",
+      "note": "Edge alpha matting"
+    },
+    {
+      "type": "issue",
+      "number": 28,
+      "title": "Reference corpus and human calibration protocol",
+      "lane": "Blocked",
+      "priority": "P1",
+      "stream": "Quality",
+      "note": "Owner-approved reference images / human calibration"
+    },
+    {
+      "type": "issue",
+      "number": 27,
+      "title": "Local aesthetic and fidelity judge plugin boundary",
+      "lane": "Backlog",
+      "priority": "P2",
+      "stream": "Quality",
+      "note": "Optional local weights and licenses"
+    },
+    {
+      "type": "issue",
+      "number": 26,
+      "title": "Full-resolution crops for visual quality gating",
+      "lane": "Backlog",
+      "priority": "P1",
+      "stream": "Quality",
+      "note": "4K crop validation"
+    },
+    {
+      "type": "issue",
+      "number": 25,
+      "title": "Judge schema and A/B order-bias tests",
+      "lane": "Backlog",
+      "priority": "P1",
+      "stream": "Quality",
+      "note": "A/B judge schema/order bias"
+    },
+    {
+      "type": "issue",
+      "number": 24,
+      "title": "8GB VRAM local inference feasibility benchmark",
+      "lane": "Blocked",
+      "priority": "P1",
+      "stream": "Local GPU",
+      "note": "Await local RTX 4070 laptop benchmark"
+    },
+    {
+      "type": "issue",
+      "number": 23,
+      "title": "ComfyUI queue resume and error-state contract",
+      "lane": "Backlog",
+      "priority": "P1",
+      "stream": "Local GPU",
+      "note": "ComfyUI history/error semantics"
+    },
+    {
+      "type": "issue",
+      "number": 22,
+      "title": "ComfyUI reproducible API graph fixtures",
+      "lane": "Backlog",
+      "priority": "P1",
+      "stream": "Local GPU",
+      "note": "ComfyUI graph mocks"
+    },
+    {
+      "type": "issue",
+      "number": 21,
+      "title": "Provider capability and price registry contract",
+      "lane": "Backlog",
+      "priority": "P1",
+      "stream": "Providers",
+      "note": "Typed capability registry"
+    },
+    {
+      "type": "issue",
+      "number": 20,
+      "title": "Normalize fal segmentation output and mask orientation",
+      "lane": "Backlog",
+      "priority": "P1",
+      "stream": "Segmentation",
+      "note": "SAM response-shape fixtures"
+    },
+    {
+      "type": "issue",
+      "number": 19,
+      "title": "Mocked FLUX tier and upscale response shapes",
+      "lane": "Backlog",
+      "priority": "P1",
+      "stream": "Providers",
+      "note": "Offline FLUX conformance"
+    },
+    {
+      "type": "issue",
+      "number": 18,
+      "title": "Content-addressed cache with privacy isolation",
+      "lane": "Backlog",
+      "priority": "P1",
+      "stream": "Runtime",
+      "note": "Cache with privacy-scoped keys"
+    },
+    {
+      "type": "issue",
+      "number": 17,
+      "title": "Persist pricing assumptions and reconcile actual bills",
+      "lane": "Blocked",
+      "priority": "P1",
+      "stream": "Economics",
+      "note": "Live billing access needs explicit authorization"
+    },
+    {
+      "type": "issue",
+      "number": 16,
+      "title": "Atomic artifacts and integrity-aware resume",
+      "lane": "Backlog",
+      "priority": "P0",
+      "stream": "Runtime",
+      "note": "Atomic writes / hash validation"
+    },
+    {
+      "type": "issue",
+      "number": 15,
+      "title": "Crash-injection matrix for billed request recovery",
+      "lane": "Backlog",
+      "priority": "P0",
+      "stream": "Runtime",
+      "note": "Fault-injection recovery"
+    },
+    {
+      "type": "issue",
+      "number": 14,
+      "title": "Granular evidence-ledger and generated milestone progress tracker",
+      "lane": "In progress",
+      "priority": "P1",
+      "stream": "Tracking",
+      "note": "Canonical evidence ledger and generated visual report"
     }
   ]
 }

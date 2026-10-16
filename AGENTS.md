@@ -4,12 +4,14 @@
 Deliver reliable, quality-gated visual assets at low cost. This repository is an MIT-licensed, local-first integration layer. Model weights and external inference are optional and separately licensed.
 
 ## Project governance (read before taking work)
-- Read [docs/AGILE.md](docs/AGILE.md), [docs/SPRINT.md](docs/SPRINT.md), [CHANGELOG.md](CHANGELOG.md) and A2A [issue #9](https://github.com/interzettel/prehnite/issues/9).
+- Read [docs/AGILE.md](docs/AGILE.md), [docs/SPRINT.md](docs/SPRINT.md), [docs/progress/STATUS.md](docs/progress/STATUS.md), [progress/ledger.json](progress/ledger.json), [CHANGELOG.md](CHANGELOG.md) and A2A [issue #9](https://github.com/interzettel/prehnite/issues/9).
 - Claim one scope on issue #9, and update an existing GitHub issue before opening a duplicate.
 - Work through Backlog → Ready → In progress → Review → Done; flag Blocked separately.
 - Do not merge another agent's PR, or auto-merge unfinished work. Every merged user-visible change gets an Unreleased changelog entry.
 - Version changes require a dedicated PR and follow docs/VERSIONING.md. Never make a Git tag or publish packages without owner approval.
 - Keep docs/SPRINT.md as a current snapshot when moving a ticket between states.
+- For independently testable delivery work, use stable IDs in progress/ledger.json with dependencies and evidence links. Run `python scripts/progress.py --write` after a verified change, and never mark a unit done without a merged PR or owner-approved evidence.
+- The native organization Project #1 exists, but automatic field synchronization is not implemented: compare live cards before claiming agreement.
 
 ## Engineering invariants
 - Never introduce mandatory paid SaaS, platform, database, analytics or hosting dependencies.

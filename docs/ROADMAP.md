@@ -1,5 +1,7 @@
 # Roadmap (issues should reference acceptance tests)
 
+**Granular roadmap and milestone progress:** [Evidence ledger dashboard](progress/STATUS.md) · [61 tracked scoped units](../progress/ledger.json) · [Current iteration board](SPRINT.md). This historical thematic checklist is not the canonical percentage.
+
 ## v0.1: executable architecture, no mandatory cloud costs
 - [x] Strict manifest/profile validation and output path safety
 - [x] Demo provider and documented opt-in fal generation/upscaling
