@@ -151,7 +151,8 @@ class JobManager:
                     status = "interrupted"
             results = journal.fact("results", {})
             manifest = journal.fact("manifest", {})
-            required = len(manifest.get("assets", []))
+            required = len(manifest.get("assets", [])) or journal.fact(
+                "requested_asset_count", 0)
             completed = sum(r.get("status") == "accepted"
                             for r in results.values() if isinstance(r, dict))
             return {
