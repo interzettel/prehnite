@@ -348,12 +348,13 @@
         {
           "id": "Q02",
           "name": "Judge schema + invalid response handling",
-          "state": "planned",
+          "state": "done",
           "issue": 25,
           "owner": "Agent cloud",
           "dependsOn": [
             "Q01"
-          ]
+          ],
+          "evidence": "https://github.com/interzettel/prehnite/pull/61"
         },
         {
           "id": "Q03",
