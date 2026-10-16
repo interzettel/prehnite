@@ -8,7 +8,7 @@ The ordinary `gallery.html` uses downsampled embedded thumbnails so 90 assets do
 prehnite inspect my-batch --asset asset-014 --workspace workspace
 ```
 
-The output lives in `workspace/batches/my-batch/reviews/asset-014.html`. Open it locally in a browser. Select **Fit to panel** for a side-by-side overview or **Actual pixels (1:1)** for scrolling/panning at the original image's native pixel dimensions. Each named cutout is displayed against a checkerboard so alpha edges are visible. The browser can still apply OS display scaling; use 100% browser zoom for meaningful 1:1 inspection.
+The output lives in `workspace/batches/my-batch/reviews/asset-014.html`. For a **source-backed** slot, you may additionally run `prehnite inspect my-batch --asset asset-014 --workspace workspace --inputs /path/to/original-input-root` to show the recorded original alongside the base/cutouts. The original must match the **historical SHA256** stored when the batch was first processed; no source-root guessing, no implicit re-fingerprinting, and no original panel for prompt-generated slots. Open it locally in a browser. Select **Fit to panel** for a side-by-side overview or **Actual pixels (1:1)** for scrolling/panning at the original image's native pixel dimensions. Each named cutout is displayed against a checkerboard so alpha edges are visible. The browser can still apply OS display scaling; use 100% browser zoom for meaningful 1:1 inspection.
 
 ## Safety and fidelity
 
