@@ -180,7 +180,7 @@ GitHub [Project #1](https://github.com/orgs/interzettel/projects/1) tracks workf
 
 ## Built for a maintainer and their agents
 
-Prehnite has a CLI first, optional [stdio MCP tools](src/prehnite/mcp_server.py) second. A person can run it directly; agents can submit preconfigured batches, check status, and request exports without being given arbitrary shell access.
+Prehnite has a CLI first, optional [stdio MCP tools](src/prehnite/mcp_server.py) second. A person can run it directly; agents can submit preconfigured batches, check status, and request exports without being given arbitrary shell access. MCP workers now support [durable reconnect and cooperative pause/cancel/resume](docs/MCP_LIFECYCLE.md) on a development branch; a stop request does not immediately stop an in-flight provider request.
 
 The project itself is managed the same way: small issue scopes, PR-based delivery, offline tests, and a persistent [agent-to-agent handoff thread](https://github.com/interzettel/prehnite/issues/9). One maintainer sets direction and approves spend and releases. Agents do the repeatable engineering work and leave evidence—not inflated status reports.
 

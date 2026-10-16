@@ -179,10 +179,10 @@
       "type": "issue",
       "number": 38,
       "title": "MCP cancellation, worker reconnection and status telemetry",
-      "lane": "Backlog",
+      "lane": "In progress",
       "priority": "P1",
       "stream": "MCP",
-      "note": "Cancellation and reconnection"
+      "note": "Durable control implementation in PR #83; CI/review required before D08 credit."
     },
     {
       "type": "issue",
@@ -588,6 +588,15 @@
       "priority": "P1",
       "stream": "Reporting",
       "note": "Merged; 264 offline tests and Windows/Ubuntu smoke green; invoices remain unverified"
+    },
+    {
+      "type": "pr",
+      "number": 83,
+      "title": "Durable MCP pause/cancel/reconnect and worker ownership",
+      "lane": "In review",
+      "priority": "P1",
+      "stream": "MCP",
+      "note": "Feature+regression PR for #38; CI and review pending; no merged ledger credit."
     }
   ]
 }

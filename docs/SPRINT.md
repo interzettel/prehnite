@@ -10,10 +10,10 @@
 
 | Lane | Cards |
 | --- | ---: |
-| Backlog | 17 |
+| Backlog | 16 |
 | Ready | 2 |
-| In progress | 0 |
-| In review | 0 |
+| In progress | 1 |
+| In review | 1 |
 | Blocked | 6 |
 | Done | 39 |
 
@@ -32,7 +32,6 @@
 | P2 | [Issue #44 — Synchronize canonical issue ledger with organization GitHub Projects v2](https://github.com/interzettel/prehnite/issues/44) | Tracking | GitHub Project #1 sync needs Projects v2 write permission |
 | P1 | [Issue #41 — Pre-release 90-asset dry run and budget projection](https://github.com/interzettel/prehnite/issues/41) | Benchmark | 90-asset offline dry-run |
 | P1 | [Issue #40 — Model, dependency and artifact licensing inventory](https://github.com/interzettel/prehnite/issues/40) | Licensing | Dependency/model weight terms inventory |
-| P1 | [Issue #38 — MCP cancellation, worker reconnection and status telemetry](https://github.com/interzettel/prehnite/issues/38) | MCP | Cancellation and reconnection |
 | P1 | [Issue #33 — Self-contained offline HTML gallery and comparisons](https://github.com/interzettel/prehnite/issues/33) | Reporting | Offline thumbnail gallery #67 merged; opt-in private original comparisons remain issue #68 |
 | P1 | [Issue #31 — Targeted repair planner for failed cutouts](https://github.com/interzettel/prehnite/issues/31) | Cutouts | Bounded repair planner |
 | P2 | [Issue #30 — Multi-instance object cutout selection](https://github.com/interzettel/prehnite/issues/30) | Cutouts | Multi-instance target matching |
@@ -52,13 +51,13 @@
 
 | Priority | Work item | Stream | Handoff / blocker |
 | --- | --- | --- | --- |
-| — | No cards currently | — | — |
+| P1 | [Issue #38 — MCP cancellation, worker reconnection and status telemetry](https://github.com/interzettel/prehnite/issues/38) | MCP | Durable control implementation in PR #83; CI/review required before D08 credit. |
 
 ## In review
 
 | Priority | Work item | Stream | Handoff / blocker |
 | --- | --- | --- | --- |
-| — | No cards currently | — | — |
+| P1 | [PR #83 — Durable MCP pause/cancel/reconnect and worker ownership](https://github.com/interzettel/prehnite/pull/83) | MCP | Feature+regression PR for #38; CI and review pending; no merged ledger credit. |
 
 ## Blocked
 
