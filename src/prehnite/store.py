@@ -273,7 +273,10 @@ class Journal:
                 "UPDATE job_control SET status=?,updated_at=? WHERE singleton=1",
                 (status, time.time()))
             self.db.commit()
-            return {"status": status, "acknowledged": status == current,
+            accepted = (status in ("pause_requested", "paused") if command == "pause"
+                        else status in ("cancel_requested", "cancelled"))
+            return {"status": status, "accepted": accepted,
+                    "already_requested": accepted and status == current,
                     "in_flight_stage_may_finish": status.endswith("_requested")}
         except BaseException:
             self.db.rollback()
