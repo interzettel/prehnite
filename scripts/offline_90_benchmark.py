@@ -248,10 +248,16 @@ def run_benchmark(home: Path) -> dict:
             assert provenance["quality_certification"].startswith("none")
         # Running a completed batch must reuse all stages and be byte-stable.
         attempts_before = len(engine.journal.attempts())
-        resumed_report = engine.run()
-        assert len(engine.journal.attempts()) == attempts_before
-        assert resumed_report["economics"]["accepted_assets"] == COUNT
-        assert package(engine.journal).read_bytes() == first_bytes
+        # Direct CLI-mode replay validates idempotence after a completed
+        # MCP job without trying to re-enter a terminal launch token.
+        replay = engine_for(manager)
+        try:
+            resumed_report = replay.run()
+            assert len(replay.journal.attempts()) == attempts_before
+            assert resumed_report["economics"]["accepted_assets"] == COUNT
+            assert package(replay.journal).read_bytes() == first_bytes
+        finally:
+            replay.journal.close()
         assert not any("INJECTED_OFFLINE_TEST_FAILURE" in str(row)
                        for row in resumed_report["asset_results"].values())
         return {
