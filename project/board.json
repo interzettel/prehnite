@@ -152,10 +152,10 @@
       "type": "issue",
       "number": 41,
       "title": "Pre-release 90-asset dry run and budget projection",
-      "lane": "Backlog",
+      "lane": "In progress",
       "priority": "P1",
       "stream": "Benchmark",
-      "note": "90-asset offline dry-run"
+      "note": "Offline 90-slot cross-platform fixture passes on PR #84; awaiting latest-head CI/merge."
     },
     {
       "type": "issue",
@@ -179,10 +179,10 @@
       "type": "issue",
       "number": 38,
       "title": "MCP cancellation, worker reconnection and status telemetry",
-      "lane": "In progress",
+      "lane": "Done",
       "priority": "P1",
       "stream": "MCP",
-      "note": "Durable control implementation in PR #83; CI/review required before D08 credit."
+      "note": "PR #83 merged as 38113a7; four-job CI green (290 tests), issue closed."
     },
     {
       "type": "issue",
@@ -593,10 +593,19 @@
       "type": "pr",
       "number": 83,
       "title": "Durable MCP pause/cancel/reconnect and worker ownership",
-      "lane": "In review",
+      "lane": "Done",
       "priority": "P1",
       "stream": "MCP",
-      "note": "Feature+regression PR for #38; CI and review pending; no merged ledger credit."
+      "note": "Merged into main; durable MCP controls verified with Windows lifecycle regression."
+    },
+    {
+      "type": "pr",
+      "number": 84,
+      "title": "90-slot offline pause/crash/recovery benchmark",
+      "lane": "In review",
+      "priority": "P1",
+      "stream": "Benchmark",
+      "note": "90/90 accepted on Ubuntu+Windows CI; merge and evidence credit pending."
     }
   ]
 }
