@@ -48,6 +48,13 @@ def export_native_inspection(journal: Journal, asset_id: str) -> Path:
     asset = next((a for a in entries
                   if isinstance(a, dict) and a.get("id") == asset_id), {})
     declared = asset.get("output", {}) if isinstance(asset.get("output"), dict) else {}
+    if declared.get("image") and outputs[0] != declared["image"]:
+        raise ArtifactIntegrityError("Base output differs from recorded manifest")
+    cutouts = declared.get("cutouts", {})
+    if isinstance(cutouts, dict) and cutouts:
+        unexpected = set(outputs[1:]) - set(cutouts.values())
+        if unexpected:
+            raise ArtifactIntegrityError("Cutout output differs from recorded manifest")
     root = (journal.root / "selected").resolve()
     total_bytes = 0
     blocks = []
@@ -64,6 +71,8 @@ def export_native_inspection(journal: Journal, asset_id: str) -> Path:
         media = _MIME.get(target.suffix.lower())
         if not media:
             raise ValueError("Unsupported native inspector image format")
+        if total_bytes + target.stat().st_size > MAX_EMBEDDED_BYTES:
+            raise ValueError("Native detail exceeds 64 MiB embedded-image limit")
         image_bytes = target.read_bytes()
         total_bytes += len(image_bytes)
         if total_bytes > MAX_EMBEDDED_BYTES:
@@ -134,5 +143,8 @@ def export_native_inspection(journal: Journal, asset_id: str) -> Path:
         '</fieldset><div class="panels">' + "".join(blocks) + '</div></main></body></html>'
     )
     output = journal.root / "reviews" / (asset_id + ".html")
+    # The reviews directory itself must never be a symlink outside the batch.
+    if not output.parent.resolve().is_relative_to(journal.root.resolve()):
+        raise ArtifactIntegrityError("Review destination escapes batch root")
     atomic_text(output, page)
     return output
