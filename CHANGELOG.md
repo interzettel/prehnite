@@ -17,6 +17,7 @@ This project follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) an
 - Original Prehnite vector mark, improved first-run documentation and truthful provider status matrix.
 
 ### Fixed
+- fal generation uses model-specific size payloads (Klein explicit image_size vs FLUX.3 Image ratio/tier); queue fixtures validate response parsing, unknown-model refusal and resume without re-uploading source images (#19).
 - Offline subprocess crash-injection tests cover paid-call journal boundaries, safe resume and cross-process lock release (#15); real provider billing is not tested.
 - Fail-closed recovery of uncertain paid calls, single-batch worker locking, and mandatory positive pricing estimates ([PR #10](https://github.com/interzettel/prehnite/pull/10)).
 
