@@ -13,6 +13,7 @@ from typing import Literal
 from .judges import Verdict
 
 _SAFE = re.compile(r"^[a-z][a-z0-9_-]{0,63}$")
+_SUBJECT = re.compile(r"^[A-Za-z][A-Za-z0-9_-]{0,63}$")
 _HEX = re.compile(r"^[a-f0-9]{64}$")
 Kind = Literal["presence_probability", "category_choice", "rubric_score",
                "bounding_box", "technical_flag"]
@@ -99,7 +100,7 @@ class DecisionEvidence:
     status: Literal["observed", "abstained"] = "observed"
 
     def __post_init__(self) -> None:
-        if not isinstance(self.subject, str) or not _SAFE.fullmatch(self.subject):
+        if not isinstance(self.subject, str) or not _SUBJECT.fullmatch(self.subject):
             raise ValueError("Unsafe decision subject")
         if not isinstance(self.image_sha256, str) or not _HEX.fullmatch(self.image_sha256):
             raise ValueError("Missing SHA256-bound visual evidence")
