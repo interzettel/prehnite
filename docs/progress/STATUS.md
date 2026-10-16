@@ -2,7 +2,7 @@
 
 > Generated from `progress/ledger.json` by `scripts/progress.py`. A unit counts only when done with evidence; percentages are not estimates of engineering time or visual quality.
 
-**29 / 61 units done (47.5%)** · 0 active · 10 blocked · 22 planned.
+**30 / 61 units done (49.2%)** · 0 active · 10 blocked · 21 planned.
 **Milestone gates reached:** 1 / 7.
 
 ![Milestone progress chart](progress.svg)
@@ -14,7 +14,7 @@
 | M0 · Runnable foundation | 6/6 (100.0%) | 0 | 0 | 0 | Reached |
 | M1 · Safe production engine | 5/10 (50.0%) | 0 | 2 | 3 | Open: C08, C09 |
 | M2 · Models and local compute | 7/10 (70.0%) | 0 | 2 | 1 | Open: P09 |
-| M3 · Photographic quality gates | 2/8 (25.0%) | 0 | 2 | 4 | Open: Q07, Q08 |
+| M3 · Photographic quality gates | 3/8 (37.5%) | 0 | 2 | 3 | Open: Q07, Q08 |
 | M4 · Cutouts and corrections | 2/7 (28.6%) | 0 | 2 | 3 | Open: S06, S07 |
 | M5 · Delivery and usability | 2/10 (20.0%) | 0 | 0 | 8 | Open: D09, D10 |
 | M6 · Community and first release | 5/10 (50.0%) | 0 | 2 | 3 | Open: R08, R09 |
@@ -69,7 +69,7 @@
 | `Q01` | Dimension and file-decodability technical checks | done | Agent cloud | F03 | [Evidence](https://github.com/interzettel/prehnite/pull/1) |
 | `Q02` | Judge schema + invalid response handling | done | Agent cloud | Q01 | [Evidence](https://github.com/interzettel/prehnite/pull/61) |
 | `Q03` | Order-bias and independent-rubric A/B tests | planned | Agent cloud | Q02 | [#63](https://github.com/interzettel/prehnite/issues/63) |
-| `Q04` | Lossless 4K crop panel comparisons | planned | Agent cloud | Q02 | [#26](https://github.com/interzettel/prehnite/issues/26) |
+| `Q04` | Lossless 4K crop panel comparisons | done | Agent cloud | Q02 | [Evidence](https://github.com/interzettel/prehnite/pull/65) |
 | `Q05` | Optional local quality judge plugin contract | planned | Agent local | Q02 | [#27](https://github.com/interzettel/prehnite/issues/27) |
 | `Q06` | Rights-cleared human-rated reference set | blocked | Owner | Q02 | [#28](https://github.com/interzettel/prehnite/issues/28) |
 | `Q07` | Calibration report for accepted/rejected quality | blocked | Owner | Q06, Q03 | [#28](https://github.com/interzettel/prehnite/issues/28) |

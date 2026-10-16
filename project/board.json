@@ -287,10 +287,10 @@
       "type": "issue",
       "number": 26,
       "title": "Full-resolution crops for visual quality gating",
-      "lane": "Ready",
+      "lane": "Done",
       "priority": "P1",
       "stream": "Quality",
-      "note": "Next independent offline lossless 4K crop and geometry validation (Q04)"
+      "note": "Merged PR #65: native-pixel 4K crops, lossless PNG and verified hash evidence; 207 CI tests"
     },
     {
       "type": "issue",
@@ -507,6 +507,15 @@
       "priority": "P1",
       "stream": "Quality",
       "note": "Controlled fixed-rubric order-swap measurement; human calibration and any paid pilot remain separately gated"
+    },
+    {
+      "type": "pr",
+      "number": 65,
+      "title": "Native-pixel crop evidence and offline CLI",
+      "lane": "Done",
+      "priority": "P1",
+      "stream": "Quality",
+      "note": "Merged to main; 207 tests passed. No model-quality certification."
     }
   ]
 }

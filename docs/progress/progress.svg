@@ -2,17 +2,17 @@
 <rect width="1200" height="1029" fill="#f6f7f4"/>
 <g font-family="system-ui,Segoe UI,sans-serif">
 <text x="35" y="48" font-size="27" font-weight="700" fill="#182a27">PREHNITE / DEVELOPMENT PROGRESS</text>
-<text x="35" y="79" font-size="16" fill="#5c6c65">29 / 61 scoped units done · 47.5%</text>
+<text x="35" y="79" font-size="16" fill="#5c6c65">30 / 61 scoped units done · 49.2%</text>
 <text x="1160" y="49" text-anchor="end" font-size="17" fill="#277e74">1/7 milestone gates</text>
 <text x="35" y="106" font-size="13" fill="#5c6c65">Unweighted work units · evidence required for completion · not a product quality score</text>
 <rect x="35" y="126" width="13" height="13" rx="2" fill="#277e74"/>
-<text x="56" y="138" font-size="13" fill="#283832">Done 29</text>
+<text x="56" y="138" font-size="13" fill="#283832">Done 30</text>
 <rect x="223" y="126" width="13" height="13" rx="2" fill="#c28b4a"/>
 <text x="244" y="138" font-size="13" fill="#283832">Active 0</text>
 <rect x="411" y="126" width="13" height="13" rx="2" fill="#b8534e"/>
 <text x="432" y="138" font-size="13" fill="#283832">Blocked 10</text>
 <rect x="599" y="126" width="13" height="13" rx="2" fill="#dce0dd"/>
-<text x="620" y="138" font-size="13" fill="#283832">Planned 22</text>
+<text x="620" y="138" font-size="13" fill="#283832">Planned 21</text>
 <rect x="35" y="171" width="1130" height="103" rx="10" fill="#fff" stroke="#d8ddd7"/>
 <text x="55" y="196" font-size="17" font-weight="650" fill="#1d302b">M0 · Runnable foundation</text>
 <text x="1140" y="196" font-size="16" text-anchor="end" font-weight="650" fill="#277e74">6/6 · 100.0%</text>
@@ -56,12 +56,12 @@
 <text x="1140" y="490" text-anchor="end" font-size="11" fill="#6b7972">Open gate: P09</text>
 <rect x="35" y="507" width="1130" height="103" rx="10" fill="#fff" stroke="#d8ddd7"/>
 <text x="55" y="532" font-size="17" font-weight="650" fill="#1d302b">M3 · Photographic quality gates</text>
-<text x="1140" y="532" font-size="16" text-anchor="end" font-weight="650" fill="#277e74">2/8 · 25.0%</text>
+<text x="1140" y="532" font-size="16" text-anchor="end" font-weight="650" fill="#277e74">3/8 · 37.5%</text>
 <text x="55" y="555" font-size="12" fill="#65756e">Prefer usable assets rather than raw generations, with transparent, calibrated judgments at native resolution.</text>
 <g><title>Q01: Dimension and file-decodability technical checks [done] issue/PR #1</title><rect x="55" y="572" width="133" height="16" rx="2" fill="#277e74"/></g>
 <g><title>Q02: Judge schema + invalid response handling [done] issue/PR #25</title><rect x="191" y="572" width="133" height="16" rx="2" fill="#277e74"/></g>
 <g><title>Q03: Order-bias and independent-rubric A/B tests [planned] issue/PR #63</title><rect x="327" y="572" width="133" height="16" rx="2" fill="#dce0dd"/></g>
-<g><title>Q04: Lossless 4K crop panel comparisons [planned] issue/PR #26</title><rect x="463" y="572" width="133" height="16" rx="2" fill="#dce0dd"/></g>
+<g><title>Q04: Lossless 4K crop panel comparisons [done] issue/PR #26</title><rect x="463" y="572" width="133" height="16" rx="2" fill="#277e74"/></g>
 <g><title>Q05: Optional local quality judge plugin contract [planned] issue/PR #27</title><rect x="599" y="572" width="133" height="16" rx="2" fill="#dce0dd"/></g>
 <g><title>Q06: Rights-cleared human-rated reference set [blocked] issue/PR #28</title><rect x="735" y="572" width="133" height="16" rx="2" fill="#b8534e"/></g>
 <g><title>Q07: Calibration report for accepted/rejected quality [blocked] issue/PR #28</title><rect x="871" y="572" width="133" height="16" rx="2" fill="#b8534e"/></g>

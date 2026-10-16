@@ -369,12 +369,13 @@
         {
           "id": "Q04",
           "name": "Lossless 4K crop panel comparisons",
-          "state": "planned",
+          "state": "done",
           "issue": 26,
           "owner": "Agent cloud",
           "dependsOn": [
             "Q02"
-          ]
+          ],
+          "evidence": "https://github.com/interzettel/prehnite/pull/65"
         },
         {
           "id": "Q05",
