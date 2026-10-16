@@ -125,6 +125,11 @@ def export(batch_id: str, workspace: Path = typer.Option(Path("workspace")),
         with j.launch_exclusive():
             if j.worker_active():
                 raise typer.BadParameter("Cannot export while a worker is active")
+            record = j.job_record()
+            if record and record["status"] in (
+                    "launching", "pause_requested", "cancel_requested"):
+                raise typer.BadParameter(
+                    "Worker launch/control state unresolved; export after safe stop")
             report = export_report(j)
             if parquet:
                 from .parquet_export import write_parquet_exports
