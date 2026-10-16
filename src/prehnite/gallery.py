@@ -17,6 +17,8 @@ from .artifacts import atomic_text, verified_image
 from .images import image_info
 from .schema import relative_name
 from .store import Journal
+from .analytics import build_analytics, render_analytics
+from .economics import batch_economics
 
 
 def _escape(value: object) -> str:
@@ -123,8 +125,8 @@ def _tile_card(root: Path, asset_id: str, result: dict) -> str:
             + '</article>')
 
 
-def export_gallery(journal: Journal) -> Path:
-    """Regenerate a fully local HTML page with verified accepted assets."""
+def export_gallery(journal: Journal, analytics: dict | None = None) -> Path:
+    """Regenerate an offline analytics dashboard with verified visual previews."""
     root = journal.root
     results = journal.fact("results", {})
     if not isinstance(results, dict):
@@ -136,6 +138,10 @@ def export_gallery(journal: Journal) -> Path:
     ] if isinstance(manifest, dict) else []
     # Also surface failures with missing manifest entries; never drop an error.
     ids = list(dict.fromkeys(asset_ids + list(results)))
+    if analytics is None:
+        tasks, attempts = journal.tasks(), journal.attempts()
+        analytics = build_analytics(manifest, results, tasks, attempts,
+                                   batch_economics(tasks, results, attempts))
     rows = []
     for asset_id in ids:
         if not isinstance(asset_id, str):
@@ -153,7 +159,7 @@ def export_gallery(journal: Journal) -> Path:
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <meta http-equiv="Content-Security-Policy"
 content="default-src 'none'; img-src data:; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'; connect-src 'none'" />
-<title>Prehnite · Offline review</title>
+<title>Prehnite · Offline analytics and review</title>
 <style>
 :root{color-scheme:light dark;font:15px/1.5 system-ui,-apple-system,Segoe UI,sans-serif;
 --bg:#f4f6f2;--paper:#fff;--ink:#19312c;--sub:#53635d;--line:#d5ddd6}
@@ -164,6 +170,38 @@ main{max-width:1240px;margin:auto;padding:22px}
 h1{font-size:clamp(1.6rem,4vw,2.5rem);margin:0}h2{font-size:1.16rem;margin:0}
 h3{font-size:.9rem;color:var(--sub);margin:16px 0 9px}
 .intro{margin:12px 0 28px;color:var(--sub);max-width:75ch}
+.analytics{margin:0 0 35px}
+.analytics-top{display:grid;gap:18px;margin:18px 0 22px}
+.analytics-top h2{font-size:1.65rem;letter-spacing:-.025em}
+.eyebrow{color:var(--sub);font-size:.69rem;letter-spacing:.13em;font-weight:700}
+.quiet,.small{color:var(--sub)}
+.small{font-size:.79rem;line-height:1.45;max-width:72ch}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:10px}
+.kpi,.analytics-panel{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:17px}
+.kpi strong{display:block;font-size:clamp(1.18rem,2.8vw,1.8rem);letter-spacing:-.04em;
+font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.kpi span{font-size:.76rem;color:var(--sub)}
+.analytics-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,350px),1fr));
+gap:13px;margin:14px 0}
+.analytics-panel{min-width:0}
+.analytics-panel h3{font-size:.92rem;margin:0 0 17px;color:var(--ink)}
+.metric-bar{margin:12px 0}
+.metric-label{display:flex;justify-content:space-between;gap:12px;
+font-size:.82rem;margin-bottom:6px;font-variant-numeric:tabular-nums}
+.metric-label strong{white-space:nowrap}
+.track{height:9px;border-radius:9px;background:var(--line);overflow:hidden}
+.fill{display:block;height:100%;background:#28796b;border-radius:9px}
+.fill-neutral{background:#9eada5}.fill-alert{background:#bd7552}
+.table-scroll{overflow-x:auto}
+.analytics-panel table{border-collapse:collapse;width:100%;font-size:.81rem;font-variant-numeric:tabular-nums}
+.analytics-panel th,.analytics-panel td{text-align:left;padding:9px 10px 9px 0;
+border-bottom:1px solid var(--line);white-space:nowrap}
+.analytics-panel thead th{font-size:.73rem;color:var(--sub);font-weight:600}
+.failure-items{list-style:none;margin:0;padding:0}
+.failure-items li{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--line)}
+.failure-items code{font-size:.76rem;overflow-wrap:anywhere}
+@media(min-width:860px){.analytics-top{grid-template-columns:1fr 2fr;align-items:center}}
+@media(max-width:500px){main{padding:16px}.asset{padding:15px}.kpi{padding:12px}}
 .dashboard{display:flex;gap:14px;flex-wrap:wrap;margin:17px 0 26px}
 .dashboard span{border:1px solid var(--line);border-radius:9px;padding:8px 12px}
 .asset{background:var(--paper);border:1px solid var(--line);border-radius:14px;
@@ -185,13 +223,14 @@ details{margin-top:17px;border-top:1px solid var(--line);padding-top:12px}
 summary{cursor:pointer;color:var(--sub);margin-bottom:12px}
 footer{color:var(--sub);margin:28px 0;font-size:.85rem}
 </style></head><body><main>""" + (
-        "<header><h1>Prehnite / offline visual review</h1>"
+        "<header><h1>Prehnite / offline production dashboard</h1>"
         "<p class='intro'>Local thumbnails only. Previews are deliberately downsampled; "
         "inspect native 1:1 crops for fine detail. Reported judge scores are uncalibrated. "
         "This standalone page has no scripts, external fonts, analytics or image requests. "
         "Sharing this HTML file shares the embedded thumbnail pixels.</p>"
         f"<div class='dashboard'><span>{len(ids)} assets</span>"
         f"<span>{accepted} accepted</span><span>{rejected} need attention</span></div></header>"
+        + render_analytics(analytics)
         + "".join(rows)
         + "<footer>Offline local report · source images and full-resolution exports are "
           "not embedded · no remote content loaded.</footer></main></body></html>"
