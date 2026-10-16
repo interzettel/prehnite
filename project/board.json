@@ -323,19 +323,19 @@
       "type": "issue",
       "number": 22,
       "title": "ComfyUI reproducible API graph fixtures",
-      "lane": "Backlog",
+      "lane": "Ready",
       "priority": "P1",
       "stream": "Local GPU",
-      "note": "ComfyUI graph mocks"
+      "note": "Next offline local ComfyUI API graph schema and node mapping fixtures"
     },
     {
       "type": "issue",
       "number": 21,
       "title": "Provider capability and price registry contract",
-      "lane": "Ready",
+      "lane": "Done",
       "priority": "P1",
       "stream": "Providers",
-      "note": "Next offline typed provider capability validation; depends on merged FLUX fixtures"
+      "note": "Typed adapter registry and user-estimate provenance merged in PR #55; real quote audit remains #17"
     },
     {
       "type": "issue",
@@ -462,6 +462,15 @@
       "priority": "P1",
       "stream": "Cutouts",
       "note": "Merged, 100 offline tests passed"
+    },
+    {
+      "type": "pr",
+      "number": 55,
+      "title": "Typed provider capability preflight",
+      "lane": "Done",
+      "priority": "P1",
+      "stream": "Providers",
+      "note": "Merged to main; 127 offline tests passed; no live pricing"
     }
   ]
 }
