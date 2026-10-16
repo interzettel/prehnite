@@ -7,6 +7,7 @@ This project follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) an
 ## [Unreleased]
 
 ### Added
+- Full-resolution 2020 × 779 owner-supplied Riso PNG README hero with transparent rounded corners and original-size textured composition. Removed obsolete 680 × 262 WebP and nonmatching wordmark SVG; retained separate reusable mineral mark. GitHub CSS sanitization no longer prevents visibly rounded corners (branding follow-up).
 - Experimental zero-network synthetic self-correction demonstration (#31/#29): one journal-backed idempotent logical product fringe repair, strict uniform-background and image/alpha guards, immutable source and mask, SHA256-verified isolated publication and crash replay; offline before/after/reference-mask HTML/JSON evidence and portrait safe refusal. Technical demo acceptance only; not a calibrated production matte or production Engine integration.
 - Provider-neutral offline typed decision evidence and bounded local candidate reject/repair action planner for separate synthetic product and portrait cohorts (#116). Capability, abstention, model-calibration, immutable accepted-output and zero-paid-spend guards; no provider transport or repair executor connected yet.
 - Deterministic offline Noul binary visual-gold evaluation (#111): Brier/ECE, explicit abstention/coverage, false-accept/reject and Wilson intervals, private aggregate reports, and quoted reservation-cost evidence. Synthetic labels are not real visual-quality certification.

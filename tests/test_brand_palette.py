@@ -48,14 +48,24 @@ def test_inline_theme_contains_both_color_modes_and_no_external_assets():
     assert "http" not in css.lower()
 
 
-def test_owner_selected_artwork_is_real_webp_and_readme_uses_it():
+def test_owner_selected_full_resolution_png_and_rounded_readme_hero():
     root = Path(__file__).resolve().parents[1]
-    path = root / "assets/prehnite-riso-green-coral.webp"
-    assert path.read_bytes().startswith(b"RIFF")
+    path = root / "assets/prehnite-riso-green-coral.png"
+    assert path.read_bytes()[:4] == bytes((137, 80, 78, 71))
     with Image.open(path) as image:
-        assert image.format == "WEBP"
-        assert image.size == (680, 262)
+        assert image.format == "PNG"
+        assert image.size == (2020, 779)
         image.verify()
+    with Image.open(path) as image:
+        rgba = image.convert("RGBA")
+        assert rgba.getpixel((0, 0))[3] == 0
+        assert rgba.getpixel((2019, 778))[3] == 0
+        assert rgba.getpixel((1010, 389))[3] >= 250
     readme = (root / "README.md").read_text(encoding="utf-8")
-    assert 'src="assets/prehnite-riso-green-coral.webp"' in readme
-    assert 'assets/prehnite-lockup.svg' in readme
+    assert 'src="assets/prehnite-riso-green-coral.png"' in readme
+    assert 'border-radius: 16px' in readme
+    assert not (root / "assets/prehnite-riso-green-coral.webp").exists()
+    assert not (root / "assets/prehnite-lockup.svg").exists()
+    assert (root / "assets/prehnite-mark.svg").exists()
+    assert "prehnite-riso-green-coral.webp" not in readme
+    assert "prehnite-lockup.svg" not in readme
