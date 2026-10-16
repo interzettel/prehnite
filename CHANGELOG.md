@@ -7,6 +7,7 @@ This project follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) an
 ## [Unreleased]
 
 ### Added
+- On-demand private native-pixel inspection CLI (`prehnite inspect --asset ...`) for verified single-slot images and alpha cutouts (#93); fit/1:1 CSS toggle, original bytes, SHA256 double-check, 64-MiB cap, no JavaScript or external resources, default gallery/ZIP unchanged.
 - Strictly opt-in local Parquet export for typed aggregate metrics and anonymous per-slot observations (#91), with optional PyArrow dependency, CLI/MCP switches, decimal USD and nullable timing, ZSTD, atomic publication marker, stale/tampered digest checks and Windows/Ubuntu test coverage. No model API/network, raw identifiers, mandatory dependency or default ZIP change.
 - Offline production analytics tranche (#6/#89): new self-contained responsive no-script dashboard panels in gallery.html, versioned aggregate-only analytics.json/analytics.csv, delivery/source/aspect cohorts, provider/stage observed-local p95/unknown timing, retry distribution, estimated spend and failure states; ZIP digest/replay verified on synthetic jobs. No claims of calibrated visual quality, actual invoices, Parquet or a public share-safe gallery.
 - Proposed batch-objective and Pareto evaluation RFC distinguishing distinct-deliverable production from creative exploration and controlled experiments; specifies offline chart provenance, comparable benchmark metrics and human-quality limitations (#81; planning only, no runtime or readiness credit).
