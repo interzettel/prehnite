@@ -51,8 +51,8 @@ def test_dependency_cycle_is_rejected():
     module = progress_module()
     data = ledger()
     # Two planned units with otherwise valid prerequisites may not depend on each other.
-    a = data["milestones"][1]["units"][6]  # C07 planned
-    b = data["milestones"][1]["units"][9]  # C10 planned
+    a = data["milestones"][4]["units"][2]  # S03 planned
+    b = data["milestones"][4]["units"][3]  # S04 planned
     a["dependsOn"] = [b["id"]]
     b["dependsOn"] = [a["id"]]
     with pytest.raises(ValueError, match="Dependency cycle"):
