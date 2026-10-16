@@ -255,6 +255,33 @@ def validate_affine(
         j.close()
 
 
+
+@app.command("evaluate-visual-gold")
+def evaluate_visual_gold(
+        source: Path = typer.Option(..., "--input",
+                                   help="Private local labeled Noul observation JSON"),
+        destination: Path = typer.Option(..., "--output",
+                                        help="Write aggregate-only JSON locally"),
+        reject_at: float = typer.Option(0.2, "--reject-at"),
+        accept_at: float = typer.Option(0.8, "--accept-at")):
+    """Offline-only binary visual-judge calibration; no providers or imagery."""
+    from .visual_calibration import (
+        evaluate_binary_visual_gold, write_aggregate_gold_report)
+    if not source.is_file() or source.stat().st_size > 16 * 1024 * 1024:
+        raise typer.BadParameter("Local gold input absent or exceeds 16 MiB")
+    data = json.loads(source.read_text(encoding="utf-8"))
+    if (not isinstance(data, dict)
+            or set(data) != {"schema_version", "declared_source", "observations"}
+            or type(data["schema_version"]) is not int
+            or data["schema_version"] != 1):
+        raise typer.BadParameter("Unsupported or privacy-unsafe gold JSON schema")
+    result = evaluate_binary_visual_gold(
+        data["observations"], declared_source=data["declared_source"],
+        lower=reject_at, upper=accept_at)
+    write_aggregate_gold_report(destination, result)
+    typer.echo(str(destination))
+
+
 @app.command()
 def export(batch_id: str, workspace: Path = typer.Option(Path("workspace")),
            parquet: bool = typer.Option(False, "--parquet",
