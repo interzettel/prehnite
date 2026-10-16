@@ -7,6 +7,7 @@ This project follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) an
 ## [Unreleased]
 
 ### Added
+- Owner-authorized AI-generated apparel R2 pilot technical intake (#32): 23 object metadata records inspected (18 front WebPs, 5 care-label WebPs), with no raw image redistribution. Added private exact-byte SHA256/size/decoder preflight, WebP input support and cross-platform synthetic refusal tests; real cutout IoU remains unmeasured without independent alpha references.
 - Local rights-aware real-photo alpha benchmark intake (#32): SHA256-bound private photo/reference/candidate matching, owner-attested processing permission and third-party provenance checks, per-category IoU/continuous alpha MAE/SAD/boundary error, local-only text receipts and cross-platform synthetic fixture regression tests. No bundled real images, automatic licensing judgments, hosted inference or human-rated quality claims.
 - Experimental 20-case synthetic cutout challenge matrix (#29/#32) with masked gold-reference IoU, alpha MAE and boundary error; distinct product/portrait/mixed-material synthetic controls, immutable fixture receipts, standalone local report and Windows/Linux validation. Strictly benchmark evidence, not human-rated dataset credit.
 - Full-resolution 2020 × 779 owner-supplied Riso PNG README hero with transparent rounded corners and original-size textured composition. Removed obsolete 680 × 262 WebP and nonmatching wordmark SVG; retained separate reusable mineral mark. GitHub CSS sanitization no longer prevents visibly rounded corners (branding follow-up).
