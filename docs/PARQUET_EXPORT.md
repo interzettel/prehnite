@@ -57,8 +57,18 @@ ORDER BY section, "group", measure;
 
 Use separate directory names to distinguish batches in a multi-run query; the Parquet tables intentionally contain **no raw batch identifier**. The file path should remain local/private.
 
-## Tests and unresolved dependencies
+## Tests, synthetic sample, and unresolved dependencies
 
-`python -m pip install -e ".[dev,parquet]"` then `python -m pytest -q tests/test_optional_parquet.py` on Windows/Ubuntu. The full default test suite is also checked **without PyArrow** to prove the optional dependency stays optional. Test scenarios cover 90 distinct synthetic slots, 18 requested cutouts, nullable-versus-zero counts and USD, explicit CLI/MCP opt-in, no accidental default ZIP changes, privacy-bounded columns, stale/tampered Parquet refusal and same-process re-export.
+`python -m pip install -e ".[dev,parquet]"` then `python -m pytest -q tests/test_optional_parquet.py` on Windows/Ubuntu.
+
+To build a **completely synthetic** 90-slot Parquet example, run:
+
+```bash
+python scripts/offline_90_benchmark.py --parquet --parquet-output synthetic-parquet-90 --result-file benchmark-parquet-90.json
+```
+
+The optional Windows/Ubuntu CI jobs upload the two Parquet files, the digest sidecar, the aggregate JSON/CSV and synthetic run metadata as downloadable review artifacts (14-day retention). This is **only allowed for these fixed synthetic test inputs**; production batches and their derived metrics must remain private unless explicitly authorized by their owner.
+
+ The full default test suite is also checked **without PyArrow** to prove the optional dependency stays optional. Test scenarios cover 90 distinct synthetic slots, 18 requested cutouts, nullable-versus-zero counts and USD, explicit CLI/MCP opt-in, no accidental default ZIP changes, privacy-bounded columns, stale/tampered Parquet refusal and same-process re-export.
 
 This does not implement human aesthetic ranking, a calibrated judge, cross-run ingestion UI, verified invoices, Parquet for every raw attempt/pixel, or a central data lake. Those are separate research/feature decisions with privacy, licensing and cost gates.
