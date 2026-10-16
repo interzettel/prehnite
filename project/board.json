@@ -362,7 +362,7 @@
       "lane": "In review",
       "priority": "P1",
       "stream": "Runtime",
-      "note": "Stage cache merged in PR #80 and tests passed; C07 ledger evidence reconciliation pending docs PR #88."
+      "note": "Cache merged PR #80; evidence PR #88 now verified and pending integration."
     },
     {
       "type": "issue",
@@ -608,13 +608,31 @@
       "note": "Merged PR #84; cross-platform CI synthetic recovery benchmark evidence; no paid inference."
     },
     {
+      "type": "issue",
+      "number": 86,
+      "title": "Machine-readable stage failure and recovery taxonomy",
+      "lane": "Done",
+      "priority": "P1",
+      "stream": "Runtime",
+      "note": "Typed error taxonomy code merged PR #87; C10 ledger credit pending."
+    },
+    {
+      "type": "pr",
+      "number": 87,
+      "title": "Typed fail-closed failure classification and report telemetry",
+      "lane": "Done",
+      "priority": "P1",
+      "stream": "Runtime",
+      "note": "Merged PR #87 with validated CI; ledger credit C10 pending."
+    },
+    {
       "type": "pr",
       "number": 88,
       "title": "Reconcile C07 merged cache evidence and progress tracker",
       "lane": "In review",
       "priority": "P1",
       "stream": "Tracking",
-      "note": "Docs-only: C07 credit from merged PR #80; CI and review required."
+      "note": "Docs-only C07 credit backed by PR #80; branch reconciled with #87."
     }
   ]
 }
