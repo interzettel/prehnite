@@ -2,7 +2,7 @@
 
 > Generated from `progress/ledger.json` by `scripts/progress.py`. A unit counts only when done with evidence; percentages are not estimates of engineering time or visual quality.
 
-**28 / 61 units done (45.9%)** · 0 active · 10 blocked · 23 planned.
+**29 / 61 units done (47.5%)** · 0 active · 10 blocked · 22 planned.
 **Milestone gates reached:** 1 / 7.
 
 ![Milestone progress chart](progress.svg)
@@ -14,7 +14,7 @@
 | M0 · Runnable foundation | 6/6 (100.0%) | 0 | 0 | 0 | Reached |
 | M1 · Safe production engine | 5/10 (50.0%) | 0 | 2 | 3 | Open: C08, C09 |
 | M2 · Models and local compute | 7/10 (70.0%) | 0 | 2 | 1 | Open: P09 |
-| M3 · Photographic quality gates | 1/8 (12.5%) | 0 | 2 | 5 | Open: Q07, Q08 |
+| M3 · Photographic quality gates | 2/8 (25.0%) | 0 | 2 | 4 | Open: Q07, Q08 |
 | M4 · Cutouts and corrections | 2/7 (28.6%) | 0 | 2 | 3 | Open: S06, S07 |
 | M5 · Delivery and usability | 2/10 (20.0%) | 0 | 0 | 8 | Open: D09, D10 |
 | M6 · Community and first release | 5/10 (50.0%) | 0 | 2 | 3 | Open: R08, R09 |
@@ -67,7 +67,7 @@
 | ID | Work package | State | Lane | Depends on | Issue/evidence |
 | --- | --- | --- | --- | --- | --- |
 | `Q01` | Dimension and file-decodability technical checks | done | Agent cloud | F03 | [Evidence](https://github.com/interzettel/prehnite/pull/1) |
-| `Q02` | Judge schema + invalid response handling | planned | Agent cloud | Q01 | [#25](https://github.com/interzettel/prehnite/issues/25) |
+| `Q02` | Judge schema + invalid response handling | done | Agent cloud | Q01 | [Evidence](https://github.com/interzettel/prehnite/pull/61) |
 | `Q03` | Order-bias and independent-rubric A/B tests | planned | Agent cloud | Q02 | [#25](https://github.com/interzettel/prehnite/issues/25) |
 | `Q04` | Lossless 4K crop panel comparisons | planned | Agent cloud | Q02 | [#26](https://github.com/interzettel/prehnite/issues/26) |
 | `Q05` | Optional local quality judge plugin contract | planned | Agent local | Q02 | [#27](https://github.com/interzettel/prehnite/issues/27) |

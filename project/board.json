@@ -287,10 +287,10 @@
       "type": "issue",
       "number": 26,
       "title": "Full-resolution crops for visual quality gating",
-      "lane": "Backlog",
+      "lane": "Ready",
       "priority": "P1",
       "stream": "Quality",
-      "note": "4K crop validation"
+      "note": "Next independent offline lossless 4K crop and geometry validation (Q04)"
     },
     {
       "type": "issue",
@@ -299,7 +299,7 @@
       "lane": "Ready",
       "priority": "P1",
       "stream": "Quality",
-      "note": "Next independent offline quality judge/schema and A/B order-bias contracts"
+      "note": "Typed verdict tranche merged in #61; controlled same-rubric A/B positional-bias measurement (Q03) remains unverified"
     },
     {
       "type": "issue",
@@ -489,6 +489,15 @@
       "priority": "P1",
       "stream": "Local GPU",
       "note": "Merged; 163 offline tests passed. No GPU/model conformance claimed."
+    },
+    {
+      "type": "pr",
+      "number": 61,
+      "title": "Strict optional judge verdict schemas and rubric disagreement",
+      "lane": "Done",
+      "priority": "P1",
+      "stream": "Quality",
+      "note": "Merged; 185 offline tests passed. Real judge calibration unresolved."
     }
   ]
 }

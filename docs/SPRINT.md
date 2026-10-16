@@ -10,12 +10,12 @@
 
 | Lane | Cards |
 | --- | ---: |
-| Backlog | 22 |
-| Ready | 2 |
+| Backlog | 21 |
+| Ready | 3 |
 | In progress | 0 |
 | In review | 0 |
 | Blocked | 6 |
-| Done | 23 |
+| Done | 24 |
 
 **WIP limits:** In progress ≤ 2; In review ≤ 3. Counts are issue/PR cards, not unique completed engineering features or a percentage.
 
@@ -43,7 +43,6 @@
 | P2 | [Issue #30 — Multi-instance object cutout selection](https://github.com/interzettel/prehnite/issues/30) | Cutouts | Multi-instance target matching |
 | P1 | [Issue #29 — Transparent alpha matting and halo removal](https://github.com/interzettel/prehnite/issues/29) | Cutouts | Edge alpha matting |
 | P2 | [Issue #27 — Local aesthetic and fidelity judge plugin boundary](https://github.com/interzettel/prehnite/issues/27) | Quality | Optional local weights and licenses |
-| P1 | [Issue #26 — Full-resolution crops for visual quality gating](https://github.com/interzettel/prehnite/issues/26) | Quality | 4K crop validation |
 | P1 | [Issue #18 — Content-addressed cache with privacy isolation](https://github.com/interzettel/prehnite/issues/18) | Runtime | Cache with privacy-scoped keys |
 
 ## Ready
@@ -51,7 +50,8 @@
 | Priority | Work item | Stream | Handoff / blocker |
 | --- | --- | --- | --- |
 | P1 | [Issue #12 — Mocked fal API conformance contract](https://github.com/interzettel/prehnite/issues/12) | Providers | No credentials or paid calls; use recorded fixture schemas. |
-| P1 | [Issue #25 — Judge schema and A/B order-bias tests](https://github.com/interzettel/prehnite/issues/25) | Quality | Next independent offline quality judge/schema and A/B order-bias contracts |
+| P1 | [Issue #26 — Full-resolution crops for visual quality gating](https://github.com/interzettel/prehnite/issues/26) | Quality | Next independent offline lossless 4K crop and geometry validation (Q04) |
+| P1 | [Issue #25 — Judge schema and A/B order-bias tests](https://github.com/interzettel/prehnite/issues/25) | Quality | Typed verdict tranche merged in #61; controlled same-rubric A/B positional-bias measurement (Q03) remains unverified |
 
 ## In progress
 
@@ -103,6 +103,7 @@
 | P1 | [PR #55 — Typed provider capability preflight](https://github.com/interzettel/prehnite/pull/55) | Providers | Merged to main; 127 offline tests passed; no live pricing |
 | P1 | [PR #57 — ComfyUI offline graph and HTTP fixtures](https://github.com/interzettel/prehnite/pull/57) | Local GPU | Merged; 139 offline tests passed, no local model weights |
 | P1 | [PR #59 — ComfyUI fail-closed queue recovery and bounded result download](https://github.com/interzettel/prehnite/pull/59) | Local GPU | Merged; 163 offline tests passed. No GPU/model conformance claimed. |
+| P1 | [PR #61 — Strict optional judge verdict schemas and rubric disagreement](https://github.com/interzettel/prehnite/pull/61) | Quality | Merged; 185 offline tests passed. Real judge calibration unresolved. |
 
 ## How to update this board
 
