@@ -47,7 +47,7 @@
       "lane": "Backlog",
       "priority": "P2",
       "stream": "Delivery",
-      "note": "Offline charts/Parquet/native inspection and conservative pixel-grid v1 merged; human quality calibration and #100 known transform+4K remain."
+      "note": "Offline analytics, Riso-branded native inspection and pixel-grid v1 merged; #100 typed transform/tiled diagnostics tranche in review; human calibration remains open."
     },
     {
       "type": "issue",
@@ -746,28 +746,37 @@
       "type": "issue",
       "number": 100,
       "title": "Provenance-bound transforms and tiled 4K comparison",
-      "lane": "Backlog",
+      "lane": "In progress",
       "priority": "P2",
       "stream": "Delivery",
-      "note": "Follow-up: alignment transforms and 4K memory-bounded metrics; avoid unverified quality labels."
+      "note": "First tranche: attested integer translation, 4K+ tile diagnostics PR #104; arbitrary affine separately deferred."
     },
     {
       "type": "issue",
       "number": 102,
       "title": "Selected forest/coral Riso identity and shared accessible palette",
-      "lane": "In progress",
+      "lane": "Done",
       "priority": "P1",
       "stream": "Design",
-      "note": "Owner-selected actual artwork, theme and tests in PR #103."
+      "note": "Owner-selected actual Riso image/palette merged PR #103, eight CI checks green."
     },
     {
       "type": "pr",
       "number": 103,
       "title": "README Riso hero and shared green/coral theme",
-      "lane": "In review",
+      "lane": "Done",
       "priority": "P1",
       "stream": "Design",
-      "note": "Binary image verified; Ubuntu/Windows CI and contrast tests pending."
+      "note": "Merged owner-selected green/coral README image and accessible offline palette."
+    },
+    {
+      "type": "pr",
+      "number": 104,
+      "title": "Provenance-bound translated 4K tile diagnostics",
+      "lane": "In review",
+      "priority": "P1",
+      "stream": "Delivery",
+      "note": "First bounded #100 implementation; CI and peer review pending, no live GPU or quality claim."
     }
   ]
 }
