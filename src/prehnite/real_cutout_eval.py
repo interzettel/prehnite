@@ -69,14 +69,14 @@ def _checked_file(root: Path, value: object, digest: object) -> Path:
 def _open_image(path: Path, *, role: str) -> Image.Image:
     try:
         with Image.open(path) as image:
-            if image.format not in {"PNG", "JPEG"}:
+            if image.format not in {"PNG", "JPEG", "WEBP"}:
                 raise EvaluationRefused("unsupported_image_encoding")
             if image.width * image.height > MAX_PIXELS or min(image.size) < 16:
                 raise EvaluationRefused("unsupported_image_dimensions")
             if image.getexif().get(274, 1) != 1:
                 raise EvaluationRefused("exif_orientation_requires_pre_normalization")
             if role == "source":
-                if image.mode not in {"RGB", "L"}:
+                if image.mode not in {"RGB", "L", "RGBA"}:
                     raise EvaluationRefused("unsupported_source_mode")
             else:
                 if image.format != "PNG" or image.mode not in {"L", "RGBA"}:
