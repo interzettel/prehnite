@@ -47,7 +47,7 @@
       "lane": "Backlog",
       "priority": "P2",
       "stream": "Delivery",
-      "note": "Need contact sheets, per-asset comparators and analytics."
+      "note": "Offline embedded gallery exists; analytics tranche #89 / draft PR #90 in development. Parquet, deeper comparisons still open."
     },
     {
       "type": "issue",
@@ -606,6 +606,51 @@
       "priority": "P1",
       "stream": "Benchmark",
       "note": "Merged PR #84; cross-platform CI synthetic recovery benchmark evidence; no paid inference."
+    },
+    {
+      "type": "issue",
+      "number": 89,
+      "title": "Offline analytics panels and versioned summary exports",
+      "lane": "In progress",
+      "priority": "P1",
+      "stream": "Delivery",
+      "note": "Bounded #6 tranche, draft PR #90; synthetic offline benchmark in CI."
+    },
+    {
+      "type": "pr",
+      "number": 90,
+      "title": "Offline analytics dashboard and summary exports",
+      "lane": "In progress",
+      "priority": "P1",
+      "stream": "Delivery",
+      "note": "Draft PR while WIP review lane is full; six-job CI pending."
+    },
+    {
+      "type": "pr",
+      "number": 82,
+      "title": "Produce/Explore/Experiment RFC and Pareto reporting",
+      "lane": "In review",
+      "priority": "P2",
+      "stream": "Product",
+      "note": "Other agent RFC remains open; older board snapshot requires reconciliation."
+    },
+    {
+      "type": "pr",
+      "number": 87,
+      "title": "C10 machine-readable failure taxonomy",
+      "lane": "In review",
+      "priority": "P1",
+      "stream": "Runtime",
+      "note": "Other review-ready PR, all six CI checks passed; not merged."
+    },
+    {
+      "type": "pr",
+      "number": 88,
+      "title": "C07 cache evidence reconciliation",
+      "lane": "In review",
+      "priority": "P1",
+      "stream": "Tracking",
+      "note": "Other review-ready PR, all six CI checks passed; not merged."
     }
   ]
 }
