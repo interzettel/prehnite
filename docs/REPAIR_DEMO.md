@@ -24,7 +24,7 @@ generator uses that reference only to measure whether the change helped.
 Detection requires a PNG RGB source and identically sized grayscale PNG mask,
 bounded size (4 million pixels, 16 MiB per file), an isolated subject, uniform
 frame background and background-colored alpha pixels within four pixels of
-exterior-connected transparency. Only those pixels lose alpha. Empty/full
+exterior-connected transparency. Only those pixels lose alpha. Empty/full or multiple-instance
 masks, excessive (>12%) removals, invalid geometry and ambiguous backgrounds
 are refused. The portrait control always abstains; this operation is not
 reliable for hair, fine edges or translucent materials.
