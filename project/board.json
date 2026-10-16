@@ -47,7 +47,7 @@
       "lane": "Backlog",
       "priority": "P2",
       "stream": "Delivery",
-      "note": "Offline charts, Parquet and native inspection merged; parent remains open for registered pixel diffs and quality calibration."
+      "note": "Offline dashboards, Parquet and native inspection merged; #98/#99 introduces technical same-grid pixel diagnostics, no perceptual quality."
     },
     {
       "type": "issue",
@@ -723,6 +723,24 @@
       "priority": "P1",
       "stream": "Delivery",
       "note": "Merged PR #96, 8/8 CI green; no provider spending."
+    },
+    {
+      "type": "issue",
+      "number": 98,
+      "title": "Conservative registered pixel diagnostics",
+      "lane": "In progress",
+      "priority": "P1",
+      "stream": "Delivery",
+      "note": "Initial operator-attested same-grid comparator in PR #99; dynamic registration and tiled 4K deferred."
+    },
+    {
+      "type": "pr",
+      "number": 99,
+      "title": "Verified pixel-grid delta and private diagnostics",
+      "lane": "In review",
+      "priority": "P1",
+      "stream": "Delivery",
+      "note": "Regression tests and Windows/Ubuntu CI pending; no quality-grade claim."
     }
   ]
 }

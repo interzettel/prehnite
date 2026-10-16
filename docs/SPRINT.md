@@ -12,8 +12,8 @@
 | --- | ---: |
 | Backlog | 14 |
 | Ready | 2 |
-| In progress | 0 |
-| In review | 0 |
+| In progress | 1 |
+| In review | 1 |
 | Blocked | 6 |
 | Done | 57 |
 
@@ -26,7 +26,7 @@
 | P2 | [Issue #2 — ComfyUI integration on real hardware](https://github.com/interzettel/prehnite/issues/2) | Local GPU | Generic adapter exists; hardware and actual workflow integration remain. |
 | P1 | [Issue #3 — Reliable segmentation and matting](https://github.com/interzettel/prehnite/issues/3) | Quality | Blocked downstream on model contracts and sample corpus. |
 | P2 | [Issue #4 — Local quality judges and crop QA](https://github.com/interzettel/prehnite/issues/4) | Quality | Must calibrate before quality gates use local scores. |
-| P2 | [Issue #6 — Offline visual reports and exports](https://github.com/interzettel/prehnite/issues/6) | Delivery | Offline charts, Parquet and native inspection merged; parent remains open for registered pixel diffs and quality calibration. |
+| P2 | [Issue #6 — Offline visual reports and exports](https://github.com/interzettel/prehnite/issues/6) | Delivery | Offline dashboards, Parquet and native inspection merged; #98/#99 introduces technical same-grid pixel diagnostics, no perceptual quality. |
 | P2 | [Issue #8 — Windows MCP lifecycle and packaging](https://github.com/interzettel/prehnite/issues/8) | Runtime | Process cancellation, reconnection and Windows tests. |
 | P0 | [Issue #5 — Crash recovery, pricing and billing hardening](https://github.com/interzettel/prehnite/issues/5) | Reliability | Safety tranche #10 merged; remaining tasks #15–#18, ownership unclaimed. |
 | P2 | [Issue #44 — Synchronize canonical issue ledger with organization GitHub Projects v2](https://github.com/interzettel/prehnite/issues/44) | Tracking | GitHub Project #1 sync needs Projects v2 write permission |
@@ -49,13 +49,13 @@
 
 | Priority | Work item | Stream | Handoff / blocker |
 | --- | --- | --- | --- |
-| — | No cards currently | — | — |
+| P1 | [Issue #98 — Conservative registered pixel diagnostics](https://github.com/interzettel/prehnite/issues/98) | Delivery | Initial operator-attested same-grid comparator in PR #99; dynamic registration and tiled 4K deferred. |
 
 ## In review
 
 | Priority | Work item | Stream | Handoff / blocker |
 | --- | --- | --- | --- |
-| — | No cards currently | — | — |
+| P1 | [PR #99 — Verified pixel-grid delta and private diagnostics](https://github.com/interzettel/prehnite/pull/99) | Delivery | Regression tests and Windows/Ubuntu CI pending; no quality-grade claim. |
 
 ## Blocked
 
