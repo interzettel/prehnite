@@ -10,19 +10,19 @@
 
 | Lane | Cards |
 | --- | ---: |
-| Backlog | 15 |
+| Backlog | 16 |
 | Ready | 2 |
-| In progress | 2 |
-| In review | 0 |
+| In progress | 1 |
+| In review | 1 |
 | Blocked | 6 |
-| Done | 72 |
+| Done | 73 |
 
 **WIP limits:** In progress ≤ 2; In review ≤ 3. Counts are issue/PR cards, not unique completed engineering features or a percentage.
 
 ## Backlog
 
 | Priority | Work item | Stream | Handoff / blocker |
-| --- | --- | --- | --- |
+| --- | --- | --- |
 | P2 | [Issue #2 — ComfyUI integration on real hardware](https://github.com/interzettel/prehnite/issues/2) | Local GPU | Generic adapter exists; hardware and actual workflow integration remain. |
 | P1 | [Issue #3 — Reliable segmentation and matting](https://github.com/interzettel/prehnite/issues/3) | Quality | Blocked downstream on model contracts and sample corpus. |
 | P2 | [Issue #4 — Local quality judges and crop QA](https://github.com/interzettel/prehnite/issues/4) | Quality | Must calibrate before quality gates use local scores. |
@@ -34,6 +34,7 @@
 | P1 | [Issue #33 — Self-contained offline HTML gallery and comparisons](https://github.com/interzettel/prehnite/issues/33) | Reporting | Offline thumbnail gallery #67 merged; opt-in private original comparisons remain issue #68 |
 | P1 | [Issue #31 — Targeted repair planner for failed cutouts](https://github.com/interzettel/prehnite/issues/31) | Cutouts | Controlled journaled synthetic repair delivered in merged PR #119; full targeted S05 failure classification and Engine integration not complete. |
 | P2 | [Issue #30 — Multi-instance object cutout selection](https://github.com/interzettel/prehnite/issues/30) | Cutouts | Multi-instance target matching |
+| P1 | [Issue #29 — Transparent alpha matting and halo removal](https://github.com/interzettel/prehnite/issues/29) | Cutouts | Merged #120 synthetic safety matrix; full S03 real-photo matte/color decontamination still open for separate implementation. |
 | P2 | [Issue #27 — Local aesthetic and fidelity judge plugin boundary](https://github.com/interzettel/prehnite/issues/27) | Quality | Optional local weights and licenses |
 | P1 | [Issue #68 — Opt-in original-input gallery comparison with privacy consent](https://github.com/interzettel/prehnite/issues/68) | Delivery | Follow-up to #33: never embed private originals without opt-in |
 | P2 | [Issue #107 — Experimental Jev typed image/Box judge and staged frame evaluation](https://github.com/interzettel/prehnite/issues/107) | Quality | Mock stages A/B merged, no Jev transport; TypeSafe experimental vision needs explicit authorized trial and real gold calibration. |
@@ -42,30 +43,29 @@
 ## Ready
 
 | Priority | Work item | Stream | Handoff / blocker |
-| --- | --- | --- | --- |
+| --- | --- | --- |
 | P1 | [Issue #12 — Mocked fal API conformance contract](https://github.com/interzettel/prehnite/issues/12) | Providers | No credentials or paid calls; use recorded fixture schemas. |
 | P1 | [Issue #25 — Judge schema and A/B order-bias tests](https://github.com/interzettel/prehnite/issues/25) | Quality | Typed verdict tranche merged in #61; controlled same-rubric A/B positional-bias measurement (Q03) remains unverified |
 
 ## In progress
 
 | Priority | Work item | Stream | Handoff / blocker |
-| --- | --- | --- | --- |
-| P1 | [Issue #29 — Transparent alpha matting and halo removal](https://github.com/interzettel/prehnite/issues/29) | Cutouts | 20-case synthetic challenge matrix under review in a new PR; real-world matte/color decontamination and human-accepted examples remain. |
+| --- | --- | --- |
 | P2 | [Issue #100 — Provenance-bound transforms and tiled 4K comparison](https://github.com/interzettel/prehnite/issues/100) | Delivery | Integer 4K tiles + SHA-bound affine v2 validator merged; real affine warp/execution still open. |
 
 ## In review
 
 | Priority | Work item | Stream | Handoff / blocker |
-| --- | --- | --- | --- |
-| — | No cards currently | — | — |
+| --- | --- | --- |
+| P1 | [PR #122 — Rights-aware local real-image alpha benchmark intake](https://github.com/interzettel/prehnite/pull/122) | Cutouts | Offline scoring+rights attestation framework; tests in PR CI; no real photographs redistributed or quality threshold claimed. |
 
 ## Blocked
 
 | Priority | Work item | Stream | Handoff / blocker |
-| --- | --- | --- | --- |
+| --- | --- | --- |
 | P1 | [Issue #7 — Real fal/Haiku credentialed integration](https://github.com/interzettel/prehnite/issues/7) | Providers | Owner must authorize actual paid/API calls separately. |
 | P1 | [Issue #42 — Owner-accepted production benchmark and release gate](https://github.com/interzettel/prehnite/issues/42) | Release | Owner acceptance and authorized live pilot |
-| P1 | [Issue #32 — Cutout quality benchmark with difficult materials](https://github.com/interzettel/prehnite/issues/32) | Cutouts | Synthetic challenge fixture/evidence work underway under #29; real rights-cleared hair/glass/fur human-rated alpha ground truth remains blocked. |
+| P1 | [Issue #32 — Cutout quality benchmark with difficult materials](https://github.com/interzettel/prehnite/issues/32) | Cutouts | Private rights-aware evaluation intake in PR #122; ground-truth real photos, independent alpha references and human review remain blocked on authorized assets. |
 | P1 | [Issue #28 — Reference corpus and human calibration protocol](https://github.com/interzettel/prehnite/issues/28) | Quality | Owner-approved reference images / human calibration |
 | P1 | [Issue #24 — 8GB VRAM local inference feasibility benchmark](https://github.com/interzettel/prehnite/issues/24) | Local GPU | Await local RTX 4070 laptop benchmark |
 | P1 | [Issue #17 — Persist pricing assumptions and reconcile actual bills](https://github.com/interzettel/prehnite/issues/17) | Economics | Live billing access needs explicit authorization |
@@ -73,7 +73,7 @@
 ## Done
 
 | Priority | Work item | Stream | Handoff / blocker |
-| --- | --- | --- | --- |
+| --- | --- | --- |
 | P1 | [Issue #11 — Agile tracking and release governance](https://github.com/interzettel/prehnite/issues/11) | Governance | Issue/PR templates, changelog and version policy merged via #13. |
 | P0 | [PR #10 — Fail-closed paid recovery and evidence chart](https://github.com/interzettel/prehnite/pull/10) | Reliability | Merged into main; offline safety regression tests passed. |
 | P1 | [PR #13 — Agile delivery board and release governance](https://github.com/interzettel/prehnite/pull/13) | Governance | Merged to main; single-source versioning and governance CI. |
@@ -146,6 +146,7 @@
 | P1 | [Issue #116 — Unified decision-model contract and bounded offline auto-repair policy](https://github.com/interzettel/prehnite/issues/116) | Quality | Scoped provider-neutral offline decision contract complete; merged #117 with 500 tests, 8/8 CI. Local repair executor remains #31. |
 | P1 | [PR #117 — Provider-neutral typed decisions and bounded local candidate policy](https://github.com/interzettel/prehnite/pull/117) | Quality | Merged PR #117 (abae806), 500 tests, 8/8 CI, postmerge main green; no paid inference. |
 | P1 | [PR #119 — Journaled product self-correction synthetic demo](https://github.com/interzettel/prehnite/pull/119) | Cutouts | Merged commit 78f47d1; zero-network one-attempt product fringe demo with cross-platform evidence; no S05 ledger credit. |
+| P1 | [PR #120 — Twenty challenging cutout fixtures and safety guards](https://github.com/interzettel/prehnite/pull/120) | Cutouts | Merged as e3026a1 after 12/12 green CI; synthetic-only, no S03/S05 evidence completion. |
 
 ## How to update this board
 

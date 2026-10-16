@@ -236,7 +236,7 @@
       "lane": "Blocked",
       "priority": "P1",
       "stream": "Cutouts",
-      "note": "Synthetic challenge fixture/evidence work underway under #29; real rights-cleared hair/glass/fur human-rated alpha ground truth remains blocked."
+      "note": "Private rights-aware evaluation intake in PR #122; ground-truth real photos, independent alpha references and human review remain blocked on authorized assets."
     },
     {
       "type": "issue",
@@ -260,10 +260,10 @@
       "type": "issue",
       "number": 29,
       "title": "Transparent alpha matting and halo removal",
-      "lane": "In progress",
+      "lane": "Backlog",
       "priority": "P1",
       "stream": "Cutouts",
-      "note": "20-case synthetic challenge matrix under review in a new PR; real-world matte/color decontamination and human-accepted examples remain."
+      "note": "Merged #120 synthetic safety matrix; full S03 real-photo matte/color decontamination still open for separate implementation."
     },
     {
       "type": "issue",
@@ -885,6 +885,24 @@
       "priority": "P1",
       "stream": "Cutouts",
       "note": "Merged commit 78f47d1; zero-network one-attempt product fringe demo with cross-platform evidence; no S05 ledger credit."
+    },
+    {
+      "type": "pr",
+      "number": 120,
+      "title": "Twenty challenging cutout fixtures and safety guards",
+      "lane": "Done",
+      "priority": "P1",
+      "stream": "Cutouts",
+      "note": "Merged as e3026a1 after 12/12 green CI; synthetic-only, no S03/S05 evidence completion."
+    },
+    {
+      "type": "pr",
+      "number": 122,
+      "title": "Rights-aware local real-image alpha benchmark intake",
+      "lane": "In review",
+      "priority": "P1",
+      "stream": "Cutouts",
+      "note": "Offline scoring+rights attestation framework; tests in PR CI; no real photographs redistributed or quality threshold claimed."
     }
   ]
 }
