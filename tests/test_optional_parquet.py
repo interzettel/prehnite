@@ -249,3 +249,44 @@ def test_invalid_numeric_csv_refused(csv_value, unit):
                 + f"1,stage,generation,value,{csv_value},{unit}\n")
     with pytest.raises((ValueError, ArithmeticError)):
         _metric_rows(csv_text)
+
+
+def test_cli_export_refuses_fresh_launch_before_worker_acquires_lock(tmp_path):
+    engine = small_engine(tmp_path)
+    try:
+        engine.run()
+        engine.journal.job_launch(
+            "test-launch-token", "fixture.yaml", "demo.yaml",
+            engine.journal.fact("configuration_sha256"))
+    finally:
+        engine.journal.close()
+    response = CliRunner().invoke(
+        app, ["export", "private-batch", "--workspace", str(tmp_path)])
+    assert response.exit_code != 0
+    assert "unresolved" in response.output.lower()
+
+
+def test_symlinked_parquet_file_outside_batch_is_rejected_even_if_digest_matches(tmp_path):
+    pa, pq = _arrow()
+    engine = small_engine(tmp_path)
+    try:
+        result = engine.run()
+        root = engine.journal.root
+        write_parquet_exports(
+            root, result["analytics"],
+            engine.journal.fact("manifest", {}),
+            engine.journal.fact("results", {}))
+        source = root / DATASETS[0]
+        outside = tmp_path / "outside.parquet"
+        outside.write_bytes(source.read_bytes())
+        source.unlink()
+        try:
+            source.symlink_to(outside)
+        except (OSError, NotImplementedError):
+            pytest.skip("Symlinks not allowed on this Windows account")
+        with pytest.raises(Exception, match="batch root"):
+            verified_parquet_entries(root)
+        # Default export does not include optional datasets regardless.
+        assert package(engine.journal).is_file()
+    finally:
+        engine.journal.close()
