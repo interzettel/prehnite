@@ -113,15 +113,29 @@ def status(batch_id: str, workspace: Path = typer.Option(Path("workspace"))):
         j.close()
 
 @app.command()
-def export(batch_id: str, workspace: Path = typer.Option(Path("workspace"))):
+def export(batch_id: str, workspace: Path = typer.Option(Path("workspace")),
+           parquet: bool = typer.Option(False, "--parquet",
+                                         help="Opt-in local Parquet; needs prehnite[parquet]")):
     from .schema import Asset
     Asset.check_id(batch_id)
     if not (workspace / "batches" / batch_id / "state.sqlite3").is_file():
         raise typer.BadParameter("No such batch")
     j = Journal(workspace, batch_id)
     try:
-        export_report(j)
-        typer.echo(str(package(j)))
+        with j.launch_exclusive():
+            if j.worker_active():
+                raise typer.BadParameter("Cannot export while a worker is active")
+            record = j.job_record()
+            if record and record["status"] in (
+                    "launching", "pause_requested", "cancel_requested"):
+                raise typer.BadParameter(
+                    "Worker launch/control state unresolved; export after safe stop")
+            report = export_report(j)
+            if parquet:
+                from .parquet_export import write_parquet_exports
+                write_parquet_exports(j.root, report["analytics"],
+                                      j.fact("manifest", {}), j.fact("results", {}))
+            typer.echo(str(package(j, include_parquet=parquet)))
     finally:
         j.close()
 

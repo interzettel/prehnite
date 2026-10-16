@@ -78,3 +78,31 @@ jobs:
             benchmark-90.html
           if-no-files-found: error
           retention-days: 14
+
+  parquet-optional:
+    name: Optional Parquet export (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Install explicitly optional Arrow support
+        run: python -m pip install -e ".[dev,parquet]"
+      - name: Validate typed schemas, privacy, opt-in and archive tamper protection
+        run: python -m pytest -q tests/test_optional_parquet.py tests/test_analytics_dashboard.py
+      - name: Exercise 90-slot crash/recovery with explicit Parquet packaging
+        run: python scripts/offline_90_benchmark.py --parquet --result-file benchmark-parquet-90.json --parquet-output synthetic-parquet-90
+      - name: Publish synthetic columnar sample for review
+        uses: actions/upload-artifact@v4
+        with:
+          name: parquet-90-${{ matrix.os }}
+          path: |
+            synthetic-parquet-90/
+            benchmark-parquet-90.json
+          if-no-files-found: error
+          retention-days: 14

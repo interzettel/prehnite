@@ -145,7 +145,7 @@ def _zip_add(archive: zipfile.ZipFile, name: str, body: bytes) -> None:
     archive.writestr(info, body, compress_type=zipfile.ZIP_DEFLATED, compresslevel=6)
 
 
-def package(journal: Journal) -> Path:
+def package(journal: Journal, *, include_parquet: bool = False) -> Path:
     """Publish a deterministic archive with a digest manifest after verification."""
     results = journal.fact("results", {})
     selected = (journal.root / "selected").resolve()
@@ -176,6 +176,10 @@ def package(journal: Journal) -> Path:
         source = journal.root / name
         if source.is_file():
             entries["_prehnite/" + name] = source.read_bytes()
+
+    if include_parquet:
+        from .parquet_export import verified_parquet_entries
+        entries.update(verified_parquet_entries(journal.root))
 
     # A portable digest list also covers the included reports; the top-level
     # manifest does not hash itself.

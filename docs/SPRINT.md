@@ -12,10 +12,10 @@
 | --- | ---: |
 | Backlog | 14 |
 | Ready | 2 |
-| In progress | 1 |
-| In review | 1 |
-| Blocked | 8 |
-| Done | 49 |
+| In progress | 0 |
+| In review | 2 |
+| Blocked | 6 |
+| Done | 51 |
 
 **WIP limits:** In progress ≤ 2; In review ≤ 3. Counts are issue/PR cards, not unique completed engineering features or a percentage.
 
@@ -49,13 +49,14 @@
 
 | Priority | Work item | Stream | Handoff / blocker |
 | --- | --- | --- | --- |
-| P1 | [Issue #89 — Offline analytics panels and versioned summary exports](https://github.com/interzettel/prehnite/issues/89) | Delivery | Green cross-platform synthetic dashboard PR #90; merge pending. |
+| — | No cards currently | — | — |
 
 ## In review
 
 | Priority | Work item | Stream | Handoff / blocker |
 | --- | --- | --- | --- |
-| P1 | [PR #90 — Offline analytics dashboard and summary exports](https://github.com/interzettel/prehnite/pull/90) | Delivery | Reconciled after failure taxonomy #87; cross-platform CI required. |
+| P2 | [Issue #91 — Optional typed Parquet exports for offline analytics](https://github.com/interzettel/prehnite/issues/91) | Delivery | Optional Parquet branch reconciled after dashboard merge; latest CI pending. |
+| P2 | [PR #92 — Typed opt-in Parquet metric and slot datasets](https://github.com/interzettel/prehnite/pull/92) | Delivery | Optional Parquet branch reconciled after dashboard merge; latest CI pending. |
 
 ## Blocked
 
@@ -67,8 +68,6 @@
 | P1 | [Issue #28 — Reference corpus and human calibration protocol](https://github.com/interzettel/prehnite/issues/28) | Quality | Owner-approved reference images / human calibration |
 | P1 | [Issue #24 — 8GB VRAM local inference feasibility benchmark](https://github.com/interzettel/prehnite/issues/24) | Local GPU | Await local RTX 4070 laptop benchmark |
 | P1 | [Issue #17 — Persist pricing assumptions and reconcile actual bills](https://github.com/interzettel/prehnite/issues/17) | Economics | Live billing access needs explicit authorization |
-| P2 | [Issue #91 — Optional typed Parquet exports for offline analytics](https://github.com/interzettel/prehnite/issues/91) | Delivery | Stacked PR #92 depends on #90; optional PyArrow. |
-| P2 | [PR #92 — Typed opt-in Parquet metric and slot datasets](https://github.com/interzettel/prehnite/pull/92) | Delivery | Green prior CI; rebase against main after #90 merge. |
 
 ## Done
 
@@ -123,6 +122,8 @@
 | P1 | [PR #88 — Reconcile C07 merged cache evidence and progress tracker](https://github.com/interzettel/prehnite/pull/88) | Tracking | Evidence PR #88 merged after preserving #87; C07 credited. |
 | P1 | [Issue #81 — Batch objective modes and Pareto evaluation RFC](https://github.com/interzettel/prehnite/issues/81) | Product strategy | RFC PR #82 merged; produce-first design only, no runtime gate credit. |
 | P1 | [PR #82 — Produce/Explore/Experiment and Pareto reporting RFC](https://github.com/interzettel/prehnite/pull/82) | Product strategy | Documentation RFC integrated; human quality and comparable cohorts still future. |
+| P1 | [Issue #89 — Offline analytics panels and versioned summary exports](https://github.com/interzettel/prehnite/issues/89) | Delivery | Integrated offline analytics in #90; CI green. |
+| P1 | [PR #90 — Offline analytics dashboard and summary exports](https://github.com/interzettel/prehnite/pull/90) | Delivery | Integrated offline analytics in #90; CI green. |
 
 ## How to update this board
 

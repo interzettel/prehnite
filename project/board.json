@@ -656,37 +656,37 @@
       "type": "issue",
       "number": 89,
       "title": "Offline analytics panels and versioned summary exports",
-      "lane": "In progress",
+      "lane": "Done",
       "priority": "P1",
       "stream": "Delivery",
-      "note": "Green cross-platform synthetic dashboard PR #90; merge pending."
+      "note": "Integrated offline analytics in #90; CI green."
     },
     {
       "type": "pr",
       "number": 90,
       "title": "Offline analytics dashboard and summary exports",
-      "lane": "In review",
+      "lane": "Done",
       "priority": "P1",
       "stream": "Delivery",
-      "note": "Reconciled after failure taxonomy #87; cross-platform CI required."
+      "note": "Integrated offline analytics in #90; CI green."
     },
     {
       "type": "issue",
       "number": 91,
       "title": "Optional typed Parquet exports for offline analytics",
-      "lane": "Blocked",
+      "lane": "In review",
       "priority": "P2",
       "stream": "Delivery",
-      "note": "Stacked PR #92 depends on #90; optional PyArrow."
+      "note": "Optional Parquet branch reconciled after dashboard merge; latest CI pending."
     },
     {
       "type": "pr",
       "number": 92,
       "title": "Typed opt-in Parquet metric and slot datasets",
-      "lane": "Blocked",
+      "lane": "In review",
       "priority": "P2",
       "stream": "Delivery",
-      "note": "Green prior CI; rebase against main after #90 merge."
+      "note": "Optional Parquet branch reconciled after dashboard merge; latest CI pending."
     }
   ]
 }
