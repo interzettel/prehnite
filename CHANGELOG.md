@@ -7,6 +7,7 @@ This project follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) an
 ## [Unreleased]
 
 ### Added
+- Reproducible 90-slot synthetic dry run on Windows/Ubuntu CI: 60 generated local sources, 30 demo-provider generations, 18 named cutouts, injected per-asset failure, safe pause at slot 30, actual child-process crash after slot 65, explicit resume, 108-image ZIP SHA256 receipt and byte-stable local replay; JSON evidence and clearly hypothetical cost projections (#41). No real image-quality or invoice claims.
 - Durable detached MCP job ownership, reconnect-safe status, cooperative pause/cancel/explicit resume, OS-backed launch/worker locking and stage-boundary stop checkpoints; no PID-based process killing and no claims of immediate remote cancellation (#38, development PR).
 - Explicitly opt-in, privacy-scoped immutable stage cache keyed by exact input/model/version/options and SHA256; cached paid inference requires extra consent and pinned revision, with no retry of ambiguous prior paid requests (#18).
 - Offline batch economics and attempt-timing telemetry: append-only SQLite attempt evidence, per-stage retries/p95 local durations, reserved USD per accepted asset and explicitly unknown provider invoices (#34). Synthetic 90-asset regression fixtures; no paid runs.

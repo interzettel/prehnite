@@ -174,13 +174,13 @@ The tracker distinguishes implemented scaffolding from independently evidenced c
 
 [![Prehnite evidence-backed progress by milestone](docs/progress/progress.svg)](docs/progress/STATUS.md)
 
-[Read the 61-unit work ledger](docs/progress/STATUS.md) · [Technical release gates](docs/PROGRESS.md) · [Current sprint](docs/SPRINT.md) · [Roadmap](docs/ROADMAP.md)
+[Read the 61-unit work ledger](docs/progress/STATUS.md) · [90-asset no-cost benchmark](docs/OFFLINE_90_BENCHMARK.md) · [Technical release gates](docs/PROGRESS.md) · [Current sprint](docs/SPRINT.md) · [Roadmap](docs/ROADMAP.md)
 
 GitHub [Project #1](https://github.com/orgs/interzettel/projects/1) tracks workflow; the version-controlled [ledger](progress/ledger.json) tracks evidence. They answer different questions. Native Project field syncing is still [planned](https://github.com/interzettel/prehnite/issues/44).
 
 ## Built for a maintainer and their agents
 
-Prehnite has a CLI first, optional [stdio MCP tools](src/prehnite/mcp_server.py) second. A person can run it directly; agents can submit preconfigured batches, check status, and request exports without being given arbitrary shell access. MCP workers now support [durable reconnect and cooperative pause/cancel/resume](docs/MCP_LIFECYCLE.md) on a development branch; a stop request does not immediately stop an in-flight provider request.
+Prehnite has a CLI first, optional [stdio MCP tools](src/prehnite/mcp_server.py) second. A person can run it directly; agents can submit preconfigured batches, check status, and request exports without being given arbitrary shell access. MCP workers now support [durable reconnect and cooperative pause/cancel/resume](docs/MCP_LIFECYCLE.md) on the main branch; a stop request does not immediately stop an in-flight provider request.
 
 The project itself is managed the same way: small issue scopes, PR-based delivery, offline tests, and a persistent [agent-to-agent handoff thread](https://github.com/interzettel/prehnite/issues/9). One maintainer sets direction and approves spend and releases. Agents do the repeatable engineering work and leave evidence—not inflated status reports.
 
