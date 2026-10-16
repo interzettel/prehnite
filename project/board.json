@@ -827,19 +827,28 @@
       "type": "issue",
       "number": 111,
       "title": "Jev Stage B mock wire fixtures and gold-set calibration",
-      "lane": "Backlog",
+      "lane": "In progress",
       "priority": "P1",
       "stream": "Quality",
-      "note": "Follow-up to #107; zero-network official adapter fixtures, reference-size guards, synthetic eval, no billing."
+      "note": "Official-shape Jev mock request/response fixtures in PR #113; gold-set calibration remains open."
     },
     {
       "type": "pr",
       "number": 112,
       "title": "Close Jev Stage A sprint cards and queue Stage B",
-      "lane": "In review",
+      "lane": "Done",
       "priority": "P2",
       "stream": "Governance",
-      "note": "Docs/board-only after merged PR #110; no counted milestone credit."
+      "note": "Merged Stage A board closeout PR #112, all CI checks passed."
+    },
+    {
+      "type": "pr",
+      "number": 113,
+      "title": "Documented TypeSafe Jev official-shape offline wire fixtures",
+      "lane": "In review",
+      "priority": "P1",
+      "stream": "Quality",
+      "note": "Probability/level semantics and Box absence masking; 8-job CI pending, no API/paid transport."
     }
   ]
 }
