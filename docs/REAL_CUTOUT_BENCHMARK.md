@@ -75,7 +75,7 @@ python scripts/evaluate_real_cutouts.py \
 
 On Windows, use your own quoted Windows paths; the command is otherwise the
 same. An input or output path outside its expected place, missing SHA256 match,
-invalid image/alpha mode, geometry mismatch, uncertain permission or EXIF
+invalid image/alpha mode, blank reference matte, geometry mismatch, uncertain permission or EXIF
 rotation without prior normalization **refuses** scoring.
 
 The JSON report includes per-sample numerical metrics, cohort summaries and
