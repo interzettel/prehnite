@@ -236,16 +236,16 @@
       "lane": "Blocked",
       "priority": "P1",
       "stream": "Cutouts",
-      "note": "Rights-cleared alpha reference data"
+      "note": "Synthetic challenge fixture/evidence work underway under #29; real rights-cleared hair/glass/fur human-rated alpha ground truth remains blocked."
     },
     {
       "type": "issue",
       "number": 31,
       "title": "Targeted repair planner for failed cutouts",
-      "lane": "In review",
+      "lane": "Backlog",
       "priority": "P1",
       "stream": "Cutouts",
-      "note": "PR #119 review-ready: journaled offline product correction and portrait refusal, 516 unit passed; full S03/S05 still open."
+      "note": "Controlled journaled synthetic repair delivered in merged PR #119; full targeted S05 failure classification and Engine integration not complete."
     },
     {
       "type": "issue",
@@ -260,10 +260,10 @@
       "type": "issue",
       "number": 29,
       "title": "Transparent alpha matting and halo removal",
-      "lane": "Backlog",
+      "lane": "In progress",
       "priority": "P1",
       "stream": "Cutouts",
-      "note": "Edge alpha matting"
+      "note": "20-case synthetic challenge matrix under review in a new PR; real-world matte/color decontamination and human-accepted examples remain."
     },
     {
       "type": "issue",
@@ -876,6 +876,15 @@
       "priority": "P1",
       "stream": "Quality",
       "note": "Merged PR #117 (abae806), 500 tests, 8/8 CI, postmerge main green; no paid inference."
+    },
+    {
+      "type": "pr",
+      "number": 119,
+      "title": "Journaled product self-correction synthetic demo",
+      "lane": "Done",
+      "priority": "P1",
+      "stream": "Cutouts",
+      "note": "Merged commit 78f47d1; zero-network one-attempt product fringe demo with cross-platform evidence; no S05 ledger credit."
     }
   ]
 }

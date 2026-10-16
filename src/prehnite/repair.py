@@ -105,8 +105,28 @@ def _fringe(source: Image.Image, alpha: Image.Image) -> tuple[tuple[int, int, in
     # interior holes or distant similarly colored product details.
     exterior = alpha.point(lambda value: 255 if value == 0 else 0)
     ImageDraw.floodfill(exterior, (0, 0), 128, thresh=0)
+    # Any transparent region disconnected from the frame is an internal hole,
+    # missing part or complex topology. This strict solid-product algorithm
+    # cannot establish whether it should be preserved or repaired.
+    if 255 in exterior.tobytes():
+        raise RepairRefused("interior_transparency_requires_review")
     exterior = exterior.point(lambda value: 255 if value == 128 else 0)
     near_exterior = exterior.filter(ImageFilter.MaxFilter(2 * MAX_FRINGE + 1))
+
+    # A background-colored pixel deep within the mask cannot safely be
+    # distinguished from a missed interior hole or a foreground color
+    # collision. Do not cut it out just because it matches frame colors.
+    # These checks deliberately prefer review over false technical acceptance.
+    alpha_bytes = alpha.tobytes()
+    band_bytes = near_exterior.tobytes()
+    rgb_bytes = source.tobytes()
+    for index, opacity in enumerate(alpha_bytes):
+        if not opacity or band_bytes[index]:
+            continue
+        offset = index * 3
+        if all(abs(rgb_bytes[offset + k] - background[k]) <= COLOR_TOLERANCE
+               for k in range(3)):
+            raise RepairRefused("interior_background_collision_or_hole")
 
     changed = Image.new("L", source.size, 0)
     source_pixels = source.load()
@@ -219,6 +239,7 @@ def _receipt(journal: Journal, operation_id: str) -> dict:
 
 def run_product_repair(journal: Journal, source: Path, mask: Path, *,
                        asset_id: str, target_id: str, cohort: str = "product",
+                       material: str = "unknown",
                        accepted_output_exists: bool = False,
                        remote_charge_uncertain: bool = False,
                        awaiting_provider_submission: bool = False) -> dict:
@@ -234,6 +255,12 @@ def run_product_repair(journal: Journal, source: Path, mask: Path, *,
         raise ValueError("Unsafe asset/target ID or journal")
     if cohort != "product":
         return {"status": "human_review", "reason": "portrait_or_other_cohort_unsupported",
+                "would_spend_usd": 0}
+    # Material is caller-declared, not inferred from RGB; this does not
+    # certify that the label is correct. Explicitly unknown / glass / fabric
+    # must not enter the opaque-product-only algorithm.
+    if material != "opaque":
+        return {"status": "human_review", "reason": "material_not_qualified_for_opaque_repair",
                 "would_spend_usd": 0}
     if (accepted_output_exists or remote_charge_uncertain or awaiting_provider_submission):
         return {"status": "human_review", "reason": "accepted_or_remote_state_unsafe",

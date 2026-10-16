@@ -7,6 +7,7 @@ This project follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) an
 ## [Unreleased]
 
 ### Added
+- Experimental 20-case synthetic cutout challenge matrix (#29/#32) with masked gold-reference IoU, alpha MAE and boundary error; distinct product/portrait/mixed-material synthetic controls, immutable fixture receipts, standalone local report and Windows/Linux validation. Strictly benchmark evidence, not human-rated dataset credit.
 - Full-resolution 2020 × 779 owner-supplied Riso PNG README hero with transparent rounded corners and original-size textured composition. Removed obsolete 680 × 262 WebP and nonmatching wordmark SVG; retained separate reusable mineral mark. GitHub CSS sanitization no longer prevents visibly rounded corners (branding follow-up).
 - Experimental zero-network synthetic self-correction demonstration (#31/#29): one journal-backed idempotent logical product fringe repair, strict uniform-background and image/alpha guards, immutable source and mask, SHA256-verified isolated publication and crash replay; offline before/after/reference-mask HTML/JSON evidence and portrait safe refusal. Technical demo acceptance only; not a calibrated production matte or production Engine integration.
 - Provider-neutral offline typed decision evidence and bounded local candidate reject/repair action planner for separate synthetic product and portrait cohorts (#116). Capability, abstention, model-calibration, immutable accepted-output and zero-paid-spend guards; no provider transport or repair executor connected yet.
@@ -43,6 +44,7 @@ This project follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) an
 - Original Prehnite vector mark, improved first-run documentation and truthful provider status matrix.
 
 ### Fixed
+- Local repair now requires an explicitly declared opaque material and refuses ambiguous masked interior background colors or disconnected internal transparency before trying an alpha cleanup; synthetic negative controls cover holes, matching-color product areas and unqualified translucent inputs (#29).
 - Empty masks no longer get scheduled for ineffective local morphology: repair planner sends them to human review instead (#31).
 - Deterministic ZIP ordering, fixed metadata timestamps and SHA256 archive receipt cover accepted outputs and bundled reports; repeated export no longer varies with local file mtimes (#36).
 - Validate optional judge verdicts as complete finite numeric schemas with consistent winners/ties, reject malformed cached decisions and abstain on independent-rubric disagreement; fake position-bias tests added (#25, offline only).

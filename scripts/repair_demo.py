@@ -160,7 +160,7 @@ def run(workspace: Path) -> dict:
         product = run_product_repair(
             journal, Path(fixtures["product"]["source"]),
             Path(fixtures["product"]["defective"]),
-            asset_id="ceramic-product", target_id="one-object")
+            asset_id="ceramic-product", target_id="one-object", material="opaque")
         portrait = run_product_repair(
             journal, Path(fixtures["portrait"]["source"]),
             Path(fixtures["portrait"]["defective"]),
