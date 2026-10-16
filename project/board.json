@@ -588,6 +588,24 @@
       "priority": "P1",
       "stream": "Reporting",
       "note": "Merged; 264 offline tests and Windows/Ubuntu smoke green; invoices remain unverified"
+    },
+    {
+      "type": "issue",
+      "number": 81,
+      "title": "Batch objective modes and Pareto evaluation RFC",
+      "lane": "In review",
+      "priority": "P1",
+      "stream": "Product strategy",
+      "note": "Produce-first design; defines comparable Pareto metrics. Documentation PR #82; no runtime credit."
+    },
+    {
+      "type": "pr",
+      "number": 82,
+      "title": "Produce/Explore/Experiment and Pareto reporting RFC",
+      "lane": "In review",
+      "priority": "P1",
+      "stream": "Product strategy",
+      "note": "Documentation-only PR; CI/review required. No release or quality evidence."
     }
   ]
 }
