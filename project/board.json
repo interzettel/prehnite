@@ -242,10 +242,10 @@
       "type": "issue",
       "number": 31,
       "title": "Targeted repair planner for failed cutouts",
-      "lane": "Backlog",
+      "lane": "In progress",
       "priority": "P1",
       "stream": "Cutouts",
-      "note": "Bounded repair planner"
+      "note": "Journal-backed offline product fringe repair demo in progress; portrait refusal; full S03/S05 remain unverified."
     },
     {
       "type": "issue",

@@ -149,7 +149,7 @@ def test_default_policy_is_read_only_and_cannot_auto_reject_or_repair():
 
 
 @pytest.mark.parametrize("cohort,technical",[
-    ("product","mask_empty"),
+    ("product","alpha_edge_contamination"),
     ("portrait","alpha_edge_contamination"),
 ])
 def test_explicit_policy_schedules_only_one_nonpaid_local_mask_refinement(cohort,technical):
@@ -251,7 +251,7 @@ def test_policy_configuration_caps_are_validated():
 
 def test_product_portrait_synthetic_cohorts_have_distinct_behaviors_and_no_spend():
     cases=[
-        ("product","mask_empty","repair_local_mask"),
+        ("product","mask_empty","human_review"),
         ("product","mask_full_frame","reject_candidate"),
         ("product","subject_instance_ambiguous","human_review"),
         ("portrait","alpha_edge_contamination","repair_local_mask"),
@@ -265,3 +265,10 @@ def test_product_portrait_synthetic_cohorts_have_distinct_behaviors_and_no_spend
         assert result.would_spend_usd==0
         seen[cohort].add(technical)
     assert len(seen["product"])==len(seen["portrait"])==3
+
+def test_empty_mask_is_not_repaired_using_local_alpha_morphology():
+    state=issue("product","mask_empty")
+    for limits in (enabled(), RepairLimits()):
+        plan=decide_candidate(state,limits)
+        assert plan.action=="human_review"
+        assert plan.reason_code=="empty_mask_needs_new_segmentation_or_human"

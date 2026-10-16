@@ -23,7 +23,7 @@ _TKNOWN = frozenset({
     "image_geometry_invalid", "wrong_image_encoding", "subject_instance_ambiguous",
     "none",
 })
-_REPAIRABLE = frozenset({"mask_empty", "alpha_edge_contamination"})
+_REPAIRABLE = frozenset({"alpha_edge_contamination"})
 _HARD_REJECT = frozenset({"mask_full_frame", "image_geometry_invalid",
                           "wrong_image_encoding"})
 _PROVIDERS = ("jev", "openai-compatible", "anthropic", "local")
@@ -274,6 +274,8 @@ def decide_candidate(state: CandidateState, limits: RepairLimits) -> DecisionPla
         return review("model_abstained")
     if state.technical_issue == "subject_instance_ambiguous":
         return review("multiple_subjects_require_selection")
+    if state.technical_issue == "mask_empty":
+        return review("empty_mask_needs_new_segmentation_or_human")
     if state.technical_issue in _REPAIRABLE:
         if state.stage not in ("segmentation", "cutout"):
             return review("wrong_stage_for_local_repair")

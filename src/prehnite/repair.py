@@ -247,6 +247,14 @@ def run_product_repair(journal: Journal, source: Path, mask: Path, *,
                     "would_spend_usd": 0}
         _schema(journal)
         op_id = _operation_id(journal, asset_id, target_id, diagnosis)
+        # A changed input must not reset the one-repair cap per target.
+        other = journal.db.execute(
+            "SELECT operation_id FROM local_repairs WHERE asset_id=? AND target_id=? AND operation_id<>?",
+            (asset_id, target_id, op_id)
+        ).fetchone()
+        if other is not None:
+            return {"status": "human_review", "reason": "target_repair_attempt_exhausted",
+                    "would_spend_usd": 0}
         output = journal.root / "repairs" / op_id / "repaired.png"
         journal.db.execute("BEGIN IMMEDIATE")
         try:
