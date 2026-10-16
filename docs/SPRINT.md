@@ -10,12 +10,12 @@
 
 | Lane | Cards |
 | --- | ---: |
-| Backlog | 15 |
+| Backlog | 16 |
 | Ready | 2 |
-| In progress | 2 |
-| In review | 1 |
+| In progress | 1 |
+| In review | 0 |
 | Blocked | 6 |
-| Done | 68 |
+| Done | 69 |
 
 **WIP limits:** In progress ≤ 2; In review ≤ 3. Counts are issue/PR cards, not unique completed engineering features or a percentage.
 
@@ -37,7 +37,8 @@
 | P1 | [Issue #29 — Transparent alpha matting and halo removal](https://github.com/interzettel/prehnite/issues/29) | Cutouts | Edge alpha matting |
 | P2 | [Issue #27 — Local aesthetic and fidelity judge plugin boundary](https://github.com/interzettel/prehnite/issues/27) | Quality | Optional local weights and licenses |
 | P1 | [Issue #68 — Opt-in original-input gallery comparison with privacy consent](https://github.com/interzettel/prehnite/issues/68) | Delivery | Follow-up to #33: never embed private originals without opt-in |
-| P2 | [Issue #107 — Experimental Jev typed image/Box judge and staged frame evaluation](https://github.com/interzettel/prehnite/issues/107) | Quality | Stage A mock merged, live Jev disabled; Stage B official wire fixtures/calibration #111 next. Vision/Box experimental. |
+| P2 | [Issue #107 — Experimental Jev typed image/Box judge and staged frame evaluation](https://github.com/interzettel/prehnite/issues/107) | Quality | Mock stages A/B merged, no Jev transport; TypeSafe experimental vision needs explicit authorized trial and real gold calibration. |
+| P1 | [Issue #111 — Jev Stage B mock wire fixtures and gold-set calibration](https://github.com/interzettel/prehnite/issues/111) | Quality | Offline Jev wire fixtures #113 and calibration #114 merged; owner-reviewed real gold cohort and reliability threshold still needed before production. |
 
 ## Ready
 
@@ -51,13 +52,12 @@
 | Priority | Work item | Stream | Handoff / blocker |
 | --- | --- | --- | --- |
 | P2 | [Issue #100 — Provenance-bound transforms and tiled 4K comparison](https://github.com/interzettel/prehnite/issues/100) | Delivery | Integer 4K tiles + SHA-bound affine v2 validator merged; real affine warp/execution still open. |
-| P1 | [Issue #111 — Jev Stage B mock wire fixtures and gold-set calibration](https://github.com/interzettel/prehnite/issues/111) | Quality | PR #113 merged; PR #114 adds offline Brier/ECE, abstention and gold-label cost evidence. Real labeled cohort still needed. |
 
 ## In review
 
 | Priority | Work item | Stream | Handoff / blocker |
 | --- | --- | --- | --- |
-| P1 | [PR #114 — Jev Noul offline gold-set calibration and aggregate reports](https://github.com/interzettel/prehnite/pull/114) | Quality | No inference; synthetic labeled regression tests, owner review and CI pending. |
+| — | No cards currently | — | — |
 
 ## Blocked
 
@@ -142,6 +142,7 @@
 | P1 | [PR #110 — Offline typed visual judge mock and Jev opt-in preflight](https://github.com/interzettel/prehnite/pull/110) | Quality | Merged PR #110: typed Jev mock/media/price preflight, 403 tests passed, 8/8 CI. |
 | P2 | [PR #112 — Close Jev Stage A sprint cards and queue Stage B](https://github.com/interzettel/prehnite/pull/112) | Governance | Merged Stage A board closeout PR #112, all CI checks passed. |
 | P1 | [PR #113 — Documented TypeSafe Jev official-shape offline wire fixtures](https://github.com/interzettel/prehnite/pull/113) | Quality | Merged PR #113, 424 tests + 8/8 green CI; no vendor transport. |
+| P1 | [PR #114 — Jev Noul offline gold-set calibration and aggregate reports](https://github.com/interzettel/prehnite/pull/114) | Quality | Merged offline gold Brier/ECE/abstention/cost evaluation in #114; 459 passed, 8/8 CI. |
 
 ## How to update this board
 
