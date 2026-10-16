@@ -122,8 +122,15 @@ def export(batch_id: str, workspace: Path = typer.Option(Path("workspace")),
         raise typer.BadParameter("No such batch")
     j = Journal(workspace, batch_id)
     try:
-        export_report(j)
-        typer.echo(str(package(j)))
+        with j.launch_exclusive():
+            if j.worker_active():
+                raise typer.BadParameter("Cannot export while a worker is active")
+            report = export_report(j)
+            if parquet:
+                from .parquet_export import write_parquet_exports
+                write_parquet_exports(j.root, report["analytics"],
+                                      j.fact("manifest", {}), j.fact("results", {}))
+            typer.echo(str(package(j, include_parquet=parquet)))
     finally:
         j.close()
 
