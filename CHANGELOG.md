@@ -7,6 +7,7 @@ This project follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) an
 ## [Unreleased]
 
 ### Added
+- Experimental zero-network synthetic self-correction demonstration (#31/#29): one journal-backed idempotent logical product fringe repair, strict uniform-background and image/alpha guards, immutable source and mask, SHA256-verified isolated publication and crash replay; offline before/after/reference-mask HTML/JSON evidence and portrait safe refusal. Technical demo acceptance only; not a calibrated production matte or production Engine integration.
 - Provider-neutral offline typed decision evidence and bounded local candidate reject/repair action planner for separate synthetic product and portrait cohorts (#116). Capability, abstention, model-calibration, immutable accepted-output and zero-paid-spend guards; no provider transport or repair executor connected yet.
 - Deterministic offline Noul binary visual-gold evaluation (#111): Brier/ECE, explicit abstention/coverage, false-accept/reject and Wilson intervals, private aggregate reports, and quoted reservation-cost evidence. Synthetic labels are not real visual-quality certification.
 - Local-only official-shape Jev 1.14 request/response **fixtures** (#111): preserve Noul probabilities, Choice categorical distributions, Score level-weighted positions and presence-gated Box coordinates; image references and experimental headers remain inert, without network transport or automatic acceptance.
@@ -41,6 +42,7 @@ This project follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) an
 - Original Prehnite vector mark, improved first-run documentation and truthful provider status matrix.
 
 ### Fixed
+- Empty masks no longer get scheduled for ineffective local morphology: repair planner sends them to human review instead (#31).
 - Deterministic ZIP ordering, fixed metadata timestamps and SHA256 archive receipt cover accepted outputs and bundled reports; repeated export no longer varies with local file mtimes (#36).
 - Validate optional judge verdicts as complete finite numeric schemas with consistent winners/ties, reject malformed cached decisions and abstain on independent-rubric disagreement; fake position-bias tests added (#25, offline only).
 - ComfyUI prompt IDs are persisted before queue dispatch, with fail-closed history recovery after connection loss, cancelled/interrupted job recognition, and bounded atomic downloads; no unverified local-model quality claims (#23).
