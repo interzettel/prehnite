@@ -912,6 +912,15 @@
       "priority": "P1",
       "stream": "Cutouts",
       "note": "Merged 39c84d3 with 14/14 CI: verified 84 private JPEG inputs and 50 unreviewed local masks; no independent alpha references or QA acceptance."
+    },
+    {
+      "type": "pr",
+      "number": 125,
+      "title": "Validate offline Review Studio ZIP and import human feedback",
+      "lane": "In review",
+      "priority": "P1",
+      "stream": "Cutouts",
+      "note": "Draft PR #125: private mask integrity, review counters, defect triage; synthetic-only tests. Owner's actual ratings and independent gold mattes pending."
     }
   ]
 }
