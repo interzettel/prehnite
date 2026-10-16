@@ -113,7 +113,9 @@ def status(batch_id: str, workspace: Path = typer.Option(Path("workspace"))):
         j.close()
 
 @app.command()
-def export(batch_id: str, workspace: Path = typer.Option(Path("workspace"))):
+def export(batch_id: str, workspace: Path = typer.Option(Path("workspace")),
+           parquet: bool = typer.Option(False, "--parquet",
+                                         help="Opt-in local Parquet; needs prehnite[parquet]")):
     from .schema import Asset
     Asset.check_id(batch_id)
     if not (workspace / "batches" / batch_id / "state.sqlite3").is_file():
