@@ -803,7 +803,7 @@
       "lane": "Backlog",
       "priority": "P2",
       "stream": "Quality",
-      "note": "Stage A mock merged, live Jev disabled; Stage B official wire fixtures/calibration #111 next. Vision/Box experimental."
+      "note": "Mock stages A/B merged, no Jev transport; TypeSafe experimental vision needs explicit authorized trial and real gold calibration."
     },
     {
       "type": "issue",
@@ -827,10 +827,10 @@
       "type": "issue",
       "number": 111,
       "title": "Jev Stage B mock wire fixtures and gold-set calibration",
-      "lane": "In progress",
+      "lane": "Backlog",
       "priority": "P1",
       "stream": "Quality",
-      "note": "PR #113 merged; PR #114 adds offline Brier/ECE, abstention and gold-label cost evidence. Real labeled cohort still needed."
+      "note": "Offline Jev wire fixtures #113 and calibration #114 merged; owner-reviewed real gold cohort and reliability threshold still needed before production."
     },
     {
       "type": "pr",
@@ -854,10 +854,10 @@
       "type": "pr",
       "number": 114,
       "title": "Jev Noul offline gold-set calibration and aggregate reports",
-      "lane": "In review",
+      "lane": "Done",
       "priority": "P1",
       "stream": "Quality",
-      "note": "No inference; synthetic labeled regression tests, owner review and CI pending."
+      "note": "Merged offline gold Brier/ECE/abstention/cost evaluation in #114; 459 passed, 8/8 CI."
     }
   ]
 }
