@@ -144,12 +144,13 @@
         {
           "id": "C05",
           "name": "Atomic output writes and checksum replay checks",
-          "state": "planned",
+          "state": "done",
           "issue": 16,
           "owner": "Agent cloud",
           "dependsOn": [
             "C02"
-          ]
+          ],
+          "evidence": "https://github.com/interzettel/prehnite/pull/52"
         },
         {
           "id": "C06",
@@ -249,12 +250,13 @@
         {
           "id": "P04",
           "name": "SAM response-shape fixtures and validation",
-          "state": "planned",
+          "state": "done",
           "issue": 20,
           "owner": "Agent cloud",
           "dependsOn": [
             "P01"
-          ]
+          ],
+          "evidence": "https://github.com/interzettel/prehnite/pull/53"
         },
         {
           "id": "P05",
@@ -437,13 +439,14 @@
         {
           "id": "S02",
           "name": "Hosted SAM image/mask dimensional conformance",
-          "state": "planned",
+          "state": "done",
           "issue": 20,
           "owner": "Agent cloud",
           "dependsOn": [
             "S01",
             "P04"
-          ]
+          ],
+          "evidence": "https://github.com/interzettel/prehnite/pull/53"
         },
         {
           "id": "S03",
