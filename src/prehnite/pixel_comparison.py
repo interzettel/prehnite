@@ -11,7 +11,6 @@ import hashlib
 import html
 import io
 import json
-import math
 from pathlib import Path
 
 from PIL import Image, ImageChops, ImageStat
@@ -52,26 +51,28 @@ def _verify_bytes(path: Path, digest: str) -> bytes:
     return data
 
 
-def _read_pair(first: bytes, second: bytes) -> tuple[Image.Image, Image.Image, str | None]:
-    """Accept matching unmodified frames; do not silently transpose/resize/convert ICC."""
+def _read_pair(first: bytes, second: bytes) -> tuple[
+        Image.Image | None, Image.Image | None, str | None,
+        tuple[int, int], tuple[int, int]]:
+    """Check headers before decoding; no automatic EXIF/ICC/geometric transform."""
     with Image.open(io.BytesIO(first)) as a, Image.open(io.BytesIO(second)) as b:
-        width, height = a.size
-        if width * height > MAX_METRIC_PIXELS or b.width * b.height > MAX_METRIC_PIXELS:
-            return a.copy(), b.copy(), "metric_pixel_budget_exceeded"
-        if a.size != b.size:
-            return a.copy(), b.copy(), "geometry_mismatch"
+        frame_a, frame_b = a.size, b.size
+        # Different dimensions cannot share a pixel grid; do not infer resize.
+        if frame_a != frame_b:
+            return None, None, "geometry_mismatch", frame_a, frame_b
+        if a.width * a.height > MAX_METRIC_PIXELS:
+            return None, None, "metric_pixel_budget_exceeded", frame_a, frame_b
         if (a.getexif().get(274, 1) not in (None, 1)
                 or b.getexif().get(274, 1) not in (None, 1)):
-            return a.copy(), b.copy(), "orientation_unresolved"
+            return None, None, "orientation_unresolved", frame_a, frame_b
         if a.mode not in _SUPPORTED or b.mode not in _SUPPORTED:
-            return a.copy(), b.copy(), "pixel_encoding_unsupported"
-        # Untagged-to-untagged comparisons are only channel-level diagnostics,
-        # never assertions of colorimetrically accurate perceptual differences.
+            return None, None, "pixel_encoding_unsupported", frame_a, frame_b
         if a.info.get("icc_profile") != b.info.get("icc_profile"):
-            return a.copy(), b.copy(), "color_profile_mismatch"
+            return None, None, "color_profile_mismatch", frame_a, frame_b
+        # At most 4 MP of decoded pixels per image; no large mismatch decode.
         a.load()
         b.load()
-        return a.copy(), b.copy(), None
+        return a.copy(), b.copy(), None, frame_a, frame_b
 
 
 def _against_background(image: Image.Image, color: tuple[int, int, int]) -> Image.Image:
@@ -225,9 +226,8 @@ def compare_slot(
     if len(ref_bytes) + len(cand_bytes) > MAX_EMBEDDED_BYTES:
         raise ValueError("Comparison exceeds 64 MiB encoded-byte budget")
 
-    first, second, reason = _read_pair(ref_bytes, cand_bytes)
-    with first, second:
-        record = {
+    first, second, reason, ref_size, cand_size = _read_pair(ref_bytes, cand_bytes)
+    record = {
             "schema_version": SCHEMA_VERSION,
             "purpose": "technical_pixel_observation_only",
             "comparison": ("original_vs_base" if inputs is not None else "base_vs_cutout"),
@@ -238,17 +238,19 @@ def compare_slot(
             "reason_code": reason,
             "reference_sha256": ref_sha,
             "candidate_sha256": cand_sha,
-            "reference_dimensions": [first.width, first.height],
-            "candidate_dimensions": [second.width, second.height],
+            "reference_dimensions": list(ref_size),
+            "candidate_dimensions": list(cand_size),
             "icc_contract": "both_untagged_or_identical_profile_bytes",
             "comparison_color_space": "encoded_channels_not_perceptual_or_linear",
             "human_quality_judgment": None,
             "actual_provider_invoice_usd": None,
             "metrics": None,
         }
-        if reason:
-            # Explain refusal without generating an enticing but invalid overlay.
-            return record
+    if reason:
+        # Explain refusal without generating an enticing but invalid overlay.
+        return record
+    assert first is not None and second is not None
+    with first, second:
         metrics, heatmap = _numeric_diff(first, second)
     record["metrics"] = metrics
     if len(ref_bytes) + len(cand_bytes) + len(heatmap) > MAX_EMBEDDED_BYTES:
