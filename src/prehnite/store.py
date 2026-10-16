@@ -22,10 +22,15 @@ class Journal:
     def __init__(self, workspace: Path, batch_id: str):
         self.root = workspace.resolve() / "batches" / batch_id
         self.root.mkdir(parents=True, exist_ok=True)
-        self.db = sqlite3.connect(self.root / "state.sqlite3")
+        self.db = sqlite3.connect(self.root / "state.sqlite3", timeout=5)
         self.db.row_factory = sqlite3.Row
-        self.db.execute("PRAGMA journal_mode=WAL")
-        self.db.executescript("""
+        self.db.execute("PRAGMA busy_timeout=2000")
+        # Fresh concurrent workers can contend even while enabling WAL or
+        # creating IF NOT EXISTS tables. Retry initialization only for BUSY.
+        for attempt in range(8):
+            try:
+                self.db.execute("PRAGMA journal_mode=WAL")
+                self.db.executescript("""
         CREATE TABLE IF NOT EXISTS tasks (
           task_key TEXT PRIMARY KEY, stage TEXT NOT NULL, status TEXT NOT NULL,
           request_id TEXT, path TEXT, provider TEXT, model TEXT,
@@ -56,8 +61,15 @@ class Journal:
           current_asset TEXT,
           detail TEXT
         );
-        """)
-        self.db.commit()
+                """)
+                self.db.commit()
+                break
+            except sqlite3.OperationalError as exc:
+                self.db.rollback()
+                if "locked" not in str(exc).lower() or attempt == 7:
+                    self.db.close()
+                    raise
+                time.sleep(0.03 * (attempt + 1))
 
     def get(self, key: str) -> dict[str, Any] | None:
         row = self.db.execute("SELECT * FROM tasks WHERE task_key=?", (key,)).fetchone()
