@@ -152,10 +152,10 @@
       "type": "issue",
       "number": 41,
       "title": "Pre-release 90-asset dry run and budget projection",
-      "lane": "In progress",
+      "lane": "Done",
       "priority": "P1",
       "stream": "Benchmark",
-      "note": "Offline 90-slot cross-platform fixture passes on PR #84; awaiting latest-head CI/merge."
+      "note": "PR #84 merged; 90/90 offline benchmark passed on Ubuntu & Windows, 108 verified ZIP image entries."
     },
     {
       "type": "issue",
@@ -602,10 +602,10 @@
       "type": "pr",
       "number": 84,
       "title": "90-slot offline pause/crash/recovery benchmark",
-      "lane": "In review",
+      "lane": "Done",
       "priority": "P1",
       "stream": "Benchmark",
-      "note": "90/90 accepted on Ubuntu+Windows CI; merge and evidence credit pending."
+      "note": "Merged PR #84; cross-platform CI synthetic recovery benchmark evidence; no paid inference."
     }
   ]
 }
