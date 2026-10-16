@@ -10,12 +10,12 @@
 
 | Lane | Cards |
 | --- | ---: |
-| Backlog | 27 |
+| Backlog | 25 |
 | Ready | 2 |
 | In progress | 0 |
 | In review | 0 |
 | Blocked | 6 |
-| Done | 13 |
+| Done | 17 |
 
 **WIP limits:** In progress ≤ 2; In review ≤ 3. Counts are issue/PR cards, not unique completed engineering features or a percentage.
 
@@ -47,8 +47,6 @@
 | P1 | [Issue #25 — Judge schema and A/B order-bias tests](https://github.com/interzettel/prehnite/issues/25) | Quality | A/B judge schema/order bias |
 | P1 | [Issue #23 — ComfyUI queue resume and error-state contract](https://github.com/interzettel/prehnite/issues/23) | Local GPU | ComfyUI history/error semantics |
 | P1 | [Issue #22 — ComfyUI reproducible API graph fixtures](https://github.com/interzettel/prehnite/issues/22) | Local GPU | ComfyUI graph mocks |
-| P1 | [Issue #21 — Provider capability and price registry contract](https://github.com/interzettel/prehnite/issues/21) | Providers | Typed capability registry |
-| P1 | [Issue #20 — Normalize fal segmentation output and mask orientation](https://github.com/interzettel/prehnite/issues/20) | Segmentation | SAM response-shape fixtures |
 | P1 | [Issue #18 — Content-addressed cache with privacy isolation](https://github.com/interzettel/prehnite/issues/18) | Runtime | Cache with privacy-scoped keys |
 
 ## Ready
@@ -56,7 +54,7 @@
 | Priority | Work item | Stream | Handoff / blocker |
 | --- | --- | --- | --- |
 | P1 | [Issue #12 — Mocked fal API conformance contract](https://github.com/interzettel/prehnite/issues/12) | Providers | No credentials or paid calls; use recorded fixture schemas. |
-| P0 | [Issue #16 — Atomic artifacts and integrity-aware resume](https://github.com/interzettel/prehnite/issues/16) | Runtime | Next P0: atomic output writes, SHA256 corruption-aware resume |
+| P1 | [Issue #21 — Provider capability and price registry contract](https://github.com/interzettel/prehnite/issues/21) | Providers | Next offline typed provider capability validation; depends on merged FLUX fixtures |
 
 ## In progress
 
@@ -90,7 +88,9 @@
 | P1 | [PR #13 — Agile delivery board and release governance](https://github.com/interzettel/prehnite/pull/13) | Governance | Merged to main; single-source versioning and governance CI. |
 | P0 | [PR #1 — Initial MIT engine foundation](https://github.com/interzettel/prehnite/pull/1) | Foundation | Merged; synthetic demo CI passed. |
 | P1 | [Issue #43 — Human-centered README, original vector identity and first-run guide](https://github.com/interzettel/prehnite/issues/43) | Onboarding | Merged in PR #45; evidence ledger / README published on main. |
+| P1 | [Issue #20 — Normalize fal segmentation output and mask orientation](https://github.com/interzettel/prehnite/issues/20) | Segmentation | Offline CI tests merged in PR #53; real paid/live validation remains open |
 | P1 | [Issue #19 — Mocked FLUX tier and upscale response shapes](https://github.com/interzettel/prehnite/issues/19) | Providers | Mocked and subprocess CI evidence in merged PR #50 |
+| P0 | [Issue #16 — Atomic artifacts and integrity-aware resume](https://github.com/interzettel/prehnite/issues/16) | Runtime | Offline CI tests merged in PR #52; real paid/live validation remains open |
 | P0 | [Issue #15 — Crash-injection matrix for billed request recovery](https://github.com/interzettel/prehnite/issues/15) | Runtime | Mocked and subprocess CI evidence in merged PR #49 |
 | P1 | [Issue #14 — Granular evidence-ledger and generated milestone progress tracker](https://github.com/interzettel/prehnite/issues/14) | Tracking | Merged in PR #45; evidence ledger / README published on main. |
 | P1 | [PR #45 — Original identity and evidence-based milestone ledger](https://github.com/interzettel/prehnite/pull/45) | Governance | Merged to main; 47 offline tests passed. |
@@ -98,6 +98,8 @@
 | P1 | [PR #47 — Reconcile tracker and modernize CI](https://github.com/interzettel/prehnite/pull/47) | Maintenance | Merged; 47 tests passing without warnings. |
 | P1 | [PR #49 — Subprocess crash-recovery matrix](https://github.com/interzettel/prehnite/pull/49) | Runtime | Merged after passing offline tests; no paid inference |
 | P1 | [PR #50 — fal generation payload and queue contract fixtures](https://github.com/interzettel/prehnite/pull/50) | Providers | Merged after passing offline tests; no paid inference |
+| P0 | [PR #52 — Atomic accepted assets and SHA256 integrity](https://github.com/interzettel/prehnite/pull/52) | Runtime | Merged, 90 offline tests passed |
+| P1 | [PR #53 — SAM 3.1 mask geometry and channel contracts](https://github.com/interzettel/prehnite/pull/53) | Cutouts | Merged, 100 offline tests passed |
 
 ## How to update this board
 

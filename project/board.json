@@ -332,19 +332,19 @@
       "type": "issue",
       "number": 21,
       "title": "Provider capability and price registry contract",
-      "lane": "Backlog",
+      "lane": "Ready",
       "priority": "P1",
       "stream": "Providers",
-      "note": "Typed capability registry"
+      "note": "Next offline typed provider capability validation; depends on merged FLUX fixtures"
     },
     {
       "type": "issue",
       "number": 20,
       "title": "Normalize fal segmentation output and mask orientation",
-      "lane": "Backlog",
+      "lane": "Done",
       "priority": "P1",
       "stream": "Segmentation",
-      "note": "SAM response-shape fixtures"
+      "note": "Offline CI tests merged in PR #53; real paid/live validation remains open"
     },
     {
       "type": "issue",
@@ -377,10 +377,10 @@
       "type": "issue",
       "number": 16,
       "title": "Atomic artifacts and integrity-aware resume",
-      "lane": "Ready",
+      "lane": "Done",
       "priority": "P0",
       "stream": "Runtime",
-      "note": "Next P0: atomic output writes, SHA256 corruption-aware resume"
+      "note": "Offline CI tests merged in PR #52; real paid/live validation remains open"
     },
     {
       "type": "issue",
@@ -444,6 +444,24 @@
       "priority": "P1",
       "stream": "Providers",
       "note": "Merged after passing offline tests; no paid inference"
+    },
+    {
+      "type": "pr",
+      "number": 52,
+      "title": "Atomic accepted assets and SHA256 integrity",
+      "lane": "Done",
+      "priority": "P0",
+      "stream": "Runtime",
+      "note": "Merged, 90 offline tests passed"
+    },
+    {
+      "type": "pr",
+      "number": 53,
+      "title": "SAM 3.1 mask geometry and channel contracts",
+      "lane": "Done",
+      "priority": "P1",
+      "stream": "Cutouts",
+      "note": "Merged, 100 offline tests passed"
     }
   ]
 }
