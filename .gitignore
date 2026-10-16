@@ -224,3 +224,7 @@ __marimo__/
 /private-r2-*.json
 /prehnite-private-corpus/
 /prehnite-private-reports/
+
+# Private exploratory apparel masks and reports
+/apparel-pilot-qa/
+/private-apparel-pilot/
