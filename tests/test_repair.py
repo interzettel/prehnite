@@ -33,7 +33,7 @@ def execute(tmp_path, *, source=None, mask=None, **kwargs):
     source, mask = (source, mask) if source is not None else images(tmp_path)
     journal = Journal(tmp_path, "offline-repair-test")
     try:
-        options = {"asset_id": "product-001", "target_id": "cup", **kwargs}
+        options = {"asset_id": "product-001", "target_id": "cup", "material": "opaque", **kwargs}
         return run_product_repair(journal, source, mask, **options)
     finally:
         journal.close()
@@ -247,3 +247,31 @@ def test_changed_input_sha_cannot_reset_single_target_attempt_cap(tmp_path):
     db = sqlite3.connect(tmp_path / "batches/offline-repair-test/state.sqlite3")
     assert db.execute("SELECT COUNT(*) FROM local_repairs").fetchone()[0] == 1
     db.close()
+
+def test_unspecified_or_glass_product_cannot_auto_repair(tmp_path):
+    source, mask = images(tmp_path)
+    for material in ("unknown", "glass", "translucent", "fabric"):
+        result = execute(tmp_path, source=source, mask=mask, material=material)
+        assert result["status"] == "human_review"
+        assert result["reason"] == "material_not_qualified_for_opaque_repair"
+    journal = Journal(tmp_path, "offline-repair-test")
+    try:
+        assert journal.db.execute(
+            "SELECT name FROM sqlite_master WHERE name='local_repairs'"
+        ).fetchall() == []
+    finally:
+        journal.close()
+
+
+def test_masked_background_inside_product_abstains_instead_of_erasing(tmp_path):
+    source, mask = images(tmp_path)
+    with Image.open(source) as im:
+        modified = im.copy()
+    # Foreground accidentally shares background color deep inside the opaque
+    # mask: could be a product color, transparent hole or invalid mask.
+    ImageDraw.Draw(modified).rectangle((69, 58, 90, 87), fill="#4aaf87")
+    modified.save(source)
+    outcome = execute(tmp_path, source=source, mask=mask)
+    assert outcome["status"] == "human_review"
+    assert outcome["reason"] == "interior_background_collision_or_hole"
+    assert outcome["would_spend_usd"] == 0
