@@ -749,7 +749,7 @@
       "lane": "In progress",
       "priority": "P2",
       "stream": "Delivery",
-      "note": "v1 tiled translation and v2 affine schema merged; actual affine executor and 4K resampling remain."
+      "note": "Integer 4K tiles + SHA-bound affine v2 validator merged; real affine warp/execution still open."
     },
     {
       "type": "issue",
@@ -803,25 +803,43 @@
       "lane": "Backlog",
       "priority": "P2",
       "stream": "Quality",
-      "note": "Jev 1.14 visual judge is experimental; mock-only Stage A child #109 / PR #110, no live transport or spend."
+      "note": "Stage A mock merged, live Jev disabled; Stage B official wire fixtures/calibration #111 next. Vision/Box experimental."
     },
     {
       "type": "issue",
       "number": 109,
       "title": "Jev experimental visual-judge typed contract, media and budget preflight",
-      "lane": "In progress",
+      "lane": "Done",
       "priority": "P1",
       "stream": "Quality",
-      "note": "PR #110 mock-only; verified no transport/paid calls, 8-job CI pending."
+      "note": "Mock-only Jev Stage A merged #110, eight green checks, no spend; parent #107 open."
     },
     {
       "type": "pr",
       "number": 110,
       "title": "Offline typed visual judge mock and Jev opt-in preflight",
-      "lane": "In review",
+      "lane": "Done",
       "priority": "P1",
       "stream": "Quality",
-      "note": "Internal typed schemas and mock fixtures; no TypeSafe API calls or auto acceptance."
+      "note": "Merged PR #110: typed Jev mock/media/price preflight, 403 tests passed, 8/8 CI."
+    },
+    {
+      "type": "issue",
+      "number": 111,
+      "title": "Jev Stage B mock wire fixtures and gold-set calibration",
+      "lane": "Backlog",
+      "priority": "P1",
+      "stream": "Quality",
+      "note": "Follow-up to #107; zero-network official adapter fixtures, reference-size guards, synthetic eval, no billing."
+    },
+    {
+      "type": "pr",
+      "number": 112,
+      "title": "Close Jev Stage A sprint cards and queue Stage B",
+      "lane": "In review",
+      "priority": "P2",
+      "stream": "Governance",
+      "note": "Docs/board-only after merged PR #110; no counted milestone credit."
     }
   ]
 }
