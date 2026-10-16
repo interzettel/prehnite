@@ -4,6 +4,7 @@ from __future__ import annotations
 import base64
 import io
 import json
+import math
 import os
 import re
 from dataclasses import dataclass
@@ -32,16 +33,43 @@ def preview(path: Path, max_edge: int = 1300) -> str:
     return base64.b64encode(b.getvalue()).decode("ascii")
 
 
-def check_verdict(raw: dict, choices: tuple[str, ...]) -> Verdict:
-    scores = raw.get("scores", {})
-    if raw.get("winner") not in (*choices, "tie", "neither"):
+def check_verdict(raw: object, choices: tuple[str, ...]) -> Verdict:
+    """Strictly validate a rubric response, not merely its JSON syntax.
+
+    These scores are uncalibrated rubric judgments, not probabilities.
+    """
+    if not isinstance(raw, dict):
+        raise ValueError("Judge verdict must be a JSON object")
+    if len(choices) != len(set(choices)) or not choices:
+        raise ValueError("Candidate labels must be nonempty and unique")
+    winner = raw.get("winner")
+    if winner not in (*choices, "tie", "neither"):
         raise ValueError("Judge returned invalid winner")
+    scores = raw.get("scores")
     if not isinstance(scores, dict) or set(scores) != set(choices):
-        raise ValueError("Judge scores must cover every candidate")
-    vals = {key: float(value) for key, value in scores.items()}
-    if any(not (0 <= v <= 1) for v in vals.values()):
-        raise ValueError("Judge scores must be between 0 and 1")
-    return Verdict(str(raw["winner"]), vals, str(raw.get("reason", ""))[:600])
+        raise ValueError("Judge scores must cover every candidate exactly")
+    normalized = {}
+    for label in choices:
+        value = scores[label]
+        if isinstance(value, bool) or not isinstance(value, (int, float)):
+            raise ValueError("Judge scores must be numeric JSON values")
+        value = float(value)
+        if not math.isfinite(value) or not 0 <= value <= 1:
+            raise ValueError("Judge scores must be finite and between 0 and 1")
+        normalized[label] = value
+    reason = raw.get("reason")
+    if not isinstance(reason, str) or not reason.strip():
+        raise ValueError("Judge must explain its decision")
+    # Separate outright winner from an abstention. A tie has nearly equal
+    # rubric scores; "neither" means no candidate meets a minimal standard.
+    top = max(normalized.values())
+    if winner == "tie" and max(normalized.values()) - min(normalized.values()) > 0.02:
+        raise ValueError("Judge tie contradicts candidate scores")
+    if winner == "neither" and top >= 0.5:
+        raise ValueError("Judge neither contradicts high candidate score")
+    if winner in choices and normalized[winner] < top - 0.02:
+        raise ValueError("Judge winner contradicts candidate scores")
+    return Verdict(str(winner), normalized, reason.strip()[:600])
 
 
 class HaikuJudge:
@@ -70,6 +98,9 @@ class HaikuJudge:
                         "Return ONLY JSON with keys winner (one of candidate labels/tie/neither), "
                         f"scores (mapping {list(keys)} to values 0..1), reason (brief). "
                         "Scores measure rubric satisfaction, not certainty. "
+                        "A named winner must have the top score; a tie requires "
+                        "scores within 0.02 and neither requires all scores below "
+                        "0.5. Return a meaningful brief reason. "
                         + (f"Exact prompt: {prompt}" if prompt else "")})
         for key, path in images.items():
             content.append({"type": "text", "text": f"Candidate {key}"})

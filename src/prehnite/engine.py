@@ -11,7 +11,7 @@ from typing import Callable
 from .images import image_info, make_cutout, preview_cutout, resize_to
 from .artifacts import (ArtifactIntegrityError, atomic_copy_image, atomic_resize,
                         temporary_sibling, verified_image)
-from .judges import HaikuJudge, technical
+from .judges import HaikuJudge, check_verdict, technical
 from .manifest import resolve_input, validate_job
 from .providers import get_provider
 from .reporting import export_report, package
@@ -156,7 +156,12 @@ class Engine:
             raise ValueError("Haiku pair judge requires exactly two candidates")
         paths = dict(zip(("A", "B"), candidates.values()))
         total = {key: [] for key in paths}
+        rubric_winners = []
         for kind in ("blind", "prompt"):
+            # Deliberately reverse the display order across independent
+            # rubrics to expose blatant first-candidate preference. It does
+            # NOT constitute statistical order-bias calibration.
+            order = ("A", "B") if kind == "blind" else ("B", "A")
             key = f"{asset.id}:a{attempt}:judge:{kind}"
             record = self.journal.get(key)
             if record and record["status"] == "completed":
@@ -173,19 +178,29 @@ class Engine:
                                  model=judge.model, reserved_usd=estimate)
                 try:
                     verdict = HaikuJudge(judge).review(
-                        paths, asset.prompt if kind == "prompt" else None, kind)
+                        {label: paths[label] for label in order},
+                        asset.prompt if kind == "prompt" else None, kind)
                 except Exception as exc:
                     self.journal.put(key, "judge", "uncertain", provider="anthropic",
                                      model=judge.model, reserved_usd=estimate,
                                      data={"error": str(exc)[:500]})
                     raise
                 raw = {"winner": verdict.winner, "scores": verdict.scores,
-                       "reason": verdict.reason}
+                       "reason": verdict.reason, "candidate_order": list(order)}
+                check_verdict(raw, tuple(paths))
                 self.journal.put(key, "judge", "completed", provider="anthropic",
                                  model=judge.model, reserved_usd=estimate, data=raw,
                                  tokens_in=verdict.tokens_in, tokens_out=verdict.tokens_out)
+            if raw.get("candidate_order") is not None and raw["candidate_order"] != list(order):
+                raise ValueError("Cached judge candidate order differs; reconcile manually")
+            checked = check_verdict(raw, tuple(paths))
+            rubric_winners.append(checked.winner)
             for label in paths:
-                total[label].append(float(raw["scores"][label]))
+                total[label].append(checked.scores[label])
+        if any(label in ("tie", "neither") for label in rubric_winners):
+            return None, None, "Judge abstained; no automatic candidate acceptance"
+        if len(set(rubric_winners)) != 1:
+            return None, None, "Independent judge rubrics disagree; human review required"
         # Gate on worst-of-two rubrics; do not average away important violations.
         ranking = sorted(((min(scores), key) for key, scores in total.items()), reverse=True)
         score, label = ranking[0]
@@ -321,8 +336,10 @@ class Engine:
                 break
             if winner is None:
                 last_reason = reason
-                if asset.source:
-                    break  # A fixed source cannot improve by repeating an identical judge call.
+                if asset.source or "disagree" in reason or "abstained" in reason:
+                    # Don't purchase another generated batch just to resolve
+                    # a conflict between supposedly independent judge rubrics.
+                    break
                 continue
             atomic_resize(candidates[winner], final_output, asset.target_size)
             outputs = [asset.output.image]
