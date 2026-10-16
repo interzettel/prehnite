@@ -197,12 +197,13 @@
         {
           "id": "C10",
           "name": "Machine-readable stage-level failure taxonomy",
-          "state": "planned",
+          "state": "done",
           "issue": 15,
           "owner": "Agent cloud",
           "dependsOn": [
             "C04"
-          ]
+          ],
+          "evidence": "https://github.com/interzettel/prehnite/pull/87"
         }
       ]
     },
