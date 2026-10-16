@@ -45,3 +45,21 @@ and clean Windows/Linux installation work.
 All baseline CLI and initialization tests run offline in GitHub CI. This
 is not yet a verified fresh Windows PowerShell installation transcript,
 a desktop installer or a model deployment service.
+
+## Windows and Linux clean-install evidence
+
+CI uses an isolated virtual environment on **both** `windows-latest`
+(PowerShell runner) and `ubuntu-latest`. The
+[`scripts/smoke_install.py`](../scripts/smoke_install.py) procedure
+builds a wheel and sdist, verifies their package/version/Python metadata,
+installs only the new wheel and its mandatory dependencies, checks that
+`torch`, `fal_client`, `anthropic` and `mcp` did not install implicitly,
+then executes the CLI commands `init`, `doctor`, `validate`, `run`
+and validates the generated ZIP checksum and contents.
+
+The Actions job log is a reproducible CI transcript, **not** proof of an
+installed Windows desktop environment or actual local NVIDIA hardware.
+No provider API key, cloud account, ComfyUI service or GPU weight file is
+necessary for these tests. The independent real Windows 8GB VRAM model
+benchmark remains [#24](https://github.com/interzettel/prehnite/issues/24).
+No artifacts are tagged, uploaded as releases, or published to PyPI.
