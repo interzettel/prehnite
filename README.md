@@ -127,6 +127,16 @@ by you.
 
 For the locally hosted route, start with [the ComfyUI example profile](examples/profile-comfyui.yaml). For pay-per-use hosting, review [the fal profile](examples/profile-fal.yaml), verify endpoint contracts and current prices, and provide your own `FAL_KEY`. Do not use the sample prices as a quote.
 
+### Inspect detail without paying a judge
+
+Image previews can hide important 4K defects. You can create **native-pixel detail crops** and an annotated overview entirely offline:
+
+```bash
+prehnite crops my-photo.png --output detail-evidence --edge 1024
+```
+
+The output includes five lossless corner/center crops and a SHA256 manifest. Add `--anchor-x 0.45 --anchor-y 0.35` for one manually chosen area. This creates review evidence, **not an automated quality score**. [Read the crop guide](docs/CROP_EVIDENCE.md).
+
 ## Where things stand
 
 **`0.1.0.dev0` · source-only development preview.** Not a tagged release or a published PyPI package. The core synthetic workflow works; **photorealistic quality, 4K GPU feasibility, segmentation accuracy and actual API billing have not been certified**.
