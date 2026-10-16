@@ -7,15 +7,20 @@ archives and never makes browser network requests or model-provider calls.
 from __future__ import annotations
 
 import base64
+import hashlib
 import html
+import re
+from collections import Counter
 from pathlib import Path
 
 from .artifacts import ArtifactIntegrityError, atomic_text, verified_image
+from .manifest import resolve_input
 from .schema import Asset, relative_name
 from .store import Journal
 
 MAX_EMBEDDED_BYTES = 64 * 1024 * 1024
 MAX_PANELS = 12
+MAX_RENDER_PIXELS = 24_000_000
 _MIME = {
     ".png": "image/png",
     ".jpg": "image/jpeg",
@@ -24,7 +29,9 @@ _MIME = {
 }
 
 
-def export_native_inspection(journal: Journal, asset_id: str) -> Path:
+def export_native_inspection(
+        journal: Journal, asset_id: str, *,
+        inputs: Path | None = None) -> Path:
     """Generate one self-contained, full-resolution inspection page.
 
     The caller must control this private workspace. Fail closed on stale
@@ -58,6 +65,42 @@ def export_native_inspection(journal: Journal, asset_id: str) -> Path:
     root = (journal.root / "selected").resolve()
     total_bytes = 0
     blocks = []
+    if inputs is not None:
+        # CLI batches may have been created with an arbitrary --inputs root.
+        # Never guess the original folder from journal location or file name.
+        source = asset.get("source")
+        if not isinstance(source, str) or not source:
+            raise ValueError("This slot has no original source image to inspect")
+        source = relative_name(source)
+        previous = journal.fact("input_file_sha256")
+        expected = previous.get(asset_id) if isinstance(previous, dict) else None
+        if not isinstance(expected, str) or not re.fullmatch(r"[a-f0-9]{64}", expected):
+            raise ArtifactIntegrityError("No verified historical original-input hash")
+        original = resolve_input(Path(inputs), source)
+        # Only an original still matching the original batch fingerprint
+        # may be presented as the real original. Never update the fingerprint.
+        original_info = verified_image(original, expected)
+        if original_info["width"] * original_info["height"] > MAX_RENDER_PIXELS:
+            raise ValueError("Original exceeds the native pixel safety limit")
+        media = _MIME.get(original.suffix.lower())
+        if media is None:
+            raise ValueError("Unsupported original image format")
+        source_bytes = original.read_bytes()
+        if hashlib.sha256(source_bytes).hexdigest() != expected:
+            raise ArtifactIntegrityError("Original input changed while reading")
+        total_bytes += len(source_bytes)
+        if total_bytes > MAX_EMBEDDED_BYTES:
+            raise ValueError("Native detail exceeds 64 MiB embedded-image limit")
+        uri = "data:" + media + ";base64," + base64.b64encode(source_bytes).decode("ascii")
+        blocks.append(
+            '<section class="panel"><h2>Original input (SHA256 verified)</h2>'
+            '<p class="info">Owner-provided source · '
+            + str(original_info["width"]) + ' × ' + str(original_info["height"])
+            + ' px</p><div class="viewport"><img src="' + uri
+            + '" width="' + str(original_info["width"]) + '" height="'
+            + str(original_info["height"]) + '" alt="Verified original for '
+            + html.escape(asset_id, quote=True) + '" /></div></section>'
+        )
     seen = set()
     for position, raw in enumerate(outputs):
         name = relative_name(raw)
@@ -68,6 +111,8 @@ def export_native_inspection(journal: Journal, asset_id: str) -> Path:
         if not target.is_relative_to(root):
             raise ArtifactIntegrityError("Selected file escapes batch root")
         info = verified_image(target, checksums.get(name))
+        if info["width"] * info["height"] > MAX_RENDER_PIXELS:
+            raise ValueError("Selected image exceeds the native pixel safety limit")
         media = _MIME.get(target.suffix.lower())
         if not media:
             raise ValueError("Unsupported native inspector image format")
@@ -79,7 +124,6 @@ def export_native_inspection(journal: Journal, asset_id: str) -> Path:
             raise ValueError("Native detail exceeds 64 MiB embedded-image limit")
         # The digest is rechecked against the *read bytes* to catch changes
         # after preflight but before embedding.
-        import hashlib
         if hashlib.sha256(image_bytes).hexdigest() != checksums[name]:
             raise ArtifactIntegrityError("Selected image changed during native review")
         cutout_labels = declared.get("cutouts", {})
@@ -101,6 +145,45 @@ def export_native_inspection(journal: Journal, asset_id: str) -> Path:
             + html.escape(kind + " for " + asset_id, quote=True)
             + '" /></div></section>'
         )
+    # Agent-readable operator evidence without raw operation keys, remote IDs,
+    # model strings, paths, prompts, exceptions or untrusted freeform notes.
+    def safe_label(value: object) -> str:
+        return (value if isinstance(value, str)
+                and re.fullmatch(r"[A-Za-z][A-Za-z0-9_-]{0,39}", value)
+                else "unknown")
+
+    attempts = Counter(
+        a["task_key"] for a in journal.attempts()
+        if isinstance(a, dict) and isinstance(a.get("task_key"), str))
+    stages = []
+    for row in journal.tasks():
+        task_key = row.get("task_key")
+        if not isinstance(task_key, str) or not task_key.startswith(asset_id + ":"):
+            continue
+        reserve = row.get("reserved_usd", 0)
+        reserve = float(reserve) if type(reserve) in (int, float) and 0 <= reserve < 1e9 else 0.0
+        stages.append((
+            safe_label(row.get("stage")),
+            safe_label(row.get("provider")),
+            safe_label(row.get("status")),
+            attempts.get(task_key, 0),
+            reserve,
+        ))
+    stage_rows = "".join(
+        "<tr><td>" + html.escape(name) + "</td><td>" + html.escape(provider)
+        + "</td><td>" + html.escape(state) + "</td><td>" + str(count)
+        + "</td><td>$" + f"{reserved:.6f}" + "</td></tr>"
+        for name, provider, state, count, reserved in sorted(stages)
+    )
+    stage_table = (
+        '<section class="evidence"><h2>Local stage observations</h2>'
+        '<p class="hint">Local attempts and reserved estimates only; no actual '
+        'provider invoice or validated visual-quality claim.</p><div class="table-scroll">'
+        '<table><thead><tr><th>Stage</th><th>Provider</th><th>Status</th>'
+        '<th>Local attempts</th><th>Reserved USD</th></tr></thead><tbody>'
+        + stage_rows + '</tbody></table></div></section>'
+        if stages else '<p class="hint">No recorded stages for this asset.</p>'
+    )
     page = (
         '<!doctype html><html lang="en"><head><meta charset="utf-8">'
         '<meta name="viewport" content="width=device-width,initial-scale=1">'
@@ -133,6 +216,10 @@ def export_native_inspection(journal: Journal, asset_id: str) -> Path:
         'background-size:24px 24px;background-position:0 0,0 12px,12px -12px,-12px 0}'
         '.viewport img{display:block;max-width:100%;height:auto}'
         'main:has(#actual:checked) .viewport img{max-width:none;width:auto;height:auto}'
+        'main:has(#checker:not(:checked)) .checker{background:var(--panel);background-image:none}'
+        '.evidence{margin-top:23px;padding:17px;background:var(--panel);border:1px solid var(--line)}'
+        '.table-scroll{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:.83rem}'
+        'th,td{text-align:left;padding:8px 14px 8px 0;border-bottom:1px solid var(--line)}'
         '</style></head><body><main><h1>Prehnite / Native inspection</h1>'
         '<p class="hint">Private local evidence · no quality certification · '
         'no network, script, or resampling. Actual pixels means one image pixel '
@@ -140,7 +227,9 @@ def export_native_inspection(journal: Journal, asset_id: str) -> Path:
         '<fieldset><legend>Image size</legend>'
         '<label><input type="radio" name="scale" id="fit" checked> Fit to panel</label>'
         '<label><input type="radio" name="scale" id="actual"> Actual pixels (1:1)</label>'
-        '</fieldset><div class="panels">' + "".join(blocks) + '</div></main></body></html>'
+        '<label><input type="checkbox" id="checker" checked> Alpha checkerboard</label>'
+        '</fieldset><div class="panels">' + "".join(blocks)
+        + '</div>' + stage_table + '</main></body></html>'
     )
     output = journal.root / "reviews" / (asset_id + ".html")
     # The reviews directory itself must never be a symlink outside the batch.
