@@ -13,7 +13,7 @@
 | Backlog | 17 |
 | Ready | 2 |
 | In progress | 0 |
-| In review | 0 |
+| In review | 2 |
 | Blocked | 6 |
 | Done | 39 |
 
@@ -58,7 +58,8 @@
 
 | Priority | Work item | Stream | Handoff / blocker |
 | --- | --- | --- | --- |
-| — | No cards currently | — | — |
+| P1 | [Issue #81 — Batch objective modes and Pareto evaluation RFC](https://github.com/interzettel/prehnite/issues/81) | Product strategy | Produce-first design; defines comparable Pareto metrics. Documentation PR #82; no runtime credit. |
+| P1 | [PR #82 — Produce/Explore/Experiment and Pareto reporting RFC](https://github.com/interzettel/prehnite/pull/82) | Product strategy | Documentation-only PR; CI/review required. No release or quality evidence. |
 
 ## Blocked
 
