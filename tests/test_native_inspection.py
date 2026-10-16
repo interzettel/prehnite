@@ -178,3 +178,34 @@ def test_cli_inspect_no_zip_changes_and_single_asset_from_ninety(tmp_path):
                            for name in archive.namelist())
     finally:
         j.close()
+
+
+def test_inspection_refuses_symlinked_review_destination_directory(tmp_path):
+    j = Journal(tmp_path, "inspection-review-escape")
+    try:
+        make_slot(j, cutout=False)
+        outside = tmp_path / "outside-folder"
+        outside.mkdir()
+        link = j.root / "reviews"
+        try:
+            link.symlink_to(outside, target_is_directory=True)
+        except (NotImplementedError, OSError):
+            pytest.skip("Directory symlinks unavailable")
+        with pytest.raises(ArtifactIntegrityError, match="Review destination escapes"):
+            export_native_inspection(j, "slot")
+        assert not list(outside.iterdir())
+    finally:
+        j.close()
+
+
+def test_inspection_refuses_base_output_mismatch_to_manifest(tmp_path):
+    j = Journal(tmp_path, "inspection-mismatch")
+    try:
+        make_slot(j, cutout=False)
+        m = j.fact("manifest")
+        m["assets"][0]["output"]["image"] = "photos/another-file.png"
+        j.set_fact("manifest", m)
+        with pytest.raises(ArtifactIntegrityError, match="Base output differs"):
+            export_native_inspection(j, "slot")
+    finally:
+        j.close()
