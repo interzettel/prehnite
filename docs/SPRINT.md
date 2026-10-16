@@ -14,7 +14,7 @@
 | Ready | 2 |
 | In progress | 2 |
 | In review | 3 |
-| Blocked | 6 |
+| Blocked | 8 |
 | Done | 43 |
 
 **WIP limits:** In progress ≤ 2; In review ≤ 3. Counts are issue/PR cards, not unique completed engineering features or a percentage.
@@ -71,6 +71,8 @@
 | P1 | [Issue #28 — Reference corpus and human calibration protocol](https://github.com/interzettel/prehnite/issues/28) | Quality | Owner-approved reference images / human calibration |
 | P1 | [Issue #24 — 8GB VRAM local inference feasibility benchmark](https://github.com/interzettel/prehnite/issues/24) | Local GPU | Await local RTX 4070 laptop benchmark |
 | P1 | [Issue #17 — Persist pricing assumptions and reconcile actual bills](https://github.com/interzettel/prehnite/issues/17) | Economics | Live billing access needs explicit authorization |
+| P2 | [Issue #91 — Optional typed Parquet exports for offline analytics](https://github.com/interzettel/prehnite/issues/91) | Delivery | Stacked feature work implemented on draft PR #92; blocked on parent #90 and review slot, CI pending. |
+| P2 | [PR #92 — Typed opt-in Parquet metric and slot datasets](https://github.com/interzettel/prehnite/pull/92) | Delivery | Stacked draft against PR #90 branch; parent merge/rebase and optional CI checks required. |
 
 ## Done
 
