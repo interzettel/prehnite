@@ -12,10 +12,10 @@
 | --- | ---: |
 | Backlog | 16 |
 | Ready | 2 |
-| In progress | 2 |
-| In review | 1 |
+| In progress | 1 |
+| In review | 0 |
 | Blocked | 6 |
-| Done | 69 |
+| Done | 71 |
 
 **WIP limits:** In progress ≤ 2; In review ≤ 3. Counts are issue/PR cards, not unique completed engineering features or a percentage.
 
@@ -52,13 +52,12 @@
 | Priority | Work item | Stream | Handoff / blocker |
 | --- | --- | --- | --- |
 | P2 | [Issue #100 — Provenance-bound transforms and tiled 4K comparison](https://github.com/interzettel/prehnite/issues/100) | Delivery | Integer 4K tiles + SHA-bound affine v2 validator merged; real affine warp/execution still open. |
-| P1 | [Issue #116 — Unified decision-model contract and bounded offline auto-repair policy](https://github.com/interzettel/prehnite/issues/116) | Quality | Owner approved mixed assets and bounded local repair; policy contract and synthetic fixture PR #117, no provider calls. |
 
 ## In review
 
 | Priority | Work item | Stream | Handoff / blocker |
 | --- | --- | --- | --- |
-| P1 | [PR #117 — Provider-neutral typed decisions and bounded local candidate policy](https://github.com/interzettel/prehnite/pull/117) | Quality | Testing capability guards, product/portrait synthetic actions, spend/accepted protection. Not yet connected to production executor. |
+| — | No cards currently | — | — |
 
 ## Blocked
 
@@ -144,6 +143,8 @@
 | P2 | [PR #112 — Close Jev Stage A sprint cards and queue Stage B](https://github.com/interzettel/prehnite/pull/112) | Governance | Merged Stage A board closeout PR #112, all CI checks passed. |
 | P1 | [PR #113 — Documented TypeSafe Jev official-shape offline wire fixtures](https://github.com/interzettel/prehnite/pull/113) | Quality | Merged PR #113, 424 tests + 8/8 green CI; no vendor transport. |
 | P1 | [PR #114 — Jev Noul offline gold-set calibration and aggregate reports](https://github.com/interzettel/prehnite/pull/114) | Quality | Merged offline gold Brier/ECE/abstention/cost evaluation in #114; 459 passed, 8/8 CI. |
+| P1 | [Issue #116 — Unified decision-model contract and bounded offline auto-repair policy](https://github.com/interzettel/prehnite/issues/116) | Quality | Scoped provider-neutral offline decision contract complete; merged #117 with 500 tests, 8/8 CI. Local repair executor remains #31. |
+| P1 | [PR #117 — Provider-neutral typed decisions and bounded local candidate policy](https://github.com/interzettel/prehnite/pull/117) | Quality | Merged PR #117 (abae806), 500 tests, 8/8 CI, postmerge main green; no paid inference. |
 
 ## How to update this board
 
