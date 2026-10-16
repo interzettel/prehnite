@@ -358,13 +358,14 @@
         },
         {
           "id": "Q03",
-          "name": "Order-bias and independent-rubric A/B tests",
-          "state": "planned",
+          "name": "Controlled fixed-rubric A/B positional-bias measurement",
+          "state": "done",
           "issue": 63,
           "owner": "Agent cloud",
           "dependsOn": [
             "Q02"
-          ]
+          ],
+          "evidence": "https://github.com/interzettel/prehnite/pull/70"
         },
         {
           "id": "Q04",
@@ -582,13 +583,14 @@
         },
         {
           "id": "D07",
-          "name": "Prehnite init/doctor self-check onboarding",
-          "state": "planned",
+          "name": "Safe offline init and secret-safe doctor CLI",
+          "state": "done",
           "issue": 37,
           "owner": "Agent cloud",
           "dependsOn": [
             "D01"
-          ]
+          ],
+          "evidence": "https://github.com/interzettel/prehnite/pull/71"
         },
         {
           "id": "D08",
@@ -602,13 +604,14 @@
         },
         {
           "id": "D09",
-          "name": "Clean Windows and Linux installation smoke matrix",
-          "state": "planned",
+          "name": "Clean Windows and Linux wheel/sdist install smoke matrix",
+          "state": "done",
           "issue": 39,
           "owner": "Agent local",
           "dependsOn": [
             "D07"
-          ]
+          ],
+          "evidence": "https://github.com/interzettel/prehnite/pull/72"
         },
         {
           "id": "D10",

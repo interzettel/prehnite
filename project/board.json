@@ -170,10 +170,10 @@
       "type": "issue",
       "number": 39,
       "title": "Cross-platform installer and Python packaging smoke checks",
-      "lane": "Backlog",
+      "lane": "Done",
       "priority": "P1",
       "stream": "Packaging",
-      "note": "Windows/Linux smoke tests"
+      "note": "Merged PR #72; validated free CLI and clean Windows/Linux wheel install, GPU not benchmarked"
     },
     {
       "type": "issue",
@@ -188,10 +188,10 @@
       "type": "issue",
       "number": 37,
       "title": "Prehnite init and doctor CLI onboarding",
-      "lane": "Backlog",
+      "lane": "Done",
       "priority": "P1",
       "stream": "Onboarding",
-      "note": "init/doctor CLI"
+      "note": "Merged PR #71; validated free CLI and clean Windows/Linux wheel install, GPU not benchmarked"
     },
     {
       "type": "issue",
@@ -206,10 +206,10 @@
       "type": "issue",
       "number": 35,
       "title": "Versioned provenance and reproducible output manifest",
-      "lane": "Backlog",
+      "lane": "Ready",
       "priority": "P1",
       "stream": "Reporting",
-      "note": "Replay and artifact provenance"
+      "note": "Next offline stage-level provenance and manifest hashes; distinguish reproducible replay from provider determinism"
     },
     {
       "type": "issue",
@@ -503,10 +503,10 @@
       "type": "issue",
       "number": 63,
       "title": "Controlled A/B positional-bias protocol and disagreement calibration",
-      "lane": "Backlog",
+      "lane": "Done",
       "priority": "P1",
       "stream": "Quality",
-      "note": "Controlled fixed-rubric order-swap measurement; human calibration and any paid pilot remain separately gated"
+      "note": "Offline fixed-rubric positional measurement PR #70; human judge calibration still pending"
     },
     {
       "type": "pr",
@@ -534,6 +534,33 @@
       "priority": "P1",
       "stream": "Delivery",
       "note": "Merged; 212 offline tests. No external web resources or paid calls."
+    },
+    {
+      "type": "pr",
+      "number": 70,
+      "title": "Fixed-rubric A/B positional-bias protocol",
+      "lane": "Done",
+      "priority": "P1",
+      "stream": "Quality",
+      "note": "Merged; 226 offline tests passed"
+    },
+    {
+      "type": "pr",
+      "number": 71,
+      "title": "Offline init and doctor CLI",
+      "lane": "Done",
+      "priority": "P1",
+      "stream": "Onboarding",
+      "note": "Merged; 239 offline tests passed"
+    },
+    {
+      "type": "pr",
+      "number": 72,
+      "title": "Cross-platform clean wheel/sdist install verification",
+      "lane": "Done",
+      "priority": "P1",
+      "stream": "Packaging",
+      "note": "Merged; Windows + Ubuntu CI clean installs passed"
     }
   ]
 }

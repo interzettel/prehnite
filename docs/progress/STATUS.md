@@ -2,7 +2,7 @@
 
 > Generated from `progress/ledger.json` by `scripts/progress.py`. A unit counts only when done with evidence; percentages are not estimates of engineering time or visual quality.
 
-**31 / 61 units done (50.8%)** · 0 active · 10 blocked · 20 planned.
+**34 / 61 units done (55.7%)** · 0 active · 10 blocked · 17 planned.
 **Milestone gates reached:** 1 / 7.
 
 ![Milestone progress chart](progress.svg)
@@ -14,9 +14,9 @@
 | M0 · Runnable foundation | 6/6 (100.0%) | 0 | 0 | 0 | Reached |
 | M1 · Safe production engine | 5/10 (50.0%) | 0 | 2 | 3 | Open: C08, C09 |
 | M2 · Models and local compute | 7/10 (70.0%) | 0 | 2 | 1 | Open: P09 |
-| M3 · Photographic quality gates | 3/8 (37.5%) | 0 | 2 | 3 | Open: Q07, Q08 |
+| M3 · Photographic quality gates | 4/8 (50.0%) | 0 | 2 | 2 | Open: Q07, Q08 |
 | M4 · Cutouts and corrections | 2/7 (28.6%) | 0 | 2 | 3 | Open: S06, S07 |
-| M5 · Delivery and usability | 3/10 (30.0%) | 0 | 0 | 7 | Open: D09, D10 |
+| M5 · Delivery and usability | 5/10 (50.0%) | 0 | 0 | 5 | Open: D10 |
 | M6 · Community and first release | 5/10 (50.0%) | 0 | 2 | 3 | Open: R08, R09 |
 
 ## Work units
@@ -68,7 +68,7 @@
 | --- | --- | --- | --- | --- | --- |
 | `Q01` | Dimension and file-decodability technical checks | done | Agent cloud | F03 | [Evidence](https://github.com/interzettel/prehnite/pull/1) |
 | `Q02` | Judge schema + invalid response handling | done | Agent cloud | Q01 | [Evidence](https://github.com/interzettel/prehnite/pull/61) |
-| `Q03` | Order-bias and independent-rubric A/B tests | planned | Agent cloud | Q02 | [#63](https://github.com/interzettel/prehnite/issues/63) |
+| `Q03` | Controlled fixed-rubric A/B positional-bias measurement | done | Agent cloud | Q02 | [Evidence](https://github.com/interzettel/prehnite/pull/70) |
 | `Q04` | Lossless 4K crop panel comparisons | done | Agent cloud | Q02 | [Evidence](https://github.com/interzettel/prehnite/pull/65) |
 | `Q05` | Optional local quality judge plugin contract | planned | Agent local | Q02 | [#27](https://github.com/interzettel/prehnite/issues/27) |
 | `Q06` | Rights-cleared human-rated reference set | blocked | Owner | Q02 | [#28](https://github.com/interzettel/prehnite/issues/28) |
@@ -97,9 +97,9 @@
 | `D04` | Accepted asset efficiency and latency breakdown | planned | Agent cloud | D02, C06 | [#34](https://github.com/interzettel/prehnite/issues/34) |
 | `D05` | Versioned provenance and exact input/output hashes | planned | Agent cloud | C05 | [#35](https://github.com/interzettel/prehnite/issues/35) |
 | `D06` | Deterministic ZIP ordering and digest manifest | planned | Agent cloud | D05 | [#36](https://github.com/interzettel/prehnite/issues/36) |
-| `D07` | Prehnite init/doctor self-check onboarding | planned | Agent cloud | D01 | [#37](https://github.com/interzettel/prehnite/issues/37) |
+| `D07` | Safe offline init and secret-safe doctor CLI | done | Agent cloud | D01 | [Evidence](https://github.com/interzettel/prehnite/pull/71) |
 | `D08` | Safe MCP pause/cancel/reconnect semantics | planned | Agent cloud | C04 | [#38](https://github.com/interzettel/prehnite/issues/38) |
-| `D09` | Clean Windows and Linux installation smoke matrix | planned | Agent local | D07 | [#39](https://github.com/interzettel/prehnite/issues/39) |
+| `D09` | Clean Windows and Linux wheel/sdist install smoke matrix | done | Agent local | D07 | [Evidence](https://github.com/interzettel/prehnite/pull/72) |
 | `D10` | 90-asset no-cost CLI/MCP fixture bundle | planned | Agent cloud | D06, D08 | [#41](https://github.com/interzettel/prehnite/issues/41) |
 
 ### M6 · Community and first release
