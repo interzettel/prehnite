@@ -233,8 +233,9 @@ def verified_parquet_entries(root: Path) -> dict[str, bytes]:
     """
     root = Path(root)
     manifest_path = root / MANIFEST_FILE
-    if not manifest_path.is_file():
-        raise ArtifactIntegrityError("Parquet was not explicitly exported")
+    if (not manifest_path.is_file() or
+            not manifest_path.resolve().is_relative_to(root.resolve())):
+        raise ArtifactIntegrityError("Parquet marker missing or outside batch root")
     try:
         publication = json.loads(manifest_path.read_text(encoding="utf-8"))
         if publication["schema_version"] != PARQUET_SCHEMA_VERSION:
