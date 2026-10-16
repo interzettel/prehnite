@@ -10,12 +10,12 @@
 
 | Lane | Cards |
 | --- | ---: |
-| Backlog | 14 |
+| Backlog | 15 |
 | Ready | 2 |
-| In progress | 1 |
-| In review | 1 |
+| In progress | 0 |
+| In review | 0 |
 | Blocked | 6 |
-| Done | 57 |
+| Done | 59 |
 
 **WIP limits:** In progress ≤ 2; In review ≤ 3. Counts are issue/PR cards, not unique completed engineering features or a percentage.
 
@@ -26,7 +26,7 @@
 | P2 | [Issue #2 — ComfyUI integration on real hardware](https://github.com/interzettel/prehnite/issues/2) | Local GPU | Generic adapter exists; hardware and actual workflow integration remain. |
 | P1 | [Issue #3 — Reliable segmentation and matting](https://github.com/interzettel/prehnite/issues/3) | Quality | Blocked downstream on model contracts and sample corpus. |
 | P2 | [Issue #4 — Local quality judges and crop QA](https://github.com/interzettel/prehnite/issues/4) | Quality | Must calibrate before quality gates use local scores. |
-| P2 | [Issue #6 — Offline visual reports and exports](https://github.com/interzettel/prehnite/issues/6) | Delivery | Offline dashboards, Parquet and native inspection merged; #98/#99 introduces technical same-grid pixel diagnostics, no perceptual quality. |
+| P2 | [Issue #6 — Offline visual reports and exports](https://github.com/interzettel/prehnite/issues/6) | Delivery | Offline charts/Parquet/native inspection and conservative pixel-grid v1 merged; human quality calibration and #100 known transform+4K remain. |
 | P2 | [Issue #8 — Windows MCP lifecycle and packaging](https://github.com/interzettel/prehnite/issues/8) | Runtime | Process cancellation, reconnection and Windows tests. |
 | P0 | [Issue #5 — Crash recovery, pricing and billing hardening](https://github.com/interzettel/prehnite/issues/5) | Reliability | Safety tranche #10 merged; remaining tasks #15–#18, ownership unclaimed. |
 | P2 | [Issue #44 — Synchronize canonical issue ledger with organization GitHub Projects v2](https://github.com/interzettel/prehnite/issues/44) | Tracking | GitHub Project #1 sync needs Projects v2 write permission |
@@ -37,6 +37,7 @@
 | P1 | [Issue #29 — Transparent alpha matting and halo removal](https://github.com/interzettel/prehnite/issues/29) | Cutouts | Edge alpha matting |
 | P2 | [Issue #27 — Local aesthetic and fidelity judge plugin boundary](https://github.com/interzettel/prehnite/issues/27) | Quality | Optional local weights and licenses |
 | P1 | [Issue #68 — Opt-in original-input gallery comparison with privacy consent](https://github.com/interzettel/prehnite/issues/68) | Delivery | Follow-up to #33: never embed private originals without opt-in |
+| P2 | [Issue #100 — Provenance-bound transforms and tiled 4K comparison](https://github.com/interzettel/prehnite/issues/100) | Delivery | Follow-up: alignment transforms and 4K memory-bounded metrics; avoid unverified quality labels. |
 
 ## Ready
 
@@ -49,13 +50,13 @@
 
 | Priority | Work item | Stream | Handoff / blocker |
 | --- | --- | --- | --- |
-| P1 | [Issue #98 — Conservative registered pixel diagnostics](https://github.com/interzettel/prehnite/issues/98) | Delivery | Initial operator-attested same-grid comparator in PR #99; dynamic registration and tiled 4K deferred. |
+| — | No cards currently | — | — |
 
 ## In review
 
 | Priority | Work item | Stream | Handoff / blocker |
 | --- | --- | --- | --- |
-| P1 | [PR #99 — Verified pixel-grid delta and private diagnostics](https://github.com/interzettel/prehnite/pull/99) | Delivery | Regression tests and Windows/Ubuntu CI pending; no quality-grade claim. |
+| — | No cards currently | — | — |
 
 ## Blocked
 
@@ -129,6 +130,8 @@
 | P1 | [PR #94 — Single-slot native 1:1 comparison and alpha inspection](https://github.com/interzettel/prehnite/pull/94) | Delivery | Merged PR #94 with full-resolution SHA256 selected output inspection. |
 | P1 | [Issue #95 — Verified original source and private stage drilldown](https://github.com/interzettel/prehnite/issues/95) | Delivery | Closed: opt-in verified original input and safe stage evidence merged PR #96. |
 | P1 | [PR #96 — Original-vs-output native comparison with stage facts](https://github.com/interzettel/prehnite/pull/96) | Delivery | Merged PR #96, 8/8 CI green; no provider spending. |
+| P1 | [Issue #98 — Conservative registered pixel diagnostics](https://github.com/interzettel/prehnite/issues/98) | Delivery | Completed bounded pixel-grid v1, PR #99 merged, CI green; operator assertion is not automatic registration. |
+| P1 | [PR #99 — Verified pixel-grid delta and private diagnostics](https://github.com/interzettel/prehnite/pull/99) | Delivery | Merged PR #99, 8/8 Windows/Ubuntu CI green; 349 unit tests and synthetic diff artifacts. |
 
 ## How to update this board
 
