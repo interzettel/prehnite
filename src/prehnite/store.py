@@ -4,9 +4,18 @@ from __future__ import annotations
 import json
 import os
 import sqlite3
+import time
 from contextlib import contextmanager
 from pathlib import Path
 from typing import Any
+
+
+class JobStopped(Exception):
+    """Cooperative MCP stop; must not be converted to an asset error."""
+
+    def __init__(self, status: str):
+        self.status = status
+        super().__init__(f"Batch {status} at a safe checkpoint")
 
 
 class Journal:
@@ -35,6 +44,18 @@ class Journal:
           FOREIGN KEY(task_key) REFERENCES tasks(task_key)
         );
         CREATE TABLE IF NOT EXISTS facts (key TEXT PRIMARY KEY, value TEXT NOT NULL);
+        CREATE TABLE IF NOT EXISTS job_control (
+          singleton INTEGER PRIMARY KEY CHECK(singleton=1),
+          token TEXT NOT NULL,
+          status TEXT NOT NULL,
+          launched_at REAL NOT NULL,
+          updated_at REAL NOT NULL,
+          manifest_filename TEXT NOT NULL,
+          profile_filename TEXT NOT NULL,
+          config_sha256 TEXT NOT NULL,
+          current_asset TEXT,
+          detail TEXT
+        );
         """)
         self.db.commit()
 
@@ -114,15 +135,118 @@ class Journal:
         return float(self.db.execute("SELECT COALESCE(SUM(reserved_usd),0) FROM tasks")
                      .fetchone()[0])
 
-    @contextmanager
-    def exclusive(self):
-        """One active worker per batch, across processes (Windows and Unix).
 
-        Kernel locks are automatically released when the worker crashes.
-        The lock file is intentionally persistent; its existence does NOT
-        indicate the batch is running.
-        """
-        path = self.root / "run.lock"
+    def job_record(self) -> dict | None:
+        row = self.db.execute("SELECT * FROM job_control WHERE singleton=1").fetchone()
+        return dict(row) if row else None
+
+    def job_launch(self, token: str, manifest_filename: str,
+                   profile_filename: str, config_sha256: str) -> None:
+        """Called under launch_exclusive, never using a PID for ownership."""
+        now = time.time()
+        self.db.execute("""
+          INSERT INTO job_control(singleton,token,status,launched_at,updated_at,
+                                  manifest_filename,profile_filename,config_sha256)
+          VALUES(1,?,?,?,?,?,?,?)
+          ON CONFLICT(singleton) DO UPDATE SET
+            token=excluded.token,status='launching',
+            launched_at=excluded.launched_at,updated_at=excluded.updated_at,
+            manifest_filename=excluded.manifest_filename,
+            profile_filename=excluded.profile_filename,
+            config_sha256=excluded.config_sha256,
+            current_asset=NULL,detail=NULL
+        """, (token, "launching", now, now, manifest_filename,
+              profile_filename, config_sha256))
+        self.db.commit()
+
+    def job_start(self, token: str) -> None:
+        """Worker may run only if its token still owns the launch."""
+        record = self.job_record()
+        if not record or record["token"] != token or record["status"] not in (
+                "launching", "pause_requested", "cancel_requested"):
+            raise JobStopped("superseded")
+        if record["status"] == "launching":
+            self._job_update(token, "running")
+
+    def _job_update(self, token: str, status: str, *,
+                    current_asset: str | None = None,
+                    detail: str | None = None) -> None:
+        cursor = self.db.execute(
+            """UPDATE job_control SET status=?,updated_at=?,current_asset=?,detail=?
+               WHERE singleton=1 AND token=?""",
+            (status, time.time(), current_asset, detail, token))
+        self.db.commit()
+        if cursor.rowcount != 1:
+            raise JobStopped("superseded")
+
+    def job_checkpoint(self, token: str | None, asset_id: str | None = None) -> None:
+        """Stop only between stages; an in-flight paid request is never killed."""
+        if token is None:
+            return
+        record = self.job_record()
+        if not record or record["token"] != token:
+            raise JobStopped("superseded")
+        if record["status"] == "pause_requested":
+            raise JobStopped("paused")
+        if record["status"] == "cancel_requested":
+            raise JobStopped("cancelled")
+        if record["status"] != "running":
+            raise JobStopped("superseded")
+        if asset_id is not None:
+            self._job_update(token, "running", current_asset=asset_id)
+
+    def job_finish(self, token: str, status: str, detail: str | None = None) -> None:
+        if status not in ("paused", "cancelled", "completed", "failed"):
+            raise ValueError("Invalid terminal state")
+        record = self.job_record()
+        if not record or record["token"] != token:
+            raise JobStopped("superseded")
+        if record["status"] == "cancel_requested":
+            status = "cancelled"
+        elif record["status"] == "pause_requested" and status == "completed":
+            status = "paused"
+        self._job_update(token, status, detail=(detail or "")[:240] or None)
+
+    def job_command(self, command: str, *, worker_active: bool) -> dict:
+        """Serialize concurrent controls; commands are requests, not kill signals."""
+        if command not in ("pause", "cancel"):
+            raise ValueError("Invalid job command")
+        self.db.execute("BEGIN IMMEDIATE")
+        try:
+            row = self.db.execute("SELECT * FROM job_control WHERE singleton=1").fetchone()
+            if not row:
+                raise ValueError("Unknown MCP job")
+            current = row["status"]
+            if current in ("completed", "cancelled", "failed", "superseded"):
+                status = current
+            elif command == "cancel":
+                live_launch = (current == "launching" and
+                               time.time() - row["launched_at"] < 30)
+                status = ("cancel_requested" if worker_active or live_launch
+                          else "cancelled")
+            elif current == "cancel_requested":
+                status = current
+            elif current == "paused":
+                status = current
+            else:
+                live_launch = (current == "launching" and
+                               time.time() - row["launched_at"] < 30)
+                status = ("pause_requested" if worker_active or live_launch
+                          else "paused")
+            self.db.execute(
+                "UPDATE job_control SET status=?,updated_at=? WHERE singleton=1",
+                (status, time.time()))
+            self.db.commit()
+            return {"status": status, "acknowledged": status == current,
+                    "in_flight_stage_may_finish": status.endswith("_requested")}
+        except BaseException:
+            self.db.rollback()
+            raise
+
+    @contextmanager
+    def _file_lock(self, name: str):
+        """Nonblocking kernel lock; persistent files are not liveness signals."""
+        path = self.root / name
         with path.open("a+b") as handle:
             try:
                 if os.name == "nt":
@@ -146,6 +270,25 @@ class Journal:
                     msvcrt.locking(handle.fileno(), msvcrt.LK_UNLCK, 1)
                 else:
                     fcntl.flock(handle.fileno(), fcntl.LOCK_UN)
+
+    @contextmanager
+    def exclusive(self):
+        with self._file_lock("run.lock"):
+            yield
+
+    @contextmanager
+    def launch_exclusive(self):
+        with self._file_lock("launch.lock"):
+            yield
+
+    def worker_active(self) -> bool:
+        try:
+            with self.exclusive():
+                return False
+        except RuntimeError as exc:
+            if "already has a running worker" not in str(exc):
+                raise
+            return True
 
     def close(self):
         self.db.close()
