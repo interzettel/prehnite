@@ -149,7 +149,8 @@ def expected_projection() -> list[dict]:
 
 def run_benchmark(home: Path, preview_file: Path | None = None,
                   *, parquet: bool = False,
-                  parquet_output: Path | None = None) -> dict:
+                  parquet_output: Path | None = None,
+                  native_preview_file: Path | None = None) -> dict:
     manager = prepare(home)
     # Fake *only launch*, actual Engine workers execute independently below.
     # This eliminates timing races without weakening real OS run-lock tests.
@@ -305,6 +306,21 @@ def run_benchmark(home: Path, preview_file: Path | None = None,
                 "Prehnite / offline production dashboard · SYNTHETIC DEMO</h1>",
                 1)
             preview_file.write_text(gallery_html, encoding="utf-8")
+        if native_preview_file is not None:
+            from prehnite.native_inspection import export_native_inspection
+            native_page = export_native_inspection(
+                engine.journal, "asset-005", inputs=manager.inputs)
+            native_html = native_page.read_text(encoding="utf-8")
+            assert "Original input (SHA256 verified)" in native_html
+            assert "Cutout: subject" in native_html
+            assert "Local stage observations" in native_html or "No recorded stages" in native_html
+            assert "<script" not in native_html and "connect-src 'none'" in native_html
+            native_preview_file.parent.mkdir(parents=True, exist_ok=True)
+            native_preview_file.write_text(
+                native_html.replace(
+                    "Prehnite / Native inspection</h1>",
+                    "Prehnite / Native inspection · SYNTHETIC DEMO</h1>", 1),
+                encoding="utf-8")
         parquet_verified = False
         if parquet:
             import pyarrow.parquet as pq
@@ -380,6 +396,8 @@ def main():
                         help="Copy only synthetic aggregate Parquet evidence to this folder")
     parser.add_argument("--preview-file", type=Path,
                         help="Write a safe embedded HTML preview (synthetic demo only)")
+    parser.add_argument("--native-preview-file", type=Path,
+                        help="Write one verified native source/base/cutout synthetic review")
     args = parser.parse_args()
     if args.parquet_output is not None and not args.parquet:
         parser.error("--parquet-output requires --parquet")
@@ -391,7 +409,8 @@ def main():
     with tempfile.TemporaryDirectory(prefix="prehnite-benchmark-90-") as directory:
         report = run_benchmark(Path(directory), args.preview_file,
                                parquet=args.parquet,
-                               parquet_output=args.parquet_output)
+                               parquet_output=args.parquet_output,
+                               native_preview_file=args.native_preview_file)
     serialized = json.dumps(report, indent=2, sort_keys=True) + "\n"
     if args.result_file:
         args.result_file.parent.mkdir(parents=True, exist_ok=True)
