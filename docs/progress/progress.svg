@@ -2,13 +2,13 @@
 <rect width="1200" height="1029" fill="#f6f7f4"/>
 <g font-family="system-ui,Segoe UI,sans-serif">
 <text x="35" y="48" font-size="27" font-weight="700" fill="#182a27">PREHNITE / DEVELOPMENT PROGRESS</text>
-<text x="35" y="79" font-size="16" fill="#5c6c65">18 / 61 scoped units done · 29.5%</text>
+<text x="35" y="79" font-size="16" fill="#5c6c65">20 / 61 scoped units done · 32.8%</text>
 <text x="1160" y="49" text-anchor="end" font-size="17" fill="#277e74">1/7 milestone gates</text>
 <text x="35" y="106" font-size="13" fill="#5c6c65">Unweighted work units · evidence required for completion · not a product quality score</text>
 <rect x="35" y="126" width="13" height="13" rx="2" fill="#277e74"/>
-<text x="56" y="138" font-size="13" fill="#283832">Done 18</text>
+<text x="56" y="138" font-size="13" fill="#283832">Done 20</text>
 <rect x="223" y="126" width="13" height="13" rx="2" fill="#c28b4a"/>
-<text x="244" y="138" font-size="13" fill="#283832">Active 2</text>
+<text x="244" y="138" font-size="13" fill="#283832">Active 0</text>
 <rect x="411" y="126" width="13" height="13" rx="2" fill="#b8534e"/>
 <text x="432" y="138" font-size="13" fill="#283832">Blocked 10</text>
 <rect x="599" y="126" width="13" height="13" rx="2" fill="#dce0dd"/>
@@ -26,7 +26,7 @@
 <text x="1140" y="266" text-anchor="end" font-size="11" fill="#6b7972">Gate reached</text>
 <rect x="35" y="283" width="1130" height="103" rx="10" fill="#fff" stroke="#d8ddd7"/>
 <text x="55" y="308" font-size="17" font-weight="650" fill="#1d302b">M1 · Safe production engine</text>
-<text x="1140" y="308" font-size="16" text-anchor="end" font-weight="650" fill="#277e74">3/10 · 30.0%</text>
+<text x="1140" y="308" font-size="16" text-anchor="end" font-weight="650" fill="#277e74">5/10 · 50.0%</text>
 <text x="55" y="331" font-size="12" fill="#65756e">A restartable cost-controlled pipeline that never silently spends twice and never exports corrupt artifacts.</text>
 <g><title>C01: Paid call budget authorization gate [done] issue/PR #10</title><rect x="55" y="348" width="105" height="16" rx="2" fill="#277e74"/></g>
 <g><title>C02: Fail-closed uncertain request recovery [done] issue/PR #10</title><rect x="163" y="348" width="105" height="16" rx="2" fill="#277e74"/></g>
@@ -101,8 +101,8 @@
 <g><title>R01: Keep a Changelog and canonical PEP 440 version [done] issue/PR #13</title><rect x="55" y="908" width="105" height="16" rx="2" fill="#277e74"/></g>
 <g><title>R02: Issue-driven Kanban, PR/issue templates and WIP limits [done] issue/PR #13</title><rect x="163" y="908" width="105" height="16" rx="2" fill="#277e74"/></g>
 <g><title>R03: Persistent A2A coordination and ownership handoffs [done] issue/PR #9</title><rect x="271" y="908" width="105" height="16" rx="2" fill="#277e74"/></g>
-<g><title>R04: Evidence-ledger, milestone roadmap and SVG chart [active] issue/PR #14</title><rect x="379" y="908" width="105" height="16" rx="2" fill="#c28b4a"/></g>
-<g><title>R05: Human-first README, badge and original mark [active] issue/PR #43</title><rect x="487" y="908" width="105" height="16" rx="2" fill="#c28b4a"/></g>
+<g><title>R04: Evidence-ledger, milestone roadmap and SVG chart [done] issue/PR #14</title><rect x="379" y="908" width="105" height="16" rx="2" fill="#277e74"/></g>
+<g><title>R05: Human-first README, badge and original mark [done] issue/PR #43</title><rect x="487" y="908" width="105" height="16" rx="2" fill="#277e74"/></g>
 <g><title>R06: Audit dependencies and model-weight licensing [planned] issue/PR #40</title><rect x="595" y="908" width="105" height="16" rx="2" fill="#dce0dd"/></g>
 <g><title>R07: 90-asset offline production dry run [planned] issue/PR #41</title><rect x="703" y="908" width="105" height="16" rx="2" fill="#dce0dd"/></g>
 <g><title>R08: 90-asset live pilot and owner quality acceptance [blocked] issue/PR #42</title><rect x="811" y="908" width="105" height="16" rx="2" fill="#b8534e"/></g>

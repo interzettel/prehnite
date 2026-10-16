@@ -2,7 +2,7 @@
 
 > Generated from `progress/ledger.json` by `scripts/progress.py`. A unit counts only when done with evidence; percentages are not estimates of engineering time or visual quality.
 
-**18 / 61 units done (29.5%)** · 2 active · 10 blocked · 31 planned.
+**20 / 61 units done (32.8%)** · 0 active · 10 blocked · 31 planned.
 **Milestone gates reached:** 1 / 7.
 
 ![Milestone progress chart](progress.svg)
@@ -17,7 +17,7 @@
 | M3 · Photographic quality gates | 1/8 (12.5%) | 0 | 2 | 5 | Open: Q07, Q08 |
 | M4 · Cutouts and corrections | 1/7 (14.3%) | 0 | 2 | 4 | Open: S06, S07 |
 | M5 · Delivery and usability | 2/10 (20.0%) | 0 | 0 | 8 | Open: D09, D10 |
-| M6 · Community and first release | 3/10 (30.0%) | 2 | 2 | 3 | Open: R08, R09 |
+| M6 · Community and first release | 5/10 (50.0%) | 0 | 2 | 3 | Open: R08, R09 |
 
 ## Work units
 
@@ -109,8 +109,8 @@
 | `R01` | Keep a Changelog and canonical PEP 440 version | done | Agent cloud | F01 | [Evidence](https://github.com/interzettel/prehnite/pull/13) |
 | `R02` | Issue-driven Kanban, PR/issue templates and WIP limits | done | Agent cloud | F01 | [Evidence](https://github.com/interzettel/prehnite/pull/13) |
 | `R03` | Persistent A2A coordination and ownership handoffs | done | Agent cloud | F01 | [Evidence](https://github.com/interzettel/prehnite/issues/9) |
-| `R04` | Evidence-ledger, milestone roadmap and SVG chart | active | Agent cloud | R02 | [#14](https://github.com/interzettel/prehnite/issues/14) |
-| `R05` | Human-first README, badge and original mark | active | Agent cloud | R02 | [#43](https://github.com/interzettel/prehnite/issues/43) |
+| `R04` | Evidence-ledger, milestone roadmap and SVG chart | done | Agent cloud | R02 | [Evidence](https://github.com/interzettel/prehnite/pull/45) |
+| `R05` | Human-first README, badge and original mark | done | Agent cloud | R02 | [Evidence](https://github.com/interzettel/prehnite/pull/45) |
 | `R06` | Audit dependencies and model-weight licensing | planned | Agent cloud | R01 | [#40](https://github.com/interzettel/prehnite/issues/40) |
 | `R07` | 90-asset offline production dry run | planned | Agent cloud | D10 | [#41](https://github.com/interzettel/prehnite/issues/41) |
 | `R08` | 90-asset live pilot and owner quality acceptance | blocked | Owner | R07, S07, P09 | [#42](https://github.com/interzettel/prehnite/issues/42) |
