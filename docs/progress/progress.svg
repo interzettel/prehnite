@@ -60,7 +60,7 @@
 <text x="55" y="555" font-size="12" fill="#65756e">Prefer usable assets rather than raw generations, with transparent, calibrated judgments at native resolution.</text>
 <g><title>Q01: Dimension and file-decodability technical checks [done] issue/PR #1</title><rect x="55" y="572" width="133" height="16" rx="2" fill="#277e74"/></g>
 <g><title>Q02: Judge schema + invalid response handling [done] issue/PR #25</title><rect x="191" y="572" width="133" height="16" rx="2" fill="#277e74"/></g>
-<g><title>Q03: Order-bias and independent-rubric A/B tests [planned] issue/PR #25</title><rect x="327" y="572" width="133" height="16" rx="2" fill="#dce0dd"/></g>
+<g><title>Q03: Order-bias and independent-rubric A/B tests [planned] issue/PR #63</title><rect x="327" y="572" width="133" height="16" rx="2" fill="#dce0dd"/></g>
 <g><title>Q04: Lossless 4K crop panel comparisons [planned] issue/PR #26</title><rect x="463" y="572" width="133" height="16" rx="2" fill="#dce0dd"/></g>
 <g><title>Q05: Optional local quality judge plugin contract [planned] issue/PR #27</title><rect x="599" y="572" width="133" height="16" rx="2" fill="#dce0dd"/></g>
 <g><title>Q06: Rights-cleared human-rated reference set [blocked] issue/PR #28</title><rect x="735" y="572" width="133" height="16" rx="2" fill="#b8534e"/></g>
