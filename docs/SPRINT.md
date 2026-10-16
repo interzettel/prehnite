@@ -10,12 +10,12 @@
 
 | Lane | Cards |
 | --- | ---: |
-| Backlog | 30 |
-| Ready | 1 |
-| In progress | 1 |
+| Backlog | 28 |
+| Ready | 3 |
+| In progress | 0 |
 | In review | 0 |
 | Blocked | 6 |
-| Done | 7 |
+| Done | 9 |
 
 **WIP limits:** In progress ≤ 2; In review ≤ 3. Counts are issue/PR cards, not unique completed engineering features or a percentage.
 
@@ -49,22 +49,22 @@
 | P1 | [Issue #22 — ComfyUI reproducible API graph fixtures](https://github.com/interzettel/prehnite/issues/22) | Local GPU | ComfyUI graph mocks |
 | P1 | [Issue #21 — Provider capability and price registry contract](https://github.com/interzettel/prehnite/issues/21) | Providers | Typed capability registry |
 | P1 | [Issue #20 — Normalize fal segmentation output and mask orientation](https://github.com/interzettel/prehnite/issues/20) | Segmentation | SAM response-shape fixtures |
-| P1 | [Issue #19 — Mocked FLUX tier and upscale response shapes](https://github.com/interzettel/prehnite/issues/19) | Providers | Offline FLUX conformance |
 | P1 | [Issue #18 — Content-addressed cache with privacy isolation](https://github.com/interzettel/prehnite/issues/18) | Runtime | Cache with privacy-scoped keys |
 | P0 | [Issue #16 — Atomic artifacts and integrity-aware resume](https://github.com/interzettel/prehnite/issues/16) | Runtime | Atomic writes / hash validation |
-| P0 | [Issue #15 — Crash-injection matrix for billed request recovery](https://github.com/interzettel/prehnite/issues/15) | Runtime | Fault-injection recovery |
 
 ## Ready
 
 | Priority | Work item | Stream | Handoff / blocker |
 | --- | --- | --- | --- |
 | P1 | [Issue #12 — Mocked fal API conformance contract](https://github.com/interzettel/prehnite/issues/12) | Providers | No credentials or paid calls; use recorded fixture schemas. |
+| P1 | [Issue #19 — Mocked FLUX tier and upscale response shapes](https://github.com/interzettel/prehnite/issues/19) | Providers | Small offline-only PR candidate; no paid provider calls. |
+| P0 | [Issue #15 — Crash-injection matrix for billed request recovery](https://github.com/interzettel/prehnite/issues/15) | Runtime | Small offline-only PR candidate; no paid provider calls. |
 
 ## In progress
 
 | Priority | Work item | Stream | Handoff / blocker |
 | --- | --- | --- | --- |
-| P1 | [Issue #46 — Merge-state reconciliation and CI hygiene](https://github.com/interzettel/prehnite/issues/46) | Maintenance | Pillow and GitHub Actions Node runtime warnings. |
+| — | No cards currently | — | — |
 
 ## In review
 
@@ -94,6 +94,8 @@
 | P1 | [Issue #43 — Human-centered README, original vector identity and first-run guide](https://github.com/interzettel/prehnite/issues/43) | Onboarding | Merged in PR #45; evidence ledger / README published on main. |
 | P1 | [Issue #14 — Granular evidence-ledger and generated milestone progress tracker](https://github.com/interzettel/prehnite/issues/14) | Tracking | Merged in PR #45; evidence ledger / README published on main. |
 | P1 | [PR #45 — Original identity and evidence-based milestone ledger](https://github.com/interzettel/prehnite/pull/45) | Governance | Merged to main; 47 offline tests passed. |
+| P1 | [Issue #46 — Merge-state reconciliation and CI hygiene](https://github.com/interzettel/prehnite/issues/46) | Maintenance | CI warnings resolved with 47/47 passing in merged PR #47. |
+| P1 | [PR #47 — Reconcile tracker and modernize CI](https://github.com/interzettel/prehnite/pull/47) | Maintenance | Merged; 47 tests passing without warnings. |
 
 ## How to update this board
 
