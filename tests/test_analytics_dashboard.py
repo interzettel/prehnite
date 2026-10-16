@@ -71,6 +71,9 @@ def test_partial_batch_snapshot_cohorts_cost_unknowns_and_retry_histogram():
         "failed_cutouts": 1, "remote_request_pending": 1
     }
     assert data["current_unfinished_stage_states"] == {"submitted": 1}
+    assert data["recovery_action_counts"] == {
+        "manual_reconcile_before_retry": 1
+    }
     assert data["retry_distribution"] == {
         "no_invocation_recorded": 0, "one_invocation": 1,
         "two_invocations": 1, "three_or_more": 0,
@@ -120,6 +123,7 @@ def test_html_charts_escape_untrusted_values_and_never_execute_scripts():
     assert "Delivery states" in page
     assert "Source type" in page
     assert "Stage efficiency" in page
+    assert "Recovery guidance" in page
     assert "Observed p95 ms" in page
     assert "Required-slot completion" in page
     assert "Verified invoice:</strong> unknown" in page
@@ -142,6 +146,7 @@ def test_zero_acceptance_or_unknown_timing_are_not_fabricated():
     assert a["reserved_usd_per_accepted_asset"] is None
     assert a["stages"]["generation"]["observed_elapsed_ms_p95"] is None
     assert a["providers"][0]["observed_local_ms_p95"] is None
+    assert a["recovery_action_counts"] == {"inspect_nonpaid_stage": 1}
     assert "unknown" in render_analytics(a)
 
 
