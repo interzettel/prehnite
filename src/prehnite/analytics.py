@@ -19,6 +19,8 @@ from .economics import batch_economics
 
 SCHEMA_VERSION = 1
 _ALLOWED_FAILURE = re.compile(r"^[a-z][a-z0-9_]{0,63}$")
+_ALLOWED_PROVIDER = re.compile(r"^[a-z][a-z0-9_.-]{0,63}$")
+_PAID_PROVIDERS = frozenset({"fal", "anthropic"})
 _STATES = ("accepted", "failed_cutouts", "rejected", "error", "pending")
 _STATUS_LABELS = {
     "accepted": "Accepted",
@@ -119,19 +121,31 @@ def build_analytics(manifest: dict, results: dict, tasks: list[dict],
     task_keys = set()
     by_key = {}
     incomplete_stage = Counter()
+    recovery_actions = Counter()
     for row in tasks:
         name = row["task_key"]
         if name in task_keys:
             raise ValueError("Duplicate operation key")
         task_keys.add(name)
-        by_key[name] = row["provider"]
-        group = provider[row["provider"]]
+        provider_name = row["provider"]
+        provider_name = (provider_name if isinstance(provider_name, str)
+                         and _ALLOWED_PROVIDER.fullmatch(provider_name)
+                         else "unknown")
+        by_key[name] = provider_name
+        group = provider[provider_name]
         group["operations"] += 1
         group["reserved_usd"] += float(row["reserved_usd"])
         group["tokens_in"] += int(row["tokens_in"])
         group["tokens_out"] += int(row["tokens_out"])
         if row["status"] != "completed":
             incomplete_stage[_safe_code(row.get("status"), "unknown")] += 1
+            # Conservative read-only operator hint, NOT a dispatch permission.
+            if provider_name in _PAID_PROVIDERS:
+                action = ("inspect_existing_request" if row.get("request_id")
+                          else "manual_reconcile_before_retry")
+            else:
+                action = "inspect_nonpaid_stage"
+            recovery_actions[action] += 1
     counts = Counter()
     for a in attempts:
         key = a["task_key"]
@@ -188,6 +202,7 @@ def build_analytics(manifest: dict, results: dict, tasks: list[dict],
         ),
         "current_asset_failure_codes": dict(sorted(failure.items())),
         "current_unfinished_stage_states": dict(sorted(incomplete_stage.items())),
+        "recovery_action_counts": dict(sorted(recovery_actions.items())),
         "retry_distribution": retry_distribution,
         "stages": economics["stages"],
         "providers": providers,
@@ -294,6 +309,13 @@ def render_analytics(stats: dict) -> str:
                       for k, v in stats["current_unfinished_stage_states"].items())
             + "</ul>"
         )
+    actions = stats["recovery_action_counts"]
+    actions_html = (
+        "<ul class='failure-items'>"
+        + "".join("<li><code>" + _esc(k) + "</code><strong>"
+                  + str(v) + "</strong></li>" for k, v in actions.items())
+        + "</ul>" if actions else "<p class='quiet'>No unfinished operation guidance.</p>"
+    )
     per_accepted = stats["reserved_usd_per_accepted_asset"]
     cost_label = ("undefined" if per_accepted is None else f"${per_accepted:.6f}")
     percent = stats["accepted_percent_of_required"]
@@ -324,7 +346,9 @@ def render_analytics(stats: dict) -> str:
         + '</section></div>'
         '<div class="analytics-grid">'
         '<section class="analytics-panel"><h3>Current failures</h3>' + failures_html
-        + '<p class="small">Current status snapshot, not historical failures.</p></section>'
+        + '<h3>Recovery guidance</h3>' + actions_html
+        + '<p class="small">Read-only hints; never authorize new paid calls. '
+          'Current snapshot, not historical failures.</p></section>'
         '<section class="analytics-panel"><h3>Cost provenance</h3>'
         '<p><strong>Verified invoice:</strong> unknown</p>'
         '<p><strong>Provider-reported partial amount:</strong> '
@@ -379,6 +403,12 @@ def write_analytics(root: Path, data: dict) -> None:
                          "operations"))
     for key, number in sorted(data["current_asset_failure_codes"].items()):
         writer.writerow((version, "asset_failure_codes", key, "count", number, "assets"))
+    for key, number in sorted(data["current_unfinished_stage_states"].items()):
+        writer.writerow((version, "unfinished_stage_states", key, "count", number,
+                         "operations"))
+    for key, number in sorted(data["recovery_action_counts"].items()):
+        writer.writerow((version, "recovery_action_counts", key, "count", number,
+                         "operations"))
     for row in data["providers"]:
         for name in ("operations", "reserved_usd", "attempts_started",
                      "attempts_without_finished_timing", "observed_local_ms_p95",
