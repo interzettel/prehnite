@@ -12,10 +12,10 @@
 | --- | ---: |
 | Backlog | 14 |
 | Ready | 2 |
-| In progress | 2 |
-| In review | 1 |
+| In progress | 0 |
+| In review | 0 |
 | Blocked | 6 |
-| Done | 54 |
+| Done | 57 |
 
 **WIP limits:** In progress ≤ 2; In review ≤ 3. Counts are issue/PR cards, not unique completed engineering features or a percentage.
 
@@ -26,7 +26,7 @@
 | P2 | [Issue #2 — ComfyUI integration on real hardware](https://github.com/interzettel/prehnite/issues/2) | Local GPU | Generic adapter exists; hardware and actual workflow integration remain. |
 | P1 | [Issue #3 — Reliable segmentation and matting](https://github.com/interzettel/prehnite/issues/3) | Quality | Blocked downstream on model contracts and sample corpus. |
 | P2 | [Issue #4 — Local quality judges and crop QA](https://github.com/interzettel/prehnite/issues/4) | Quality | Must calibrate before quality gates use local scores. |
-| P2 | [Issue #6 — Offline visual reports and exports](https://github.com/interzettel/prehnite/issues/6) | Delivery | Analytics gallery implemented in PR #90; Parquet separately stacked #92. |
+| P2 | [Issue #6 — Offline visual reports and exports](https://github.com/interzettel/prehnite/issues/6) | Delivery | Offline charts, Parquet and native inspection merged; parent remains open for registered pixel diffs and quality calibration. |
 | P2 | [Issue #8 — Windows MCP lifecycle and packaging](https://github.com/interzettel/prehnite/issues/8) | Runtime | Process cancellation, reconnection and Windows tests. |
 | P0 | [Issue #5 — Crash recovery, pricing and billing hardening](https://github.com/interzettel/prehnite/issues/5) | Reliability | Safety tranche #10 merged; remaining tasks #15–#18, ownership unclaimed. |
 | P2 | [Issue #44 — Synchronize canonical issue ledger with organization GitHub Projects v2](https://github.com/interzettel/prehnite/issues/44) | Tracking | GitHub Project #1 sync needs Projects v2 write permission |
@@ -49,14 +49,13 @@
 
 | Priority | Work item | Stream | Handoff / blocker |
 | --- | --- | --- | --- |
-| P1 | [Issue #93 — Private native-pixel image and cutout inspection](https://github.com/interzettel/prehnite/issues/93) | Delivery | Native 1:1 base/cutout PR #94 merged; opt-in source comparison + drilldowns in #95/PR #96. |
-| P1 | [Issue #95 — Verified original source and private stage drilldown](https://github.com/interzettel/prehnite/issues/95) | Delivery | Implementation in PR #96, requires full CI and review. |
+| — | No cards currently | — | — |
 
 ## In review
 
 | Priority | Work item | Stream | Handoff / blocker |
 | --- | --- | --- | --- |
-| P1 | [PR #96 — Original-vs-output native comparison with stage facts](https://github.com/interzettel/prehnite/pull/96) | Delivery | Testing opt-in trusted input root; stage notes limited to safe codes. |
+| — | No cards currently | — | — |
 
 ## Blocked
 
@@ -126,7 +125,10 @@
 | P1 | [PR #90 — Offline analytics dashboard and summary exports](https://github.com/interzettel/prehnite/pull/90) | Delivery | Integrated offline analytics in #90; CI green. |
 | P2 | [Issue #91 — Optional typed Parquet exports for offline analytics](https://github.com/interzettel/prehnite/issues/91) | Delivery | Optional PyArrow Parquet exports merged PR #92; 8/8 CI green. |
 | P2 | [PR #92 — Typed opt-in Parquet metric and slot datasets](https://github.com/interzettel/prehnite/pull/92) | Delivery | Optional PyArrow Parquet exports merged PR #92; 8/8 CI green. |
-| P1 | [PR #94 — Single-slot native 1:1 comparison and alpha inspection](https://github.com/interzettel/prehnite/pull/94) | Delivery | Merged PR #94, full-resolution verified one-slot review; CI green. |
+| P1 | [Issue #93 — Private native-pixel image and cutout inspection](https://github.com/interzettel/prehnite/issues/93) | Delivery | Closed: verified native source/base/cutout review integrated in PRs #94/#96. |
+| P1 | [PR #94 — Single-slot native 1:1 comparison and alpha inspection](https://github.com/interzettel/prehnite/pull/94) | Delivery | Merged PR #94 with full-resolution SHA256 selected output inspection. |
+| P1 | [Issue #95 — Verified original source and private stage drilldown](https://github.com/interzettel/prehnite/issues/95) | Delivery | Closed: opt-in verified original input and safe stage evidence merged PR #96. |
+| P1 | [PR #96 — Original-vs-output native comparison with stage facts](https://github.com/interzettel/prehnite/pull/96) | Delivery | Merged PR #96, 8/8 CI green; no provider spending. |
 
 ## How to update this board
 

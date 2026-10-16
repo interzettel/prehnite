@@ -47,7 +47,7 @@
       "lane": "Backlog",
       "priority": "P2",
       "stream": "Delivery",
-      "note": "Analytics gallery implemented in PR #90; Parquet separately stacked #92."
+      "note": "Offline charts, Parquet and native inspection merged; parent remains open for registered pixel diffs and quality calibration."
     },
     {
       "type": "issue",
@@ -692,10 +692,10 @@
       "type": "issue",
       "number": 93,
       "title": "Private native-pixel image and cutout inspection",
-      "lane": "In progress",
+      "lane": "Done",
       "priority": "P1",
       "stream": "Delivery",
-      "note": "Native 1:1 base/cutout PR #94 merged; opt-in source comparison + drilldowns in #95/PR #96."
+      "note": "Closed: verified native source/base/cutout review integrated in PRs #94/#96."
     },
     {
       "type": "pr",
@@ -704,25 +704,25 @@
       "lane": "Done",
       "priority": "P1",
       "stream": "Delivery",
-      "note": "Merged PR #94, full-resolution verified one-slot review; CI green."
+      "note": "Merged PR #94 with full-resolution SHA256 selected output inspection."
     },
     {
       "type": "issue",
       "number": 95,
       "title": "Verified original source and private stage drilldown",
-      "lane": "In progress",
+      "lane": "Done",
       "priority": "P1",
       "stream": "Delivery",
-      "note": "Implementation in PR #96, requires full CI and review."
+      "note": "Closed: opt-in verified original input and safe stage evidence merged PR #96."
     },
     {
       "type": "pr",
       "number": 96,
       "title": "Original-vs-output native comparison with stage facts",
-      "lane": "In review",
+      "lane": "Done",
       "priority": "P1",
       "stream": "Delivery",
-      "note": "Testing opt-in trusted input root; stage notes limited to safe codes."
+      "note": "Merged PR #96, 8/8 CI green; no provider spending."
     }
   ]
 }
