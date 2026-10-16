@@ -13,9 +13,9 @@
 | Backlog | 14 |
 | Ready | 2 |
 | In progress | 0 |
-| In review | 2 |
+| In review | 0 |
 | Blocked | 6 |
-| Done | 45 |
+| Done | 49 |
 
 **WIP limits:** In progress ≤ 2; In review ≤ 3. Counts are issue/PR cards, not unique completed engineering features or a percentage.
 
@@ -55,8 +55,7 @@
 
 | Priority | Work item | Stream | Handoff / blocker |
 | --- | --- | --- | --- |
-| P1 | [Issue #18 — Content-addressed cache with privacy isolation](https://github.com/interzettel/prehnite/issues/18) | Runtime | Cache merged PR #80; evidence PR #88 now verified and pending integration. |
-| P1 | [PR #88 — Reconcile C07 merged cache evidence and progress tracker](https://github.com/interzettel/prehnite/pull/88) | Tracking | Docs-only C07 credit backed by PR #80; branch reconciled with #87. |
+| — | No cards currently | — | — |
 
 ## Blocked
 
@@ -91,6 +90,7 @@
 | P1 | [Issue #21 — Provider capability and price registry contract](https://github.com/interzettel/prehnite/issues/21) | Providers | Typed adapter registry and user-estimate provenance merged in PR #55; real quote audit remains #17 |
 | P1 | [Issue #20 — Normalize fal segmentation output and mask orientation](https://github.com/interzettel/prehnite/issues/20) | Segmentation | Offline CI tests merged in PR #53; real paid/live validation remains open |
 | P1 | [Issue #19 — Mocked FLUX tier and upscale response shapes](https://github.com/interzettel/prehnite/issues/19) | Providers | Mocked and subprocess CI evidence in merged PR #50 |
+| P1 | [Issue #18 — Content-addressed cache with privacy isolation](https://github.com/interzettel/prehnite/issues/18) | Runtime | Cache code merged #80; evidence reconciliation #88 merged. |
 | P0 | [Issue #16 — Atomic artifacts and integrity-aware resume](https://github.com/interzettel/prehnite/issues/16) | Runtime | Offline CI tests merged in PR #52; real paid/live validation remains open |
 | P0 | [Issue #15 — Crash-injection matrix for billed request recovery](https://github.com/interzettel/prehnite/issues/15) | Runtime | Mocked and subprocess CI evidence in merged PR #49 |
 | P1 | [Issue #14 — Granular evidence-ledger and generated milestone progress tracker](https://github.com/interzettel/prehnite/issues/14) | Tracking | Merged in PR #45; evidence ledger / README published on main. |
@@ -118,6 +118,9 @@
 | P1 | [PR #84 — 90-slot offline pause/crash/recovery benchmark](https://github.com/interzettel/prehnite/pull/84) | Benchmark | Merged PR #84; cross-platform CI synthetic recovery benchmark evidence; no paid inference. |
 | P1 | [Issue #86 — Machine-readable stage failure and recovery taxonomy](https://github.com/interzettel/prehnite/issues/86) | Runtime | Typed error taxonomy code merged PR #87; C10 ledger credit pending. |
 | P1 | [PR #87 — Typed fail-closed failure classification and report telemetry](https://github.com/interzettel/prehnite/pull/87) | Runtime | Merged PR #87 with validated CI; ledger credit C10 pending. |
+| P1 | [PR #88 — Reconcile C07 merged cache evidence and progress tracker](https://github.com/interzettel/prehnite/pull/88) | Tracking | Evidence PR #88 merged after preserving #87; C07 credited. |
+| P1 | [Issue #81 — Batch objective modes and Pareto evaluation RFC](https://github.com/interzettel/prehnite/issues/81) | Product strategy | RFC PR #82 merged; produce-first design only, no runtime gate credit. |
+| P1 | [PR #82 — Produce/Explore/Experiment and Pareto reporting RFC](https://github.com/interzettel/prehnite/pull/82) | Product strategy | Documentation RFC integrated; human quality and comparable cohorts still future. |
 
 ## How to update this board
 

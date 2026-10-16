@@ -359,10 +359,10 @@
       "type": "issue",
       "number": 18,
       "title": "Content-addressed cache with privacy isolation",
-      "lane": "In review",
+      "lane": "Done",
       "priority": "P1",
       "stream": "Runtime",
-      "note": "Cache merged PR #80; evidence PR #88 now verified and pending integration."
+      "note": "Cache code merged #80; evidence reconciliation #88 merged."
     },
     {
       "type": "issue",
@@ -629,10 +629,28 @@
       "type": "pr",
       "number": 88,
       "title": "Reconcile C07 merged cache evidence and progress tracker",
-      "lane": "In review",
+      "lane": "Done",
       "priority": "P1",
       "stream": "Tracking",
-      "note": "Docs-only C07 credit backed by PR #80; branch reconciled with #87."
+      "note": "Evidence PR #88 merged after preserving #87; C07 credited."
+    },
+    {
+      "type": "issue",
+      "number": 81,
+      "title": "Batch objective modes and Pareto evaluation RFC",
+      "lane": "Done",
+      "priority": "P1",
+      "stream": "Product strategy",
+      "note": "RFC PR #82 merged; produce-first design only, no runtime gate credit."
+    },
+    {
+      "type": "pr",
+      "number": 82,
+      "title": "Produce/Explore/Experiment and Pareto reporting RFC",
+      "lane": "Done",
+      "priority": "P1",
+      "stream": "Product strategy",
+      "note": "Documentation RFC integrated; human quality and comparable cohorts still future."
     }
   ]
 }
