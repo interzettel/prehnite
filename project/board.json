@@ -350,10 +350,10 @@
       "type": "issue",
       "number": 19,
       "title": "Mocked FLUX tier and upscale response shapes",
-      "lane": "Ready",
+      "lane": "Done",
       "priority": "P1",
       "stream": "Providers",
-      "note": "Small offline-only PR candidate; no paid provider calls."
+      "note": "Mocked and subprocess CI evidence in merged PR #50"
     },
     {
       "type": "issue",
@@ -377,19 +377,19 @@
       "type": "issue",
       "number": 16,
       "title": "Atomic artifacts and integrity-aware resume",
-      "lane": "Backlog",
+      "lane": "Ready",
       "priority": "P0",
       "stream": "Runtime",
-      "note": "Atomic writes / hash validation"
+      "note": "Next P0: atomic output writes, SHA256 corruption-aware resume"
     },
     {
       "type": "issue",
       "number": 15,
       "title": "Crash-injection matrix for billed request recovery",
-      "lane": "Ready",
+      "lane": "Done",
       "priority": "P0",
       "stream": "Runtime",
-      "note": "Small offline-only PR candidate; no paid provider calls."
+      "note": "Mocked and subprocess CI evidence in merged PR #49"
     },
     {
       "type": "issue",
@@ -426,6 +426,24 @@
       "priority": "P1",
       "stream": "Maintenance",
       "note": "Merged; 47 tests passing without warnings."
+    },
+    {
+      "type": "pr",
+      "number": 49,
+      "title": "Subprocess crash-recovery matrix",
+      "lane": "Done",
+      "priority": "P1",
+      "stream": "Runtime",
+      "note": "Merged after passing offline tests; no paid inference"
+    },
+    {
+      "type": "pr",
+      "number": 50,
+      "title": "fal generation payload and queue contract fixtures",
+      "lane": "Done",
+      "priority": "P1",
+      "stream": "Providers",
+      "note": "Merged after passing offline tests; no paid inference"
     }
   ]
 }

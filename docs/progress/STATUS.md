@@ -2,7 +2,7 @@
 
 > Generated from `progress/ledger.json` by `scripts/progress.py`. A unit counts only when done with evidence; percentages are not estimates of engineering time or visual quality.
 
-**20 / 61 units done (32.8%)** · 0 active · 10 blocked · 31 planned.
+**22 / 61 units done (36.1%)** · 0 active · 10 blocked · 29 planned.
 **Milestone gates reached:** 1 / 7.
 
 ![Milestone progress chart](progress.svg)
@@ -12,8 +12,8 @@
 | Milestone | Done | Active | Blocked | Planned | Gate |
 | --- | ---: | ---: | ---: | ---: | --- |
 | M0 · Runnable foundation | 6/6 (100.0%) | 0 | 0 | 0 | Reached |
-| M1 · Safe production engine | 3/10 (30.0%) | 0 | 2 | 5 | Open: C08, C09 |
-| M2 · Models and local compute | 2/10 (20.0%) | 0 | 2 | 6 | Open: P07, P09 |
+| M1 · Safe production engine | 4/10 (40.0%) | 0 | 2 | 4 | Open: C08, C09 |
+| M2 · Models and local compute | 3/10 (30.0%) | 0 | 2 | 5 | Open: P07, P09 |
 | M3 · Photographic quality gates | 1/8 (12.5%) | 0 | 2 | 5 | Open: Q07, Q08 |
 | M4 · Cutouts and corrections | 1/7 (14.3%) | 0 | 2 | 4 | Open: S06, S07 |
 | M5 · Delivery and usability | 2/10 (20.0%) | 0 | 0 | 8 | Open: D09, D10 |
@@ -39,7 +39,7 @@
 | `C01` | Paid call budget authorization gate | done | Agent cloud | F04 | [Evidence](https://github.com/interzettel/prehnite/pull/10) |
 | `C02` | Fail-closed uncertain request recovery | done | Agent cloud | F04 | [Evidence](https://github.com/interzettel/prehnite/pull/10) |
 | `C03` | Single-batch worker lock (offline test) | done | Agent cloud | F04 | [Evidence](https://github.com/interzettel/prehnite/pull/10) |
-| `C04` | Cross-process kill-and-restart fault matrix | planned | Agent cloud | C02 | [#15](https://github.com/interzettel/prehnite/issues/15) |
+| `C04` | Cross-process kill-and-restart fault matrix | done | Agent cloud | C02 | [Evidence](https://github.com/interzettel/prehnite/pull/49) |
 | `C05` | Atomic output writes and checksum replay checks | planned | Agent cloud | C02 | [#16](https://github.com/interzettel/prehnite/issues/16) |
 | `C06` | Versioned pricing quotes and bill reconciliation | blocked | Owner | C01 | [#17](https://github.com/interzettel/prehnite/issues/17) |
 | `C07` | Content-addressed, privacy-scoped stage cache | planned | Agent cloud | C05 | [#18](https://github.com/interzettel/prehnite/issues/18) |
@@ -53,7 +53,7 @@
 | --- | --- | --- | --- | --- | --- |
 | `P01` | Demo and optional hosted provider adapter scaffold | done | Agent cloud | F03 | [Evidence](https://github.com/interzettel/prehnite/pull/1) |
 | `P02` | Generic local ComfyUI graph/queue scaffold | done | Agent cloud | F03 | [Evidence](https://github.com/interzettel/prehnite/pull/1) |
-| `P03` | Offline FLUX tier/upscale contract fixtures | planned | Agent cloud | P01 | [#19](https://github.com/interzettel/prehnite/issues/19) |
+| `P03` | Offline FLUX tier/upscale contract fixtures | done | Agent cloud | P01 | [Evidence](https://github.com/interzettel/prehnite/pull/50) |
 | `P04` | SAM response-shape fixtures and validation | planned | Agent cloud | P01 | [#20](https://github.com/interzettel/prehnite/issues/20) |
 | `P05` | Typed provider capability/price discovery | planned | Agent cloud | P03 | [#21](https://github.com/interzettel/prehnite/issues/21) |
 | `P06` | Tested ComfyUI graph fixture and mapping | planned | Agent cloud | P02 | [#22](https://github.com/interzettel/prehnite/issues/22) |
