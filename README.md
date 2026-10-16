@@ -53,7 +53,7 @@ prehnite estimate examples/manifest.yaml --profile examples/profile-demo.yaml
 prehnite run examples/manifest.yaml --profile examples/profile-demo.yaml --workspace workspace
 ```
 
-Look under `workspace/batches/portrait-pilot/`. You'll find the selected images, the state journal, a JSON/CSV/HTML report, and a ZIP with the requested output paths. A second run reuses completed stages.
+Look under `workspace/batches/portrait-pilot/`. You'll find the selected images, the state journal, JSON/CSV reports, an [offline visual gallery](docs/OFFLINE_GALLERY.md) (`gallery.html`), and a ZIP with the requested output paths. A second run reuses completed stages.
 
 <details>
 <summary><strong>What the output looks like</strong></summary>
@@ -71,6 +71,7 @@ workspace/
         ├── report.json
         ├── operations.csv
         ├── report.html
+        ├── gallery.html
         └── prehnite-portrait-pilot.zip
 ```
 

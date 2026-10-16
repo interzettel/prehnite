@@ -62,6 +62,8 @@ def export_report(journal: Journal) -> dict:
         + "</tr></thead><tbody>" + table_rows + "</tbody></table></html>"
     )
     atomic_text(journal.root / "report.html", page)
+    from .gallery import export_gallery
+    export_gallery(journal)
     return data
 
 
@@ -90,7 +92,7 @@ def package(journal: Journal) -> Path:
             for name, (source, expected_sha256) in sorted(artifacts.items()):
                 verified_image(source, expected_sha256)
                 archive.write(source, name)
-            for name in ("report.json", "operations.csv", "report.html"):
+            for name in ("report.json", "operations.csv", "report.html", "gallery.html"):
                 source = journal.root / name
                 if source.is_file():
                     archive.write(source, "_prehnite/" + name)

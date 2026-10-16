@@ -7,6 +7,7 @@ This project follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) an
 ## [Unreleased]
 
 ### Added
+- Self-contained offline `gallery.html` visual result browser, with hashed accepted-image thumbnails, checkerboard cutouts, intermediate previews and escaped rejection notes; packaged in the ZIP without CDN/JavaScript or network dependencies (#33).
 - Native 1:1 pixel crop evidence (corners, center, optional manual focal anchor), annotated downsampled overview, hash-verified PNG/JSON manifest and offline `prehnite crops` CLI (#26). Crops are evidence, not automatic quality scores.
 - Offline ComfyUI API-format generation/upscale/segmentation node-map fixtures and fake local HTTP queue tests (#22); invalid graph mappings now fail before uploading a local source image.
 - Typed model-provider capability registry and fail-fast preflight checks for required stages, supported tiers/options, upload permissions and unimplemented adapters; user-managed prices explicitly marked non-live (#21).
