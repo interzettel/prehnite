@@ -229,3 +229,28 @@ def test_artifact_host_allowlist_rejects_untrusted_urls_without_network(tmp_path
     with pytest.raises(ValueError, match="non-fal"):
         providers.download_image(bad_url, tmp_path/"x.png")
     assert not (tmp_path/"x.png").exists()
+
+def test_two_sam_masks_rejected_instead_of_guessing_first(fal_stub, tmp_path):
+    stub, downloaded = fal_stub
+    source = tmp_path / "source.png"
+    Image.new("RGB", (192, 256), "teal").save(source)
+    stub.masks = {"masks": [
+        {"url": "https://v3b.fal.media/files/mock/mask.png"},
+        {"url": "https://v3b.fal.media/files/mock/mask2.png"},
+    ]}
+    with pytest.raises(ValueError, match="exactly one"):
+        Fal().segment(source, "person", tmp_path / "out.png",
+                      Endpoint(provider="fal", model="fal-ai/sam-3-1/image"))
+    assert downloaded == []
+
+
+def test_sam_result_records_mask_geometry(fal_stub, tmp_path):
+    stub, downloaded = fal_stub
+    source = tmp_path / "source.png"
+    Image.new("RGB", (192, 256), "teal").save(source)
+    outcome = Fal().segment(source, "person", tmp_path / "mask.png",
+                            Endpoint(provider="fal", model="fal-ai/sam-3-1/image"))
+    assert outcome.metadata["mask_validation"]["width"] == 192
+    assert outcome.metadata["mask_validation"]["height"] == 256
+    assert len(stub.uploads) == 1
+    assert len(downloaded) == 1
