@@ -750,6 +750,24 @@
       "priority": "P2",
       "stream": "Delivery",
       "note": "Follow-up: alignment transforms and 4K memory-bounded metrics; avoid unverified quality labels."
+    },
+    {
+      "type": "issue",
+      "number": 102,
+      "title": "Selected forest/coral Riso identity and shared accessible palette",
+      "lane": "In progress",
+      "priority": "P1",
+      "stream": "Design",
+      "note": "Owner-selected actual artwork, theme and tests in PR #103."
+    },
+    {
+      "type": "pr",
+      "number": 103,
+      "title": "README Riso hero and shared green/coral theme",
+      "lane": "In review",
+      "priority": "P1",
+      "stream": "Design",
+      "note": "Binary image verified; Ubuntu/Windows CI and contrast tests pending."
     }
   ]
 }
