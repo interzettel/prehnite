@@ -2,7 +2,7 @@
 
 > Generated from `progress/ledger.json` by `scripts/progress.py`. A unit counts only when done with evidence; percentages are not estimates of engineering time or visual quality.
 
-**27 / 61 units done (44.3%)** · 0 active · 10 blocked · 24 planned.
+**28 / 61 units done (45.9%)** · 0 active · 10 blocked · 23 planned.
 **Milestone gates reached:** 1 / 7.
 
 ![Milestone progress chart](progress.svg)
@@ -13,7 +13,7 @@
 | --- | ---: | ---: | ---: | ---: | --- |
 | M0 · Runnable foundation | 6/6 (100.0%) | 0 | 0 | 0 | Reached |
 | M1 · Safe production engine | 5/10 (50.0%) | 0 | 2 | 3 | Open: C08, C09 |
-| M2 · Models and local compute | 6/10 (60.0%) | 0 | 2 | 2 | Open: P07, P09 |
+| M2 · Models and local compute | 7/10 (70.0%) | 0 | 2 | 1 | Open: P09 |
 | M3 · Photographic quality gates | 1/8 (12.5%) | 0 | 2 | 5 | Open: Q07, Q08 |
 | M4 · Cutouts and corrections | 2/7 (28.6%) | 0 | 2 | 3 | Open: S06, S07 |
 | M5 · Delivery and usability | 2/10 (20.0%) | 0 | 0 | 8 | Open: D09, D10 |
@@ -57,7 +57,7 @@
 | `P04` | SAM response-shape fixtures and validation | done | Agent cloud | P01 | [Evidence](https://github.com/interzettel/prehnite/pull/53) |
 | `P05` | Typed adapter capabilities and price-estimate provenance | done | Agent cloud | P03 | [Evidence](https://github.com/interzettel/prehnite/pull/55) |
 | `P06` | Offline ComfyUI graph mapping and mock queue fixtures | done | Agent cloud | P02 | [Evidence](https://github.com/interzettel/prehnite/pull/57) |
-| `P07` | ComfyUI queue/recovery without duplicate submits | planned | Agent cloud | P06, C02 | [#23](https://github.com/interzettel/prehnite/issues/23) |
+| `P07` | ComfyUI queue/recovery without duplicate submits | done | Agent cloud | P06, C02 | [Evidence](https://github.com/interzettel/prehnite/pull/59) |
 | `P08` | 8GB VRAM local model feasibility benchmark | blocked | Agent local | P06 | [#24](https://github.com/interzettel/prehnite/issues/24) |
 | `P09` | User-approved end-to-end live inference pilot | blocked | Owner | P03, C09 | [#7](https://github.com/interzettel/prehnite/issues/7) |
 | `P10` | Provider-choice plan by cost, hardware and quality | planned | Agent cloud | P05 | [#21](https://github.com/interzettel/prehnite/issues/21) |
