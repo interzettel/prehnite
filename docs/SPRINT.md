@@ -12,8 +12,8 @@
 | --- | ---: |
 | Backlog | 15 |
 | Ready | 2 |
-| In progress | 0 |
-| In review | 0 |
+| In progress | 2 |
+| In review | 3 |
 | Blocked | 6 |
 | Done | 43 |
 
@@ -26,7 +26,7 @@
 | P2 | [Issue #2 — ComfyUI integration on real hardware](https://github.com/interzettel/prehnite/issues/2) | Local GPU | Generic adapter exists; hardware and actual workflow integration remain. |
 | P1 | [Issue #3 — Reliable segmentation and matting](https://github.com/interzettel/prehnite/issues/3) | Quality | Blocked downstream on model contracts and sample corpus. |
 | P2 | [Issue #4 — Local quality judges and crop QA](https://github.com/interzettel/prehnite/issues/4) | Quality | Must calibrate before quality gates use local scores. |
-| P2 | [Issue #6 — Offline visual reports and exports](https://github.com/interzettel/prehnite/issues/6) | Delivery | Need contact sheets, per-asset comparators and analytics. |
+| P2 | [Issue #6 — Offline visual reports and exports](https://github.com/interzettel/prehnite/issues/6) | Delivery | Offline embedded gallery exists; analytics tranche #89 / draft PR #90 in development. Parquet, deeper comparisons still open. |
 | P2 | [Issue #8 — Windows MCP lifecycle and packaging](https://github.com/interzettel/prehnite/issues/8) | Runtime | Process cancellation, reconnection and Windows tests. |
 | P0 | [Issue #5 — Crash recovery, pricing and billing hardening](https://github.com/interzettel/prehnite/issues/5) | Reliability | Safety tranche #10 merged; remaining tasks #15–#18, ownership unclaimed. |
 | P2 | [Issue #44 — Synchronize canonical issue ledger with organization GitHub Projects v2](https://github.com/interzettel/prehnite/issues/44) | Tracking | GitHub Project #1 sync needs Projects v2 write permission |
@@ -50,13 +50,16 @@
 
 | Priority | Work item | Stream | Handoff / blocker |
 | --- | --- | --- | --- |
-| — | No cards currently | — | — |
+| P1 | [Issue #89 — Offline analytics panels and versioned summary exports](https://github.com/interzettel/prehnite/issues/89) | Delivery | Bounded #6 tranche, draft PR #90; synthetic offline benchmark in CI. |
+| P1 | [PR #90 — Offline analytics dashboard and summary exports](https://github.com/interzettel/prehnite/pull/90) | Delivery | Draft PR while WIP review lane is full; six-job CI pending. |
 
 ## In review
 
 | Priority | Work item | Stream | Handoff / blocker |
 | --- | --- | --- | --- |
-| — | No cards currently | — | — |
+| P2 | [PR #82 — Produce/Explore/Experiment RFC and Pareto reporting](https://github.com/interzettel/prehnite/pull/82) | Product | Other agent RFC remains open; older board snapshot requires reconciliation. |
+| P1 | [PR #87 — C10 machine-readable failure taxonomy](https://github.com/interzettel/prehnite/pull/87) | Runtime | Other review-ready PR, all six CI checks passed; not merged. |
+| P1 | [PR #88 — C07 cache evidence reconciliation](https://github.com/interzettel/prehnite/pull/88) | Tracking | Other review-ready PR, all six CI checks passed; not merged. |
 
 ## Blocked
 
