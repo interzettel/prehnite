@@ -60,6 +60,10 @@ The image bytes in HTML are **private** and must not be publicly uploaded from r
 
 Privacy-aware field names in the JSON avoid raw prompts, original source paths, local operation keys, provider request IDs or free-form judge/error text. SHA256 digests are included to bind comparison evidence to the bytes; the JSON does not prove that a user assertion about alignment was objectively correct.
 
+## Inspect a safe synthetic example
+
+Run `python scripts/synthetic_pixel_diff_demo.py --output pixel-diff-synthetic` to create **fixed synthetic-only** examples of original-vs-base and base-vs-alpha-cutout comparisons. Open `pixel-diff-synthetic/synthetic-original.html` or `synthetic-cutout.html` locally. The repository's Ubuntu and Windows offline-90 CI jobs attach those two review pages, their PNG heatmaps and versioned JSON records to the 14-day benchmark artifacts. Do not upload review pages derived from real user imagery to publicly accessible CI.
+
 ## Evidence and next gates
 
 `python -m pytest -q tests/test_pixel_comparison.py` covers identical pixels, a single-pixel edit, same-sized unregistered shifts requiring explicit attestation, geometry mismatch, EXIF rotation, ICC mismatch, RGBA fringe/hidden RGB, integrity tampering, external symlink, 4MP boundary, CLI opt-in and default ZIP stability.
