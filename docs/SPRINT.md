@@ -10,12 +10,12 @@
 
 | Lane | Cards |
 | --- | ---: |
-| Backlog | 16 |
+| Backlog | 15 |
 | Ready | 2 |
 | In progress | 1 |
 | In review | 1 |
 | Blocked | 6 |
-| Done | 39 |
+| Done | 41 |
 
 **WIP limits:** In progress ≤ 2; In review ≤ 3. Counts are issue/PR cards, not unique completed engineering features or a percentage.
 
@@ -30,7 +30,6 @@
 | P2 | [Issue #8 — Windows MCP lifecycle and packaging](https://github.com/interzettel/prehnite/issues/8) | Runtime | Process cancellation, reconnection and Windows tests. |
 | P0 | [Issue #5 — Crash recovery, pricing and billing hardening](https://github.com/interzettel/prehnite/issues/5) | Reliability | Safety tranche #10 merged; remaining tasks #15–#18, ownership unclaimed. |
 | P2 | [Issue #44 — Synchronize canonical issue ledger with organization GitHub Projects v2](https://github.com/interzettel/prehnite/issues/44) | Tracking | GitHub Project #1 sync needs Projects v2 write permission |
-| P1 | [Issue #41 — Pre-release 90-asset dry run and budget projection](https://github.com/interzettel/prehnite/issues/41) | Benchmark | 90-asset offline dry-run |
 | P1 | [Issue #40 — Model, dependency and artifact licensing inventory](https://github.com/interzettel/prehnite/issues/40) | Licensing | Dependency/model weight terms inventory |
 | P1 | [Issue #33 — Self-contained offline HTML gallery and comparisons](https://github.com/interzettel/prehnite/issues/33) | Reporting | Offline thumbnail gallery #67 merged; opt-in private original comparisons remain issue #68 |
 | P1 | [Issue #31 — Targeted repair planner for failed cutouts](https://github.com/interzettel/prehnite/issues/31) | Cutouts | Bounded repair planner |
@@ -51,13 +50,13 @@
 
 | Priority | Work item | Stream | Handoff / blocker |
 | --- | --- | --- | --- |
-| P1 | [Issue #38 — MCP cancellation, worker reconnection and status telemetry](https://github.com/interzettel/prehnite/issues/38) | MCP | Durable control implementation in PR #83; CI/review required before D08 credit. |
+| P1 | [Issue #41 — Pre-release 90-asset dry run and budget projection](https://github.com/interzettel/prehnite/issues/41) | Benchmark | Offline 90-slot cross-platform fixture passes on PR #84; awaiting latest-head CI/merge. |
 
 ## In review
 
 | Priority | Work item | Stream | Handoff / blocker |
 | --- | --- | --- | --- |
-| P1 | [PR #83 — Durable MCP pause/cancel/reconnect and worker ownership](https://github.com/interzettel/prehnite/pull/83) | MCP | Feature+regression PR for #38; CI and review pending; no merged ledger credit. |
+| P1 | [PR #84 — 90-slot offline pause/crash/recovery benchmark](https://github.com/interzettel/prehnite/pull/84) | Benchmark | 90/90 accepted on Ubuntu+Windows CI; merge and evidence credit pending. |
 
 ## Blocked
 
@@ -80,6 +79,7 @@
 | P0 | [PR #1 — Initial MIT engine foundation](https://github.com/interzettel/prehnite/pull/1) | Foundation | Merged; synthetic demo CI passed. |
 | P1 | [Issue #43 — Human-centered README, original vector identity and first-run guide](https://github.com/interzettel/prehnite/issues/43) | Onboarding | Merged in PR #45; evidence ledger / README published on main. |
 | P1 | [Issue #39 — Cross-platform installer and Python packaging smoke checks](https://github.com/interzettel/prehnite/issues/39) | Packaging | Merged PR #72; validated free CLI and clean Windows/Linux wheel install, GPU not benchmarked |
+| P1 | [Issue #38 — MCP cancellation, worker reconnection and status telemetry](https://github.com/interzettel/prehnite/issues/38) | MCP | PR #83 merged as 38113a7; four-job CI green (290 tests), issue closed. |
 | P1 | [Issue #37 — Prehnite init and doctor CLI onboarding](https://github.com/interzettel/prehnite/issues/37) | Onboarding | Merged PR #71; validated free CLI and clean Windows/Linux wheel install, GPU not benchmarked |
 | P1 | [Issue #36 — Deterministic validated archive and manifest hashes](https://github.com/interzettel/prehnite/issues/36) | Reporting | Implemented and verified in merged PR #76, zero inference spend |
 | P1 | [Issue #35 — Versioned provenance and reproducible output manifest](https://github.com/interzettel/prehnite/issues/35) | Reporting | Implemented and verified in merged PR #74, zero inference spend |
@@ -113,6 +113,7 @@
 | P1 | [PR #74 — Privacy-minimized provenance manifest](https://github.com/interzettel/prehnite/pull/74) | Delivery | Merged with green CI and offline regression tests |
 | P1 | [PR #76 — Deterministic ZIP and SHA256 receipt](https://github.com/interzettel/prehnite/pull/76) | Delivery | Merged with green CI and offline regression tests |
 | P1 | [PR #78 — Evidence-based accepted-asset economics and stage timing](https://github.com/interzettel/prehnite/pull/78) | Reporting | Merged; 264 offline tests and Windows/Ubuntu smoke green; invoices remain unverified |
+| P1 | [PR #83 — Durable MCP pause/cancel/reconnect and worker ownership](https://github.com/interzettel/prehnite/pull/83) | MCP | Merged into main; durable MCP controls verified with Windows lifecycle regression. |
 
 ## How to update this board
 
