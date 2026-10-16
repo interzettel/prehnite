@@ -83,14 +83,19 @@ def crops(source: Path, output: Path = typer.Option(..., help="Local evidence fo
 @app.command()
 def run(manifest: Path, profile: Path = typer.Option(...),
         workspace: Path = typer.Option(Path("workspace")),
-        inputs: Path = typer.Option(Path("inputs"))):
+        inputs: Path = typer.Option(Path("inputs")),
+        job_token: str | None = typer.Option(None, "--job-token", hidden=True)):
     from .engine import Engine
-    engine = Engine(load_manifest(manifest), load_profile(profile), workspace, inputs)
+    engine = Engine(load_manifest(manifest), load_profile(profile), workspace, inputs,
+                    job_token=job_token)
     try:
         report = engine.run()
-        typer.echo(f"Processed {len(report['asset_results'])} assets; "
-                   f"reserved USD {report['cost_estimated_or_reserved_usd']}; "
-                   f"output: {engine.journal.root}")
+        if "job_status" in report:
+            typer.echo(f"Worker {report['job_status']}; accepted results remain journaled")
+        else:
+            typer.echo(f"Processed {len(report['asset_results'])} assets; "
+                       f"reserved USD {report['cost_estimated_or_reserved_usd']}; "
+                       f"output: {engine.journal.root}")
     finally:
         engine.journal.close()
 
