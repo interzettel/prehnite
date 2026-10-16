@@ -12,8 +12,8 @@
 | --- | ---: |
 | Backlog | 16 |
 | Ready | 2 |
-| In progress | 1 |
-| In review | 0 |
+| In progress | 2 |
+| In review | 1 |
 | Blocked | 6 |
 | Done | 69 |
 
@@ -52,12 +52,13 @@
 | Priority | Work item | Stream | Handoff / blocker |
 | --- | --- | --- | --- |
 | P2 | [Issue #100 — Provenance-bound transforms and tiled 4K comparison](https://github.com/interzettel/prehnite/issues/100) | Delivery | Integer 4K tiles + SHA-bound affine v2 validator merged; real affine warp/execution still open. |
+| P1 | [Issue #116 — Unified decision-model contract and bounded offline auto-repair policy](https://github.com/interzettel/prehnite/issues/116) | Quality | Owner approved mixed assets and bounded local repair; policy contract and synthetic fixture PR #117, no provider calls. |
 
 ## In review
 
 | Priority | Work item | Stream | Handoff / blocker |
 | --- | --- | --- | --- |
-| — | No cards currently | — | — |
+| P1 | [PR #117 — Provider-neutral typed decisions and bounded local candidate policy](https://github.com/interzettel/prehnite/pull/117) | Quality | Testing capability guards, product/portrait synthetic actions, spend/accepted protection. Not yet connected to production executor. |
 
 ## Blocked
 
