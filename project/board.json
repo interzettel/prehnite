@@ -606,6 +606,24 @@
       "priority": "P1",
       "stream": "Benchmark",
       "note": "Merged PR #84; cross-platform CI synthetic recovery benchmark evidence; no paid inference."
+    },
+    {
+      "type": "issue",
+      "number": 86,
+      "title": "Machine-readable stage failure and recovery taxonomy",
+      "lane": "In progress",
+      "priority": "P1",
+      "stream": "Runtime",
+      "note": "C10 #86: recovery taxonomy in PR #87; offline tests/CI pending, no evidence credit yet."
+    },
+    {
+      "type": "pr",
+      "number": 87,
+      "title": "Typed fail-closed failure classification and report telemetry",
+      "lane": "In review",
+      "priority": "P1",
+      "stream": "Runtime",
+      "note": "C10 #86: recovery taxonomy in PR #87; offline tests/CI pending, no evidence credit yet."
     }
   ]
 }
