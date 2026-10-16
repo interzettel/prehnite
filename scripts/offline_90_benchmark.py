@@ -146,7 +146,8 @@ def expected_projection() -> list[dict]:
     ]
 
 
-def run_benchmark(home: Path, preview_file: Path | None = None) -> dict:
+def run_benchmark(home: Path, preview_file: Path | None = None,
+                  *, parquet: bool = False) -> dict:
     manager = prepare(home)
     # Fake *only launch*, actual Engine workers execute independently below.
     # This eliminates timing races without weakening real OS run-lock tests.
@@ -292,6 +293,30 @@ def run_benchmark(home: Path, preview_file: Path | None = None) -> dict:
                 "Prehnite / offline production dashboard · SYNTHETIC DEMO</h1>",
                 1)
             preview_file.write_text(gallery_html, encoding="utf-8")
+        parquet_verified = False
+        if parquet:
+            import pyarrow.parquet as pq
+            from prehnite.parquet_export import DATASETS, write_parquet_exports
+            manifest = engine.journal.fact("manifest", {})
+            results = engine.journal.fact("results", {})
+            record = write_parquet_exports(
+                engine.journal.root, final["analytics"], manifest, results)
+            assert record["datasets"][DATASETS[1]]["rows"] == COUNT
+            slot_table = pq.read_table(engine.journal.root / DATASETS[1])
+            assert slot_table.num_rows == COUNT
+            assert sum(slot_table.column("requested_cutouts").to_pylist()) == CUTOUTS
+            assert sum(slot_table.column("selected_outputs").to_pylist()) == COUNT + CUTOUTS
+            parquet_zip = package(engine.journal, include_parquet=True)
+            with zipfile.ZipFile(parquet_zip) as z:
+                for name in DATASETS:
+                    assert "_prehnite/" + name in z.namelist()
+                assert "_prehnite/parquet-manifest.json" in z.namelist()
+                assert z.testzip() is None
+                receipt = json.loads(z.read("_prehnite/archive-manifest.json"))
+                for name in DATASETS:
+                    item = "_prehnite/" + name
+                    assert hashlib.sha256(z.read(item)).hexdigest() == receipt["sha256"][item]
+            parquet_verified = True
         return {
             "schema_version": 1,
             "scenario": "synthetic_offline_no_paid_inference",
@@ -312,6 +337,7 @@ def run_benchmark(home: Path, preview_file: Path | None = None) -> dict:
             "zip_image_entries": len(expected_images),
             "archive_sha256": hashlib.sha256(first_bytes).hexdigest(),
             "replay_byte_identical": True,
+            "parquet_opt_in_verified": parquet_verified,
             "quote_scenarios": expected_projection(),
             "limitations": [
                 "synthetic_inputs_not_human_verified_visual_quality",
@@ -329,6 +355,8 @@ def main():
     parser.add_argument("--token", type=str)
     parser.add_argument("--crash-worker", action="store_true")
     parser.add_argument("--result-file", type=Path)
+    parser.add_argument("--parquet", action="store_true",
+                        help="Also verify opt-in Parquet datasets; requires prehnite[parquet]")
     parser.add_argument("--preview-file", type=Path,
                         help="Write a safe embedded HTML preview (synthetic demo only)")
     args = parser.parse_args()
@@ -338,7 +366,8 @@ def main():
         crash_worker(JobManager(args.home), args.token)
         raise AssertionError("Injected worker should have exited with status 73")
     with tempfile.TemporaryDirectory(prefix="prehnite-benchmark-90-") as directory:
-        report = run_benchmark(Path(directory), args.preview_file)
+        report = run_benchmark(Path(directory), args.preview_file,
+                               parquet=args.parquet)
     serialized = json.dumps(report, indent=2, sort_keys=True) + "\n"
     if args.result_file:
         args.result_file.parent.mkdir(parents=True, exist_ok=True)
