@@ -10,6 +10,7 @@ import argparse
 import hashlib
 import json
 import os
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -147,7 +148,8 @@ def expected_projection() -> list[dict]:
 
 
 def run_benchmark(home: Path, preview_file: Path | None = None,
-                  *, parquet: bool = False) -> dict:
+                  *, parquet: bool = False,
+                  parquet_output: Path | None = None) -> dict:
     manager = prepare(home)
     # Fake *only launch*, actual Engine workers execute independently below.
     # This eliminates timing races without weakening real OS run-lock tests.
@@ -316,6 +318,13 @@ def run_benchmark(home: Path, preview_file: Path | None = None,
                 for name in DATASETS:
                     item = "_prehnite/" + name
                     assert hashlib.sha256(z.read(item)).hexdigest() == receipt["sha256"][item]
+            if parquet_output is not None:
+                # Never export real user data through this test script: prepare()
+                # creates only fresh synthetic fixtures inside temporary home.
+                parquet_output.mkdir(parents=True, exist_ok=True)
+                for name in (*DATASETS, "parquet-manifest.json",
+                             "analytics.json", "analytics.csv"):
+                    shutil.copyfile(engine.journal.root / name, parquet_output / name)
             parquet_verified = True
         return {
             "schema_version": 1,
@@ -357,9 +366,13 @@ def main():
     parser.add_argument("--result-file", type=Path)
     parser.add_argument("--parquet", action="store_true",
                         help="Also verify opt-in Parquet datasets; requires prehnite[parquet]")
+    parser.add_argument("--parquet-output", type=Path,
+                        help="Copy only synthetic aggregate Parquet evidence to this folder")
     parser.add_argument("--preview-file", type=Path,
                         help="Write a safe embedded HTML preview (synthetic demo only)")
     args = parser.parse_args()
+    if args.parquet_output is not None and not args.parquet:
+        parser.error("--parquet-output requires --parquet")
     if args.crash_worker:
         if args.home is None or args.token is None:
             parser.error("Crash worker needs --home and --token")
@@ -367,7 +380,8 @@ def main():
         raise AssertionError("Injected worker should have exited with status 73")
     with tempfile.TemporaryDirectory(prefix="prehnite-benchmark-90-") as directory:
         report = run_benchmark(Path(directory), args.preview_file,
-                               parquet=args.parquet)
+                               parquet=args.parquet,
+                               parquet_output=args.parquet_output)
     serialized = json.dumps(report, indent=2, sort_keys=True) + "\n"
     if args.result_file:
         args.result_file.parent.mkdir(parents=True, exist_ok=True)
