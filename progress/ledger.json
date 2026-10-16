@@ -597,12 +597,13 @@
         {
           "id": "D08",
           "name": "Safe MCP pause/cancel/reconnect semantics",
-          "state": "planned",
+          "state": "done",
           "issue": 38,
           "owner": "Agent cloud",
           "dependsOn": [
             "C04"
-          ]
+          ],
+          "evidence": "https://github.com/interzettel/prehnite/pull/83"
         },
         {
           "id": "D09",
@@ -618,13 +619,14 @@
         {
           "id": "D10",
           "name": "90-asset no-cost CLI/MCP fixture bundle",
-          "state": "planned",
+          "state": "done",
           "issue": 41,
           "owner": "Agent cloud",
           "dependsOn": [
             "D06",
             "D08"
-          ]
+          ],
+          "evidence": "https://github.com/interzettel/prehnite/pull/84"
         }
       ]
     },
@@ -705,12 +707,13 @@
         {
           "id": "R07",
           "name": "90-asset offline production dry run",
-          "state": "planned",
+          "state": "done",
           "issue": 41,
           "owner": "Agent cloud",
           "dependsOn": [
             "D10"
-          ]
+          ],
+          "evidence": "https://github.com/interzettel/prehnite/pull/84"
         },
         {
           "id": "R08",
