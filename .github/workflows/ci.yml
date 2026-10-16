@@ -183,4 +183,4 @@ jobs:
       - name: Install offline test dependencies
         run: python -m pip install -e ".[dev]"
       - name: Verify refusal, alpha metrics, privacy and no output mutation
-        run: python -m pytest -q tests/test_real_cutout_eval.py tests/test_private_source_preflight.py tests/test_inspect_apparel_pilot.py
+        run: python -m pytest -q tests/test_real_cutout_eval.py tests/test_private_source_preflight.py tests/test_inspect_apparel_pilot.py tests/test_review_intake.py
