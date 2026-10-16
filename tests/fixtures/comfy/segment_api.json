@@ -1,0 +1,28 @@
+{
+  "20": {
+    "class_type": "LoadImage",
+    "inputs": {
+      "image": "placeholder.png"
+    }
+  },
+  "21": {
+    "class_type": "CLIPTextEncode",
+    "inputs": {
+      "text": "placeholder",
+      "clip": [
+        "1",
+        1
+      ]
+    }
+  },
+  "42": {
+    "class_type": "SaveImage",
+    "inputs": {
+      "filename_prefix": "prehnite-mask",
+      "images": [
+        "30",
+        0
+      ]
+    }
+  }
+}

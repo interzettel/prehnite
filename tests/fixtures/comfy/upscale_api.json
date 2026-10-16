@@ -1,0 +1,31 @@
+{
+  "10": {
+    "class_type": "LoadImage",
+    "inputs": {
+      "image": "placeholder.png"
+    }
+  },
+  "12": {
+    "class_type": "ImageUpscaleWithModel",
+    "inputs": {
+      "image": [
+        "10",
+        0
+      ],
+      "upscale_model": [
+        "14",
+        0
+      ]
+    }
+  },
+  "42": {
+    "class_type": "SaveImage",
+    "inputs": {
+      "filename_prefix": "prehnite-upscale",
+      "images": [
+        "12",
+        0
+      ]
+    }
+  }
+}

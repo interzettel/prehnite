@@ -7,6 +7,7 @@ This project follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) an
 ## [Unreleased]
 
 ### Added
+- Offline ComfyUI API-format generation/upscale/segmentation node-map fixtures and fake local HTTP queue tests (#22); invalid graph mappings now fail before uploading a local source image.
 - Typed model-provider capability registry and fail-fast preflight checks for required stages, supported tiers/options, upload permissions and unimplemented adapters; user-managed prices explicitly marked non-live (#21).
 - MIT-licensed Prehnite Python package and command-line interface.
 - Strict manifest/profile contracts, output validation, persistent batch journal, opt-in inference routing and estimated cost tracking.
