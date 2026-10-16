@@ -117,7 +117,7 @@ def _fringe(source: Image.Image, alpha: Image.Image) -> tuple[tuple[int, int, in
 def diagnose(source: Path, mask: Path) -> FringeDiagnosis:
     image, alpha = _inputs(source, mask)
     background, _, count = _fringe(image, alpha)
-    foreground = sum(1 for pixel in alpha.getdata() if pixel)
+    foreground = sum(1 for pixel in alpha.tobytes() if pixel)
     if not count:
         raise RepairRefused("no_verifiable_background_fringe")
     if count > max(1, int(foreground * 0.12)):
@@ -136,7 +136,7 @@ def _render(source: Path, mask: Path, destination: Path,
     # Modifies alpha only; foreground RGB and upstream inputs are untouched.
     alpha.paste(0, mask=changes)
     _, _, remaining = _fringe(image, alpha)
-    retained = sum(1 for pixel in alpha.getdata() if pixel)
+    retained = sum(1 for pixel in alpha.tobytes() if pixel)
     if remaining or not retained or count > expected.foreground_pixels * 0.12:
         raise RepairRefused("technical_validation_failed")
     image.putalpha(alpha)
