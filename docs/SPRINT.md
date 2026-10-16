@@ -12,8 +12,8 @@
 | --- | ---: |
 | Backlog | 15 |
 | Ready | 2 |
-| In progress | 0 |
-| In review | 0 |
+| In progress | 1 |
+| In review | 1 |
 | Blocked | 6 |
 | Done | 43 |
 
@@ -50,13 +50,13 @@
 
 | Priority | Work item | Stream | Handoff / blocker |
 | --- | --- | --- | --- |
-| — | No cards currently | — | — |
+| P1 | [Issue #86 — Machine-readable stage failure and recovery taxonomy](https://github.com/interzettel/prehnite/issues/86) | Runtime | C10 #86: recovery taxonomy in PR #87; offline tests/CI pending, no evidence credit yet. |
 
 ## In review
 
 | Priority | Work item | Stream | Handoff / blocker |
 | --- | --- | --- | --- |
-| — | No cards currently | — | — |
+| P1 | [PR #87 — Typed fail-closed failure classification and report telemetry](https://github.com/interzettel/prehnite/pull/87) | Runtime | C10 #86: recovery taxonomy in PR #87; offline tests/CI pending, no evidence credit yet. |
 
 ## Blocked
 
