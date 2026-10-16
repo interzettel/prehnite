@@ -27,7 +27,7 @@ class Consistent:
     def __call__(self, images, prompt, rubric):
         self.calls.append((tuple(images), prompt, rubric))
         # Stable content identity regardless of display label order.
-        scores = {label: (0.9 if path.stem == "red" else 0.35)
+        scores = {label: (0.9 if path.name == "a.png" else 0.35)
                   for label, path in images.items()}
         return {"winner": max(scores, key=scores.get), "scores": scores,
                 "reason": "Consistent object preference"}
@@ -89,7 +89,7 @@ def test_mixed_stability_and_report_effect_sizes_are_reproducible(pair, tmp_path
         def __call__(self, images, prompt, rubric):
             self.count += 1
             if self.count <= 2:
-                scores = {label: (0.9 if path.stem == "red" else 0.35)
+                scores = {label: (0.9 if path.name == "a.png" else 0.35)
                           for label, path in images.items()}
                 return {"winner": max(scores, key=scores.get), "scores": scores,
                         "reason": "Stable"}
