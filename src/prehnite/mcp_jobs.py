@@ -92,6 +92,7 @@ class JobManager:
                 elif resume:
                     raise ValueError("No prior MCP job to resume")
                 token = uuid.uuid4().hex
+                journal.set_fact("requested_asset_count", len(manifest.assets))
                 journal.job_launch(token, manifest_filename, profile_filename, fp)
                 log_path = journal.root / "worker.log"
                 command = [
