@@ -350,10 +350,10 @@
       "type": "issue",
       "number": 19,
       "title": "Mocked FLUX tier and upscale response shapes",
-      "lane": "Backlog",
+      "lane": "Ready",
       "priority": "P1",
       "stream": "Providers",
-      "note": "Offline FLUX conformance"
+      "note": "Small offline-only PR candidate; no paid provider calls."
     },
     {
       "type": "issue",
@@ -386,10 +386,10 @@
       "type": "issue",
       "number": 15,
       "title": "Crash-injection matrix for billed request recovery",
-      "lane": "Backlog",
+      "lane": "Ready",
       "priority": "P0",
       "stream": "Runtime",
-      "note": "Fault-injection recovery"
+      "note": "Small offline-only PR candidate; no paid provider calls."
     },
     {
       "type": "issue",
@@ -413,10 +413,19 @@
       "type": "issue",
       "number": 46,
       "title": "Merge-state reconciliation and CI hygiene",
-      "lane": "In progress",
+      "lane": "Done",
       "priority": "P1",
       "stream": "Maintenance",
-      "note": "Pillow and GitHub Actions Node runtime warnings."
+      "note": "CI warnings resolved with 47/47 passing in merged PR #47."
+    },
+    {
+      "type": "pr",
+      "number": 47,
+      "title": "Reconcile tracker and modernize CI",
+      "lane": "Done",
+      "priority": "P1",
+      "stream": "Maintenance",
+      "note": "Merged; 47 tests passing without warnings."
     }
   ]
 }
