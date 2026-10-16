@@ -22,7 +22,7 @@
 ## Backlog
 
 | Priority | Work item | Stream | Handoff / blocker |
-| --- | --- | --- |
+| --- | --- | --- | --- |
 | P2 | [Issue #2 — ComfyUI integration on real hardware](https://github.com/interzettel/prehnite/issues/2) | Local GPU | Generic adapter exists; hardware and actual workflow integration remain. |
 | P1 | [Issue #3 — Reliable segmentation and matting](https://github.com/interzettel/prehnite/issues/3) | Quality | Blocked downstream on model contracts and sample corpus. |
 | P2 | [Issue #4 — Local quality judges and crop QA](https://github.com/interzettel/prehnite/issues/4) | Quality | Must calibrate before quality gates use local scores. |
@@ -43,26 +43,26 @@
 ## Ready
 
 | Priority | Work item | Stream | Handoff / blocker |
-| --- | --- | --- |
+| --- | --- | --- | --- |
 | P1 | [Issue #12 — Mocked fal API conformance contract](https://github.com/interzettel/prehnite/issues/12) | Providers | No credentials or paid calls; use recorded fixture schemas. |
 | P1 | [Issue #25 — Judge schema and A/B order-bias tests](https://github.com/interzettel/prehnite/issues/25) | Quality | Typed verdict tranche merged in #61; controlled same-rubric A/B positional-bias measurement (Q03) remains unverified |
 
 ## In progress
 
 | Priority | Work item | Stream | Handoff / blocker |
-| --- | --- | --- |
+| --- | --- | --- | --- |
 | P2 | [Issue #100 — Provenance-bound transforms and tiled 4K comparison](https://github.com/interzettel/prehnite/issues/100) | Delivery | Integer 4K tiles + SHA-bound affine v2 validator merged; real affine warp/execution still open. |
 
 ## In review
 
 | Priority | Work item | Stream | Handoff / blocker |
-| --- | --- | --- |
+| --- | --- | --- | --- |
 | P1 | [PR #122 — Rights-aware local real-image alpha benchmark intake](https://github.com/interzettel/prehnite/pull/122) | Cutouts | Offline scoring+rights attestation framework; tests in PR CI; no real photographs redistributed or quality threshold claimed. |
 
 ## Blocked
 
 | Priority | Work item | Stream | Handoff / blocker |
-| --- | --- | --- |
+| --- | --- | --- | --- |
 | P1 | [Issue #7 — Real fal/Haiku credentialed integration](https://github.com/interzettel/prehnite/issues/7) | Providers | Owner must authorize actual paid/API calls separately. |
 | P1 | [Issue #42 — Owner-accepted production benchmark and release gate](https://github.com/interzettel/prehnite/issues/42) | Release | Owner acceptance and authorized live pilot |
 | P1 | [Issue #32 — Cutout quality benchmark with difficult materials](https://github.com/interzettel/prehnite/issues/32) | Cutouts | Private rights-aware evaluation intake in PR #122; ground-truth real photos, independent alpha references and human review remain blocked on authorized assets. |
@@ -73,7 +73,7 @@
 ## Done
 
 | Priority | Work item | Stream | Handoff / blocker |
-| --- | --- | --- |
+| --- | --- | --- | --- |
 | P1 | [Issue #11 — Agile tracking and release governance](https://github.com/interzettel/prehnite/issues/11) | Governance | Issue/PR templates, changelog and version policy merged via #13. |
 | P0 | [PR #10 — Fail-closed paid recovery and evidence chart](https://github.com/interzettel/prehnite/pull/10) | Reliability | Merged into main; offline safety regression tests passed. |
 | P1 | [PR #13 — Agile delivery board and release governance](https://github.com/interzettel/prehnite/pull/13) | Governance | Merged to main; single-source versioning and governance CI. |
