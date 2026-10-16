@@ -189,3 +189,18 @@ def test_ninety_slots_never_embed_neighboring_original_or_stage(tmp_path):
         assert len(text.encode()) < 1_000_000
     finally:
         j.close()
+
+
+def test_optional_original_counts_toward_total_panel_limit(tmp_path):
+    j, inputs, _, _ = fixture(tmp_path, batch="panel-limit")
+    try:
+        result = j.fact("results")
+        # This check must happen before any missing cutout is read. Twelve
+        # selected panels + one opt-in original would exceed the global limit.
+        result["one"]["outputs"] += [f"cutouts/{n}.png" for n in range(11)]
+        j.set_fact("results", result)
+        with pytest.raises(ValueError, match="12-panel limit"):
+            export_native_inspection(j, "one", inputs=inputs)
+        assert not (j.root / "reviews/one.html").exists()
+    finally:
+        j.close()
