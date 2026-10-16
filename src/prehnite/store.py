@@ -24,6 +24,16 @@ class Journal:
           tokens_out INTEGER NOT NULL DEFAULT 0, data TEXT NOT NULL DEFAULT '{}',
           updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
         );
+        CREATE TABLE IF NOT EXISTS task_attempts (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          task_key TEXT NOT NULL,
+          stage TEXT NOT NULL,
+          provider TEXT NOT NULL,
+          started_at TEXT NOT NULL DEFAULT (STRFTIME('%Y-%m-%dT%H:%M:%fZ','now')),
+          outcome TEXT NOT NULL DEFAULT 'incomplete',
+          elapsed_ms REAL,
+          FOREIGN KEY(task_key) REFERENCES tasks(task_key)
+        );
         CREATE TABLE IF NOT EXISTS facts (key TEXT PRIMARY KEY, value TEXT NOT NULL);
         """)
         self.db.commit()
@@ -53,6 +63,39 @@ class Journal:
         """, (key, stage, status, request_id, path, provider, model, reserved_usd,
               tokens_in, tokens_out, json.dumps(data or {}, sort_keys=True)))
         self.db.commit()
+
+    def begin_attempt(self, task_key: str, stage: str, provider: str) -> int:
+        """Record that a new local invocation began, independently of task state."""
+        cursor = self.db.execute(
+            "INSERT INTO task_attempts(task_key,stage,provider) VALUES (?,?,?)",
+            (task_key, stage, provider),
+        )
+        self.db.commit()
+        return int(cursor.lastrowid)
+
+    def finish_attempt(self, attempt_id: int, outcome: str, elapsed_ms: float) -> None:
+        """Complete one attempt with measured monotonic wall elapsed time."""
+        import math
+        if (outcome not in ("completed", "failed")
+                or isinstance(elapsed_ms, bool)
+                or not math.isfinite(elapsed_ms) or elapsed_ms < 0):
+            raise ValueError("Invalid attempt outcome or elapsed duration")
+        cursor = self.db.execute(
+            """UPDATE task_attempts SET outcome=?,elapsed_ms=?
+               WHERE id=? AND outcome='incomplete'""",
+            (outcome, elapsed_ms, attempt_id),
+        )
+        if cursor.rowcount != 1:
+            raise ValueError("Attempt not found or already finished")
+        self.db.commit()
+
+    def attempts(self) -> list[dict]:
+        """Append-only invocation evidence, including unfinished crash entries."""
+        rows = self.db.execute(
+            "SELECT id,task_key,stage,provider,started_at,outcome,elapsed_ms "
+            "FROM task_attempts ORDER BY id"
+        ).fetchall()
+        return [dict(row) for row in rows]
 
     def set_fact(self, key: str, value: Any) -> None:
         self.db.execute("INSERT OR REPLACE INTO facts VALUES (?,?)",

@@ -147,6 +147,15 @@ prehnite crops my-photo.png --output detail-evidence --edge 1024
 
 The output includes five lossless corner/center crops and a SHA256 manifest. Add `--anchor-x 0.45 --anchor-y 0.35` for one manually chosen area. This creates review evidence, **not an automated quality score**. [Read the crop guide](docs/CROP_EVIDENCE.md).
 
+### Measure cost per usable asset, not raw generations
+
+The offline [economics report](docs/ECONOMICS.md) distinguishes
+**reserved/estimated spend** from **provider-reported partial amounts** and
+**verified invoices** (currently unavailable). It tracks accepted versus
+rejected assets, repeated stage invocations, local timing coverage and
+cost-per-accepted output. Failures still contribute to reserved cost; a
+batch with zero accepted assets has no meaningful cost-per-accepted figure.
+
 ## Where things stand
 
 **`0.1.0.dev0` · source-only development preview.** Not a tagged release or a published PyPI package. The core synthetic workflow works; **photorealistic quality, 4K GPU feasibility, segmentation accuracy and actual API billing have not been certified**.

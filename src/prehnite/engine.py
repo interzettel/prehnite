@@ -5,6 +5,7 @@ import hashlib
 import json
 import os
 import shutil
+import time
 from pathlib import Path
 from typing import Callable
 
@@ -114,6 +115,8 @@ class Engine:
             self.journal.put(key, stage, "submitted", request_id=request_id,
                              path=str(output), provider=endpoint.provider,
                              model=endpoint.model, reserved_usd=estimate)
+        attempt_id = self.journal.begin_attempt(key, stage, endpoint.provider)
+        started = time.perf_counter()
         try:
             with temporary_sibling(output) as temp:
                 result = invoke(on_submit, resume_id, temp)
@@ -129,6 +132,8 @@ class Engine:
                              path=str(output), provider=endpoint.provider,
                              model=endpoint.model, reserved_usd=estimate,
                              data=metadata)
+            self.journal.finish_attempt(
+                attempt_id, "completed", (time.perf_counter() - started) * 1000)
             return output
         except Exception as exc:
             # A failed remote get() with a request ID can be resumed without rebilling.
@@ -137,6 +142,8 @@ class Engine:
                              path=str(output), provider=endpoint.provider,
                              model=endpoint.model, reserved_usd=estimate,
                              data={"error": str(exc)[:500]})
+            self.journal.finish_attempt(
+                attempt_id, "failed", (time.perf_counter() - started) * 1000)
             raise
 
     def generate(self, asset: Asset, variant: str, attempt: int, root: Path) -> Path:
@@ -199,21 +206,27 @@ class Engine:
                 estimate = self.cost("judge")
                 self.journal.put(key, "judge", "submitting", provider="anthropic",
                                  model=judge.model, reserved_usd=estimate)
+                attempt_id = self.journal.begin_attempt(key, "judge", "anthropic")
+                started = time.perf_counter()
                 try:
                     verdict = HaikuJudge(judge).review(
                         {label: paths[label] for label in order},
                         asset.prompt if kind == "prompt" else None, kind)
+                    raw = {"winner": verdict.winner, "scores": verdict.scores,
+                           "reason": verdict.reason, "candidate_order": list(order)}
+                    check_verdict(raw, tuple(paths))
+                    self.journal.put(key, "judge", "completed", provider="anthropic",
+                                     model=judge.model, reserved_usd=estimate, data=raw,
+                                     tokens_in=verdict.tokens_in, tokens_out=verdict.tokens_out)
                 except Exception as exc:
                     self.journal.put(key, "judge", "uncertain", provider="anthropic",
                                      model=judge.model, reserved_usd=estimate,
                                      data={"error": str(exc)[:500]})
+                    self.journal.finish_attempt(
+                        attempt_id, "failed", (time.perf_counter() - started) * 1000)
                     raise
-                raw = {"winner": verdict.winner, "scores": verdict.scores,
-                       "reason": verdict.reason, "candidate_order": list(order)}
-                check_verdict(raw, tuple(paths))
-                self.journal.put(key, "judge", "completed", provider="anthropic",
-                                 model=judge.model, reserved_usd=estimate, data=raw,
-                                 tokens_in=verdict.tokens_in, tokens_out=verdict.tokens_out)
+                self.journal.finish_attempt(
+                    attempt_id, "completed", (time.perf_counter() - started) * 1000)
             if raw.get("candidate_order") is not None and raw["candidate_order"] != list(order):
                 raise ValueError("Cached judge candidate order differs; reconcile manually")
             checked = check_verdict(raw, tuple(paths))
@@ -272,6 +285,9 @@ class Engine:
                         self.journal.put(eval_key, "cutout_judge", "submitting",
                                          provider="anthropic", model=self.profile.judge.model,
                                          reserved_usd=estimate)
+                        attempt_id = self.journal.begin_attempt(
+                            eval_key, "cutout_judge", "anthropic")
+                        started = time.perf_counter()
                         try:
                             verdict = HaikuJudge(self.profile.judge).review(
                                 {"A": original_preview, "B": composite},
@@ -280,7 +296,13 @@ class Engine:
                             self.journal.put(eval_key, "cutout_judge", "uncertain",
                                              provider="anthropic", model=self.profile.judge.model,
                                              reserved_usd=estimate, data={"error": str(exc)[:500]})
+                            self.journal.finish_attempt(
+                                attempt_id, "failed",
+                                (time.perf_counter() - started) * 1000)
                             raise
+                        self.journal.finish_attempt(
+                            attempt_id, "completed",
+                            (time.perf_counter() - started) * 1000)
                         score = verdict.scores["B"]
                         self.journal.put(eval_key, "cutout_judge", "completed",
                                          provider="anthropic", model=self.profile.judge.model,
