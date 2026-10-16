@@ -47,7 +47,7 @@
       "lane": "Backlog",
       "priority": "P2",
       "stream": "Delivery",
-      "note": "Offline embedded gallery exists; analytics tranche #89 / draft PR #90 in development. Parquet, deeper comparisons still open."
+      "note": "Analytics gallery implemented in PR #90; Parquet separately stacked #92."
     },
     {
       "type": "issue",
@@ -359,10 +359,10 @@
       "type": "issue",
       "number": 18,
       "title": "Content-addressed cache with privacy isolation",
-      "lane": "Backlog",
+      "lane": "Done",
       "priority": "P1",
       "stream": "Runtime",
-      "note": "Cache with privacy-scoped keys"
+      "note": "Cache code merged #80; evidence reconciliation #88 merged."
     },
     {
       "type": "issue",
@@ -609,66 +609,84 @@
     },
     {
       "type": "issue",
+      "number": 86,
+      "title": "Machine-readable stage failure and recovery taxonomy",
+      "lane": "Done",
+      "priority": "P1",
+      "stream": "Runtime",
+      "note": "Typed error taxonomy code merged PR #87; C10 ledger credit pending."
+    },
+    {
+      "type": "pr",
+      "number": 87,
+      "title": "Typed fail-closed failure classification and report telemetry",
+      "lane": "Done",
+      "priority": "P1",
+      "stream": "Runtime",
+      "note": "Merged PR #87 with validated CI; ledger credit C10 pending."
+    },
+    {
+      "type": "pr",
+      "number": 88,
+      "title": "Reconcile C07 merged cache evidence and progress tracker",
+      "lane": "Done",
+      "priority": "P1",
+      "stream": "Tracking",
+      "note": "Evidence PR #88 merged after preserving #87; C07 credited."
+    },
+    {
+      "type": "issue",
+      "number": 81,
+      "title": "Batch objective modes and Pareto evaluation RFC",
+      "lane": "Done",
+      "priority": "P1",
+      "stream": "Product strategy",
+      "note": "RFC PR #82 merged; produce-first design only, no runtime gate credit."
+    },
+    {
+      "type": "pr",
+      "number": 82,
+      "title": "Produce/Explore/Experiment and Pareto reporting RFC",
+      "lane": "Done",
+      "priority": "P1",
+      "stream": "Product strategy",
+      "note": "Documentation RFC integrated; human quality and comparable cohorts still future."
+    },
+    {
+      "type": "issue",
       "number": 89,
       "title": "Offline analytics panels and versioned summary exports",
-      "lane": "In progress",
+      "lane": "Done",
       "priority": "P1",
       "stream": "Delivery",
-      "note": "Bounded #6 tranche, draft PR #90; synthetic offline benchmark in CI."
+      "note": "Integrated offline analytics in #90; CI green."
     },
     {
       "type": "pr",
       "number": 90,
       "title": "Offline analytics dashboard and summary exports",
-      "lane": "In progress",
+      "lane": "Done",
       "priority": "P1",
       "stream": "Delivery",
-      "note": "Draft PR while WIP review lane is full; six-job CI pending."
-    },
-    {
-      "type": "pr",
-      "number": 82,
-      "title": "Produce/Explore/Experiment RFC and Pareto reporting",
-      "lane": "In review",
-      "priority": "P2",
-      "stream": "Product",
-      "note": "Other agent RFC remains open; older board snapshot requires reconciliation."
-    },
-    {
-      "type": "pr",
-      "number": 87,
-      "title": "C10 machine-readable failure taxonomy",
-      "lane": "In review",
-      "priority": "P1",
-      "stream": "Runtime",
-      "note": "Other review-ready PR, all six CI checks passed; not merged."
-    },
-    {
-      "type": "pr",
-      "number": 88,
-      "title": "C07 cache evidence reconciliation",
-      "lane": "In review",
-      "priority": "P1",
-      "stream": "Tracking",
-      "note": "Other review-ready PR, all six CI checks passed; not merged."
+      "note": "Integrated offline analytics in #90; CI green."
     },
     {
       "type": "issue",
       "number": 91,
       "title": "Optional typed Parquet exports for offline analytics",
-      "lane": "Blocked",
+      "lane": "In review",
       "priority": "P2",
       "stream": "Delivery",
-      "note": "Stacked feature work implemented on draft PR #92; blocked on parent #90 and review slot, CI pending."
+      "note": "Optional Parquet branch reconciled after dashboard merge; latest CI pending."
     },
     {
       "type": "pr",
       "number": 92,
       "title": "Typed opt-in Parquet metric and slot datasets",
-      "lane": "Blocked",
+      "lane": "In review",
       "priority": "P2",
       "stream": "Delivery",
-      "note": "Stacked draft against PR #90 branch; parent merge/rebase and optional CI checks required."
+      "note": "Optional Parquet branch reconciled after dashboard merge; latest CI pending."
     }
   ]
 }

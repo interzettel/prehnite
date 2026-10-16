@@ -174,7 +174,9 @@ The tracker distinguishes implemented scaffolding from independently evidenced c
 
 [![Prehnite evidence-backed progress by milestone](docs/progress/progress.svg)](docs/progress/STATUS.md)
 
-[Read the 61-unit work ledger](docs/progress/STATUS.md) · [90-asset no-cost benchmark](docs/OFFLINE_90_BENCHMARK.md) · [Technical release gates](docs/PROGRESS.md) · [Offline production analytics](docs/OFFLINE_ANALYTICS.md) · [Optional Parquet export](docs/PARQUET_EXPORT.md) · [Current sprint](docs/SPRINT.md) · [Roadmap](docs/ROADMAP.md)
+[Read the 61-unit work ledger](docs/progress/STATUS.md) · [90-asset no-cost benchmark](docs/OFFLINE_90_BENCHMARK.md) · [Technical release gates](docs/PROGRESS.md) · [Offline production analytics](docs/OFFLINE_ANALYTICS.md) · [Optional Parquet export](docs/PARQUET_EXPORT.md) · [Failure codes and recovery actions](docs/FAILURE_TAXONOMY.md) · [Current sprint](docs/SPRINT.md) · [Roadmap](docs/ROADMAP.md)
+
+The [Produce / Explore / Experiment evaluation RFC](docs/BATCH_OBJECTIVES.md) describes future batch modes and a measurement framework; v0.1 implements neither a general exploration planner nor a Pareto dashboard.
 
 GitHub [Project #1](https://github.com/orgs/interzettel/projects/1) tracks workflow; the version-controlled [ledger](progress/ledger.json) tracks evidence. They answer different questions. Native Project field syncing is still [planned](https://github.com/interzettel/prehnite/issues/44).
 

@@ -13,6 +13,7 @@ from .artifacts import ArtifactIntegrityError, atomic_text, temporary_sibling, v
 from .schema import relative_name
 from .store import Journal
 from .economics import batch_economics
+from .failures import classify_task, summarize_failures
 from .analytics import build_analytics, write_analytics
 
 
@@ -21,8 +22,9 @@ def export_report(journal: Journal) -> dict:
     results = journal.fact("results", {})
     attempts = journal.attempts()
     economics = batch_economics(rows, results, attempts)
+    failure_summary = summarize_failures(rows, results)
     analytics = build_analytics(journal.fact("manifest", {}), results,
-                                rows, attempts, economics)
+                               rows, attempts, economics)
     data = {
         "batch_id": journal.root.name,
         "cost_estimated_or_reserved_usd": round(journal.reserved(), 5),
@@ -35,17 +37,24 @@ def export_report(journal: Journal) -> dict:
         "operations_detail": rows,
         "economics": economics,
         "analytics": analytics,
+        "failure_summary": failure_summary,
+        "batch_failure": journal.fact("batch_failure"),
     }
     atomic_text(journal.root / "report.json",
                 json.dumps(data, indent=2, ensure_ascii=False))
     with temporary_sibling(journal.root / "operations.csv") as temp:
         with temp.open("w", newline="", encoding="utf-8") as f:
             fields = ("task_key", "stage", "status", "provider", "model",
-                      "reserved_usd", "tokens_in", "tokens_out", "request_id", "path")
+                      "reserved_usd", "tokens_in", "tokens_out", "request_id",
+                      "path", "failure_code", "next_action")
             writer = csv.DictWriter(f, fieldnames=fields)
             writer.writeheader()
             for row in rows:
-                writer.writerow({k: row.get(k) for k in fields})
+                failure = classify_task(row)
+                values = {k: row.get(k) for k in fields}
+                values["failure_code"] = failure["code"] if failure else ""
+                values["next_action"] = failure["next_action"] if failure else ""
+                writer.writerow(values)
         os.replace(temp, journal.root / "operations.csv")
     table_rows = "".join(
         "<tr><td>" + "</td><td>".join(html.escape(str(row.get(key, ""))) for key in
@@ -59,6 +68,16 @@ def export_report(journal: Journal) -> dict:
             "attempts_without_finished_timing", "observed_elapsed_ms_p95"))
         + "</td></tr>"
         for name, values in economics["stages"].items()
+    )
+    failure_rows = "".join(
+        "<tr><td>" + html.escape(code) + "</td><td>"
+        + str(count) + "</td></tr>"
+        for code, count in failure_summary["asset_failure_counts"].items()
+    )
+    failure_stage_rows = "".join(
+        "<tr><td>" + html.escape(code) + "</td><td>"
+        + str(count) + "</td></tr>"
+        for code, count in failure_summary["stage_failure_counts"].items()
     )
     cost_per_accepted = economics["reserved_usd_per_accepted_asset"]
     accepted_cost_label = ("undefined (no accepted assets)" if cost_per_accepted is None
@@ -89,6 +108,14 @@ def export_report(journal: Journal) -> dict:
         + stage_rows + "</tbody></table>"
         + "<p>Local measured invocation/publish time is not provider inference "
         + "latency or time spent waiting after a crash.</p>"
+        + "<h2>Machine-readable failures and safe next actions</h2>"
+        + "<p>Snapshot of unresolved stages; pending remote requests never imply "
+          "permission to resubmit or that charges were reversed. See report.json "
+          "for versioned codes and action counts.</p>"
+        + "<h3>Assets</h3><table><tr><th>Code</th><th>Count</th></tr>"
+        + failure_rows + "</table><h3>Stages</h3>"
+        + "<table><tr><th>Code</th><th>Count</th></tr>"
+        + failure_stage_rows + "</table>"
         + "<p>Acceptance state and errors: see report.json. "
           "Open gallery.html for the self-contained analytics and image dashboard. "
           "Exported analytics.json / analytics.csv use schema version 1.</p>"

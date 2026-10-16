@@ -175,6 +175,12 @@ def run_benchmark(home: Path, preview_file: Path | None = None,
         first_results = engine.journal.fact("results", {})
         assert len(first_results) == 30
         assert first_results["asset-010"]["status"] == "error"
+        assert first_results["asset-010"]["failure"]["code"] == "stage_execution_error"
+        paused_report = json.loads((engine.journal.root / "report.json").read_text())
+        assert paused_report["failure_summary"]["schema_version"] == 1
+        assert paused_report["failure_summary"]["asset_failure_counts"] == {
+            "stage_execution_error": 1
+        }
         assert sum(r["status"] == "accepted" for r in first_results.values()) == 29
         before = {r["task_key"]: r for r in engine.journal.tasks()}
     finally:
@@ -221,6 +227,10 @@ def run_benchmark(home: Path, preview_file: Path | None = None,
         assert final["cost_estimated_or_reserved_usd"] == 0.0
         e = final["economics"]
         assert e["accepted_assets"] == COUNT
+        assert final["failure_summary"]["schema_version"] == 1
+        assert final["failure_summary"]["asset_failure_counts"] == {}
+        assert final["failure_summary"]["stage_failure_counts"] == {}
+        assert final["failure_summary"]["unresolved_operations"] == []
         analytics = final["analytics"]
         assert analytics["schema_version"] == 1
         assert analytics["required_assets"] == COUNT

@@ -165,12 +165,13 @@
         {
           "id": "C07",
           "name": "Content-addressed, privacy-scoped stage cache",
-          "state": "planned",
+          "state": "done",
           "issue": 18,
           "owner": "Agent cloud",
           "dependsOn": [
             "C05"
-          ]
+          ],
+          "evidence": "https://github.com/interzettel/prehnite/pull/80"
         },
         {
           "id": "C08",
