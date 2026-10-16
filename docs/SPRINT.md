@@ -12,10 +12,10 @@
 | --- | ---: |
 | Backlog | 14 |
 | Ready | 2 |
-| In progress | 1 |
+| In progress | 2 |
 | In review | 1 |
 | Blocked | 6 |
-| Done | 53 |
+| Done | 54 |
 
 **WIP limits:** In progress ≤ 2; In review ≤ 3. Counts are issue/PR cards, not unique completed engineering features or a percentage.
 
@@ -49,13 +49,14 @@
 
 | Priority | Work item | Stream | Handoff / blocker |
 | --- | --- | --- | --- |
-| P1 | [Issue #93 — Private native-pixel image and cutout inspection](https://github.com/interzettel/prehnite/issues/93) | Delivery | Code in PR #94; verify native bytes, integrity and no external data. |
+| P1 | [Issue #93 — Private native-pixel image and cutout inspection](https://github.com/interzettel/prehnite/issues/93) | Delivery | Native 1:1 base/cutout PR #94 merged; opt-in source comparison + drilldowns in #95/PR #96. |
+| P1 | [Issue #95 — Verified original source and private stage drilldown](https://github.com/interzettel/prehnite/issues/95) | Delivery | Implementation in PR #96, requires full CI and review. |
 
 ## In review
 
 | Priority | Work item | Stream | Handoff / blocker |
 | --- | --- | --- | --- |
-| P1 | [PR #94 — Single-slot native 1:1 comparison and alpha inspection](https://github.com/interzettel/prehnite/pull/94) | Delivery | PR #94 builds private, on-demand full-resolution HTML; CI pending. |
+| P1 | [PR #96 — Original-vs-output native comparison with stage facts](https://github.com/interzettel/prehnite/pull/96) | Delivery | Testing opt-in trusted input root; stage notes limited to safe codes. |
 
 ## Blocked
 
@@ -125,6 +126,7 @@
 | P1 | [PR #90 — Offline analytics dashboard and summary exports](https://github.com/interzettel/prehnite/pull/90) | Delivery | Integrated offline analytics in #90; CI green. |
 | P2 | [Issue #91 — Optional typed Parquet exports for offline analytics](https://github.com/interzettel/prehnite/issues/91) | Delivery | Optional PyArrow Parquet exports merged PR #92; 8/8 CI green. |
 | P2 | [PR #92 — Typed opt-in Parquet metric and slot datasets](https://github.com/interzettel/prehnite/pull/92) | Delivery | Optional PyArrow Parquet exports merged PR #92; 8/8 CI green. |
+| P1 | [PR #94 — Single-slot native 1:1 comparison and alpha inspection](https://github.com/interzettel/prehnite/pull/94) | Delivery | Merged PR #94, full-resolution verified one-slot review; CI green. |
 
 ## How to update this board
 
