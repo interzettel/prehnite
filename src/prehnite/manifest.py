@@ -62,3 +62,7 @@ def validate_job(manifest: Manifest, profile: Profile, input_root: Path) -> None
         for stage in ("upscale", "segmentation"):
             if getattr(profile, stage).provider == "fal":
                 raise ValueError("Cloud uploads require allow_cloud_uploads=true")
+    # Keep this last so missing quotes and explicit consent failures retain
+    # their actionable errors; all checks still happen before any remote call.
+    from .registry import validate_workflow_capabilities
+    validate_workflow_capabilities(manifest, profile)
