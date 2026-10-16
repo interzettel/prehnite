@@ -2,7 +2,7 @@
 
 > Generated from `progress/ledger.json` by `scripts/progress.py`. A unit counts only when done with evidence; percentages are not estimates of engineering time or visual quality.
 
-**41 / 61 units done (67.2%)** · 0 active · 10 blocked · 10 planned.
+**42 / 61 units done (68.9%)** · 0 active · 10 blocked · 9 planned.
 **Milestone gates reached:** 2 / 7.
 
 ![Milestone progress chart](progress.svg)
@@ -12,7 +12,7 @@
 | Milestone | Done | Active | Blocked | Planned | Gate |
 | --- | ---: | ---: | ---: | ---: | --- |
 | M0 · Runnable foundation | 6/6 (100.0%) | 0 | 0 | 0 | Reached |
-| M1 · Safe production engine | 6/10 (60.0%) | 0 | 2 | 2 | Open: C08, C09 |
+| M1 · Safe production engine | 7/10 (70.0%) | 0 | 2 | 1 | Open: C08, C09 |
 | M2 · Models and local compute | 7/10 (70.0%) | 0 | 2 | 1 | Open: P09 |
 | M3 · Photographic quality gates | 4/8 (50.0%) | 0 | 2 | 2 | Open: Q07, Q08 |
 | M4 · Cutouts and corrections | 2/7 (28.6%) | 0 | 2 | 3 | Open: S06, S07 |
@@ -45,7 +45,7 @@
 | `C07` | Content-addressed, privacy-scoped stage cache | done | Agent cloud | C05 | [Evidence](https://github.com/interzettel/prehnite/pull/80) |
 | `C08` | Resumable cross-platform interrupted 90-item batch | planned | Agent local | C04, C05 | [#15](https://github.com/interzettel/prehnite/issues/15) |
 | `C09` | Actual provider charges reconciled to reserves | blocked | Owner | C06 | [#17](https://github.com/interzettel/prehnite/issues/17) |
-| `C10` | Machine-readable stage-level failure taxonomy | planned | Agent cloud | C04 | [#15](https://github.com/interzettel/prehnite/issues/15) |
+| `C10` | Machine-readable stage-level failure taxonomy | done | Agent cloud | C04 | [Evidence](https://github.com/interzettel/prehnite/pull/87) |
 
 ### M2 · Models and local compute
 
