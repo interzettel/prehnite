@@ -13,9 +13,9 @@
 | Backlog | 16 |
 | Ready | 2 |
 | In progress | 1 |
-| In review | 1 |
+| In review | 0 |
 | Blocked | 6 |
-| Done | 74 |
+| Done | 75 |
 
 **WIP limits:** In progress ≤ 2; In review ≤ 3. Counts are issue/PR cards, not unique completed engineering features or a percentage.
 
@@ -57,7 +57,7 @@
 
 | Priority | Work item | Stream | Handoff / blocker |
 | --- | --- | --- | --- |
-| P1 | [PR #123 — Private apparel ZIP inspection and unreviewed mask probe](https://github.com/interzettel/prehnite/pull/123) | Cutouts | Owner ZIP: 84 RGB JPEG inputs, 50 unreviewed GrabCut baselines; no actual gold IoU, original photos or masks committed. |
+| — | No cards currently | — | — |
 
 ## Blocked
 
@@ -65,7 +65,7 @@
 | --- | --- | --- | --- |
 | P1 | [Issue #7 — Real fal/Haiku credentialed integration](https://github.com/interzettel/prehnite/issues/7) | Providers | Owner must authorize actual paid/API calls separately. |
 | P1 | [Issue #42 — Owner-accepted production benchmark and release gate](https://github.com/interzettel/prehnite/issues/42) | Release | Owner acceptance and authorized live pilot |
-| P1 | [Issue #32 — Cutout quality benchmark with difficult materials](https://github.com/interzettel/prehnite/issues/32) | Cutouts | 84 owner-approved AI-generated JPEGs inspected, 50 unreviewed candidate masks. PR #123 archive tester in review; independently reviewed gold alpha still absent. |
+| P1 | [Issue #32 — Cutout quality benchmark with difficult materials](https://github.com/interzettel/prehnite/issues/32) | Cutouts | Owner-approved private 84-JPEG apparel archive and 50 unreviewed alpha candidates; #122/#123 merged. Gold alpha, benchmark scores and human approval remain blocked. |
 | P1 | [Issue #28 — Reference corpus and human calibration protocol](https://github.com/interzettel/prehnite/issues/28) | Quality | Owner-approved reference images / human calibration |
 | P1 | [Issue #24 — 8GB VRAM local inference feasibility benchmark](https://github.com/interzettel/prehnite/issues/24) | Local GPU | Await local RTX 4070 laptop benchmark |
 | P1 | [Issue #17 — Persist pricing assumptions and reconcile actual bills](https://github.com/interzettel/prehnite/issues/17) | Economics | Live billing access needs explicit authorization |
@@ -148,6 +148,7 @@
 | P1 | [PR #119 — Journaled product self-correction synthetic demo](https://github.com/interzettel/prehnite/pull/119) | Cutouts | Merged commit 78f47d1; zero-network one-attempt product fringe demo with cross-platform evidence; no S05 ledger credit. |
 | P1 | [PR #120 — Twenty challenging cutout fixtures and safety guards](https://github.com/interzettel/prehnite/pull/120) | Cutouts | Merged as e3026a1 after 12/12 green CI; synthetic-only, no S03/S05 evidence completion. |
 | P1 | [PR #122 — Rights-aware local real-image alpha benchmark intake](https://github.com/interzettel/prehnite/pull/122) | Cutouts | Merged 463d3c2; local rights-aware alpha scorer, source-only R2 WebP preflight. No reference-alpha production claims. |
+| P1 | [PR #123 — Private apparel ZIP inspection and unreviewed mask probe](https://github.com/interzettel/prehnite/pull/123) | Cutouts | Merged 39c84d3 with 14/14 CI: verified 84 private JPEG inputs and 50 unreviewed local masks; no independent alpha references or QA acceptance. |
 
 ## How to update this board
 

@@ -236,7 +236,7 @@
       "lane": "Blocked",
       "priority": "P1",
       "stream": "Cutouts",
-      "note": "84 owner-approved AI-generated JPEGs inspected, 50 unreviewed candidate masks. PR #123 archive tester in review; independently reviewed gold alpha still absent."
+      "note": "Owner-approved private 84-JPEG apparel archive and 50 unreviewed alpha candidates; #122/#123 merged. Gold alpha, benchmark scores and human approval remain blocked."
     },
     {
       "type": "issue",
@@ -908,10 +908,10 @@
       "type": "pr",
       "number": 123,
       "title": "Private apparel ZIP inspection and unreviewed mask probe",
-      "lane": "In review",
+      "lane": "Done",
       "priority": "P1",
       "stream": "Cutouts",
-      "note": "Owner ZIP: 84 RGB JPEG inputs, 50 unreviewed GrabCut baselines; no actual gold IoU, original photos or masks committed."
+      "note": "Merged 39c84d3 with 14/14 CI: verified 84 private JPEG inputs and 50 unreviewed local masks; no independent alpha references or QA acceptance."
     }
   ]
 }
