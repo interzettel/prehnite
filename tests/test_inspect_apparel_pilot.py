@@ -63,6 +63,7 @@ def test_inventory_and_source_only_no_false_iou(tmp_path):
 
 @pytest.mark.parametrize("problem,reason", [
     ("traversal", "unexpected_or_encrypted_member"),
+    ("windows_slash", "unexpected_or_encrypted_member"),
     ("unrelated", "unexpected_or_encrypted_member"),
     ("duplicate", "duplicate_product_role"),
     ("bad_format", "unsupported_image_format"),
@@ -74,6 +75,8 @@ def test_untrusted_archive_fail_closed_without_output(tmp_path, problem, reason)
     entries = [("pilot/WH-S001/front.jpg", _content())]
     if problem == "traversal":
         entries = [("../WH-S001/front.jpg", _content())]
+    if problem == "windows_slash":
+        entries = [("pilot\\\\WH-S001\\\\front.jpg", _content())]
     if problem == "unrelated":
         entries = [("pilot/README.md", b"no image")]
     if problem == "duplicate":
