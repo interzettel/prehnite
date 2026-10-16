@@ -359,10 +359,10 @@
       "type": "issue",
       "number": 18,
       "title": "Content-addressed cache with privacy isolation",
-      "lane": "Backlog",
+      "lane": "In review",
       "priority": "P1",
       "stream": "Runtime",
-      "note": "Cache with privacy-scoped keys"
+      "note": "Cache merged PR #80; evidence PR #88 now verified and pending integration."
     },
     {
       "type": "issue",
@@ -611,19 +611,28 @@
       "type": "issue",
       "number": 86,
       "title": "Machine-readable stage failure and recovery taxonomy",
-      "lane": "In progress",
+      "lane": "Done",
       "priority": "P1",
       "stream": "Runtime",
-      "note": "C10 #86: recovery taxonomy in PR #87; offline tests/CI pending, no evidence credit yet."
+      "note": "Typed error taxonomy code merged PR #87; C10 ledger credit pending."
     },
     {
       "type": "pr",
       "number": 87,
       "title": "Typed fail-closed failure classification and report telemetry",
-      "lane": "In review",
+      "lane": "Done",
       "priority": "P1",
       "stream": "Runtime",
-      "note": "C10 #86: recovery taxonomy in PR #87; offline tests/CI pending, no evidence credit yet."
+      "note": "Merged PR #87 with validated CI; ledger credit C10 pending."
+    },
+    {
+      "type": "pr",
+      "number": 88,
+      "title": "Reconcile C07 merged cache evidence and progress tracker",
+      "lane": "In review",
+      "priority": "P1",
+      "stream": "Tracking",
+      "note": "Docs-only C07 credit backed by PR #80; branch reconciled with #87."
     }
   ]
 }
