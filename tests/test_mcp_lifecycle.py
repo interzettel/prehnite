@@ -240,3 +240,75 @@ def test_real_detached_cli_worker_survives_manager_reconnect(tmp_path):
         "batches/mcp-fixture/worker.log").read_text(errors="replace"))
     assert new_client.status("mcp-fixture")["accepted_assets"] == 1
     assert Path(new_client.export("mcp-fixture")["archive"]).is_file()
+
+
+def test_mutated_staged_configuration_is_rejected_before_worker_writes(monkeypatch, tmp_path):
+    manager = setup(tmp_path)
+    fake_launch(monkeypatch)
+    manager.submit("fixture.yaml", "demo.yaml")
+    launched_token = token(manager)
+    changed = yaml.safe_load((manager.profiles / "demo.yaml").read_text())
+    changed["policy"]["maximum_attempts"] = 3
+    (manager.profiles / "demo.yaml").write_text(yaml.safe_dump(changed), encoding="utf8")
+    with pytest.raises(ValueError, match="configuration changed since preflight"):
+        simulate_worker(manager, launched_token)
+    j = Journal(manager.workspace, "mcp-fixture")
+    try:
+        assert j.fact("configuration_sha256") is None
+        assert j.fact("manifest") is None
+        assert j.job_record()["status"] == "launching"
+    finally:
+        j.close()
+
+
+def test_active_subprocess_survives_client_reconnect_and_honors_cancel(monkeypatch, tmp_path):
+    manager = setup(tmp_path, assets=1)
+    fake_launch(monkeypatch)
+    manager.submit("fixture.yaml", "demo.yaml")
+    launch_token = token(manager)
+    ready = tmp_path / "worker-ready"
+    # Genuine independent process and genuine run.lock, no model/provider call.
+    script = """
+import sys, time
+from pathlib import Path
+from prehnite.store import Journal, JobStopped
+workspace, token, ready = Path(sys.argv[1]), sys.argv[2], Path(sys.argv[3])
+journal = Journal(workspace, "mcp-fixture")
+try:
+    with journal.exclusive():
+        journal.job_start(token)
+        ready.write_text("ready")
+        while True:
+            try:
+                journal.job_checkpoint(token)
+            except JobStopped as stopped:
+                journal.job_finish(token, stopped.status)
+                break
+            time.sleep(0.025)
+finally:
+    journal.close()
+"""
+    process = subprocess.Popen(
+        [sys.executable, "-c", script, str(manager.workspace), launch_token, str(ready)],
+        stdin=subprocess.DEVNULL, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+    )
+    try:
+        deadline = time.monotonic() + 12
+        while not ready.is_file() and time.monotonic() < deadline:
+            if process.poll() is not None:
+                pytest.fail(f"Worker exited early: {process.stderr.read()!r}")
+            time.sleep(0.03)
+        assert ready.is_file(), "Independent worker never acquired its run lock"
+        reconnected = JobManager(tmp_path)
+        assert reconnected.status("mcp-fixture")["worker_active"]
+        assert reconnected.status("mcp-fixture")["status"] == "running"
+        assert reconnected.submit("fixture.yaml", "demo.yaml")["status"] == "already_running"
+        assert reconnected.control("mcp-fixture", "cancel")["status"] == "cancel_requested"
+        stdout, stderr = process.communicate(timeout=12)
+        assert process.returncode == 0, (stdout, stderr)
+        assert reconnected.status("mcp-fixture")["status"] == "cancelled"
+        assert not reconnected.status("mcp-fixture")["worker_active"]
+    finally:
+        if process.poll() is None:
+            process.kill()
+            process.communicate(timeout=5)
