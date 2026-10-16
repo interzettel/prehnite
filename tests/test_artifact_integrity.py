@@ -236,12 +236,12 @@ def test_atomic_zip_failure_preserves_last_good_archive(monkeypatch, tmp_path):
         archive = engine.journal.root/"prehnite-atomic.zip"
         baseline = archive.read_bytes()
         import prehnite.reporting as reporting
-        original = reporting.zipfile.ZipFile.write
-        def fail_on_asset(self, filename, arcname=None, *args, **kwargs):
-            if arcname == "images/asset.png":
+        original = reporting._zip_add
+        def fail_on_asset(archive, name, body):
+            if name == "images/asset.png":
                 raise OSError("disk full mid-archive")
-            return original(self, filename, arcname, *args, **kwargs)
-        monkeypatch.setattr(reporting.zipfile.ZipFile, "write", fail_on_asset)
+            return original(archive, name, body)
+        monkeypatch.setattr(reporting, "_zip_add", fail_on_asset)
         with pytest.raises(OSError):
             package(engine.journal)
         assert archive.read_bytes() == baseline

@@ -69,40 +69,75 @@ def export_report(journal: Journal) -> dict:
     return data
 
 
+_FIXED_ZIP_DATE = (1980, 1, 1, 0, 0, 0)
+
+
+def _zip_add(archive: zipfile.ZipFile, name: str, body: bytes) -> None:
+    """Use identical ZIP metadata across operating systems and source mtimes."""
+    info = zipfile.ZipInfo(name, date_time=_FIXED_ZIP_DATE)
+    info.create_system = 3
+    info.external_attr = 0o100644 << 16
+    info.compress_type = zipfile.ZIP_DEFLATED
+    archive.writestr(info, body, compress_type=zipfile.ZIP_DEFLATED, compresslevel=6)
+
+
 def package(journal: Journal) -> Path:
-    """Build a verified ZIP off to the side, then atomically publish it."""
+    """Publish a deterministic archive with a digest manifest after verification."""
     results = journal.fact("results", {})
     selected = (journal.root / "selected").resolve()
-    artifacts = {}
+    artifacts: dict[str, tuple[Path, str]] = {}
     for result in results.values():
         if result.get("status") != "accepted":
             continue
         hashes = result.get("outputs_sha256", {})
         for name in result.get("outputs", []):
             name = relative_name(name)
-            if name in artifacts:
-                raise ArtifactIntegrityError("Duplicate archive target")
+            if name in artifacts or name.startswith("_prehnite/"):
+                raise ArtifactIntegrityError("Duplicate or reserved archive target")
             destination = (selected / name).resolve()
             if not destination.is_relative_to(selected):
                 raise ArtifactIntegrityError("Unsafe archive destination")
             verified_image(destination, hashes.get(name))
             artifacts[name] = (destination, hashes[name])
 
+    entries = {}
+    for name, (source, expected) in sorted(artifacts.items()):
+        verified_image(source, expected)
+        data = source.read_bytes()
+        if hashlib.sha256(data).hexdigest() != expected:
+            raise ArtifactIntegrityError("Output changed during ZIP preflight: " + name)
+        entries[name] = data
+    for name in ("report.json", "operations.csv", "report.html", "gallery.html",
+                 "provenance.json"):
+        source = journal.root / name
+        if source.is_file():
+            entries["_prehnite/" + name] = source.read_bytes()
+
+    # A portable digest list also covers the included reports; the top-level
+    # manifest does not hash itself.
+    manifest = {
+        "schema_version": 1,
+        "sha256": {
+            name: hashlib.sha256(body).hexdigest()
+            for name, body in sorted(entries.items())
+        },
+    }
+    entries["_prehnite/archive-manifest.json"] = (
+        json.dumps(manifest, sort_keys=True, separators=(",", ":")) + "\n"
+    ).encode("utf-8")
+
     path = journal.root / f"prehnite-{journal.root.name}.zip"
     with temporary_sibling(path) as staged:
-        with zipfile.ZipFile(staged, "w", zipfile.ZIP_DEFLATED, compresslevel=6) as archive:
-            for name, (source, expected_sha256) in sorted(artifacts.items()):
-                verified_image(source, expected_sha256)
-                archive.write(source, name)
-            for name in ("report.json", "operations.csv", "report.html", "gallery.html"):
-                source = journal.root / name
-                if source.is_file():
-                    archive.write(source, "_prehnite/" + name)
+        with zipfile.ZipFile(staged, "w", compression=zipfile.ZIP_DEFLATED) as archive:
+            for name, body in sorted(entries.items()):
+                _zip_add(archive, name, body)
         with zipfile.ZipFile(staged) as archive:
             if archive.testzip() is not None:
-                raise ArtifactIntegrityError("ZIP checksum validation failed")
-            for name, (_, expected) in artifacts.items():
+                raise ArtifactIntegrityError("ZIP CRC validation failed")
+            if archive.namelist() != sorted(entries):
+                raise ArtifactIntegrityError("ZIP entry order changed")
+            for name, expected in manifest["sha256"].items():
                 if hashlib.sha256(archive.read(name)).hexdigest() != expected:
-                    raise ArtifactIntegrityError(f"ZIP entry has unexpected bytes: {name}")
+                    raise ArtifactIntegrityError("ZIP entry digest mismatch: " + name)
         os.replace(staged, path)
     return path

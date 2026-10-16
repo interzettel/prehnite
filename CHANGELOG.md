@@ -25,6 +25,7 @@ This project follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) an
 - Original Prehnite vector mark, improved first-run documentation and truthful provider status matrix.
 
 ### Fixed
+- Deterministic ZIP ordering, fixed metadata timestamps and SHA256 archive receipt cover accepted outputs and bundled reports; repeated export no longer varies with local file mtimes (#36).
 - Validate optional judge verdicts as complete finite numeric schemas with consistent winners/ties, reject malformed cached decisions and abstain on independent-rubric disagreement; fake position-bias tests added (#25, offline only).
 - ComfyUI prompt IDs are persisted before queue dispatch, with fail-closed history recovery after connection loss, cancelled/interrupted job recognition, and bounded atomic downloads; no unverified local-model quality claims (#23).
 - Validate SAM 3.1 mask geometry and grayscale/alpha semantics before cutout acceptance; reject ambiguous multiple masks and undocumented endpoint aliases (#20; mocked only).
