@@ -55,11 +55,12 @@ def test_owner_selected_full_resolution_png_and_rounded_readme_hero():
     with Image.open(path) as image:
         assert image.format == "PNG"
         assert image.size == (2020, 779)
+        image.verify()
+    with Image.open(path) as image:
         rgba = image.convert("RGBA")
         assert rgba.getpixel((0, 0))[3] == 0
         assert rgba.getpixel((2019, 778))[3] == 0
         assert rgba.getpixel((1010, 389))[3] >= 250
-        image.verify()
     readme = (root / "README.md").read_text(encoding="utf-8")
     assert 'src="assets/prehnite-riso-green-coral.png"' in readme
     assert 'border-radius: 16px' in readme
