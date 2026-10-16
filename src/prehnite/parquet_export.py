@@ -249,6 +249,8 @@ def verified_parquet_entries(root: Path) -> dict[str, bytes]:
         entries = {}
         for name in DATASETS:
             source = root / name
+            if not source.resolve().is_relative_to(root.resolve()):
+                raise ValueError("Parquet dataset escapes batch root")
             item = publication["datasets"][name]
             body = source.read_bytes()
             if (len(body) < 8 or body[:4] != b"PAR1" or body[-4:] != b"PAR1"
