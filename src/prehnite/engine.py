@@ -18,7 +18,7 @@ from .manifest import resolve_input, validate_job
 from .providers import get_provider
 from .reporting import export_report, package
 from .schema import Asset, Endpoint, Manifest, Profile
-from .store import Journal
+from .store import Journal, JobStopped
 
 
 class BudgetExceeded(RuntimeError):
@@ -32,9 +32,10 @@ def fingerprint(manifest: Manifest, profile: Profile) -> str:
 
 class Engine:
     def __init__(self, manifest: Manifest, profile: Profile, workspace: Path,
-                 inputs: Path = Path("inputs")):
+                 inputs: Path = Path("inputs"), job_token: str | None = None):
         validate_job(manifest, profile, inputs)
         self.manifest = manifest
+        self.job_token = job_token
         self.profile = profile
         self.inputs = inputs
         self.journal = Journal(workspace, manifest.id)
@@ -85,6 +86,7 @@ class Engine:
     def stage(self, key: str, stage: str, endpoint: Endpoint, output: Path,
               invoke: Callable, price_key: str = "",
               cache_request: dict | None = None) -> Path:
+        self.journal.job_checkpoint(self.job_token)
         previous = self.journal.get(key)
         if previous and previous["status"] == "completed":
             try:
@@ -234,6 +236,7 @@ class Engine:
                     f"Paid judge {key} has uncertain status; reconcile manually"
                 )
             else:
+                self.journal.job_checkpoint(self.job_token)
                 estimate = self.cost("judge")
                 self.journal.put(key, "judge", "submitting", provider="anthropic",
                                  model=judge.model, reserved_usd=estimate)
@@ -292,6 +295,7 @@ class Engine:
         # Retry is a real edge-refinement alternative, not a redundant paid model call.
         problems = []
         for refine in (False, True)[:self.profile.policy.maximum_attempts]:
+            self.journal.job_checkpoint(self.job_token)
             output = root / ("refined.png" if refine else "raw.png")
             try:
                 stats = make_cutout(selected, mask, output, refine=refine)
@@ -314,6 +318,7 @@ class Engine:
                     elif old:
                         raise RuntimeError("Ambiguous paid cutout judgment; reconcile first")
                     else:
+                        self.journal.job_checkpoint(self.job_token)
                         estimate = self.cost("judge")
                         self.journal.put(eval_key, "cutout_judge", "submitting",
                                          provider="anthropic", model=self.profile.judge.model,
@@ -397,6 +402,7 @@ class Engine:
                     "reason": "; ".join(failures)}
         last_reason = "No acceptable candidate"
         for attempt in range(1, self.profile.policy.maximum_attempts + 1):
+            self.journal.job_checkpoint(self.job_token)
             candidates: dict[str, Path] = {}
             if asset.source:
                 candidates["source"] = resolve_input(self.inputs, asset.source)
@@ -444,12 +450,33 @@ class Engine:
 
     def run(self) -> dict:
         with self.journal.exclusive():
-            return self._run_locked()
+            if self.job_token is not None:
+                self.journal.job_start(self.job_token)
+            try:
+                result = self._run_locked()
+            except JobStopped as stop:
+                if self.job_token is not None and stop.status in ("paused", "cancelled"):
+                    self.journal.job_finish(self.job_token, stop.status)
+                    export_report(self.journal)
+                    return {"job_status": stop.status,
+                            "asset_results": self.journal.fact("results", {})}
+                raise
+            except Exception:
+                if self.job_token is not None:
+                    self.journal.job_finish(self.job_token, "failed",
+                                            "Worker raised an exception; inspect local log")
+                raise
+            else:
+                if self.job_token is not None:
+                    self.journal.job_finish(self.job_token, "completed")
+                return result
 
     def _run_locked(self) -> dict:
         self.verify_input_sources()
+        self.journal.job_checkpoint(self.job_token)
         results = self.journal.fact("results", {})
         for asset in self.manifest.assets:
+            self.journal.job_checkpoint(self.job_token, asset.id)
             if results.get(asset.id, {}).get("status") == "accepted":
                 try:
                     self.validate_saved_outputs(results[asset.id])
@@ -467,6 +494,9 @@ class Engine:
                 self.journal.set_fact("results", results)
                 export_report(self.journal)
                 raise
+            except JobStopped:
+                self.journal.set_fact("results", results)
+                raise
             except ArtifactIntegrityError as exc:
                 result = {"status": "error", "outputs": [], "integrity_error": True,
                           "reason": str(exc)[:500]}
@@ -475,6 +505,8 @@ class Engine:
             results[asset.id] = result
             self.journal.set_fact("results", results)
             export_report(self.journal)
+            self.journal.job_checkpoint(self.job_token)
+        self.journal.job_checkpoint(self.job_token)
         report = export_report(self.journal)
         package(self.journal)
         return report
