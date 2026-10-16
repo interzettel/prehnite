@@ -14,6 +14,7 @@ from collections import Counter
 from pathlib import Path
 
 from .artifacts import ArtifactIntegrityError, atomic_text, verified_image
+from .brand import embedded_theme_css
 from .manifest import resolve_input
 from .schema import Asset, relative_name
 from .store import Journal
@@ -238,5 +239,6 @@ def export_native_inspection(
     # The reviews directory itself must never be a symlink outside the batch.
     if not output.parent.resolve().is_relative_to(journal.root.resolve()):
         raise ArtifactIntegrityError("Review destination escapes batch root")
+    page = page.replace('</style>', embedded_theme_css() + '</style>', 1)
     atomic_text(output, page)
     return output
