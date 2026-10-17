@@ -13,9 +13,9 @@
 | Backlog | 17 |
 | Ready | 3 |
 | In progress | 2 |
-| In review | 3 |
+| In review | 0 |
 | Blocked | 7 |
-| Done | 81 |
+| Done | 84 |
 
 **WIP limits:** In progress ≤ 2; In review ≤ 3. Counts are issue/PR cards, not unique completed engineering features or a percentage.
 
@@ -54,15 +54,13 @@
 | Priority | Work item | Stream | Handoff / blocker |
 | --- | --- | --- | --- |
 | P2 | [Issue #100 — Provenance-bound transforms and tiled 4K comparison](https://github.com/interzettel/prehnite/issues/100) | Delivery | Integer 4K tiles + SHA-bound affine v2 validator merged; real affine warp/execution still open. |
-| P1 | [Issue #134 — Local GPU feasibility doctor and benchmark](https://github.com/interzettel/prehnite/issues/134) | Local GPU | PR #139 read-only offline hardware doctor under review; real GPU recipe benchmarking and non-NVIDIA probing not verified. |
+| P1 | [Issue #134 — Local GPU feasibility doctor and benchmark](https://github.com/interzettel/prehnite/issues/134) | Local GPU | PR #139 delivers offline read-only hardware diagnostics; real GPU model benchmarks and other accelerator backends remain open. |
 
 ## In review
 
 | Priority | Work item | Stream | Handoff / blocker |
 | --- | --- | --- | --- |
-| P1 | [Issue #133 — Recipe contract and capability DAG validation](https://github.com/interzettel/prehnite/issues/133) | Recipes | PR #138 blueprints have passed 16/16 CI checks and await owner review; recipe execution still unimplemented. |
-| P1 | [PR #138 — Versioned micro/macro recipe DAG contracts](https://github.com/interzettel/prehnite/pull/138) | Recipes | Blueprint-only DAG contract, 16/16 CI green; owner merge pending; no weights or runtime. |
-| P1 | [PR #139 — Offline hardware doctor and provenance-aware memory probes](https://github.com/interzettel/prehnite/pull/139) | Local GPU | Read-only source-labeled RAM and NVIDIA VRAM, cross-platform CI; no model-specific GPU benchmarking or tier certification. |
+| — | No cards currently | — | — |
 
 ## Blocked
 
@@ -161,6 +159,9 @@
 | P1 | [PR #129 — Stage opt-in bounded opaque repair for cutout review](https://github.com/interzettel/prehnite/pull/129) | Cutouts | Merged and verified 2026-10-17. Scope delivered, broader release acceptance still pending. |
 | P1 | [PR #130 — Dependency SBOM and exact environment pins](https://github.com/interzettel/prehnite/pull/130) | Licensing | Merged and verified 2026-10-17. Scope delivered, broader release acceptance still pending. |
 | P1 | [PR #131 — Model and checkpoint rights inventory](https://github.com/interzettel/prehnite/pull/131) | Licensing | Merged and verified 2026-10-17. Scope delivered, broader release acceptance still pending. |
+| P1 | [Issue #133 — Recipe contract and capability DAG validation](https://github.com/interzettel/prehnite/issues/133) | Recipes | Versioned micro/macro offline DAG contract merged via PR #138; executable model installation and real GPU tests remain separate. |
+| P1 | [PR #138 — Versioned micro/macro recipe DAG contracts](https://github.com/interzettel/prehnite/pull/138) | Recipes | Merged PR #138; strict preview-only recipe validation; no installed weights or model inference. |
+| P1 | [PR #139 — Offline hardware doctor and provenance-aware memory probes](https://github.com/interzettel/prehnite/pull/139) | Local GPU | PR #139 merged hardware-readiness diagnostics only; real recipe execution and physical GPU benchmarks unverified. |
 
 ## How to update this board
 

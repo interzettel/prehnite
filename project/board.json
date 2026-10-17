@@ -980,10 +980,10 @@
       "type": "issue",
       "number": 133,
       "title": "Recipe contract and capability DAG validation",
-      "lane": "In review",
+      "lane": "Done",
       "priority": "P1",
       "stream": "Recipes",
-      "note": "PR #138 blueprints have passed 16/16 CI checks and await owner review; recipe execution still unimplemented."
+      "note": "Versioned micro/macro offline DAG contract merged via PR #138; executable model installation and real GPU tests remain separate."
     },
     {
       "type": "issue",
@@ -992,7 +992,7 @@
       "lane": "In progress",
       "priority": "P1",
       "stream": "Local GPU",
-      "note": "PR #139 read-only offline hardware doctor under review; real GPU recipe benchmarking and non-NVIDIA probing not verified."
+      "note": "PR #139 delivers offline read-only hardware diagnostics; real GPU model benchmarks and other accelerator backends remain open."
     },
     {
       "type": "issue",
@@ -1016,19 +1016,19 @@
       "type": "pr",
       "number": 138,
       "title": "Versioned micro/macro recipe DAG contracts",
-      "lane": "In review",
+      "lane": "Done",
       "priority": "P1",
       "stream": "Recipes",
-      "note": "Blueprint-only DAG contract, 16/16 CI green; owner merge pending; no weights or runtime."
+      "note": "Merged PR #138; strict preview-only recipe validation; no installed weights or model inference."
     },
     {
       "type": "pr",
       "number": 139,
       "title": "Offline hardware doctor and provenance-aware memory probes",
-      "lane": "In review",
+      "lane": "Done",
       "priority": "P1",
       "stream": "Local GPU",
-      "note": "Read-only source-labeled RAM and NVIDIA VRAM, cross-platform CI; no model-specific GPU benchmarking or tier certification."
+      "note": "PR #139 merged hardware-readiness diagnostics only; real recipe execution and physical GPU benchmarks unverified."
     }
   ]
 }
