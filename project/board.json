@@ -161,10 +161,10 @@
       "type": "issue",
       "number": 40,
       "title": "Model, dependency and artifact licensing inventory",
-      "lane": "Backlog",
+      "lane": "Ready",
       "priority": "P1",
       "stream": "Licensing",
-      "note": "Dependency/model weight terms inventory"
+      "note": "R06-A01 and R06-A02 merged; remaining media rights and final release compliance separate."
     },
     {
       "type": "issue",
@@ -242,10 +242,10 @@
       "type": "issue",
       "number": 31,
       "title": "Targeted repair planner for failed cutouts",
-      "lane": "In progress",
+      "lane": "Blocked",
       "priority": "P1",
       "stream": "Cutouts",
-      "note": "S05-A04 opt-in production staging in PR #129, review-only, no visual acceptance; S05-A05 real photo evidence blocked."
+      "note": "S05-A04 merged; S05-A05 independent real-photo alpha acceptance still awaits annotated evidence."
     },
     {
       "type": "issue",
@@ -926,10 +926,10 @@
       "type": "pr",
       "number": 125,
       "title": "Validated offline human-review ZIP and repair triage",
-      "lane": "In review",
+      "lane": "Done",
       "priority": "P1",
       "stream": "Cutouts",
-      "note": "CI green; owner reviewing cutout UI, PR unmerged. In-review atomic work earns no completion credit."
+      "note": "Merged and verified 2026-10-17. Scope delivered, broader release acceptance still pending."
     },
     {
       "type": "pr",
@@ -944,10 +944,73 @@
       "type": "pr",
       "number": 129,
       "title": "Stage opt-in bounded opaque repair for cutout review",
-      "lane": "In review",
+      "lane": "Done",
       "priority": "P1",
       "stream": "Cutouts",
-      "note": "Strict owner-declared opaque product, isolate journaled repair, preserve selected assets; CI pending. No human acceptance or parent unit done."
+      "note": "Merged and verified 2026-10-17. Scope delivered, broader release acceptance still pending."
+    },
+    {
+      "type": "pr",
+      "number": 130,
+      "title": "Dependency SBOM and exact environment pins",
+      "lane": "Done",
+      "priority": "P1",
+      "stream": "Licensing",
+      "note": "Merged and verified 2026-10-17. Scope delivered, broader release acceptance still pending."
+    },
+    {
+      "type": "pr",
+      "number": 131,
+      "title": "Model and checkpoint rights inventory",
+      "lane": "Done",
+      "priority": "P1",
+      "stream": "Licensing",
+      "note": "Merged and verified 2026-10-17. Scope delivered, broader release acceptance still pending."
+    },
+    {
+      "type": "issue",
+      "number": 132,
+      "title": "Versioned model recipes: micro/macro architecture",
+      "lane": "Backlog",
+      "priority": "P1",
+      "stream": "Recipes",
+      "note": "New owner-directed recipe roadmap; future reviewed atomic scope migration."
+    },
+    {
+      "type": "issue",
+      "number": 133,
+      "title": "Recipe contract and capability DAG validation",
+      "lane": "Ready",
+      "priority": "P1",
+      "stream": "Recipes",
+      "note": "Next independent PR. Contract-only: no model downloads, no proven hardware support."
+    },
+    {
+      "type": "issue",
+      "number": 134,
+      "title": "Local GPU feasibility doctor and benchmark",
+      "lane": "Backlog",
+      "priority": "P1",
+      "stream": "Local GPU",
+      "note": "New owner-directed recipe roadmap; future reviewed atomic scope migration."
+    },
+    {
+      "type": "issue",
+      "number": 135,
+      "title": "Rights-aware model acquisition and installation",
+      "lane": "Backlog",
+      "priority": "P1",
+      "stream": "Recipes",
+      "note": "New owner-directed recipe roadmap; future reviewed atomic scope migration."
+    },
+    {
+      "type": "issue",
+      "number": 136,
+      "title": "Memory-aware batch scheduling and profiling",
+      "lane": "Backlog",
+      "priority": "P1",
+      "stream": "Local GPU",
+      "note": "New owner-directed recipe roadmap; future reviewed atomic scope migration."
     }
   ]
 }

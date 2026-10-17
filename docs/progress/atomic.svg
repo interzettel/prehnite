@@ -10,11 +10,11 @@
 <rect x="32" y="118" width="810" height="18" rx="5" fill="#D5DCD5"/>
 <rect x="32" y="118" width="557.7" height="18" rx="5" fill="#075231"/>
 <text x="32" y="190" font-size="16" font-weight="600" fill="#075231">Atomic delivery / initially unfinished 19 units</text>
-<text x="1060" y="190" font-size="18" font-weight="700" text-anchor="end" fill="#075231">10/73 · 13.70%</text>
+<text x="1060" y="190" font-size="18" font-weight="700" text-anchor="end" fill="#075231">14/73 · 19.18%</text>
 <rect x="32" y="203" width="810" height="18" rx="5" fill="#D5DCD5"/>
-<rect x="32" y="203" width="111.0" height="18" rx="5" fill="#075231"/>
+<rect x="32" y="203" width="155.3" height="18" rx="5" fill="#075231"/>
 <text x="32" y="249" font-size="13" fill="#53675A">Second measure covers only frozen open-unit tasks, never an overall completion estimate.</text>
-<text x="32" y="273" font-size="13" fill="#53675A">Review 2 · Active 0 · Blocked 27 · Planned 34 · baseline 2026-10-17</text>
+<text x="32" y="273" font-size="13" fill="#53675A">Review 0 · Active 0 · Blocked 27 · Planned 32 · baseline 2026-10-17</text>
 <text x="32" y="305" font-size="16" font-weight="600" fill="#075231">PR-SIZED TASKS BY UNFINISHED UNIT</text>
 <text x="32" y="333" font-size="14" font-weight="700" fill="#075231">C06</text>
 <text x="120" y="333" font-size="12" fill="#384F45">Versioned pricing quotes and bill reconcili</text>
@@ -83,11 +83,11 @@
 <text x="1060" y="684" font-size="13" text-anchor="end" fill="#075231">0/3</text>
 <text x="32" y="723" font-size="14" font-weight="700" fill="#075231">R06</text>
 <text x="120" y="723" font-size="12" fill="#384F45">Audit dependencies and model-weight licensi</text>
-<g><title>R06-A01 / planned / Inventory Python dependencies and transitive licenses</title><rect x="565.00" y="709" width="100.75" height="17" rx="2" fill="#D5DCD5"/></g>
-<g><title>R06-A02 / planned / Audit optional model checkpoints and training restrictions</title><rect x="668.75" y="709" width="100.75" height="17" rx="2" fill="#D5DCD5"/></g>
+<g><title>R06-A01 / done / Inventory Python dependencies and transitive licenses</title><rect x="565.00" y="709" width="100.75" height="17" rx="2" fill="#075231"/></g>
+<g><title>R06-A02 / done / Audit optional model checkpoints and training restrictions</title><rect x="668.75" y="709" width="100.75" height="17" rx="2" fill="#075231"/></g>
 <g><title>R06-A03 / planned / Scan produced artifacts, embedded fonts and photos for redistribution rights</title><rect x="772.50" y="709" width="100.75" height="17" rx="2" fill="#D5DCD5"/></g>
 <g><title>R06-A04 / planned / Publish actionable license compliance/upgrade report</title><rect x="876.25" y="709" width="100.75" height="17" rx="2" fill="#D5DCD5"/></g>
-<text x="1060" y="723" font-size="13" text-anchor="end" fill="#075231">0/4</text>
+<text x="1060" y="723" font-size="13" text-anchor="end" fill="#075231">2/4</text>
 <text x="32" y="762" font-size="14" font-weight="700" fill="#075231">R08</text>
 <text x="120" y="762" font-size="12" fill="#384F45">90-asset live pilot and owner quality accep</text>
 <g><title>R08-A01 / blocked / Approve live 90-asset test scope and external spend</title><rect x="565.00" y="748" width="135.33" height="17" rx="2" fill="#A63D35"/></g>
@@ -126,9 +126,9 @@
 <g><title>S05-A01 / done / Typed zero-spend repair decision plan</title><rect x="565.00" y="943" width="80.00" height="17" rx="2" fill="#075231"/></g>
 <g><title>S05-A02 / done / Idempotent journal-backed local repair executor</title><rect x="648.00" y="943" width="80.00" height="17" rx="2" fill="#075231"/></g>
 <g><title>S05-A03 / done / Hard-case refusal and one-attempt coverage</title><rect x="731.00" y="943" width="80.00" height="17" rx="2" fill="#075231"/></g>
-<g><title>S05-A04 / in_review / Wire the bounded repair into production Engine.cutout</title><rect x="814.00" y="943" width="80.00" height="17" rx="2" fill="#E5955B"/></g>
+<g><title>S05-A04 / done / Wire the bounded repair into production Engine.cutout</title><rect x="814.00" y="943" width="80.00" height="17" rx="2" fill="#075231"/></g>
 <g><title>S05-A05 / blocked / Verify repaired real-photo acceptance contract</title><rect x="897.00" y="943" width="80.00" height="17" rx="2" fill="#A63D35"/></g>
-<text x="1060" y="957" font-size="13" text-anchor="end" fill="#075231">3/5</text>
+<text x="1060" y="957" font-size="13" text-anchor="end" fill="#075231">4/5</text>
 <text x="32" y="996" font-size="14" font-weight="700" fill="#075231">S06</text>
 <text x="120" y="996" font-size="12" fill="#384F45">Transparent cutout benchmark with alpha met</text>
 <g><title>S06-A01 / done / Build withheld-reference synthetic alpha challenge suite</title><rect x="565.00" y="982" width="66.17" height="17" rx="2" fill="#075231"/></g>
@@ -141,10 +141,10 @@
 <text x="32" y="1035" font-size="14" font-weight="700" fill="#075231">S07</text>
 <text x="120" y="1035" font-size="12" fill="#384F45">Human-accepted cutout samples across tricky</text>
 <g><title>S07-A01 / planned / Define human acceptance rubric across tricky materials</title><rect x="565.00" y="1021" width="80.00" height="17" rx="2" fill="#D5DCD5"/></g>
-<g><title>S07-A02 / in_review / Implement strict human-review feedback ingestion</title><rect x="648.00" y="1021" width="80.00" height="17" rx="2" fill="#E5955B"/></g>
+<g><title>S07-A02 / done / Implement strict human-review feedback ingestion</title><rect x="648.00" y="1021" width="80.00" height="17" rx="2" fill="#075231"/></g>
 <g><title>S07-A03 / planned / Owner review 12 representative cutout candidates</title><rect x="731.00" y="1021" width="80.00" height="17" rx="2" fill="#D5DCD5"/></g>
 <g><title>S07-A04 / blocked / Independently produce/reference-review corrected mattes</title><rect x="814.00" y="1021" width="80.00" height="17" rx="2" fill="#A63D35"/></g>
 <g><title>S07-A05 / blocked / Demonstrate accepted samples across all target materials</title><rect x="897.00" y="1021" width="80.00" height="17" rx="2" fill="#A63D35"/></g>
-<text x="1060" y="1035" font-size="13" text-anchor="end" fill="#075231">0/5</text>
+<text x="1060" y="1035" font-size="13" text-anchor="end" fill="#075231">1/5</text>
 <text x="32" y="1081" font-size="12" fill="#53675A">Green done · Orange review · Amber active · Coral blocked · Grey planned · registry 2026-10-17</text>
 </g></svg>

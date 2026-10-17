@@ -10,12 +10,12 @@
 
 | Lane | Cards |
 | --- | ---: |
-| Backlog | 15 |
-| Ready | 2 |
-| In progress | 2 |
-| In review | 2 |
-| Blocked | 6 |
-| Done | 77 |
+| Backlog | 18 |
+| Ready | 4 |
+| In progress | 1 |
+| In review | 0 |
+| Blocked | 7 |
+| Done | 81 |
 
 **WIP limits:** In progress ≤ 2; In review ≤ 3. Counts are issue/PR cards, not unique completed engineering features or a percentage.
 
@@ -30,7 +30,6 @@
 | P2 | [Issue #8 — Windows MCP lifecycle and packaging](https://github.com/interzettel/prehnite/issues/8) | Runtime | Process cancellation, reconnection and Windows tests. |
 | P0 | [Issue #5 — Crash recovery, pricing and billing hardening](https://github.com/interzettel/prehnite/issues/5) | Reliability | Safety tranche #10 merged; remaining tasks #15–#18, ownership unclaimed. |
 | P2 | [Issue #44 — Synchronize canonical issue ledger with organization GitHub Projects v2](https://github.com/interzettel/prehnite/issues/44) | Tracking | GitHub Project #1 sync needs Projects v2 write permission |
-| P1 | [Issue #40 — Model, dependency and artifact licensing inventory](https://github.com/interzettel/prehnite/issues/40) | Licensing | Dependency/model weight terms inventory |
 | P1 | [Issue #33 — Self-contained offline HTML gallery and comparisons](https://github.com/interzettel/prehnite/issues/33) | Reporting | Offline thumbnail gallery #67 merged; opt-in private original comparisons remain issue #68 |
 | P2 | [Issue #30 — Multi-instance object cutout selection](https://github.com/interzettel/prehnite/issues/30) | Cutouts | Multi-instance target matching |
 | P1 | [Issue #29 — Transparent alpha matting and halo removal](https://github.com/interzettel/prehnite/issues/29) | Cutouts | Merged #120 synthetic safety matrix; full S03 real-photo matte/color decontamination still open for separate implementation. |
@@ -38,27 +37,31 @@
 | P1 | [Issue #68 — Opt-in original-input gallery comparison with privacy consent](https://github.com/interzettel/prehnite/issues/68) | Delivery | Follow-up to #33: never embed private originals without opt-in |
 | P2 | [Issue #107 — Experimental Jev typed image/Box judge and staged frame evaluation](https://github.com/interzettel/prehnite/issues/107) | Quality | Mock stages A/B merged, no Jev transport; TypeSafe experimental vision needs explicit authorized trial and real gold calibration. |
 | P1 | [Issue #111 — Jev Stage B mock wire fixtures and gold-set calibration](https://github.com/interzettel/prehnite/issues/111) | Quality | Offline Jev wire fixtures #113 and calibration #114 merged; owner-reviewed real gold cohort and reliability threshold still needed before production. |
+| P1 | [Issue #132 — Versioned model recipes: micro/macro architecture](https://github.com/interzettel/prehnite/issues/132) | Recipes | New owner-directed recipe roadmap; future reviewed atomic scope migration. |
+| P1 | [Issue #134 — Local GPU feasibility doctor and benchmark](https://github.com/interzettel/prehnite/issues/134) | Local GPU | New owner-directed recipe roadmap; future reviewed atomic scope migration. |
+| P1 | [Issue #135 — Rights-aware model acquisition and installation](https://github.com/interzettel/prehnite/issues/135) | Recipes | New owner-directed recipe roadmap; future reviewed atomic scope migration. |
+| P1 | [Issue #136 — Memory-aware batch scheduling and profiling](https://github.com/interzettel/prehnite/issues/136) | Local GPU | New owner-directed recipe roadmap; future reviewed atomic scope migration. |
 
 ## Ready
 
 | Priority | Work item | Stream | Handoff / blocker |
 | --- | --- | --- | --- |
 | P1 | [Issue #12 — Mocked fal API conformance contract](https://github.com/interzettel/prehnite/issues/12) | Providers | No credentials or paid calls; use recorded fixture schemas. |
+| P1 | [Issue #40 — Model, dependency and artifact licensing inventory](https://github.com/interzettel/prehnite/issues/40) | Licensing | R06-A01 and R06-A02 merged; remaining media rights and final release compliance separate. |
 | P1 | [Issue #25 — Judge schema and A/B order-bias tests](https://github.com/interzettel/prehnite/issues/25) | Quality | Typed verdict tranche merged in #61; controlled same-rubric A/B positional-bias measurement (Q03) remains unverified |
+| P1 | [Issue #133 — Recipe contract and capability DAG validation](https://github.com/interzettel/prehnite/issues/133) | Recipes | Next independent PR. Contract-only: no model downloads, no proven hardware support. |
 
 ## In progress
 
 | Priority | Work item | Stream | Handoff / blocker |
 | --- | --- | --- | --- |
-| P1 | [Issue #31 — Targeted repair planner for failed cutouts](https://github.com/interzettel/prehnite/issues/31) | Cutouts | S05-A04 opt-in production staging in PR #129, review-only, no visual acceptance; S05-A05 real photo evidence blocked. |
 | P2 | [Issue #100 — Provenance-bound transforms and tiled 4K comparison](https://github.com/interzettel/prehnite/issues/100) | Delivery | Integer 4K tiles + SHA-bound affine v2 validator merged; real affine warp/execution still open. |
 
 ## In review
 
 | Priority | Work item | Stream | Handoff / blocker |
 | --- | --- | --- | --- |
-| P1 | [PR #125 — Validated offline human-review ZIP and repair triage](https://github.com/interzettel/prehnite/pull/125) | Cutouts | CI green; owner reviewing cutout UI, PR unmerged. In-review atomic work earns no completion credit. |
-| P1 | [PR #129 — Stage opt-in bounded opaque repair for cutout review](https://github.com/interzettel/prehnite/pull/129) | Cutouts | Strict owner-declared opaque product, isolate journaled repair, preserve selected assets; CI pending. No human acceptance or parent unit done. |
+| — | No cards currently | — | — |
 
 ## Blocked
 
@@ -67,6 +70,7 @@
 | P1 | [Issue #7 — Real fal/Haiku credentialed integration](https://github.com/interzettel/prehnite/issues/7) | Providers | Owner must authorize actual paid/API calls separately. |
 | P1 | [Issue #42 — Owner-accepted production benchmark and release gate](https://github.com/interzettel/prehnite/issues/42) | Release | Owner acceptance and authorized live pilot |
 | P1 | [Issue #32 — Cutout quality benchmark with difficult materials](https://github.com/interzettel/prehnite/issues/32) | Cutouts | Owner-approved private 84-JPEG apparel archive and 50 unreviewed alpha candidates; #122/#123 merged. Gold alpha, benchmark scores and human approval remain blocked. |
+| P1 | [Issue #31 — Targeted repair planner for failed cutouts](https://github.com/interzettel/prehnite/issues/31) | Cutouts | S05-A04 merged; S05-A05 independent real-photo alpha acceptance still awaits annotated evidence. |
 | P1 | [Issue #28 — Reference corpus and human calibration protocol](https://github.com/interzettel/prehnite/issues/28) | Quality | Owner-approved reference images / human calibration |
 | P1 | [Issue #24 — 8GB VRAM local inference feasibility benchmark](https://github.com/interzettel/prehnite/issues/24) | Local GPU | Await local RTX 4070 laptop benchmark |
 | P1 | [Issue #17 — Persist pricing assumptions and reconcile actual bills](https://github.com/interzettel/prehnite/issues/17) | Economics | Live billing access needs explicit authorization |
@@ -151,7 +155,11 @@
 | P1 | [PR #122 — Rights-aware local real-image alpha benchmark intake](https://github.com/interzettel/prehnite/pull/122) | Cutouts | Merged 463d3c2; local rights-aware alpha scorer, source-only R2 WebP preflight. No reference-alpha production claims. |
 | P1 | [PR #123 — Private apparel ZIP inspection and unreviewed mask probe](https://github.com/interzettel/prehnite/pull/123) | Cutouts | Merged 39c84d3 with 14/14 CI: verified 84 private JPEG inputs and 50 unreviewed local masks; no independent alpha references or QA acceptance. |
 | P1 | [Issue #126 — Atomic task progress alongside the 61-unit evidence ledger](https://github.com/interzettel/prehnite/issues/126) | Tracking | Delivered in merged PR #127 (14/14 CI). Frozen atomic register, dual progress view; original release ledger unchanged. |
+| P1 | [PR #125 — Validated offline human-review ZIP and repair triage](https://github.com/interzettel/prehnite/pull/125) | Cutouts | Merged and verified 2026-10-17. Scope delivered, broader release acceptance still pending. |
 | P1 | [PR #127 — Evidence-backed atomic task register and dual progress chart](https://github.com/interzettel/prehnite/pull/127) | Tracking | Merged as 1e28ea7 with 14/14 green jobs. Evidence-backed 10/73 atomic tasks, 1 review; no double counting. |
+| P1 | [PR #129 — Stage opt-in bounded opaque repair for cutout review](https://github.com/interzettel/prehnite/pull/129) | Cutouts | Merged and verified 2026-10-17. Scope delivered, broader release acceptance still pending. |
+| P1 | [PR #130 — Dependency SBOM and exact environment pins](https://github.com/interzettel/prehnite/pull/130) | Licensing | Merged and verified 2026-10-17. Scope delivered, broader release acceptance still pending. |
+| P1 | [PR #131 — Model and checkpoint rights inventory](https://github.com/interzettel/prehnite/pull/131) | Licensing | Merged and verified 2026-10-17. Scope delivered, broader release acceptance still pending. |
 
 ## How to update this board
 

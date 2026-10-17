@@ -510,11 +510,12 @@
       "parent": "S05",
       "title": "Wire the bounded repair into production Engine.cutout",
       "acceptance": "Real stage transition uses journal, protects selected artifacts and can abstain",
-      "state": "in_review",
+      "state": "done",
       "issue": 31,
       "owner": "Agent cloud",
       "dependsOn": [],
-      "review_url": "https://github.com/interzettel/prehnite/pull/129"
+      "verified_at": "2026-10-17",
+      "evidence": "https://github.com/interzettel/prehnite/pull/129"
     },
     {
       "id": "S05-A05",
@@ -610,11 +611,12 @@
       "parent": "S07",
       "title": "Implement strict human-review feedback ingestion",
       "acceptance": "Import approved/needs-work/skip plus RGBA edits without gold-label claims",
-      "state": "in_review",
+      "state": "done",
       "issue": 32,
       "owner": "Owner",
       "dependsOn": [],
-      "review_url": "https://github.com/interzettel/prehnite/pull/125"
+      "verified_at": "2026-10-17",
+      "evidence": "https://github.com/interzettel/prehnite/pull/125"
     },
     {
       "id": "S07-A03",
@@ -652,21 +654,25 @@
       "id": "R06-A01",
       "parent": "R06",
       "title": "Inventory Python dependencies and transitive licenses",
-      "acceptance": "Generated SBOM with locked versions and known exceptions",
-      "state": "planned",
+      "acceptance": "CycloneDX SBOM, exact installed-version snapshot (not hashed lock), and named unresolved license exceptions",
+      "state": "done",
       "issue": 40,
       "owner": "Agent cloud",
-      "dependsOn": []
+      "dependsOn": [],
+      "verified_at": "2026-10-17",
+      "evidence": "https://github.com/interzettel/prehnite/pull/130"
     },
     {
       "id": "R06-A02",
       "parent": "R06",
       "title": "Audit optional model checkpoints and training restrictions",
       "acceptance": "Separate weight/source terms recorded; no implicit MIT relicensing",
-      "state": "planned",
+      "state": "done",
       "issue": 40,
       "owner": "Agent cloud",
-      "dependsOn": []
+      "dependsOn": [],
+      "verified_at": "2026-10-17",
+      "evidence": "https://github.com/interzettel/prehnite/pull/131"
     },
     {
       "id": "R06-A03",
