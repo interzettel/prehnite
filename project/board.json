@@ -980,19 +980,19 @@
       "type": "issue",
       "number": 133,
       "title": "Recipe contract and capability DAG validation",
-      "lane": "In progress",
+      "lane": "Done",
       "priority": "P1",
       "stream": "Recipes",
-      "note": "PR #138: offline versioned DAG contract + micro/macro blueprint samples. Hardware execution, installed weights and paid APIs explicitly unresolved."
+      "note": "Versioned micro/macro offline DAG contract merged via PR #138; executable model installation and real GPU tests remain separate."
     },
     {
       "type": "issue",
       "number": 134,
       "title": "Local GPU feasibility doctor and benchmark",
-      "lane": "Backlog",
+      "lane": "In progress",
       "priority": "P1",
       "stream": "Local GPU",
-      "note": "New owner-directed recipe roadmap; future reviewed atomic scope migration."
+      "note": "PR #139 delivers offline read-only hardware diagnostics; real GPU model benchmarks and other accelerator backends remain open."
     },
     {
       "type": "issue",
@@ -1016,10 +1016,19 @@
       "type": "pr",
       "number": 138,
       "title": "Versioned micro/macro recipe DAG contracts",
-      "lane": "In review",
+      "lane": "Done",
       "priority": "P1",
       "stream": "Recipes",
-      "note": "Blueprint-only manifests and offline validator, tests and provenance SHA. No model execution or installed weights. CI pending."
+      "note": "Merged PR #138; strict preview-only recipe validation; no installed weights or model inference."
+    },
+    {
+      "type": "pr",
+      "number": 139,
+      "title": "Offline hardware doctor and provenance-aware memory probes",
+      "lane": "Done",
+      "priority": "P1",
+      "stream": "Local GPU",
+      "note": "PR #139 merged hardware-readiness diagnostics only; real recipe execution and physical GPU benchmarks unverified."
     }
   ]
 }
