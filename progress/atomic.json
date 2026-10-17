@@ -786,5 +786,28 @@
       "owner": "Agent cloud",
       "dependsOn": []
     }
-  ]
+  ],
+  "baseline_open_parent_ids": [
+    "C06",
+    "C08",
+    "C09",
+    "P08",
+    "P09",
+    "P10",
+    "Q05",
+    "Q06",
+    "Q07",
+    "Q08",
+    "R06",
+    "R08",
+    "R09",
+    "R10",
+    "S03",
+    "S04",
+    "S05",
+    "S06",
+    "S07"
+  ],
+  "baseline_date": "2026-10-17",
+  "baseline_task_count": 73
 }
