@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "stages": {
+    "generate": [
+      {
+        "role": "text_encoder",
+        "filename": "text_encoders/CHANGE_ME.safetensors",
+        "graph_reference": "CHANGE_ME.safetensors",
+        "model_revision": "replace-with-exact-source-revision",
+        "model_terms_url": "https://example.org/replace-with-official-license"
+      },
+      {
+        "role": "vae",
+        "filename": "vae/CHANGE_ME.safetensors",
+        "graph_reference": "CHANGE_ME.safetensors",
+        "model_revision": "replace-with-exact-source-revision",
+        "model_terms_url": "https://example.org/replace-with-official-license"
+      }
+    ],
+    "cutout": []
+  }
+}
