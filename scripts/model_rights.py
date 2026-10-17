@@ -35,9 +35,13 @@ def valid_url(url: object) -> bool:
     if not isinstance(url, str) or len(url) > 800:
         return False
     parsed = urlsplit(url)
-    return (parsed.scheme == "https" and bool(parsed.hostname)
+    # This is a documented set of upstream authorities, not evidence that
+    # any linked page legally licenses a checkpoint or its generated outputs.
+    upstream_hosts = {"fal.ai", "www.anthropic.com", "github.com",
+                      "bfl.ai", "huggingface.co"}
+    return (parsed.scheme == "https" and parsed.hostname in upstream_hosts
             and not parsed.username and not parsed.password and not parsed.fragment
-            and not parsed.query and parsed.hostname not in {"localhost", "127.0.0.1"})
+            and not parsed.query)
 
 
 def valid_date(value: object, now: date) -> bool:
