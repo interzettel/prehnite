@@ -98,6 +98,22 @@ prehnite run examples/manifest-first-fal.yaml \
 
 Never retry ambiguous remote requests blindly. Save fal request IDs, final provider invoice and output hashes privately; compare the actual invoice to the planning estimate. Paid endpoint schema and rates can change independently of Prehnite. Additional fal segmentation is a *separate future test* requiring image-upload authorization and fresh rights review, not automatically enabled.
 
+## C. Create private technical evidence after an actual run
+
+When you have **real** generated and transparent cutout files inside your private output directory, use the *development checkout* to collect a no-network, create-only evidence receipt:
+
+```bash
+prehnite trial-evidence \
+  --root /path/private/output-images \
+  --generated photos/desk-lamp.png \
+  --cutout cutouts/desk-lamp.png \
+  --output /path/private/first-asset-evidence.json
+```
+
+The `--root` and generated/cutout paths are ordinary user-owned private files; the JSON evidence report **must be outside** the image directory. Prehnite verifies actual image decodability, matching pixel dimensions, strict RGBA PNG transparency, finite file sizes, source SHA256 and an observed hardware snapshot. It never modifies either image or uploads anything; a second invocation refuses to overwrite a prior report. If available, optionally supply `--elapsed-seconds 45.2 --peak-vram-mib 6144 --measurement-method "nvidia-smi sampled at 1 Hz during full run"`—such values are **your measurements**, not independently verified by Prehnite. Do not supply guessed performance data.
+
+A valid receipt establishes **technical validity only**. It does not certify that the mask actually follows an object, that the checkpoint license is valid, that ComfyUI used the intended weights in memory, or that your GPU tier is fast enough for general users. Human review defaults to `unreviewed`. Record `--human-review accepted` only after separately examining the image; the report still flags this as a nonindependently verified owner statement. A rights-cleared reference alpha and independent quality evaluation are still required for #32.
+
 ## C. Evidence needed to mark #134/#32 complete
 
 Once real local GPU inference is done, preserve a **private** evidence directory with: OS/GPU/driver, VRAM and RAM observed, ComfyUI/runtime revision, exact file hashes, recipe/manifest/profile hashes and batch ID, cold/warm duration per stage, peak GPU VRAM/RAM *if actually measured*, screenshots or output PNG hashes, and the journal report. Capture and label OOM/error behaviour. Measure idle vs peak realistically, with a clearly noted tool and time window. Never invent unsupported hardware capacity tiers.
