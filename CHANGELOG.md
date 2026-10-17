@@ -6,6 +6,13 @@ This project follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) an
 
 ## [Unreleased]
 
+No unreleased changes have been recorded since the 0.1.0a1 release candidate.
+
+## [0.1.0a1] - 2026-10-17
+
+**First public developer alpha candidate.** This is an installable local-first orchestration engine and synthetic quality-evidence stack, not a production-ready image generator or certified 4K model pipeline. The initial PyPI release is subject to manual security gates; physical GPU/third-party model rights, human-accepted cutout quality and real hosted API billing are still unverified.
+
+
 ### Changed
 - Separated public PyPI alpha publishing from ordinary CI: dedicated manually dispatched, same-SHA CI-artifact-verified `publish.yml`, owner-reviewed `pypi` environment, annotated tag, short-lived OIDC upload and GitHub prerelease after success; requires updating the owner's existing pending PyPI publisher from `ci.yml` to `publish.yml` before first upload. No new license, inference quality claims or automatic publishing.
 
