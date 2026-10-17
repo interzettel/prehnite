@@ -6,6 +6,9 @@ This project follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) an
 
 ## [Unreleased]
 
+### Added
+- Private create-only `prehnite trial-evidence`: verifies real generated/cutout image geometry, RGBA alpha transparency, file SHA256, hardware observations and optional **operator-supplied** time/VRAM readings while explicitly withholding independent cutout quality/model-rights certification (#134/#32). No inference, file mutation or network calls.
+
 ### Changed
 - Start the next development series at `0.1.0a2.dev0` after the immutable public `0.1.0a1` release. Version change alone does not publish a new package; subsequent alpha requires a new reviewed release candidate and guarded publishing workflow.
 
