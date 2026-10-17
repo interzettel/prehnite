@@ -56,9 +56,11 @@ def local_profile():
     return Profile.model_validate({
         "variants": ["native_4k"],
         "generation": {"provider": "comfyui", "model": "user-workflow",
-                       "options": {"workflow": "gen.json", "output_node": "2",\n                                   "prompt_node": "3", "seed_node": "4", "size_node": "5"}},
+                       "options": {"workflow": "gen.json", "output_node": "2",
+                                   "prompt_node": "3", "seed_node": "4", "size_node": "5"}},
         "segmentation": {"provider": "comfyui", "model": "user-segmentation",
-                         "options": {"workflow": "cut.json", "output_node": "2",\n                                   "input_node": "6", "target_node": "3"}},
+                         "options": {"workflow": "cut.json", "output_node": "2",
+                                   "input_node": "6", "target_node": "3"}},
         "upscale": {"provider": "disabled"},
         "judge": {"provider": "demo", "model": "technical"},
         "costs": {"allow_paid": False, "allow_cloud_uploads": False,
