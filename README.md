@@ -211,7 +211,7 @@ batch with zero accepted assets has no meaningful cost-per-accepted figure.
 
 ## Where things stand
 
-**`0.1.0a1` · first public developer alpha — [published on PyPI](https://pypi.org/project/prehnite/0.1.0a1/) and [tagged on GitHub](https://github.com/interzettel/prehnite/releases/tag/v0.1.0a1) on 2026-10-17.** Install with `python -m pip install prehnite==0.1.0a1`. See [Changelog](CHANGELOG.md), [Versioning](docs/VERSIONING.md) and [Release policy](docs/RELEASING.md). The core synthetic workflow works; **photorealistic quality, 4K GPU feasibility, segmentation accuracy and actual API billing have not been certified**.
+**Latest public release: `0.1.0a1` — [published on PyPI](https://pypi.org/project/prehnite/0.1.0a1/) and [tagged on GitHub](https://github.com/interzettel/prehnite/releases/tag/v0.1.0a1) on 2026-10-17.** Current source development version: **`0.1.0a2.dev0` (unpublished)**. Install the released alpha with `python -m pip install prehnite==0.1.0a1`. See [Changelog](CHANGELOG.md), [Versioning](docs/VERSIONING.md) and [Release policy](docs/RELEASING.md). The core synthetic workflow works; **photorealistic quality, 4K GPU feasibility, segmentation accuracy and actual API billing have not been certified**.
 
 The tracker distinguishes implemented scaffolding from independently evidenced completions, and records issues blocked by local hardware, human calibration or paid-call authorization.
 
