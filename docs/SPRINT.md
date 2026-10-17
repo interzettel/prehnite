@@ -173,4 +173,4 @@
 4. CI verifies that status snapshot matches the machine-readable board and WIP caps.
 5. Track **release evidence** separately in `docs/PROGRESS.md` (introduced by PR #10); this board tracks workflow, not model performance.
 
-**Release policy:** No tags, releases or uploads have been authorized. See [versioning](VERSIONING.md), [changelog](../CHANGELOG.md) and [release process](RELEASING.md).
+**Release policy:** Owner approved preparation/publication of the first `0.1.0a1` developer alpha on 2026-10-17, subject to successful source/CI inspection, updating the PyPI pending Trusted Publisher to `publish.yml`, and GitHub `pypi` environment approval. **No upload or tag has yet occurred**. Track [release issue #144](https://github.com/interzettel/prehnite/issues/144), [versioning](VERSIONING.md), [changelog](../CHANGELOG.md) and [release process](RELEASING.md); release readiness scores remain unchanged.
