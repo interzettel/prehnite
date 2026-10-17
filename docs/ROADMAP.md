@@ -34,5 +34,26 @@
 - [ ] Provider packs and reusable workflow registry
 - [ ] Installer and reproducible Windows/Linux integration tests
 
+## Model Recipes workstream — versioned micro/macro (October 2026)
+
+This is a **new, separately tracked architecture scope** under [issue #132](https://github.com/interzettel/prehnite/issues/132), not new credit in the frozen [61-unit release ledger](progress/STATUS.md) or [73-task atomic register](progress/ATOMIC.md). This checklist tracks implementation slices, **not** release readiness, demonstrated output quality or laptop VRAM compatibility. Details: [recipe specification](MODEL_RECIPES.md), [local execution contract](RECIPE_EXECUTION.md), [current board](SPRINT.md).
+
+**Completed engineering groundwork (not proof of real-model inference):**
+- [x] Versioned `prehnite-micro`/`prehnite-macro` blueprint schemas, capability DAG/cycle and policy validation, stable fingerprints ([#138](https://github.com/interzettel/prehnite/pull/138))
+- [x] Offline read-only hardware inventory with unknown/unprobed accelerator states; no VRAM tier certification ([#139](https://github.com/interzettel/prehnite/pull/139))
+- [x] Local micro ComfyUI workflow/checkpoint digest resolver with explicit operator terms acknowledgement; no download or legal approval ([#140](https://github.com/interzettel/prehnite/pull/140))
+- [x] Opt-in micro-to-engine local ComfyUI execution bridge with per-batch recipe/config/input identity in SQLite, replay refusal and synthetic cross-OS tests ([#141](https://github.com/interzettel/prehnite/pull/141))
+- [x] Documentation/board closeout and #133 scoped acceptance recorded ([#142](https://github.com/interzettel/prehnite/pull/142))
+
+**Unverified milestones / next product work:**
+- [ ] Rights-aware verified checkpoint sourcing, optional installer/offline import, terms receipts and disk requirements; no bundled weights or automatic downloads ([#135](https://github.com/interzettel/prehnite/issues/135))
+- [ ] **First real `prehnite-micro` acceptance run:** lawful local generation checkpoint + compatible ComfyUI graph, genuine generated image, local segmentation/matting checkpoint + transparent cutout, output validation and independent cutout review ([#132](https://github.com/interzettel/prehnite/issues/132), [#32](https://github.com/interzettel/prehnite/issues/32))
+- [ ] Record reproducible GPU/OS/driver, exact runtime/checkpoint hashes, peak VRAM/RAM, cold/warm stage latency, OOM/recovery behaviour and output-quality evidence on identified physical hardware before claiming any 4/6/8/12 GB `micro` tier ([#134](https://github.com/interzettel/prehnite/issues/134))
+- [ ] Model residency/unload, memory-aware scheduling, tiling, bounded failure fallback and measured per-human-accepted-cutout throughput ([#136](https://github.com/interzettel/prehnite/issues/136))
+- [ ] Operationalize versioned `prehnite-macro` with independently cleared rights, explicitly consented hosted APIs/budgets where applicable, and distinct benchmark evidence ([#132](https://github.com/interzettel/prehnite/issues/132))
+- [ ] Nontechnical installation/recipe selection and real-model end-to-end reproducibility on supported operating systems, with manual release approval ([#132](https://github.com/interzettel/prehnite/issues/132))
+
+**Current boundary:** `prehnite-micro` offers an experimental, operator-configured local execution **path**, not a preinstalled or benchmarked executable model bundle. `prehnite-macro` is still blueprint-only. No mandatory subscription/hosted workflow service and no paid inference without explicit owner authorization.
+
 ## Definition of done
 The repo is only production-ready after a 90-asset mixed-resolution run, paid-call reconciliation, restart recovery tests, image/cutout visual auditing, security testing, licensing review and reproducible benchmark documentation.

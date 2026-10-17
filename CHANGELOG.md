@@ -14,6 +14,7 @@ No unreleased changes have been recorded since the 0.1.0a1 release candidate.
 
 
 ### Changed
+- Consolidated the Riso identity commentary into `docs/BRAND_PALETTE.md`, made Changelog/Versioning accessible from README navigation, and updated the recipe architecture/roadmap/status to match the merged experimental local micro execution bridge. Physical GPU/model rights/quality gates remain open (#143).
 - Separated public PyPI alpha publishing from ordinary CI: dedicated manually dispatched, same-SHA CI-artifact-verified `publish.yml`, owner-reviewed `pypi` environment, annotated tag, short-lived OIDC upload and GitHub prerelease after success; requires updating the owner's existing pending PyPI publisher from `ci.yml` to `publish.yml` before first upload. No new license, inference quality claims or automatic publishing.
 
 ### Added

@@ -1,5 +1,4 @@
 <div align="center">
-  <!-- GitHub strips inline radius styles; the PNG also has actual transparent rounded corners. -->
   <img src="assets/prehnite-riso-green-coral.png" alt="Prehnite — Make the batch. Keep the best. Forest-green and coral Riso identity on warm paper." width="680" style="border-radius: 16px; clip-path: inset(0 round 16px);" />
   <p><strong>Batch image production without the platform tax.</strong><br />
   An open-source Python engine for generating, checking, refining and exporting visual assets.</p>
@@ -15,11 +14,11 @@
     <a href="#how-it-works">How it works</a> ·
     <a href="#where-things-stand">Project status</a> ·
     <a href="docs/progress/STATUS.md">Progress</a> ·
+    <a href="CHANGELOG.md">Changelog</a> ·
+    <a href="docs/VERSIONING.md">Versioning</a> ·
     <a href="https://github.com/orgs/interzettel/projects/1">Project board</a>
   </p>
 </div>
-
-The visual identity uses the owner-selected **forest green / coral / warm paper** Riso colorway. The hero is a [2020 × 779 rounded-corner PNG](assets/prehnite-riso-green-coral.png) with transparent corner clipping that survives GitHub's CSS sanitization. Shared [brand color tokens](docs/BRAND_PALETTE.md) apply to project UI surfaces, including accessible light/dark variants. A separate [mineral symbol](assets/prehnite-mark.svg) remains available for compact applications.
 
 ---
 
@@ -123,6 +122,20 @@ assets:
 
 The **manifest** says *what* to make. A separate **profile** says *how*: which provider/model to use, whether to compare 2K-upscaled and 4K variants, what to accept, the retry limit, and whether cloud calls may cost money. See the [working examples](examples/).
 
+### Model Recipe status: micro / macro
+
+Prehnite now has **versioned model-workflow blueprints** rather than a single hard-coded model. `prehnite-micro` targets operator-configured, local-first ComfyUI runs; `prehnite-macro` explores later high-capability/hybrid workflows. The checked-in JSON recipes **do not contain models or execute on their own**.
+
+| Capability | `prehnite-micro` | `prehnite-macro` |
+| --- | --- | --- |
+| Versioned manifest / capability graph | Implemented | Implemented |
+| Local model/input hash resolver | Implemented, operator-supplied | Not implemented |
+| Recipe-bound engine/journal execution path | Experimental, opt-in | Not implemented |
+| Checkpoint installer and rights review | Planned | Planned |
+| Real GPU & human-cutout-quality benchmark | Unverified | Unverified |
+
+**Read the [recipe roadmap](docs/ROADMAP.md#model-recipes-workstream--versioned-micromacro-october-2026) and [recipe architecture](docs/MODEL_RECIPES.md)** for the work completed, outstanding milestones and exact evidence gates. Neither mode claims a tested 4/6/8/12 GB laptop tier or preinstalled models.
+
 ### Explicit local ComfyUI recipe execution (experimental)
 
 The existing `prehnite run` command can now pin an operator-supplied micro recipe
@@ -136,21 +149,10 @@ been GPU-benchmarked. See [recipe execution limitations](docs/RECIPE_EXECUTION.m
 
 `prehnite recipe-resolve` verifies explicitly supplied local ComfyUI API graphs and
 checkpoint bytes against SHA256 and operator-acknowledged terms without downloads,
-cloud calls, credentials or inferred GPU suitability. It produces a read-only
-input receipt, **not** an executable model recipe or journal-pinned batch.
+cloud calls, credentials or inferred GPU suitability. This **inspection command**
+produces a read-only, non-executable receipt; use the separate, opt-in
+`prehnite run` recipe bridge above to bind those inputs to a real batch.
 See the [operator setup and limitations](docs/LOCAL_MODEL_RESOLVER.md).
-
-### Versioned Model Recipes: prehnite-micro / prehnite-macro (preview only)
-
-The future local-first image-production system is described by pinned, inspectable
-[Model Recipes](docs/MODEL_RECIPES.md): `prehnite-micro` for hardware-conscious
-laptop workflows and `prehnite-macro` for higher-capability local/hybrid/API
-workflows. Each blueprint declares ordered adapter capabilities, model provenance,
-unresolved weights, rights, hardware and cloud-spend gates, and a canonical
-SHA256 identity. Current examples are **read-only contract previews**:
-they do not run generation, contain model weights, download anything,
-authorize cloud calls or assert laptop VRAM performance. See
-[architecture epic #132](https://github.com/interzettel/prehnite/issues/132).
 
 ### Bring your own models, not your own orchestration subscription
 
@@ -205,7 +207,7 @@ batch with zero accepted assets has no meaningful cost-per-accepted figure.
 
 ## Where things stand
 
-**`0.1.0a1` · first public developer alpha candidate.** Public PyPI installation is available only after the separately gated, verified [publishing workflow](docs/PYPI_PUBLISHING.md) succeeds; a version number or Git tag alone does not prove publication. The core synthetic workflow works; **photorealistic quality, 4K GPU feasibility, segmentation accuracy and actual API billing have not been certified**.
+**`0.1.0a1` · first public developer alpha candidate.** Public PyPI installation is available only after the separately gated, verified [publishing workflow](docs/PYPI_PUBLISHING.md) succeeds; a version number or Git tag alone does not prove publication. See [Changelog](CHANGELOG.md), [Versioning](docs/VERSIONING.md) and [Release policy](docs/RELEASING.md). The core synthetic workflow works; **photorealistic quality, 4K GPU feasibility, segmentation accuracy and actual API billing have not been certified**.
 
 The tracker distinguishes implemented scaffolding from independently evidenced completions, and records issues blocked by local hardware, human calibration or paid-call authorization.
 

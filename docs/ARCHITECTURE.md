@@ -10,6 +10,7 @@ Prehnite is a Python service/CLI, not a ComfyUI workflow or an image generator i
 5. SQLite journal: task status, request IDs, paths, model, reserved spending, token usage, stage metadata and batch fingerprints.
 6. Reporting: JSON, CSV, standalone HTML, accepted-asset ZIP.
 7. Agent access: stdio MCP, with long jobs executed in a detached subprocess.
+8. Versioned model recipes: strict micro/macro DAG blueprints with canonical SHA256; micro-only opt-in local ComfyUI binding verifies operator-owned graph/checkpoint bytes and pins recipe+profile identity in SQLite before batch execution. No recipe-aware MCP worker or benchmarked model bundle.
 
 ## Current contracts (v0.1)
 - Generate: prompt, aspect ratio, resolution tier, seed -> image artifact.
@@ -30,4 +31,4 @@ The pairwise Haiku judge runs a blind visual review and an exact-prompt review i
 Generation quality failure changes the attempt seed, creating a genuinely new candidate. Cutout failures attempt a different local edge treatment using the same previously generated mask; this cannot fix a completely wrong object selection, which remains rejected. No unlimited retry loop.
 
 ## Deferred integrations
-Hardware-tested ComfyUI inference and model lifecycle (generic API adapter exists), non-demo local inference, local typed quality/preference judges, multiple cutout segmentation backends, robust visual region-level evaluation, a browser dashboard, parquet reports, cancellation and fine-grained progress APIs. See ROADMAP.
+Real-hardware validated `prehnite-micro` generation/matting workflows, lawful checkpoint installation and lifecycle, recipe-aware MCP launching, independently calibrated visual quality, typed local preference judges, additional segmentation backends and richer authenticated operations. The opt-in micro bridge can call existing ComfyUI locally but has not passed a physical GPU acceptance run. See [Model Recipes](MODEL_RECIPES.md) and [Roadmap](ROADMAP.md) for evidence boundaries.
