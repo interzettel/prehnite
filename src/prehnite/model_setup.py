@@ -8,7 +8,6 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from .recipe_execution import MicroExecution
 from .recipe_resolver import (
     LocalBindings, LocalStage, _local_file, _sha256_file, _validate_graph,
     resolve_local_micro,
