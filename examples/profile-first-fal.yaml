@@ -1,0 +1,22 @@
+# OPT-IN PAID EXAMPLE. Update price estimates against actual fal.ai pricing BEFORE RUNNING.
+# Static trial-plan does not contact fal.ai. "native_4k" may be costly.
+variants: [native_4k]
+generation:
+  provider: fal
+  model: blackforestlabs/flux-3/klein/text-to-image
+  options:
+    enable_prompt_expansion: false
+upscale: {provider: disabled}
+segmentation: {provider: disabled}
+judge: {provider: demo, model: technical}
+policy:
+  minimum_score: 0.75
+  maximum_attempts: 1
+  uncertain: reject
+cache: {enabled: false}
+costs:
+  allow_paid: true
+  allow_cloud_uploads: false
+  max_usd: 0.20
+  estimates_usd:
+    "generation:4k": 0.10  # PLANNING EXAMPLE ONLY; NOT LIVE QUOTE
