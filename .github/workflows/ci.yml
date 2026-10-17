@@ -189,6 +189,9 @@ jobs:
   license-sbom:
     name: Offline dependency license inventory (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
+    env:
+      PYTHONIOENCODING: utf-8
+      PYTHONUTF8: "1"
     strategy:
       fail-fast: false
       matrix:
@@ -201,6 +204,7 @@ jobs:
       - name: Install editable local engine and dev dependencies
         run: python -m pip install -e ".[dev]"
       - name: Capture actual environment dependency resolution
+        shell: bash
         run: python -m pip inspect --local > dependency-inspect.json
       - name: Generate exact-version SBOM and unresolved license report
         run: python scripts/dependency_sbom.py --inspect dependency-inspect.json --extras dev --output license-inventory
