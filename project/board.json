@@ -980,10 +980,10 @@
       "type": "issue",
       "number": 133,
       "title": "Recipe contract and capability DAG validation",
-      "lane": "In progress",
+      "lane": "Done",
       "priority": "P1",
       "stream": "Recipes",
-      "note": "PR #138 contract merged; PR #141 pending immutable per-batch recipe/run binding. Live GPU evidence separate."
+      "note": "PR #138 recipe contract and PR #141 immutable per-batch recipe/profile/input lock both merged; actual GPU inference remains separate epic #132."
     },
     {
       "type": "issue",
@@ -1043,10 +1043,10 @@
       "type": "pr",
       "number": 141,
       "title": "Recipe-locked local engine run and immutable journal identity",
-      "lane": "In review",
+      "lane": "Done",
       "priority": "P1",
       "stream": "Recipes",
-      "note": "PR #141: profile/checkpoint/graph-validated local Comfy bridge and journal identity; physical GPU unverified."
+      "note": "Merged PR #141, recipe-bound local ComfyUI engine path and SQLite replay identity; no physical GPU execution or quality certification."
     }
   ]
 }
