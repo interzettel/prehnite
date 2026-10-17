@@ -7,6 +7,7 @@ This project follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) an
 ## [Unreleased]
 
 ### Added
+- Offline WEARHOUSE Review Studio result intake (#28/#32): untrusted ZIP or autosave-folder schema/status/counter validation, SHA256 receipts and reviewed RGBA alpha PNG verification; create-only private JSON + text repair-triage without user photos or private notes, independently annotated gold or false mask-quality claims. Synthetic security/round-trip tests on Windows and Ubuntu.
 - Explicit opt-in, per-target opaque product cutout repair staging (#31, S05-A04): connect existing journal-backed local fringe repair to Engine.cutout without nested locks, preserve selected source/cutout outputs, journal review-only SHA receipts and fail closed for unqualified materials; no image-quality acceptance, extra provider spending or release gate credit.
 - Frozen 73-task, 19-parent atomic delivery register (#126) with PR-sized acceptance criteria, separate verified-parent/atomic progress dashboard, recent merge evidence and CI guards against false completion, denominator drift and stale generated SVG/Markdown; original 61-unit milestone score unchanged.
 - Owner-authorized AI-generated JPEG apparel pilot QA: source-only inventory of 84 images, 50 exploratory zero-inference product mask candidates with no false ground-truth scores; add a private ZIP inspection CLI, explicitly opt-in OpenCV GrabCut probe and cross-platform safety regressions (#32).
