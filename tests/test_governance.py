@@ -51,3 +51,26 @@ def test_kanban_duplicate_detected():
     data["cards"].append(dict(data["cards"][0]))
     with pytest.raises(ValueError, match="Duplicate"):
         board_script.validate_board(data)
+
+
+@pytest.mark.parametrize("version", [
+    "0.1.0a2.dev0", "0.1.0a2", "0.1.0b3.dev1", "0.1.0rc1",
+    "0.1.0.dev0", "0.1.0",
+])
+def test_governance_accepts_canonical_pre_release_development(version, monkeypatch, tmp_path):
+    governance = load_script("check_governance")
+    path = tmp_path / "_version.py"
+    path.write_text(f'__version__ = "{version}"\\n', encoding="utf-8")
+    monkeypatch.setattr(governance, "VERSION_PATH", path)
+    assert governance.source_version() == version
+
+
+@pytest.mark.parametrize("version", ["0.1.0a.dev0", "0.1", "0.1.0-foo", "0.1.0a2.dev",
+                                      "0.1.0a2+custom", "0.1.0a2.post3"])
+def test_governance_rejects_invalid_release_label(version, monkeypatch, tmp_path):
+    governance = load_script("check_governance")
+    path = tmp_path / "_version.py"
+    path.write_text(f'__version__ = "{version}"\\n', encoding="utf-8")
+    monkeypatch.setattr(governance, "VERSION_PATH", path)
+    with pytest.raises(ValueError, match="PEP 440"):
+        governance.source_version()
