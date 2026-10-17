@@ -6,8 +6,19 @@ This project follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) an
 
 ## [Unreleased]
 
+No unreleased changes have been recorded since the 0.1.0a1 release candidate.
+
+## [0.1.0a1] - 2026-10-17
+
+**First public developer alpha candidate.** This is an installable local-first orchestration engine and synthetic quality-evidence stack, not a production-ready image generator or certified 4K model pipeline. The initial PyPI release is subject to manual security gates; physical GPU/third-party model rights, human-accepted cutout quality and real hosted API billing are still unverified.
+
+
+### Changed
+- Consolidated the Riso identity commentary into `docs/BRAND_PALETTE.md`, made Changelog/Versioning accessible from README navigation, and updated the recipe architecture/roadmap/status to match the merged experimental local micro execution bridge. Physical GPU/model rights/quality gates remain open (#143).
+- Separated public PyPI alpha publishing from ordinary CI: dedicated manually dispatched, same-SHA CI-artifact-verified `publish.yml`, owner-reviewed `pypi` environment, annotated tag, short-lived OIDC upload and GitHub prerelease after success; requires updating the owner's existing pending PyPI publisher from `ci.yml` to `publish.yml` before first upload. No new license, inference quality claims or automatic publishing.
+
 ### Added
-- Experimental local ComfyUI recipe/engine bridge (#133): upfront and pre-run SHA256 checks, strict recipe/profile and graph model-reference compatibility, atomic SQLite per-batch recipe identity and refusal of changed/unbound/legacy resumes; no hardware or live-model performance claims.
+- Manual, tokenless PyPI publishing preparation (#144): PyPI-specific accurate release description/project metadata, offline wheel/sdist content and version audit, strict Twine validation and inspectable candidate artifacts in ordinary CI; OIDC release job requires owner-dispatched main-only alpha, existing annotated matching tag, all CI gates and a GitHub `pypi` environment reviewer before the first authorized upload. No package released, tag created or Python version incremented by this work.\n- Experimental local ComfyUI recipe/engine bridge (#133): upfront and pre-run SHA256 checks, strict recipe/profile and graph model-reference compatibility, atomic SQLite per-batch recipe identity and refusal of changed/unbound/legacy resumes; no hardware or live-model performance claims.
 - Read-only offline micro recipe resolver: operator-supplied ComfyUI API graph and checkpoint file hashing, explicit local-use terms acknowledgement, reproducible resolved-input digest and refusal of unsafe paths/mismatched bytes (#135). No downloads, model execution, verified rights or per-batch journal integration.
 - Read-only offline hardware doctor (`prehnite hardware`) with source-labeled OS/CPU/RAM/disk and optional NVIDIA-SMI VRAM observations, explicit unsupported/unknown accelerator states and synthetic platform tests (#134). No weight download, GPU benchmark, performance tier certification or inference.
 - Versioned read-only `prehnite-micro` and `prehnite-macro` recipe blueprints (#132/#133), strict registry/DAG/maturity/privacy/budget validation, canonical SHA256 identity, and offline CLI/test coverage; no inference, weights, downloads or hardware quality claims.
@@ -54,9 +65,6 @@ This project follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) an
 - GitHub Issues-based agile tracker, contributor templates, canonical package version source and release-process documentation (governance PR).
 - Granular 61-unit evidence ledger with validated dependencies, generated progress dashboard and GitHub-linked work packages.
 - Original Prehnite vector mark, improved first-run documentation and truthful provider status matrix.
-
-### Changed
-- Kept the README focused on the product: moved Riso hero dimensions, GitHub corner-clipping explanation and palette/secondary-mark design rationale into `docs/BRAND_PALETTE.md`, and exposed Changelog/Versioning links near the top. Polished code formatting in version policy. No version bump or release.
 
 ### Fixed
 - Local repair now requires an explicitly declared opaque material and refuses ambiguous masked interior background colors or disconnected internal transparency before trying an alpha cleanup; synthetic negative controls cover holes, matching-color product areas and unqualified translucent inputs (#29).

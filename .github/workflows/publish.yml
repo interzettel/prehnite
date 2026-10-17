@@ -1,0 +1,150 @@
+# This workflow intentionally contains ALL PyPI publishing privileges. CI has none.
+# PyPI Trusted Publisher must be registered for repo interzettel/prehnite and publish.yml.
+name: Publish PyPI
+on:
+  workflow_dispatch:
+    inputs:
+      release_version:
+        description: "Approved first public alpha (exactly 0.1.0a1)"
+        required: true
+        type: string
+      confirmation:
+        description: "Type exactly: PUBLISH PREHNITE TO PYPI"
+        required: true
+        type: string
+permissions:
+  contents: read
+concurrency:
+  group: prehnite-public-alpha
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    name: Verify alpha, main CI and candidate archives
+    if: ${{ github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      actions: read
+    env:
+      RELEASE_VERSION: ${{ inputs.release_version }}
+      RELEASE_CONFIRMATION: ${{ inputs.confirmation }}
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Refuse other versions, refs or missing approval
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$GITHUB_REPOSITORY" = "interzettel/prehnite"
+          test "$GITHUB_REF" = "refs/heads/main"
+          test "$RELEASE_VERSION" = "0.1.0a1"
+          test "$RELEASE_CONFIRMATION" = "PUBLISH PREHNITE TO PYPI"
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          test "$(git show HEAD:src/prehnite/_version.py | grep -E '^__version__ = "0.1.0a1"$')" = '__version__ = "0.1.0a1"'
+          echo "Verified explicit first-alpha intent on main SHA $GITHUB_SHA"
+      - name: Find successful CI push run at this exact main SHA
+        id: ci
+        shell: bash
+        run: |
+          set -euo pipefail
+          run_id="$(python scripts/release_ci_gate.py)"
+          echo "run_id=$run_id" >> "$GITHUB_OUTPUT"
+          echo "Selected exact-SHA successful CI run $run_id"
+      - name: Download candidate distributions from verified CI run
+        shell: bash
+        env:
+          CI_RUN_ID: ${{ steps.ci.outputs.run_id }}
+        run: |
+          set -euo pipefail
+          mkdir -p dist
+          gh run download "$CI_RUN_ID" -R "$GITHUB_REPOSITORY" -n candidate-python-distributions -D dist
+      - name: Verify dist bytes, metadata and release version without publication
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install packaging twine
+          python scripts/check_release_artifacts.py --expected-version "$RELEASE_VERSION" --require-public-release
+          python -m twine check --strict dist/*
+      - name: Freeze audited candidate files in this manual release run
+        uses: actions/upload-artifact@v4
+        with:
+          name: approved-pypi-distributions
+          path: dist/
+          if-no-files-found: error
+          retention-days: 14
+
+  publish:
+    name: Publish alpha to PyPI with OIDC
+    needs: [verify]
+    if: ${{ github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' }}
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/p/prehnite
+    permissions:
+      contents: write
+      id-token: write
+    env:
+      RELEASE_VERSION: ${{ inputs.release_version }}
+      RELEASE_CONFIRMATION: ${{ inputs.confirmation }}
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - uses: actions/download-artifact@v4
+        with:
+          name: approved-pypi-distributions
+          path: dist/
+      - name: Recheck approved release context and artifact SHA256
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$GITHUB_REPOSITORY" = "interzettel/prehnite"
+          test "$GITHUB_REF" = "refs/heads/main"
+          test "$RELEASE_VERSION" = "0.1.0a1"
+          test "$RELEASE_CONFIRMATION" = "PUBLISH PREHNITE TO PYPI"
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          python -m pip install packaging twine
+          python scripts/check_release_artifacts.py --expected-version "$RELEASE_VERSION" --require-public-release
+          python -m twine check --strict dist/*
+      - name: Create annotated release tag without overwriting existing tags
+        shell: bash
+        run: |
+          set -euo pipefail
+          tag="v$RELEASE_VERSION"
+          if git show-ref --verify --quiet "refs/tags/$tag"; then
+            test "$(git cat-file -t "refs/tags/$tag")" = tag
+            test "$(git rev-parse "refs/tags/$tag^{commit}")" = "$GITHUB_SHA"
+            echo "Verified existing annotated tag $tag"
+          else
+            git -c user.name='github-actions[bot]' \
+                -c user.email='41898282+github-actions[bot]@users.noreply.github.com' \
+                tag -a "$tag" -m "Prehnite $RELEASE_VERSION — reviewed first public alpha"
+            git push origin "refs/tags/$tag"
+          fi
+      - name: Publish exact approved distributions with PyPI Trusted Publishing
+        uses: pypa/gh-action-pypi-publish@dc37677b2e1c63e2034f94d8a5b11f265b73ba33 # pinned release/v1 2026-10-17
+      - name: Create matching GitHub prerelease after successful PyPI upload
+        shell: bash
+        run: |
+          set -euo pipefail
+          tag="v$RELEASE_VERSION"
+          if gh release view "$tag" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            echo "Existing GitHub release found; leaving unchanged"
+          else
+            gh release create "$tag" dist/*.whl dist/*.tar.gz \
+              --repo "$GITHUB_REPOSITORY" --verify-tag --prerelease \
+              --title "Prehnite $RELEASE_VERSION (alpha)" \
+              --notes "First public developer alpha of Prehnite's Python orchestration engine. Working synthetic/demo pipeline, optional local ComfyUI integration. No licensed model weights bundled; no verified physical GPU, production cutout quality, cloud billing or general-release readiness. Details: https://github.com/interzettel/prehnite/blob/main/CHANGELOG.md"
+          fi

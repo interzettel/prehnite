@@ -1,6 +1,6 @@
 # Versioning policy
 
-**Canonical version:** [src/prehnite/_version.py](../src/prehnite/_version.py), currently `0.1.0.dev0` (development only). The [Unreleased changelog](../CHANGELOG.md#unreleased) records merged development changes, not a shipped release; the [release playbook](RELEASING.md) describes the approval and tagging process.
+**Canonical version:** [src/prehnite/_version.py](../src/prehnite/_version.py), currently `0.1.0a1` (approved first-alpha candidate). For shipped/reviewed changes consult the [changelog](../CHANGELOG.md) and [release playbook](RELEASING.md).
 
 The `[project]` metadata in `pyproject.toml` specifies `dynamic = ["version"]`, and Hatchling reads the value from `src/prehnite/_version.py`. The public `prehnite.__version__` imports from that same file; no copy-pasted version constant exists elsewhere in executable metadata.
 
@@ -13,6 +13,10 @@ The `[project]` metadata in `pyproject.toml` specifies `dynamic = ["version"]`, 
 - `CHANGELOG.md` always has an **Unreleased** section; move changes to a dated version section only when actually shipping.
 - Do not bump version for every issue/PR; make dedicated release-candidate/version PRs so the source of truth cannot drift.
 - Do not claim an API/CLI format is stable until contracts and migration behavior are tested.
+
+## Alpha release packaging
+
+The canonical first public developer **alpha candidate is `0.1.0a1`**. Public availability is established only by the successful OIDC upload and verified PyPI distribution, not by this committed version string alone. Review [the PyPI runbook](PYPI_PUBLISHING.md) and the [release playbook](RELEASING.md) before a dedicated version PR, main-commit CI validation, updated PyPI `publish.yml` pending publisher, protected GitHub environment approval and manual OIDC upload/annotated tag. The PyPI long description is the deliberately small [PyPI README](PYPI_README.md), rather than relying on repository-relative links or CSS in the full GitHub README.
 
 ## Validation
 
