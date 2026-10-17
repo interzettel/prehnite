@@ -55,6 +55,9 @@ This project follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) an
 - Granular 61-unit evidence ledger with validated dependencies, generated progress dashboard and GitHub-linked work packages.
 - Original Prehnite vector mark, improved first-run documentation and truthful provider status matrix.
 
+### Changed
+- Kept the README focused on the product: moved Riso hero dimensions, GitHub corner-clipping explanation and palette/secondary-mark design rationale into `docs/BRAND_PALETTE.md`, and exposed Changelog/Versioning links near the top. Polished code formatting in version policy. No version bump or release.
+
 ### Fixed
 - Local repair now requires an explicitly declared opaque material and refuses ambiguous masked interior background colors or disconnected internal transparency before trying an alpha cleanup; synthetic negative controls cover holes, matching-color product areas and unqualified translucent inputs (#29).
 - Empty masks no longer get scheduled for ineffective local morphology: repair planner sends them to human review instead (#31).
