@@ -61,6 +61,7 @@ def test_committed_human_report_matches_generator_exactly():
     (lambda d: d["external_models"][0].update(source_code_license_inherited=True), "unverified_model_rights"),
     (lambda d: d["external_models"][0].update(terms_url="http://localhost/private"), "missing_valid_model_terms_url"),
     (lambda d: d["external_models"][0].update(terms_url="https://example.com/?secret=abc"), "missing_valid_model_terms_url"),
+    (lambda d: d["external_models"][0].update(terms_url="https://example.com/license"), "missing_valid_model_terms_url"),
     (lambda d: d["external_models"][0].update(training_review="none"), "missing_model_specific_rights_rationale"),
     (lambda d: d["candidate_checkpoint_families"][0].update(checkpoint_hash_verified=True), "unverified_checkpoint"),
     (lambda d: d["candidate_checkpoint_families"][0].update(license_approval="approved"), "unverified_checkpoint"),
