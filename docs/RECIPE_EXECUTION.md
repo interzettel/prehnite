@@ -24,7 +24,7 @@ prehnite run ./my-manifest.yaml --profile ./my-local-profile.yaml \
 
 No private source images, prompt files or model binary files are committed by these instructions.
 
-## Persisted guarantees and limits
+With [schema-v2 multi-file bindings](MULTIFILE_PROVENANCE.md), the journal-bound identity now includes every explicitly declared supplemental model SHA256 and its graph reference digest. Changing a declared text encoder, VAE or auxiliary file refuses resume before local ComfyUI dispatch. **Only recognized file-style references in the exported graph are checked**; custom nodes and in-memory loaded weights remain outside attested coverage. Existing v1 receipts retain their previous digest and validation behavior.\n\n## Persisted guarantees and limits
 
 The journal transactionally records the exact recipe ID/version/hash, resolved binding hash and manifest/profile fingerprint before the first stage. A matching resume is idempotent; a changed checkpoint or graph, changed profile/manifest, missing recipe flags or retroactive attempt to bind an older batch **fails closed**. Verification runs again under the engine's exclusive run lock, before any stage starts. The report JSON exposes only this non-sensitive identity, not private filesystem roots.
 
