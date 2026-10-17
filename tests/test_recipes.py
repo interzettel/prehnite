@@ -60,7 +60,7 @@ def test_both_default_blueprints_have_no_execution_or_paid_capability():
     (lambda d: d["stages"][1].update(depends_on=["invalid"]), "Unknown dependency"),
     (lambda d: d["stages"][1].update(depends_on=["cutout"]), "Self-referential"),
     (lambda d: d["stages"][0].update(depends_on=["cutout"]), "Generation is a root"),
-    (lambda d: d["stages"][1].update(operation="generate"), "Generation is a root"),
+    (lambda d: d["stages"][1].update(operation="generate", model={"provider":"demo", "model":"synthetic", "pin_status":"unresolved", "license_review":"bundled_demo_code_only"}), "Generation is a root"),
     (lambda d: d["stages"][1].update(model={"provider":"fal",
                                            "model":"blackforestlabs/flux-3/text-to-image",
                                            "pin_status":"unresolved","license_review":"required"}),
@@ -96,7 +96,7 @@ def test_missing_required_stages_and_unknown_capabilities_fail():
     x["stages"]=[x["stages"][0],x["stages"][2]]
     x["stages"][1]["depends_on"]=["generate"]
     refuses(x,"at least one cutout")
-    x=parsed()
+    x=parsed(MACRO)
     x["stages"][1]["operation"]="matte"
     x["stages"][1]["model"]["provider"]="fal"
     x["stages"][1]["model"]["model"]="fal-ai/birefnet/v2"
