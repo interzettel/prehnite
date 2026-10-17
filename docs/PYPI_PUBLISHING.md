@@ -16,7 +16,7 @@ On 17 October 2026 the owner registered a **pending** PyPI Trusted Publisher:
 
 The publishing gate therefore lives in `.github/workflows/ci.yml`, **not** in a differently named workflow that PyPI could reject. The `pypi` GitHub environment is a distinct control and is compatible with a PyPI registration whose environment is unrestricted. Before the first release, the owner must open [GitHub repository environments](https://github.com/interzettel/prehnite/settings/environments), configure or verify the `pypi` environment, **require manual approval from a trusted reviewer**, and prohibit self-review if available. Refer to [PyPI security guidance](https://docs.pypi.org/trusted-publishers/security-model/). A named environment **without reviewer protections is not itself a manual approval**.
 
-**PyPI can issue an OIDC-scoped short-lived token** only for the matching registered workflow. The publish job has `id-token: write`; all other jobs have no ID-token elevation. No personal or repository-wide `PYPI_TOKEN` secret is used. Publishing uses `pypa/gh-action-pypi-publish@release/v1`, which generates PyPI attestations under Trusted Publishing.
+**PyPI can issue an OIDC-scoped short-lived token** only for the matching registered workflow. The publish job has `id-token: write`; all other jobs have no ID-token elevation. No personal or repository-wide `PYPI_TOKEN` secret is used. Publishing uses the exact reviewed commit `pypa/gh-action-pypi-publish@dc37677b2e1c63e2034f94d8a5b11f265b73ba33` (the upstream `release/v1` ref checked on 2026-10-17), which generates PyPI attestations under Trusted Publishing. The publish job serializes concurrent release attempts.
 
 ## Every pull request / normal main CI
 
@@ -26,7 +26,7 @@ The publishing gate therefore lives in `.github/workflows/ci.yml`, **not** in a 
   - canonical source, wheel and sdist versions and expected CLI entry points;
   - archive structure, source metadata and filename guardrails against private files/model checkpoints;
   - strict Twine package long-description/metadata rendering.
-- The candidate archives are stored as a **temporary private-to-repo CI artifact**, not uploaded to PyPI. Review the archive hashes and contents. The temporary CI artifact is not a release.
+- The candidate archives are stored as a **temporary GitHub Actions artifact**, not uploaded to PyPI. Review the archive hashes and contents. The temporary CI artifact is not a release.
 - A separate, dedicated alpha version-bump PR changes only the authoritative `src/prehnite/_version.py` and release note/version documents; merging a tooling PR **does not bump the version**.
 
 ## First legitimate alpha release
