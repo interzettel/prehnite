@@ -1,6 +1,6 @@
-# Release playbook (future; no release is authorized)
+# Release playbook (manual releases only)
 
-**Current state:** development baseline only. No release tag, GitHub Release or PyPI distribution is being created by this setup.
+**Current state:** development baseline only. No release tag, GitHub Release or PyPI distribution is created merely by adding publishing infrastructure. A legitimate early alpha can ship only after explicit owner approval. See [PyPI OIDC publication runbook](PYPI_PUBLISHING.md) for the registered `ci.yml` workflow, artifact validation, annotated-tag and protected-environment requirements.
 
 ## Release candidate checklist
 
@@ -16,6 +16,6 @@
 
 ## Prohibited by default
 
-- No push-tag automation, automatic publishing, public package releases or API charges in routine PR CI.
+- No push-tag automation, automatic publishing, public package releases or API charges in routine PR/main CI. Ordinary CI builds inspectable candidate wheels and sdists, but cannot upload them.
 - No assumption that third-party models inherit MIT permissions.
 - Never rewrite already published version tags. If a release is wrong, issue a new version and document the correction.
