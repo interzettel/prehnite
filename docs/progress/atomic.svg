@@ -14,7 +14,7 @@
 <rect x="32" y="203" width="810" height="18" rx="5" fill="#D5DCD5"/>
 <rect x="32" y="203" width="111.0" height="18" rx="5" fill="#075231"/>
 <text x="32" y="249" font-size="13" fill="#53675A">Second measure covers only frozen open-unit tasks, never an overall completion estimate.</text>
-<text x="32" y="273" font-size="13" fill="#53675A">Review 1 · Active 0 · Blocked 27 · Planned 35 · baseline 2026-10-17</text>
+<text x="32" y="273" font-size="13" fill="#53675A">Review 2 · Active 0 · Blocked 27 · Planned 34 · baseline 2026-10-17</text>
 <text x="32" y="305" font-size="16" font-weight="600" fill="#075231">PR-SIZED TASKS BY UNFINISHED UNIT</text>
 <text x="32" y="333" font-size="14" font-weight="700" fill="#075231">C06</text>
 <text x="120" y="333" font-size="12" fill="#384F45">Versioned pricing quotes and bill reconcili</text>
@@ -83,7 +83,7 @@
 <text x="1060" y="684" font-size="13" text-anchor="end" fill="#075231">0/3</text>
 <text x="32" y="723" font-size="14" font-weight="700" fill="#075231">R06</text>
 <text x="120" y="723" font-size="12" fill="#384F45">Audit dependencies and model-weight licensi</text>
-<g><title>R06-A01 / planned / Inventory Python dependencies and transitive licenses</title><rect x="565.00" y="709" width="100.75" height="17" rx="2" fill="#D5DCD5"/></g>
+<g><title>R06-A01 / in_review / Inventory Python dependencies and transitive licenses</title><rect x="565.00" y="709" width="100.75" height="17" rx="2" fill="#E5955B"/></g>
 <g><title>R06-A02 / planned / Audit optional model checkpoints and training restrictions</title><rect x="668.75" y="709" width="100.75" height="17" rx="2" fill="#D5DCD5"/></g>
 <g><title>R06-A03 / planned / Scan produced artifacts, embedded fonts and photos for redistribution rights</title><rect x="772.50" y="709" width="100.75" height="17" rx="2" fill="#D5DCD5"/></g>
 <g><title>R06-A04 / planned / Publish actionable license compliance/upgrade report</title><rect x="876.25" y="709" width="100.75" height="17" rx="2" fill="#D5DCD5"/></g>

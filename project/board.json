@@ -161,10 +161,10 @@
       "type": "issue",
       "number": 40,
       "title": "Model, dependency and artifact licensing inventory",
-      "lane": "Backlog",
+      "lane": "In progress",
       "priority": "P1",
       "stream": "Licensing",
-      "note": "Dependency/model weight terms inventory"
+      "note": "R06-A01 offline Python SBOM and exact environment pins in PR #130; release license sign-off and model/media rights remain unresolved."
     },
     {
       "type": "issue",
@@ -939,6 +939,15 @@
       "priority": "P1",
       "stream": "Tracking",
       "note": "Merged as 1e28ea7 with 14/14 green jobs. Evidence-backed 10/73 atomic tasks, 1 review; no double counting."
+    },
+    {
+      "type": "pr",
+      "number": 130,
+      "title": "Offline dependency SBOM and license exceptions",
+      "lane": "In review",
+      "priority": "P1",
+      "stream": "Licensing",
+      "note": "Cross-platform CI SBOM and exact env versions; no third-party license clearance or release credit. Await owner review."
     }
   ]
 }

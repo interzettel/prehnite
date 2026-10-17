@@ -652,10 +652,11 @@
       "parent": "R06",
       "title": "Inventory Python dependencies and transitive licenses",
       "acceptance": "Generated SBOM with locked versions and known exceptions",
-      "state": "planned",
+      "state": "in_review",
       "issue": 40,
       "owner": "Agent cloud",
-      "dependsOn": []
+      "dependsOn": [],
+      "review_url": "https://github.com/interzettel/prehnite/pull/130"
     },
     {
       "id": "R06-A02",
