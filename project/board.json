@@ -917,10 +917,10 @@
       "type": "issue",
       "number": 126,
       "title": "Atomic task progress alongside the 61-unit evidence ledger",
-      "lane": "In progress",
+      "lane": "Done",
       "priority": "P1",
       "stream": "Tracking",
-      "note": "73 PR-sized tasks under frozen 19-parent scope; separate verified percentage and CI checks; PR #127 under review, original 61-unit ledger unchanged."
+      "note": "Delivered in merged PR #127 (14/14 CI). Frozen atomic register, dual progress view; original release ledger unchanged."
     },
     {
       "type": "pr",
@@ -935,10 +935,10 @@
       "type": "pr",
       "number": 127,
       "title": "Evidence-backed atomic task register and dual progress chart",
-      "lane": "In review",
+      "lane": "Done",
       "priority": "P1",
       "stream": "Tracking",
-      "note": "Task register, independent progress UI, generator and tests; PR CI/review pending, no release score inflation."
+      "note": "Merged as 1e28ea7 with 14/14 green jobs. Evidence-backed 10/73 atomic tasks, 1 review; no double counting."
     }
   ]
 }
