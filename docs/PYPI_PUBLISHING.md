@@ -1,6 +1,8 @@
 # Publishing Prehnite on PyPI — isolated, reviewed workflow
 
-**Owner authorization (2026-10-17):** prepare and publish genuine first developer alpha `0.1.0a1`, without claiming production GPU/image quality. PyPI project ownership is established **only after the first successful upload**; a pending Trusted Publisher entry is not a name reservation.
+**Released (2026-10-17):** [Prehnite 0.1.0a1 on PyPI](https://pypi.org/project/prehnite/0.1.0a1/) and [GitHub prerelease](https://github.com/interzettel/prehnite/releases/tag/v0.1.0a1). The [manual publishing run #39030551706](https://github.com/interzettel/prehnite/actions/runs/39030551706) passed both jobs, proving OIDC Trusted Publishing and project creation. The remainder of this document records the first-release procedure historically and its reusable safety gates; subsequent releases require reviewed version/workflow updates.
+
+**Immutable uploaded checksums:** wheel SHA256 `098560a9de1c06afa01a605c5a7d8d3a02f3197a0c00c2e9fbba8914f6637908`; source archive SHA256 `d2eb9e662933b334e6be55b449850ec04b2bcbe29db810b74bec6167c549e4c2`. PyPI identifies `yigit-denktas` as the Owner. A pending publisher alone never reserved the project; the first upload did.
 
 ## Workflow separation
 
@@ -8,7 +10,7 @@
 - **`.github/workflows/publish.yml` — release only.** Dispatch manually from `main` with *exactly* `0.1.0a1` and typed `PUBLISH PREHNITE TO PYPI`; refuses other refs and versions. Reads a **completed successful push CI run for the exact SHA**, fetches only its validated candidate wheel/sdist, verifies filenames, content and Twine metadata, and creates the approved release artifact set.
 - The publishing job waits for the GitHub environment **`pypi`**. After review, it re-verifies the same SHA/archived bytes, creates an **annotated** `v0.1.0a1` tag without overwriting old tags, uploads via commit-pinned `pypa/gh-action-pypi-publish` using OIDC (no API token), and creates a GitHub **prerelease** if PyPI succeeds. Failed uploads may leave a matching tag; reruns check it before proceeding.
 
-## Two account-side checks before first publication
+## Original account-side setup (completed for 0.1.0a1)
 
 ### 1. Update the existing PyPI pending Trusted Publisher
 
