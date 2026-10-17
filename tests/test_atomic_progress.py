@@ -41,7 +41,7 @@ def test_frozen_scope_covers_every_initially_unfinished_release_unit():
     assert len(atomic["baseline_open_parent_ids"]) == 19
     assert {u["id"] for milestone in ledger["milestones"] for u in milestone["units"]
             if u["state"] != "done"}.issubset(set(atomic["baseline_open_parent_ids"]))
-    assert m["done"] >= 11
+    assert m["done"] >= 10
     assert m["done"] + m["in_review"] + m["active"] + m["blocked"] + m["planned"] == 73
 
 
@@ -54,11 +54,11 @@ def test_generated_svg_and_markdown_are_reproducible():
     svg = module.render_svg(ledger, atomic)
     md = module.render_md(ledger, atomic)
     assert "68.85%" in svg
-    assert "15.07%" in md
+    assert "13.70%" in md
     assert "not an overall project completion score" in md
     assert "PR-SIZED TASKS BY UNFINISHED UNIT" in svg
     assert "42/61" in md
-    assert "11/73" in md
+    assert "10/73" in md
 
 
 @pytest.mark.parametrize("mutation,expected", [

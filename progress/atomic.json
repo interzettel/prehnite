@@ -291,13 +291,12 @@
     {
       "id": "Q06-A03",
       "parent": "Q06",
-      "title": "Validate Review Studio export and corrected masks",
-      "acceptance": "Strict ZIP/folder, status, alpha and hash tests green; PR pending merge",
-      "state": "in_review",
+      "title": "Verify review source hashes against private JPEGs",
+      "acceptance": "All reviewed source SHA256 values match the original private JPEG bytes without exporting images",
+      "state": "planned",
       "issue": 28,
       "owner": "Owner",
-      "dependsOn": [],
-      "review_url": "https://github.com/interzettel/prehnite/pull/125"
+      "dependsOn": []
     },
     {
       "id": "Q06-A04",
@@ -598,14 +597,12 @@
     {
       "id": "S07-A01",
       "parent": "S07",
-      "title": "Validate private apparel source inventory",
-      "acceptance": "84 full-resolution apparel JPEGs read with no image byte publication",
-      "state": "done",
+      "title": "Define human acceptance rubric across tricky materials",
+      "acceptance": "Per-material rubric explains acceptable boundaries, uncertain cases and human refusal criteria",
+      "state": "planned",
       "issue": 32,
       "owner": "Owner",
-      "dependsOn": [],
-      "evidence": "https://github.com/interzettel/prehnite/pull/123",
-      "verified_at": "2026-10-16"
+      "dependsOn": []
     },
     {
       "id": "S07-A02",
