@@ -1028,7 +1028,7 @@
       "lane": "In review",
       "priority": "P1",
       "stream": "Local GPU",
-      "note": "Read-only source-labeled Linux/Windows/macOS RAM and NVIDIA VRAM; no GPU benchmarking; CI pending."
+      "note": "Read-only source-labeled RAM and NVIDIA VRAM, cross-platform CI; no model-specific GPU benchmarking or tier certification."
     }
   ]
 }
