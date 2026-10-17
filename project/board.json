@@ -161,10 +161,10 @@
       "type": "issue",
       "number": 40,
       "title": "Model, dependency and artifact licensing inventory",
-      "lane": "In progress",
+      "lane": "Backlog",
       "priority": "P1",
       "stream": "Licensing",
-      "note": "R06-A01 offline Python SBOM and exact environment pins in PR #130; release license sign-off and model/media rights remain unresolved."
+      "note": "Dependency/model weight terms inventory"
     },
     {
       "type": "issue",
@@ -242,10 +242,10 @@
       "type": "issue",
       "number": 31,
       "title": "Targeted repair planner for failed cutouts",
-      "lane": "Backlog",
+      "lane": "In progress",
       "priority": "P1",
       "stream": "Cutouts",
-      "note": "Controlled journaled synthetic repair delivered in merged PR #119; full targeted S05 failure classification and Engine integration not complete."
+      "note": "S05-A04 opt-in production staging in PR #129, review-only, no visual acceptance; S05-A05 real photo evidence blocked."
     },
     {
       "type": "issue",
@@ -942,12 +942,12 @@
     },
     {
       "type": "pr",
-      "number": 130,
-      "title": "Offline dependency SBOM and license exceptions",
+      "number": 129,
+      "title": "Stage opt-in bounded opaque repair for cutout review",
       "lane": "In review",
       "priority": "P1",
-      "stream": "Licensing",
-      "note": "Cross-platform CI SBOM and exact env versions; no third-party license clearance or release credit. Await owner review."
+      "stream": "Cutouts",
+      "note": "Strict owner-declared opaque product, isolate journaled repair, preserve selected assets; CI pending. No human acceptance or parent unit done."
     }
   ]
 }

@@ -510,10 +510,11 @@
       "parent": "S05",
       "title": "Wire the bounded repair into production Engine.cutout",
       "acceptance": "Real stage transition uses journal, protects selected artifacts and can abstain",
-      "state": "planned",
+      "state": "in_review",
       "issue": 31,
       "owner": "Agent cloud",
-      "dependsOn": []
+      "dependsOn": [],
+      "review_url": "https://github.com/interzettel/prehnite/pull/129"
     },
     {
       "id": "S05-A05",
@@ -652,11 +653,10 @@
       "parent": "R06",
       "title": "Inventory Python dependencies and transitive licenses",
       "acceptance": "Generated SBOM with locked versions and known exceptions",
-      "state": "in_review",
+      "state": "planned",
       "issue": 40,
       "owner": "Agent cloud",
-      "dependsOn": [],
-      "review_url": "https://github.com/interzettel/prehnite/pull/130"
+      "dependsOn": []
     },
     {
       "id": "R06-A02",

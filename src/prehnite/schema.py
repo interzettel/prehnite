@@ -58,6 +58,8 @@ class Asset(Strict):
     target_size: tuple[int, int] = (3024, 4032)
     seed: int | None = None
     targets: list[str] = Field(default_factory=list)
+    # Explicit, per-target owner declaration; never infer opacity from pixels.
+    cutout_materials: dict[str, Literal["opaque", "unknown", "hair", "glass", "fabric", "translucent"]] = Field(default_factory=dict)
     output: Output
 
     @field_validator("id")
@@ -86,6 +88,8 @@ class Asset(Strict):
             raise ValueError("Cutout targets must be non-empty")
         if set(self.output.cutouts) != set(self.targets):
             raise ValueError("Every target must have an output cutout path")
+        if not set(self.cutout_materials).issubset(set(self.targets)):
+            raise ValueError("Cutout material declaration refers to unknown target")
         if any(not p.lower().endswith(".png") for p in self.output.cutouts.values()):
             raise ValueError("Cutouts must be PNG files")
         return self
@@ -123,6 +127,8 @@ class QualityPolicy(Strict):
     maximum_attempts: int = Field(default=2, ge=1, le=10)
     uncertain: Literal["reject", "accept_unverified"] = "reject"
     cutout_minimum_coverage: float = Field(default=0.002, ge=0, le=1)
+    # Explicit, safe opt-in. A local repair is a review candidate, never accepted.
+    local_repair_mode: Literal["disabled", "stage_for_review"] = "disabled"
 
 
 class CostPolicy(Strict):
