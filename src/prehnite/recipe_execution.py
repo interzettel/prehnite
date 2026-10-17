@@ -52,8 +52,13 @@ def verify_micro_profile(recipe: Recipe, bindings: LocalBindings,
         raise ValueError("Local micro recipe cannot authorize cloud uploads or spending")
     if profile.cache.enabled or profile.cache.allow_paid:
         raise ValueError("Recipe-bound runs disable cross-batch cache until keyed by recipe")
-    if profile.variants != ["native_4k"]:
-        raise ValueError("Initial micro bridge supports only native_4k (no upscale stage)")
+    variants_by_recipe = {
+        "0.1.0-preview.1": ["native_4k"],
+        "0.1.0-preview.2": ["native_1k"],
+    }
+    required_variants = variants_by_recipe.get(recipe.version)
+    if required_variants is None or profile.variants != required_variants:
+        raise ValueError("Micro recipe version requires matching native variant (no upscale stage)")
     graph_map = {"generate": ("generation", "generate"),
                  "cutout": ("segmentation", "segment")}
     if [stage.id for stage in recipe.stages] != ["generate", "cutout", "quality"]:
