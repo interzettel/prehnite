@@ -14,17 +14,10 @@ Requires Python 3.11 or later.
 python -m pip install prehnite
 prehnite init --destination my-first-batch
 prehnite doctor
-prehnite validate examples/manifest.yaml --profile examples/profile-demo.yaml
+prehnite --help
 ```
 
-The last example command uses sample files from the [source repository](https://github.com/interzettel/prehnite/tree/main/examples); if you installed solely from PyPI, use the files created by `prehnite init` instead. You can run `prehnite --help` to see locally available commands.
-
-**First use without cloning:**
-
-```bash
-prehnite init --destination my-first-batch
-prehnite doctor
-```
+The `init` command creates local starter configuration, but does not run model inference or incur fees. For a sample batch, follow the source repository's [two-minute demo](https://github.com/interzettel/prehnite#try-it-in-two-minutes).
 
 For a sample zero-cost batch, follow the [up-to-date project README](https://github.com/interzettel/prehnite#try-it-in-two-minutes) and [onboarding guide](https://github.com/interzettel/prehnite/blob/main/docs/ONBOARDING.md).
 
