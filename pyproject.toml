@@ -6,7 +6,7 @@ build-backend = "hatchling.build"
 name = "prehnite"
 dynamic = ["version"]
 description = "Local-first, quality-gated visual asset production with model-agnostic providers and MCP."
-readme = "README.md"
+readme = "docs/PYPI_README.md"
 license = "MIT"
 requires-python = ">=3.11"
 authors = [{name = "Studio Zettlerei"}]
@@ -17,6 +17,13 @@ dependencies = [
   "typer>=0.15,<1",
   "httpx>=0.27,<1",
 ]
+
+[project.urls]
+Homepage = "https://github.com/interzettel/prehnite"
+Documentation = "https://github.com/interzettel/prehnite/blob/main/README.md"
+Source = "https://github.com/interzettel/prehnite"
+Issues = "https://github.com/interzettel/prehnite/issues"
+Changelog = "https://github.com/interzettel/prehnite/blob/main/CHANGELOG.md"
 
 [project.optional-dependencies]
 fal = ["fal-client>=0.7,<1"]
@@ -31,6 +38,17 @@ prehnite-mcp = "prehnite.mcp_server:main"
 
 [tool.hatch.version]
 path = "src/prehnite/_version.py"
+
+# Public sdists contain only the package and release metadata. Never ship
+# local .env templates, CI internals, uploaded photos or third-party weights.
+[tool.hatch.build.targets.sdist]
+include = [
+  "/pyproject.toml",
+  "/README.md",
+  "/LICENSE",
+  "/docs/PYPI_README.md",
+  "/src/prehnite",
+]
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/prehnite"]
