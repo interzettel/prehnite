@@ -60,7 +60,7 @@ def test_kanban_duplicate_detected():
 def test_governance_accepts_canonical_pre_release_development(version, monkeypatch, tmp_path):
     governance = load_script("check_governance")
     path = tmp_path / "_version.py"
-    path.write_text(f'__version__ = "{version}"\\n', encoding="utf-8")
+    path.write_text(f'__version__ = "{version}"\n', encoding="utf-8")
     monkeypatch.setattr(governance, "VERSION_PATH", path)
     assert governance.source_version() == version
 
@@ -70,7 +70,7 @@ def test_governance_accepts_canonical_pre_release_development(version, monkeypat
 def test_governance_rejects_invalid_release_label(version, monkeypatch, tmp_path):
     governance = load_script("check_governance")
     path = tmp_path / "_version.py"
-    path.write_text(f'__version__ = "{version}"\\n', encoding="utf-8")
+    path.write_text(f'__version__ = "{version}"\n', encoding="utf-8")
     monkeypatch.setattr(governance, "VERSION_PATH", path)
     with pytest.raises(ValueError, match="PEP 440"):
         governance.source_version()
