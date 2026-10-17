@@ -1,6 +1,6 @@
 # Versioning policy
 
-**Canonical version:** [src/prehnite/_version.py](../src/prehnite/_version.py), currently `0.1.0a1` (approved first-alpha candidate). For shipped/reviewed changes consult the [changelog](../CHANGELOG.md) and [release playbook](RELEASING.md).
+**Canonical version:** [src/prehnite/_version.py](../src/prehnite/_version.py), currently `0.1.0a1` ([first public alpha published on PyPI](https://pypi.org/project/prehnite/0.1.0a1/)). For shipped/reviewed changes consult the [changelog](../CHANGELOG.md) and [release playbook](RELEASING.md).
 
 The `[project]` metadata in `pyproject.toml` specifies `dynamic = ["version"]`, and Hatchling reads the value from `src/prehnite/_version.py`. The public `prehnite.__version__` imports from that same file; no copy-pasted version constant exists elsewhere in executable metadata.
 
@@ -16,7 +16,7 @@ The `[project]` metadata in `pyproject.toml` specifies `dynamic = ["version"]`, 
 
 ## Alpha release packaging
 
-The canonical first public developer **alpha candidate is `0.1.0a1`**. Public availability is established only by the successful OIDC upload and verified PyPI distribution, not by this committed version string alone. Review [the PyPI runbook](PYPI_PUBLISHING.md) and the [release playbook](RELEASING.md) before a dedicated version PR, main-commit CI validation, updated PyPI `publish.yml` pending publisher, protected GitHub environment approval and manual OIDC upload/annotated tag. The PyPI long description is the deliberately small [PyPI README](PYPI_README.md), rather than relying on repository-relative links or CSS in the full GitHub README.
+The first public developer **alpha `0.1.0a1` is published**, with an annotated `v0.1.0a1` Git tag, a GitHub prerelease and a verified PyPI wheel/sdist. Its public availability was established by the actual OIDC upload and verified PyPI distribution, not merely by committing a version string. Subsequent releases require new reviewed versions. Review [the PyPI runbook](PYPI_PUBLISHING.md) and the [release playbook](RELEASING.md) before a dedicated version PR, main-commit CI validation, updated PyPI `publish.yml` pending publisher, protected GitHub environment approval and manual OIDC upload/annotated tag. The PyPI long description is the deliberately small [PyPI README](PYPI_README.md), rather than relying on repository-relative links or CSS in the full GitHub README.
 
 ## Validation
 

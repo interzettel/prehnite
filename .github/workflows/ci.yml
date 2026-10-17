@@ -306,3 +306,20 @@ jobs:
           if-no-files-found: error
           retention-days: 7
 
+
+  published-alpha-smoke:
+    name: Install live PyPI 0.1.0a1 (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Download the exact public wheel, hash it and install it into a clean virtualenv
+        run: python scripts/smoke_public_pypi.py
