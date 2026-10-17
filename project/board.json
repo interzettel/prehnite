@@ -980,28 +980,28 @@
       "type": "issue",
       "number": 133,
       "title": "Recipe contract and capability DAG validation",
-      "lane": "Done",
+      "lane": "Ready",
       "priority": "P1",
       "stream": "Recipes",
-      "note": "Versioned micro/macro offline DAG contract merged via PR #138; executable model installation and real GPU tests remain separate."
+      "note": "PR #138 blueprint validator merged; per-batch immutable journal pinning and replay guard still open; no model runtime."
     },
     {
       "type": "issue",
       "number": 134,
       "title": "Local GPU feasibility doctor and benchmark",
-      "lane": "In progress",
+      "lane": "Backlog",
       "priority": "P1",
       "stream": "Local GPU",
-      "note": "PR #139 delivers offline read-only hardware diagnostics; real GPU model benchmarks and other accelerator backends remain open."
+      "note": "PR #139 offline hardware doctor merged; non-NVIDIA probes and real local recipe GPU benchmarks remain."
     },
     {
       "type": "issue",
       "number": 135,
       "title": "Rights-aware model acquisition and installation",
-      "lane": "Backlog",
+      "lane": "In progress",
       "priority": "P1",
       "stream": "Recipes",
-      "note": "New owner-directed recipe roadmap; future reviewed atomic scope migration."
+      "note": "PR #140 verifies user-supplied local graph/checkpoint bytes offline; installation and license/source validation remain open."
     },
     {
       "type": "issue",
@@ -1019,7 +1019,7 @@
       "lane": "Done",
       "priority": "P1",
       "stream": "Recipes",
-      "note": "Merged PR #138; strict preview-only recipe validation; no installed weights or model inference."
+      "note": "Merged PR #138, offline recipe preview contract only; no journal pinning, weights or real inference."
     },
     {
       "type": "pr",
@@ -1028,7 +1028,16 @@
       "lane": "Done",
       "priority": "P1",
       "stream": "Local GPU",
-      "note": "PR #139 merged hardware-readiness diagnostics only; real recipe execution and physical GPU benchmarks unverified."
+      "note": "Merged PR #139, offline hardware diagnostic with unknown/unprobed states; no real-model GPU benchmark."
+    },
+    {
+      "type": "pr",
+      "number": 140,
+      "title": "Offline micro checkpoint and ComfyUI graph resolver",
+      "lane": "In review",
+      "priority": "P1",
+      "stream": "Recipes",
+      "note": "PR #140: local SHA256 and terms-attested input identity; no installer, execution, rights approval or journal pinning."
     }
   ]
 }
