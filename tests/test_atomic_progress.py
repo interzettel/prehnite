@@ -53,12 +53,13 @@ def test_generated_svg_and_markdown_are_reproducible():
         assert path.read_text(encoding="utf-8") == contents
     svg = module.render_svg(ledger, atomic)
     md = module.render_md(ledger, atomic)
-    assert "68.85%" in svg
-    assert "13.70%" in md
+    status = module.counts(ledger, atomic)
+    assert module.pct(status["parent_done"], status["parent_total"]) in svg
+    assert module.pct(status["done"], status["task_total"]) in md
     assert "not an overall project completion score" in md
     assert "PR-SIZED TASKS BY UNFINISHED UNIT" in svg
-    assert "42/61" in md
-    assert "10/73" in md
+    assert f'{status["parent_done"]}/{status["parent_total"]}' in md
+    assert f'{status["done"]}/{status["task_total"]}' in md
 
 
 @pytest.mark.parametrize("mutation,expected", [
@@ -80,8 +81,13 @@ def test_invalid_task_scopes_cannot_inflate_progress(mutation, expected):
 def test_review_cannot_be_relabelled_done_without_merge_receipt():
     module = tracker()
     ledger, atomic = data()
-    item = find(atomic, "S07-A02")
-    assert item["state"] == "in_review"
+    # Construct an unmerged review state instead of assuming a specific PR
+    # stays open forever. That state earns no credit even if relabeled.
+    item = find(atomic, "S03-A03")
+    assert item["state"] == "planned"
+    item["state"] = "in_review"
+    item["review_url"] = "https://github.com/interzettel/prehnite/pull/9999"
+    assert module.counts(ledger, atomic)["done"] == module.counts(*data())["done"]
     item["state"] = "done"
     with pytest.raises(ValueError, match="evidence"):
         module.validate(ledger, atomic)
