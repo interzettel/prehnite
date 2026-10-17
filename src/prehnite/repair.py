@@ -9,6 +9,7 @@ import hashlib
 import json
 import os
 import re
+from contextlib import nullcontext
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -242,7 +243,9 @@ def run_product_repair(journal: Journal, source: Path, mask: Path, *,
                        material: str = "unknown",
                        accepted_output_exists: bool = False,
                        remote_charge_uncertain: bool = False,
-                       awaiting_provider_submission: bool = False) -> dict:
+                       awaiting_provider_submission: bool = False,
+                       selected_source_only: bool = False,
+                       lock_already_held: bool = False) -> dict:
     """One durable *logical* attempt; crash replay may recompute local pixels.
 
     No provider, model, network access or accepted deliverable is contacted.
@@ -265,10 +268,20 @@ def run_product_repair(journal: Journal, source: Path, mask: Path, *,
     if (accepted_output_exists or remote_charge_uncertain or awaiting_provider_submission):
         return {"status": "human_review", "reason": "accepted_or_remote_state_unsafe",
                 "would_spend_usd": 0}
-    with journal.exclusive():
-        if (journal.root / "selected").exists():
-            return {"status": "human_review", "reason": "existing_selected_artifacts",
-                    "would_spend_usd": 0}
+    # Engine.run already owns the outer batch lock. The direct repair API
+    # still obtains that lock itself; nested acquisition would deadlock.
+    lock = nullcontext() if lock_already_held else journal.exclusive()
+    with lock:
+        selected_root = (journal.root / "selected").resolve()
+        if selected_root.exists():
+            # Strict opt-in permits using an existing *source* in selected/.
+            # It NEVER promotes the generated repair into selected/.
+            if not selected_source_only or not source.resolve().is_relative_to(selected_root):
+                return {"status": "human_review", "reason": "existing_selected_artifacts",
+                        "would_spend_usd": 0}
+            if not source.is_file() or source.is_symlink():
+                return {"status": "human_review", "reason": "selected_source_not_regular_file",
+                        "would_spend_usd": 0}
         try:
             diagnosis = diagnose(source, mask)
         except RepairRefused as exc:
