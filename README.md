@@ -1,5 +1,4 @@
 <div align="center">
-  <!-- GitHub strips inline radius styles; the PNG also has actual transparent rounded corners. -->
   <img src="assets/prehnite-riso-green-coral.png" alt="Prehnite — Make the batch. Keep the best. Forest-green and coral Riso identity on warm paper." width="680" style="border-radius: 16px; clip-path: inset(0 round 16px);" />
   <p><strong>Batch image production without the platform tax.</strong><br />
   An open-source Python engine for generating, checking, refining and exporting visual assets.</p>
@@ -15,11 +14,11 @@
     <a href="#how-it-works">How it works</a> ·
     <a href="#where-things-stand">Project status</a> ·
     <a href="docs/progress/STATUS.md">Progress</a> ·
+    <a href="CHANGELOG.md">Changelog</a> ·
+    <a href="docs/VERSIONING.md">Versioning</a> ·
     <a href="https://github.com/orgs/interzettel/projects/1">Project board</a>
   </p>
 </div>
-
-The visual identity uses the owner-selected **forest green / coral / warm paper** Riso colorway. The hero is a [2020 × 779 rounded-corner PNG](assets/prehnite-riso-green-coral.png) with transparent corner clipping that survives GitHub's CSS sanitization. Shared [brand color tokens](docs/BRAND_PALETTE.md) apply to project UI surfaces, including accessible light/dark variants. A separate [mineral symbol](assets/prehnite-mark.svg) remains available for compact applications.
 
 ---
 
@@ -208,7 +207,7 @@ batch with zero accepted assets has no meaningful cost-per-accepted figure.
 
 ## Where things stand
 
-**`0.1.0.dev0` · source-only development preview.** Not a tagged release or a published PyPI package. The core synthetic workflow works; **photorealistic quality, 4K GPU feasibility, segmentation accuracy and actual API billing have not been certified**.
+**`0.1.0.dev0` · source-only development preview.** Not a tagged release or a published PyPI package. The [changelog](CHANGELOG.md) records changes under **Unreleased**; see [versioning policy](docs/VERSIONING.md) and [release playbook](docs/RELEASING.md) for when a version will actually ship. The core synthetic workflow works; **photorealistic quality, 4K GPU feasibility, segmentation accuracy and actual API billing have not been certified**.
 
 The tracker distinguishes implemented scaffolding from independently evidenced completions, and records issues blocked by local hardware, human calibration or paid-call authorization.
 
