@@ -6,6 +6,10 @@ This project follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) an
 
 ## [Unreleased]
 
+### Changed
+- Start the next development series at `0.1.0a2.dev0` after the immutable public `0.1.0a1` release. Version change alone does not publish a new package; subsequent alpha requires a new reviewed release candidate and guarded publishing workflow.
+
+
 ### Added
 - Offline create-only `prehnite micro-setup` for SHA256-bound, owner-supplied ComfyUI workflow/model input bindings and explicit local-use term acknowledgement; strict micro profile compatibility and tamper/overwrite guards, without model downloads or inference (#135).
 - One-asset no-provider-call `prehnite trial-plan` for local and opted-in fal.ai smoke tests with explicit maximum operator budget, attempt/variant restrictions and clearly **unverified** price assumptions; owner first-GPU/API runbook and reusable YAML examples (#134/#132).
