@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "id": "prehnite-micro",
+  "version": "0.1.0-preview.1",
+  "kind": "micro",
+  "release_status": "blueprint_only",
+  "hardware_status": "unverified",
+  "capability_status": "registry_declared_only",
+  "description": "Design-only laptop recipe skeleton. User must supply lawful local ComfyUI graphs, checkpoint hashes, compatible runtime and measured VRAM before execution. No model bundles.",
+  "policy": {
+    "auto_download_weights": false,
+    "bundle_model_weights": false,
+    "allow_paid": false,
+    "allow_cloud_uploads": false,
+    "max_usd": 0,
+    "provider_retries_enabled": false
+  },
+  "stages": [
+    {
+      "id": "generate",
+      "operation": "generate",
+      "execution": "local",
+      "model": {
+        "provider": "comfyui",
+        "model": "user-workflow",
+        "source_url": "https://github.com/Comfy-Org/ComfyUI",
+        "pin_status": "unresolved",
+        "license_review": "required"
+      },
+      "depends_on": []
+    },
+    {
+      "id": "cutout",
+      "operation": "segment",
+      "execution": "local",
+      "model": {
+        "provider": "comfyui",
+        "model": "user-segmentation",
+        "source_url": "https://github.com/Comfy-Org/ComfyUI",
+        "pin_status": "unresolved",
+        "license_review": "required"
+      },
+      "depends_on": [
+        "generate"
+      ]
+    },
+    {
+      "id": "quality",
+      "operation": "judge",
+      "execution": "local",
+      "model": {
+        "provider": "demo",
+        "model": "technical",
+        "pin_status": "unresolved",
+        "license_review": "bundled_demo_code_only"
+      },
+      "depends_on": [
+        "generate",
+        "cutout"
+      ]
+    }
+  ]
+}
