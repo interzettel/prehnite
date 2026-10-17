@@ -39,6 +39,17 @@ prehnite-mcp = "prehnite.mcp_server:main"
 [tool.hatch.version]
 path = "src/prehnite/_version.py"
 
+# Public sdists contain only the package and release metadata. Never ship
+# local .env templates, CI internals, uploaded photos or third-party weights.
+[tool.hatch.build.targets.sdist]
+include = [
+  "/pyproject.toml",
+  "/README.md",
+  "/LICENSE",
+  "/docs/PYPI_README.md",
+  "/src/prehnite",
+]
+
 [tool.hatch.build.targets.wheel]
 packages = ["src/prehnite"]
 
