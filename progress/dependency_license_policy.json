@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "purpose": "Explicit unresolved boundaries of a Python dependency SBOM; not license exemptions or legal authorization.",
+  "known_exceptions": [
+    {
+      "kind": "model_checkpoint_weights",
+      "status": "needs_separate_review",
+      "reason": "Model weights and trained checkpoints are not Python runtime packages and require individual provenance, usage and redistribution review."
+    },
+    {
+      "kind": "hosted_provider_contracts",
+      "status": "needs_separate_review",
+      "reason": "Hosted inference API contracts, provider terms and output rights do not follow from Python-client package license metadata."
+    },
+    {
+      "kind": "third_party_media_rights",
+      "status": "needs_separate_review",
+      "reason": "Photographs, datasets, image masks, fonts and generated artwork retain separate rights and cannot be cleared by the Python dependency audit."
+    },
+    {
+      "kind": "missing_or_ambiguous_license_metadata",
+      "status": "needs_separate_review",
+      "reason": "Absent or legacy non-SPDX package metadata cannot be interpreted as redistribution approval until authoritative package/source terms are verified."
+    }
+  ]
+}
