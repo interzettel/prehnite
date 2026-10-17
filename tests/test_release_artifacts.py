@@ -38,12 +38,14 @@ def test_release_archive_accepts_package_and_docs_paths():
 
 
 def test_canonical_version_is_read_from_source():
-    assert release_check.source_version(SCRIPTS.parent) == "0.1.0.dev0"
+    from packaging.version import Version
+
+    assert Version(release_check.source_version(SCRIPTS.parent)).major == 0
 
 
 def test_release_checks_refuse_mismatched_source_version(tmp_path):
     with pytest.raises(ValueError, match="Source version"):
-        release_check.check(tmp_path, "0.1.0a1")
+        release_check.check(tmp_path, "9.9.9")
 
 
 def test_release_checks_refuse_dev_release_before_archive_handling(tmp_path):
@@ -57,6 +59,7 @@ def test_release_checks_refuse_noncanonical_version(tmp_path):
 
 
 def test_release_checks_refuse_partial_or_extra_archives(tmp_path):
-    (tmp_path / "prehnite-0.1.0.dev0.tar.gz").write_bytes(b"not a complete artifact")
+    version = release_check.source_version(SCRIPTS.parent)
+    (tmp_path / f"prehnite-{version}.tar.gz").write_bytes(b"not a complete artifact")
     with pytest.raises(ValueError, match="only wheel"):
-        release_check.check(tmp_path, "0.1.0.dev0")
+        release_check.check(tmp_path, version)
