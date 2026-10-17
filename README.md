@@ -41,6 +41,11 @@ without revealing any keys or contacting a service. For details, see
 [the first-run guide](docs/ONBOARDING.md). These commands do not run AI
 image generation or incur any inference costs.
 
+For measured-versus-unknown OS/RAM/GPU inventory, run `prehnite hardware`.
+This **offline, read-only** command can query local `nvidia-smi`; it never
+certifies a GPU memory tier or recipe feasibility. See
+[hardware doctor limitations](docs/HARDWARE_DOCTOR.md) (issue #134).
+
 ## Try it in two minutes
 
 You can test the complete workflow without a GPU, credentials, subscription, or inference charge. **The demo creates simple synthetic test images, not AI photographs.**
