@@ -7,6 +7,7 @@ This project follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) an
 ## [Unreleased]
 
 ### Added
+- Experimental local ComfyUI recipe/engine bridge (#133): upfront and pre-run SHA256 checks, strict recipe/profile and graph model-reference compatibility, atomic SQLite per-batch recipe identity and refusal of changed/unbound/legacy resumes; no hardware or live-model performance claims.
 - Read-only offline micro recipe resolver: operator-supplied ComfyUI API graph and checkpoint file hashing, explicit local-use terms acknowledgement, reproducible resolved-input digest and refusal of unsafe paths/mismatched bytes (#135). No downloads, model execution, verified rights or per-batch journal integration.
 - Read-only offline hardware doctor (`prehnite hardware`) with source-labeled OS/CPU/RAM/disk and optional NVIDIA-SMI VRAM observations, explicit unsupported/unknown accelerator states and synthetic platform tests (#134). No weight download, GPU benchmark, performance tier certification or inference.
 - Versioned read-only `prehnite-micro` and `prehnite-macro` recipe blueprints (#132/#133), strict registry/DAG/maturity/privacy/budget validation, canonical SHA256 identity, and offline CLI/test coverage; no inference, weights, downloads or hardware quality claims.
