@@ -980,10 +980,10 @@
       "type": "issue",
       "number": 133,
       "title": "Recipe contract and capability DAG validation",
-      "lane": "Ready",
+      "lane": "In progress",
       "priority": "P1",
       "stream": "Recipes",
-      "note": "PR #138 blueprint validator merged; per-batch immutable journal pinning and replay guard still open; no model runtime."
+      "note": "PR #138 contract merged; PR #141 pending immutable per-batch recipe/run binding. Live GPU evidence separate."
     },
     {
       "type": "issue",
@@ -998,10 +998,10 @@
       "type": "issue",
       "number": 135,
       "title": "Rights-aware model acquisition and installation",
-      "lane": "In progress",
+      "lane": "Ready",
       "priority": "P1",
       "stream": "Recipes",
-      "note": "PR #140 verifies user-supplied local graph/checkpoint bytes offline; installation and license/source validation remain open."
+      "note": "PR #140 offline resolver merged; checkpoint acquisition/import, rights sourcing and installation remain."
     },
     {
       "type": "issue",
@@ -1034,10 +1034,19 @@
       "type": "pr",
       "number": 140,
       "title": "Offline micro checkpoint and ComfyUI graph resolver",
+      "lane": "Done",
+      "priority": "P1",
+      "stream": "Recipes",
+      "note": "Merged PR #140, verified local graph/checkpoint bytes only; no acquisition, full rights clearance or GPU run."
+    },
+    {
+      "type": "pr",
+      "number": 141,
+      "title": "Recipe-locked local engine run and immutable journal identity",
       "lane": "In review",
       "priority": "P1",
       "stream": "Recipes",
-      "note": "PR #140: local SHA256 and terms-attested input identity; no installer, execution, rights approval or journal pinning."
+      "note": "PR #141: profile/checkpoint/graph-validated local Comfy bridge and journal identity; physical GPU unverified."
     }
   ]
 }
