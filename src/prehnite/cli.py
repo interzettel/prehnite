@@ -39,6 +39,13 @@ def doctor(check_comfyui: bool = typer.Option(False, "--check-comfyui",
     typer.echo(json.dumps(report, indent=2))
 
 
+@app.command("hardware")
+def hardware():
+    """Print read-only offline hardware observations; no model feasibility claims."""
+    from .hardware import hardware_report
+    typer.echo(json.dumps(hardware_report(), indent=2, sort_keys=True))
+
+
 @app.command()
 def validate(manifest: Path, profile: Path = typer.Option(...),
              inputs: Path = typer.Option(Path("inputs"))):
