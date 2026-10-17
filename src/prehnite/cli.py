@@ -81,6 +81,13 @@ def micro_setup(
             help="I reviewed each exact model's local-use terms; does not confer rights"),
         profile: Path | None = typer.Option(None, "--profile",
                                             help="Optional strict run-profile compatibility check"),
+        additional_models: Path | None = typer.Option(None, "--additional-models",
+                                        help="Private JSON selecting extra graph-loaded weight files"),
+        generation_checkpoint_graph_ref: str | None = typer.Option(
+            None, "--generation-checkpoint-graph-ref",
+            help="Actual ComfyUI loader value when different from path below model root"),
+        cutout_checkpoint_graph_ref: str | None = typer.Option(
+            None, "--cutout-checkpoint-graph-ref"),
 ):
     """Create offline SHA256 micro bindings once; NEVER download weights or run models."""
     from .model_setup import prepare_micro_bindings
@@ -93,6 +100,9 @@ def micro_setup(
             cutout_revision=cutout_revision, cutout_terms_url=cutout_terms_url,
             acknowledged_terms=acknowledge_model_terms, destination=output,
             profile=load_profile(profile) if profile else None,
+            additional_models=additional_models,
+            generation_checkpoint_graph_ref=generation_checkpoint_graph_ref,
+            cutout_checkpoint_graph_ref=cutout_checkpoint_graph_ref,
         )
     except (ValueError, OSError) as exc:
         raise typer.BadParameter(str(exc)) from exc
