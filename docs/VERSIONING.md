@@ -16,7 +16,7 @@ The `[project]` metadata in `pyproject.toml` specifies `dynamic = ["version"]`, 
 
 ## Alpha release packaging
 
-The planned first public developer preview is `0.1.0a1`, subject to separately approved artifacts and release authorization; this section **does not bump** the canonical `0.1.0.dev0` source version. Review [the PyPI runbook](PYPI_PUBLISHING.md) and the [release playbook](RELEASING.md) before a dedicated version PR, annotated tag, protected GitHub environment approval and manual OIDC upload. The PyPI long description is the deliberately small [PyPI README](PYPI_README.md), rather than relying on repository-relative links or CSS in the full GitHub README.
+The planned first public developer preview is `0.1.0a1`, subject to separately approved artifacts and release authorization; this section **does not bump** the canonical `0.1.0.dev0` source version. Review [the PyPI runbook](PYPI_PUBLISHING.md) and the [release playbook](RELEASING.md) before a dedicated version PR, main-commit CI validation, updated PyPI `publish.yml` pending publisher, protected GitHub environment approval and manual OIDC upload/annotated tag. The PyPI long description is the deliberately small [PyPI README](PYPI_README.md), rather than relying on repository-relative links or CSS in the full GitHub README.
 
 ## Validation
 
