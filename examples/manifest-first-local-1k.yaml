@@ -1,0 +1,13 @@
+# True native 1K, one asset; not an upscaled or relabeled 4K image.
+id: first-local-native-1k
+assets:
+  - id: desk-lamp
+    prompt: "A matte ceramic table lamp on a neutral paper backdrop, studio photograph"
+    aspect_ratio: "3:4"
+    target_size: [768, 1024]
+    seed: 42
+    targets: [lamp]
+    output:
+      image: photos/desk-lamp-1k.png
+      cutouts:
+        lamp: cutouts/desk-lamp-1k.png

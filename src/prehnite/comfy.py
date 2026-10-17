@@ -25,6 +25,7 @@ MAX_IMAGE_BYTES = 100_000_000
 MAX_DECODED_PIXELS = 24_000_000
 
 from .providers import Result
+from .registry import MICRO_1K_DIMENSIONS
 from .schema import Endpoint
 
 
@@ -194,9 +195,14 @@ class Comfy:
             put_node(graph, options.get("prompt_node"), "text", prompt)
             put_node(graph, options.get("seed_node"), str(options.get("seed_input", "seed")),
                      seed)
-            w, h = SIZES[aspect_ratio]
-            if tier == "4k":
-                w, h = w * 2, h * 2
+            if tier == "1k":
+                w, h = MICRO_1K_DIMENSIONS[aspect_ratio]
+            elif tier in ("2k", "4k"):
+                w, h = SIZES[aspect_ratio]
+                if tier == "4k":
+                    w, h = w * 2, h * 2
+            else:
+                raise ValueError("Unknown ComfyUI generation resolution tier")
             put_node(graph, options.get("size_node"), "width", w)
             put_node(graph, options.get("size_node"), "height", h)
         return self._render(graph, endpoint, output, on_submit, resume_id)

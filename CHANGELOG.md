@@ -7,6 +7,9 @@ This project follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) an
 ## [Unreleased]
 
 ### Added
+- Separate native-1K local ComfyUI `prehnite-micro` preview.2 recipe and one-asset fixtures, true 768×1024 at 3:4 (not a renamed 4K output), exact target/output geometry checks, no silent resize, paid-provider fallback or changed preview.1 batch receipts (#134/#132). Actual 8 GB GPU/model runtime remains unverified.
+
+### Added
 - Private create-only `prehnite trial-evidence`: verifies real generated/cutout image geometry, RGBA alpha transparency, file SHA256, hardware observations and optional **operator-supplied** time/VRAM readings while explicitly withholding independent cutout quality/model-rights certification (#134/#32). No inference, file mutation or network calls.
 
 ### Changed
