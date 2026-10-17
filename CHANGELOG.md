@@ -7,6 +7,7 @@ This project follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) an
 ## [Unreleased]
 
 ### Added
+- Source-dated external model/weight rights inventory and deterministic registry coverage checker (#40, R06-A02), distinguishing hosted API access, software licenses, optional checkpoint terms and training restrictions; all model and redistribution permissions remain unapproved pending human review.
 - Offline CycloneDX dependency SBOM and exact installed-version snapshot with transitive Python package closure, known license-review exceptions and separate Windows/Ubuntu synthetic CI artifacts (#40, R06-A01). A metadata signal never certifies third-party rights or universal hash-pinned builds.
 - Offline WEARHOUSE Review Studio result intake (#28/#32): untrusted ZIP or autosave-folder schema/status/counter validation, SHA256 receipts and reviewed RGBA alpha PNG verification; create-only private JSON + text repair-triage without user photos or private notes, independently annotated gold or false mask-quality claims. Synthetic security/round-trip tests on Windows and Ubuntu.
 - Explicit opt-in, per-target opaque product cutout repair staging (#31, S05-A04): connect existing journal-backed local fringe repair to Engine.cutout without nested locks, preserve selected source/cutout outputs, journal review-only SHA receipts and fail closed for unqualified materials; no image-quality acceptance, extra provider spending or release gate credit.

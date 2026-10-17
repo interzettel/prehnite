@@ -54,3 +54,27 @@ Those are the separately scoped R06-A02/R06-A03 tasks; final compliance
 approval remains R06-A04 and its parent release gate #40.
 
 No release, PyPI upload, paid model inference or license waiver is authorized.
+
+## Dated external model and checkpoint rights inventory (R06-A02)
+
+See the generated [model rights review](MODEL_RIGHTS_AUDIT.md) and
+machine-readable [provenance register](../progress/model_rights_inventory.json).
+The review covers all currently registered hosted or user-supplied model
+interfaces plus selected checkpoint examples. Every entry records a primary
+upstream source, model/use boundary, unresolved training rights and
+redistribution concerns. Run `python scripts/model_rights.py --check`
+offline to verify source coverage and that no unpublished license approval
+is inferred from Prehnite's MIT license.
+
+The review distinguishes `FLUX.1-schnell` upstream weight labeling,
+the separately licensed `FLUX.1-dev` non-commercial models, the hosted
+`FLUX.3` API, Meta's SAM materials and hosted variants, the separately
+licensed Real-ESRGAN implementation versus model weights, and ComfyUI
+workflow components and weights. Model terms and versions may change;
+the date in the inventory is a **research snapshot, not a legal guarantee**.
+
+Rights remain unresolved until actual checkpoint revisions and hashes,
+use scope, commercial/production conditions, training restrictions, API
+contracts, derivative/model redistribution and human review are recorded.
+No downloaded checkpoint or owner-supplied image is bundled. R06-A02
+does not complete the overall R06 release gate or authorize model use.
