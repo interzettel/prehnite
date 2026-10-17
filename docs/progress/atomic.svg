@@ -12,7 +12,7 @@
 <text x="32" y="190" font-size="16" font-weight="600" fill="#075231">Atomic delivery / initially unfinished 19 units</text>
 <text x="1060" y="190" font-size="18" font-weight="700" text-anchor="end" fill="#075231">14/73 · 19.18%</text>
 <rect x="32" y="203" width="810" height="18" rx="5" fill="#D5DCD5"/>
-<rect x="32" y="203" width="111.0" height="18" rx="5" fill="#075231"/>
+<rect x="32" y="203" width="155.3" height="18" rx="5" fill="#075231"/>
 <text x="32" y="249" font-size="13" fill="#53675A">Second measure covers only frozen open-unit tasks, never an overall completion estimate.</text>
 <text x="32" y="273" font-size="13" fill="#53675A">Review 0 · Active 0 · Blocked 27 · Planned 32 · baseline 2026-10-17</text>
 <text x="32" y="305" font-size="16" font-weight="600" fill="#075231">PR-SIZED TASKS BY UNFINISHED UNIT</text>
