@@ -1,7 +1,7 @@
-"""Authoritative development package version. No release or Git tag has been published.
+"""Authoritative PEP 440 package version for reviewed public alpha builds.
 
-The version is discovered by Hatchling and imported by prehnite.__init__.
-Change only as part of a deliberate version-bump PR.
+Hatchling discovers this value, and prehnite.__init__ imports it.
+Change only in a dedicated, reviewed version-bump PR.
 """
 
-__version__ = "0.1.0.dev0"
+__version__ = "0.1.0a1"
