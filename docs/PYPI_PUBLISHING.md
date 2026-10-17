@@ -1,57 +1,58 @@
-# PyPI alpha publication: explicit owner-only gate
+# Publishing Prehnite on PyPI — isolated, reviewed workflow
 
-**Status:** Release tooling is under review. No PyPI upload, release tag or GitHub Release has occurred through this work. A pending publisher **does not reserve** the PyPI package name.
+**Owner authorization (2026-10-17):** prepare and publish genuine first developer alpha `0.1.0a1`, without claiming production GPU/image quality. PyPI project ownership is established **only after the first successful upload**; a pending Trusted Publisher entry is not a name reservation.
 
-## Registered identity and security
+## Workflow separation
 
-On 17 October 2026 the owner registered a **pending** PyPI Trusted Publisher:
+- **`.github/workflows/ci.yml` — CI only.** Runs on pushes and PRs, tests on Windows/Linux, builds/inspects source and wheel distributions, saves temporary `candidate-python-distributions` artifact. No OIDC permission, publish credentials, tagging or release creation.
+- **`.github/workflows/publish.yml` — release only.** Dispatch manually from `main` with *exactly* `0.1.0a1` and typed `PUBLISH PREHNITE TO PYPI`; refuses other refs and versions. Reads a **completed successful push CI run for the exact SHA**, fetches only its validated candidate wheel/sdist, verifies filenames, content and Twine metadata, and creates the approved release artifact set.
+- The publishing job waits for the GitHub environment **`pypi`**. After review, it re-verifies the same SHA/archived bytes, creates an **annotated** `v0.1.0a1` tag without overwriting old tags, uploads via commit-pinned `pypa/gh-action-pypi-publish` using OIDC (no API token), and creates a GitHub **prerelease** if PyPI succeeds. Failed uploads may leave a matching tag; reruns check it before proceeding.
 
-| Field | Expected |
+## Two account-side checks before first publication
+
+### 1. Update the existing PyPI pending Trusted Publisher
+
+The owner registered `prehnite` on PyPI for `interzettel/prehnite`, workflow `ci.yml`, PyPI environment *Any*, on 17 October 2026. **That old registration will not authenticate the new `publish.yml` workflow.**
+
+On [PyPI trusted publisher management](https://pypi.org/manage/account/publishing/), **remove only the old pending `prehnite` / `interzettel/prehnite` / `ci.yml` entry**, then register a new pending publisher with:
+
+| PyPI setting | Correct value |
 | --- | --- |
 | Project name | `prehnite` |
-| GitHub owner / repository | `interzettel` / `prehnite` |
-| Workflow filename | `ci.yml` |
-| PyPI environment field | Any (no environment restriction in the PyPI registration) |
-| GitHub publication job environment | `pypi` |
+| Owner | `interzettel` |
+| Repository | `prehnite` |
+| Workflow filename | **`publish.yml`** (no path prefix) |
+| Environment name | **`pypi`** (bind PyPI to the exact GitHub environment rather than Any) |
 
-The publishing gate therefore lives in `.github/workflows/ci.yml`, **not** in a differently named workflow that PyPI could reject. The `pypi` GitHub environment is a distinct control and is compatible with a PyPI registration whose environment is unrestricted. Before the first release, the owner must open [GitHub repository environments](https://github.com/interzettel/prehnite/settings/environments), configure or verify the `pypi` environment, **require manual approval from a trusted reviewer**, and prohibit self-review if available. Refer to [PyPI security guidance](https://docs.pypi.org/trusted-publishers/security-model/). A named environment **without reviewer protections is not itself a manual approval**.
+Ensure the new pending publisher confirmation is visible before dispatch. If PyPI reports that `prehnite` already exists, **stop** and check ownership; do not hijack another project name.
 
-**PyPI can issue an OIDC-scoped short-lived token** only for the matching registered workflow. The publish job has `id-token: write`; all other jobs have no ID-token elevation. No personal or repository-wide `PYPI_TOKEN` secret is used. Publishing uses the exact reviewed commit `pypa/gh-action-pypi-publish@dc37677b2e1c63e2034f94d8a5b11f265b73ba33` (the upstream `release/v1` ref checked on 2026-10-17), which generates PyPI attestations under Trusted Publishing. The publish job serializes concurrent release attempts.
+### 2. Protect the GitHub publishing environment
 
-## Every pull request / normal main CI
+At [repository Settings → Environments](https://github.com/interzettel/prehnite/settings/environments) add or edit **`pypi`**:
 
-- All existing zero-cost package/tests/rights/security evidence runs normally. No hosted inference or checkpoint downloads.
-- `release-dist-audit` builds a wheel and source archive with `python -m build` and validates:
-  - exactly one `prehnite-<VERSION>-py3-none-any.whl` and `prehnite-<VERSION>.tar.gz`;
-  - canonical source, wheel and sdist versions and expected CLI entry points;
-  - archive structure, source metadata and filename guardrails against private files/model checkpoints;
-  - strict Twine package long-description/metadata rendering.
-- The candidate archives are stored as a **temporary GitHub Actions artifact**, not uploaded to PyPI. Review the archive hashes and contents. The temporary CI artifact is not a release.
-- A separate, dedicated alpha version-bump PR changes only the authoritative `src/prehnite/_version.py` and release note/version documents; merging a tooling PR **does not bump the version**.
+1. Configure **required reviewers** (someone with appropriate repository permissions), disable self-review when GitHub offers that option, and ensure selected reviewer(s) will be able to approve the workflow.
+2. Restrict deployment branches/tags to protected branches or specifically `main` as supported by GitHub plan/rules. The release workflow additionally hard-checks `refs/heads/main`, exact repository and SHA.
+3. Prefer ruleset protection for `v*` release tags to prevent rewriting them, provided it permits the designated GitHub Actions bot to create new release tags.
 
-## First legitimate alpha release
+A GitHub environment *name* is **not** proof that reviewers are configured. Without a required reviewer, do not manually dispatch the publishing workflow. The connected GitHub App cannot read/change repository environment protection or access the logged-in PyPI account.
 
-1. Review and merge the release tooling PR and its CI; ensure other open PRs do not silently replace or weaken the release workflow.
-2. Owner reviews a **dedicated** `0.1.0a1` version PR and makes an explicit public-alpha release decision. No inference quality, checkpoint licensing or production suitability is asserted by this prerelease.
-3. Verify every CI job passed on the exact approved `main` commit, and download/inspect candidate wheel/sdist from its Actions run.
-4. Owner creates the **immutable annotated tag** `v0.1.0a1` at that exact reviewed `main` commit (not a branch tip that might subsequently move). Protect `v*` tags using GitHub rulesets where available. Do not tag before approval.
-5. In GitHub **Actions → CI → Run workflow** select branch **`main`**, enable `publish_to_pypi`, enter **`0.1.0a1`** as `release_version`, and enter the exact confirmation **`PUBLISH PREHNITE TO PYPI`**. The `release-verify` job refuses non-main runs, unrelated/missing/lightweight tags, mismatched source/package versions, missing artifact checks, failed CI gates, invalid/empty confirmation and non-alpha version strings.
-6. The `publish-pypi` job waits for **GitHub environment `pypi` required reviewer approval**. The owner checks the SHA, built archive SHA256s, changelog, packaging metadata and version again, then explicitly approves. It downloads **only** the verified archives and uploads via OIDC (never from a PR/push/scheduled run).
-7. After successful first upload, verify [the PyPI project](https://pypi.org/project/prehnite/) actually exists, wheel/sdist metadata matches, attestations are present, and the package installs from PyPI in an empty venv on Windows and Linux. The pending publisher should become an active project publisher automatically.
-8. Create the accompanying approved GitHub Release pointing to the immutable tag; link documentation, source and distribution hashes, known limitations and license boundaries. Update the handoff issue #9 and the changelog evidence. Increment to the next development version in a separate PR.
+## Versioned release procedure
 
-**Failure:** If the PyPI project name is already taken before upload, stop and verify ownership/name policy; do **not** use a near-spelling impersonation or skip OIDC errors. If the environment has no required reviewer protection, **do not approve a public release**; configure it before dispatch. If upload status is uncertain, inspect the PyPI project/file list before trying again because package filenames/version uploads are immutable.
+1. Merge the dedicated workflow split PR and review the separate **`0.1.0a1` version PR**. The version PR changes `src/prehnite/_version.py`, dated `CHANGELOG.md` release notes, versioning/README status and nothing that silently asserts physical model validation.
+2. On the merged version commit in `main`, check that [GitHub CI](https://github.com/interzettel/prehnite/actions/workflows/ci.yml) has finished **successfully**. In particular, inspect its saved `candidate-python-distributions` and checksums. Do **not** create a Git tag manually: the reviewed release job creates the annotated tag after its final owner environment approval.
+3. Update PyPI Trusted Publisher and configure GitHub required-reviewer environment as above; then select **Actions → Publish PyPI → Run workflow** on `main`. Set `release_version = 0.1.0a1`, `confirmation = PUBLISH PREHNITE TO PYPI`.
+4. `verify` refuses all but the approved version/main SHA and fetches **the exact successful CI run's** artifacts. It checks version/metadata and publishes only a short-lived GitHub artifact for release approval.
+5. At the pending **`pypi` environment** job, inspect SHA, changelog, full build output and artifact SHA256. The reviewer can reject here. After approval, the job creates an immutable annotated tag, uploads to PyPI using OIDC, then publishes the GitHub prerelease and attaches exact distributions.
+6. Verify [PyPI project](https://pypi.org/project/prehnite/), wheel/sdist hash, provenance and its upload attestations. Test a fresh `pip install prehnite==0.1.0a1` in a clean environment. Update issue #144, A2A #9 and changelog evidence. The pending publisher should be promoted after the first successful upload; check rather than assume.
+7. If PyPI upload fails after creating the tag, **do not overwrite/tag-force, replay blindly, or claim a release**. Inspect PyPI first. Since uploaded filename/version pairs are immutable, genuine changes require a new version.
 
-## Workstation inspection commands (offline)
+## Local non-publishing build check
 
 ```bash
 python -m pip install build twine packaging
 python -m build --outdir dist
 python scripts/check_release_artifacts.py
 python -m twine check --strict dist/*
-python -m pip install --no-deps --force-reinstall dist/prehnite-*.whl
-prehnite --help
-prehnite-mcp --help
 ```
 
-The packaging smoke test confirms import/CLI integrity, **not** functional model inference, true model licenses or GPU quality. Version policy: [VERSIONING.md](VERSIONING.md); wider release governance: [RELEASING.md](RELEASING.md).
+The wheel/sdist and CI demonstrations do not establish real model quality, permitted checkpoint weights, physical GPU support, live API billing or production release status. All images/models run independently from the published orchestration package. Review [version policy](VERSIONING.md), [release policy](RELEASING.md), [public package description](PYPI_README.md).
