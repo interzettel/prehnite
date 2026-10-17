@@ -84,7 +84,7 @@
 <text x="32" y="723" font-size="14" font-weight="700" fill="#075231">R06</text>
 <text x="120" y="723" font-size="12" fill="#384F45">Audit dependencies and model-weight licensi</text>
 <g><title>R06-A01 / planned / Inventory Python dependencies and transitive licenses</title><rect x="565.00" y="709" width="100.75" height="17" rx="2" fill="#D5DCD5"/></g>
-<g><title>R06-A02 / in_review / Audit optional model checkpoints and training restrictions</title><rect x="668.75" y="709" width="100.75" height="17" rx="2" fill="#E5955B"/></g>
+<g><title>R06-A02 / planned / Audit optional model checkpoints and training restrictions</title><rect x="668.75" y="709" width="100.75" height="17" rx="2" fill="#D5DCD5"/></g>
 <g><title>R06-A03 / planned / Scan produced artifacts, embedded fonts and photos for redistribution rights</title><rect x="772.50" y="709" width="100.75" height="17" rx="2" fill="#D5DCD5"/></g>
 <g><title>R06-A04 / planned / Publish actionable license compliance/upgrade report</title><rect x="876.25" y="709" width="100.75" height="17" rx="2" fill="#D5DCD5"/></g>
 <text x="1060" y="723" font-size="13" text-anchor="end" fill="#075231">0/4</text>
@@ -126,7 +126,7 @@
 <g><title>S05-A01 / done / Typed zero-spend repair decision plan</title><rect x="565.00" y="943" width="80.00" height="17" rx="2" fill="#075231"/></g>
 <g><title>S05-A02 / done / Idempotent journal-backed local repair executor</title><rect x="648.00" y="943" width="80.00" height="17" rx="2" fill="#075231"/></g>
 <g><title>S05-A03 / done / Hard-case refusal and one-attempt coverage</title><rect x="731.00" y="943" width="80.00" height="17" rx="2" fill="#075231"/></g>
-<g><title>S05-A04 / planned / Wire the bounded repair into production Engine.cutout</title><rect x="814.00" y="943" width="80.00" height="17" rx="2" fill="#D5DCD5"/></g>
+<g><title>S05-A04 / in_review / Wire the bounded repair into production Engine.cutout</title><rect x="814.00" y="943" width="80.00" height="17" rx="2" fill="#E5955B"/></g>
 <g><title>S05-A05 / blocked / Verify repaired real-photo acceptance contract</title><rect x="897.00" y="943" width="80.00" height="17" rx="2" fill="#A63D35"/></g>
 <text x="1060" y="957" font-size="13" text-anchor="end" fill="#075231">3/5</text>
 <text x="32" y="996" font-size="14" font-weight="700" fill="#075231">S06</text>

@@ -161,10 +161,10 @@
       "type": "issue",
       "number": 40,
       "title": "Model, dependency and artifact licensing inventory",
-      "lane": "In progress",
+      "lane": "Backlog",
       "priority": "P1",
       "stream": "Licensing",
-      "note": "R06-A02 source-dated model checkpoint and training-rights provenance in PR #131; owner review required. R06-A01 is separately in PR #130, not yet merged."
+      "note": "Dependency/model weight terms inventory"
     },
     {
       "type": "issue",
@@ -242,10 +242,10 @@
       "type": "issue",
       "number": 31,
       "title": "Targeted repair planner for failed cutouts",
-      "lane": "Backlog",
+      "lane": "In progress",
       "priority": "P1",
       "stream": "Cutouts",
-      "note": "Controlled journaled synthetic repair delivered in merged PR #119; full targeted S05 failure classification and Engine integration not complete."
+      "note": "S05-A04 opt-in production staging in PR #129, review-only, no visual acceptance; S05-A05 real photo evidence blocked."
     },
     {
       "type": "issue",
@@ -942,12 +942,12 @@
     },
     {
       "type": "pr",
-      "number": 131,
-      "title": "Model checkpoint and hosted API rights provenance",
+      "number": 129,
+      "title": "Stage opt-in bounded opaque repair for cutout review",
       "lane": "In review",
       "priority": "P1",
-      "stream": "Licensing",
-      "note": "Covers 9 external model interfaces, 4 optional weight families, training restrictions and noninheritance safeguards; CI pending. No license clearance."
+      "stream": "Cutouts",
+      "note": "Strict owner-declared opaque product, isolate journaled repair, preserve selected assets; CI pending. No human acceptance or parent unit done."
     }
   ]
 }

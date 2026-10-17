@@ -25,13 +25,13 @@ The atomic percentage measures ONLY scoped tasks under units unfinished at the b
 | Q06 — Rights-cleared human-rated reference set | 1/4 (25.00%) | 0 | 1 | 2 | blocked |
 | Q07 — Calibration report for accepted/rejected quality | 0/3 (0.00%) | 0 | 2 | 1 | blocked |
 | Q08 — Rejection/repair behavior validated across judges | 0/3 (0.00%) | 0 | 1 | 2 | planned |
-| R06 — Audit dependencies and model-weight licensing | 0/4 (0.00%) | 1 | 0 | 3 | planned |
+| R06 — Audit dependencies and model-weight licensing | 0/4 (0.00%) | 0 | 0 | 4 | planned |
 | R08 — 90-asset live pilot and owner quality acceptance | 0/3 (0.00%) | 0 | 3 | 0 | blocked |
 | R09 — Owner-approved version tag and first release | 0/3 (0.00%) | 0 | 2 | 1 | blocked |
 | R10 — Native GitHub Projects issue/PR state sync | 0/3 (0.00%) | 0 | 1 | 2 | planned |
 | S03 — Foreground matte cleanup and edge decontamination | 2/5 (40.00%) | 0 | 1 | 2 | planned |
 | S04 — Multiple-instance selection and named outputs | 1/4 (25.00%) | 0 | 0 | 3 | planned |
-| S05 — Failure classification and bounded targeted repair | 3/5 (60.00%) | 0 | 1 | 1 | planned |
+| S05 — Failure classification and bounded targeted repair | 3/5 (60.00%) | 1 | 1 | 0 | planned |
 | S06 — Transparent cutout benchmark with alpha metrics | 3/6 (50.00%) | 0 | 2 | 1 | blocked |
 | S07 — Human-accepted cutout samples across tricky materials | 0/5 (0.00%) | 1 | 2 | 2 | blocked |
 
@@ -142,7 +142,7 @@ The atomic percentage measures ONLY scoped tasks under units unfinished at the b
 | Task | State | Acceptance criterion | Issue, blocker or evidence |
 | --- | --- | --- | --- |
 | R06-A01 — Inventory Python dependencies and transitive licenses | planned | Generated SBOM with locked versions and known exceptions | [Issue #40](https://github.com/interzettel/prehnite/issues/40) |
-| R06-A02 — Audit optional model checkpoints and training restrictions | in_review | Separate weight/source terms recorded; no implicit MIT relicensing | [PR in review](https://github.com/interzettel/prehnite/pull/131) |
+| R06-A02 — Audit optional model checkpoints and training restrictions | planned | Separate weight/source terms recorded; no implicit MIT relicensing | [Issue #40](https://github.com/interzettel/prehnite/issues/40) |
 | R06-A03 — Scan produced artifacts, embedded fonts and photos for redistribution rights | planned | Test build retains license receipts and flags unknown artifacts | [Issue #40](https://github.com/interzettel/prehnite/issues/40) |
 | R06-A04 — Publish actionable license compliance/upgrade report | planned | Human-reviewed summary links specific noncompliant dependencies to fixes | [Issue #40](https://github.com/interzettel/prehnite/issues/40) |
 
@@ -196,7 +196,7 @@ The atomic percentage measures ONLY scoped tasks under units unfinished at the b
 | S05-A01 — Typed zero-spend repair decision plan | done | Policy authorizes local repair separately from uncertain paid submission | [Merged PR](https://github.com/interzettel/prehnite/pull/117) |
 | S05-A02 — Idempotent journal-backed local repair executor | done | Stable operation receipt, atomic candidate, integrity-verified crash replay | [Merged PR](https://github.com/interzettel/prehnite/pull/119) |
 | S05-A03 — Hard-case refusal and one-attempt coverage | done | Oversized leak, multiple objects and material uncertainty safely refuse | [Merged PR](https://github.com/interzettel/prehnite/pull/120) |
-| S05-A04 — Wire the bounded repair into production Engine.cutout | planned | Real stage transition uses journal, protects selected artifacts and can abstain | [Issue #31](https://github.com/interzettel/prehnite/issues/31) |
+| S05-A04 — Wire the bounded repair into production Engine.cutout | in_review | Real stage transition uses journal, protects selected artifacts and can abstain | [PR in review](https://github.com/interzettel/prehnite/pull/129) |
 | S05-A05 — Verify repaired real-photo acceptance contract | blocked | Independent alpha and human review accept or reject production candidate | Requires independently rated corpus and production integration |
 
 ### S06 — Transparent cutout benchmark with alpha metrics

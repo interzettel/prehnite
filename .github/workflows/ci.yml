@@ -131,7 +131,7 @@ jobs:
       - name: Install only local open-source test dependencies
         run: python -m pip install -e ".[dev]"
       - name: Test alpha repair, crash recovery and portrait abstention
-        run: python -m pytest -q tests/test_repair.py tests/test_decision_engine.py
+        run: python -m pytest -q tests/test_repair.py tests/test_decision_engine.py tests/test_engine_local_repair.py
       - name: Generate self-contained zero-network before/after report
         run: python scripts/repair_demo.py --workspace repair-demo-evidence
       - name: Publish synthetic demonstration only (no user image data)
@@ -185,6 +185,38 @@ jobs:
       - name: Install offline test dependencies
         run: python -m pip install -e ".[dev]"
       - name: Verify refusal, alpha metrics, privacy and no output mutation
-        run: python -m pytest -q tests/test_real_cutout_eval.py tests/test_private_source_preflight.py tests/test_inspect_apparel_pilot.py
-      - name: Verify external-model license provenance and fail-closed rights
+        run: python -m pytest -q tests/test_real_cutout_eval.py tests/test_private_source_preflight.py tests/test_inspect_apparel_pilot.py tests/test_review_intake.py
+      - name: Verify external-model terms provenance and fail-closed rights
         run: python -m pytest -q tests/test_model_rights.py && python scripts/model_rights.py --check
+
+  license-sbom:
+    name: Offline dependency license inventory (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    env:
+      PYTHONIOENCODING: utf-8
+      PYTHONUTF8: "1"
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Install editable local engine and dev dependencies
+        run: python -m pip install -e ".[dev]"
+      - name: Capture actual environment dependency resolution
+        shell: bash
+        run: python -m pip inspect --local > dependency-inspect.json
+      - name: Generate exact-version SBOM and unresolved license report
+        run: python scripts/dependency_sbom.py --inspect dependency-inspect.json --extras dev --output license-inventory
+      - name: Fail if the generated SBOM omits dependencies or mislabels clearance
+        run: python -m pytest -q tests/test_dependency_sbom.py
+      - name: Preserve sanitized evidence (no local package paths or tokens)
+        uses: actions/upload-artifact@v4
+        with:
+          name: dependency-license-${{ matrix.os }}
+          path: license-inventory/
+          if-no-files-found: error
+          retention-days: 14
