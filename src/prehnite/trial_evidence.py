@@ -12,7 +12,6 @@ from pathlib import Path
 
 from PIL import Image, UnidentifiedImageError
 
-from .artifacts import atomic_text
 from .hardware import hardware_report
 from .schema import relative_name
 
@@ -138,7 +137,7 @@ def evidence_receipt(
             "measurement_method": measurement_method,
             "status": "owner_supplied_unverified" if measurement_method else "not_provided",
         },
-        "network_or_model_calls": 0, "amount_spent_usd": 0,
+        "calls_during_evidence_creation": 0, "spending_during_evidence_creation_usd": 0,
         "note": "Receipt only. Run a separately human-reviewed alpha quality benchmark.",
     }
     # Exclusive creation, never silently overwrite a prior acceptance record.
