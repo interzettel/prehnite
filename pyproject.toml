@@ -23,7 +23,7 @@ fal = ["fal-client>=0.7,<1"]
 anthropic = ["anthropic>=0.69,<1"]
 mcp = ["mcp>=1.28,<3"]
 parquet = ["pyarrow>=18,<27"]
-dev = ["pytest>=8,<10", "ruff>=0.8,<1"]
+dev = ["pytest>=8,<10", "ruff>=0.8,<1", "packaging>=24,<27"]
 
 [project.scripts]
 prehnite = "prehnite.cli:app"
