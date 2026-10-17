@@ -25,6 +25,38 @@ prehnite doctor
 
 On Windows PowerShell use `$env:PREHNITE_WORKFLOWS = "C:\\...\\my-graphs"`; on bash use `export PREHNITE_WORKFLOWS=/path/my-graphs`. Neither command installs or contacts ComfyUI.
 
+## 8 GB laptop smoke test — genuine native 1K
+
+Start here **instead of** 3072×4096. The separate
+[`0.1.0-preview.2` micro recipe](../recipes/prehnite-micro/0.1.0-preview.2.json)
+requires `variants: [native_1k]`; the 3:4 manifest requests **768×1024
+(786,432 real pixels)**. Its output must be the same size as the model
+result: the engine rejects a smaller frame rather than stretching it, and
+rejects a large 4K target mislabeled `native_1k`.
+
+Use [manifest-first-local-1k.yaml](../examples/manifest-first-local-1k.yaml)
+and [profile-first-local-1k.yaml](../examples/profile-first-local-1k.yaml)
+with *your real ComfyUI API graph node IDs*. The existing 4K sample below
+remains available for a separately benchmarked machine, but is **not**
+the recommended first run for an 8 GB GPU. Neither tier proves the GPU will
+successfully load your model; weights and compatible graph nodes are not shipped.
+
+```bash
+prehnite trial-plan examples/manifest-first-local-1k.yaml \
+  --profile examples/profile-first-local-1k.yaml --mode local --max-test-usd 0
+# After licensed model files and valid API graphs exist, use
+# prehnite micro-setup with:
+# --recipe recipes/prehnite-micro/0.1.0-preview.2.json
+# --profile examples/profile-first-local-1k.yaml
+# ... remaining real model/graph, terms and binding options as below.
+# Then run with the 1K manifest/profile/recipe and fresh batch ID.
+```
+
+**Do not treat this as a 4K output**. Optional subsequent upscaling,
+if separately implemented/approved, must be labeled as enhanced rather
+than native. `0.1.0-preview.1` remains strict native 4K for existing
+batch/receipt compatibility.
+
 ## A. Local generation + cutout
 
 1. Install [ComfyUI](https://github.com/Comfy-Org/ComfyUI) yourself. Choose a generation model **and** a segmentation/matting model under individually acceptable terms from their original publishers; keep weights in your own ComfyUI-accessible model directories. Do **not** redistribute gated weights or put them in the Prehnite repository. The `--checkpoints` directory must contain the **same actual bytes** that ComfyUI will load (this is not independently verified at runtime).
