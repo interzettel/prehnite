@@ -980,10 +980,10 @@
       "type": "issue",
       "number": 133,
       "title": "Recipe contract and capability DAG validation",
-      "lane": "Ready",
+      "lane": "In progress",
       "priority": "P1",
       "stream": "Recipes",
-      "note": "Next independent PR. Contract-only: no model downloads, no proven hardware support."
+      "note": "PR #138: offline versioned DAG contract + micro/macro blueprint samples. Hardware execution, installed weights and paid APIs explicitly unresolved."
     },
     {
       "type": "issue",
@@ -1011,6 +1011,15 @@
       "priority": "P1",
       "stream": "Local GPU",
       "note": "New owner-directed recipe roadmap; future reviewed atomic scope migration."
+    },
+    {
+      "type": "pr",
+      "number": 138,
+      "title": "Versioned micro/macro recipe DAG contracts",
+      "lane": "In review",
+      "priority": "P1",
+      "stream": "Recipes",
+      "note": "Blueprint-only manifests and offline validator, tests and provenance SHA. No model execution or installed weights. CI pending."
     }
   ]
 }
