@@ -107,10 +107,29 @@ def crops(source: Path, output: Path = typer.Option(..., help="Local evidence fo
 def run(manifest: Path, profile: Path = typer.Option(...),
         workspace: Path = typer.Option(Path("workspace")),
         inputs: Path = typer.Option(Path("inputs")),
-        job_token: str | None = typer.Option(None, "--job-token", hidden=True)):
+        job_token: str | None = typer.Option(None, "--job-token", hidden=True),
+        recipe: Path | None = typer.Option(None, "--recipe"),
+        bindings: Path | None = typer.Option(None, "--bindings"),
+        workflows: Path | None = typer.Option(None, "--workflows"),
+        checkpoints: Path | None = typer.Option(None, "--checkpoints")):
+    """Run a batch; optional all-or-nothing local recipe binding refuses drift."""
     from .engine import Engine
-    engine = Engine(load_manifest(manifest), load_profile(profile), workspace, inputs,
-                    job_token=job_token)
+    from .recipe_execution import MicroExecution
+    supplied = (recipe, bindings, workflows, checkpoints)
+    if any(value is not None for value in supplied) and not all(
+            value is not None for value in supplied):
+        raise typer.BadParameter(
+            "--recipe, --bindings, --workflows and --checkpoints must be supplied together"
+        )
+    execution = (MicroExecution(recipe, bindings, workflows, checkpoints)
+                 if all(value is not None for value in supplied) else None)
+    if execution is not None and job_token is not None:
+        raise typer.BadParameter("Recipe-bound MCP worker launching is not implemented")
+    try:
+        engine = Engine(load_manifest(manifest), load_profile(profile), workspace, inputs,
+                        job_token=job_token, recipe_execution=execution)
+    except (ValueError, OSError) as exc:
+        raise typer.BadParameter(str(exc)) from exc
     try:
         report = engine.run()
         if "job_status" in report:
