@@ -46,8 +46,9 @@ class LocalStage(Strict):
         if not _REVISION.fullmatch(self.model_revision):
             raise ValueError("Invalid model revision label")
         for name in (self.workflow, self.checkpoint):
-            if relative_name(name) != name:
-                raise ValueError("Unsafe noncanonical local path")
+            if relative_name(name) != name or any(
+                    component.startswith(".") for component in name.split("/")):
+                raise ValueError("Unsafe noncanonical or hidden local path")
         if not self.workflow.lower().endswith(".json"):
             raise ValueError("Workflow must be a ComfyUI API-format JSON file")
         if Path(self.checkpoint).suffix.lower() not in _EXTENSIONS:
