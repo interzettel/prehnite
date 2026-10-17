@@ -378,6 +378,9 @@ jobs:
   publish-pypi:
     name: Publish approved release to PyPI (OIDC)
     runs-on: ubuntu-latest
+    concurrency:
+      group: prehnite-pypi-publication
+      cancel-in-progress: false
     needs: [release-verify]
     if: ${{ github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && inputs.publish_to_pypi == true }}
     environment:
@@ -391,4 +394,4 @@ jobs:
           name: candidate-python-distributions
           path: dist/
       - name: Publish distribution with GitHub OIDC and PyPI attestations
-        uses: pypa/gh-action-pypi-publish@release/v1
+        uses: pypa/gh-action-pypi-publish@dc37677b2e1c63e2034f94d8a5b11f265b73ba33 # release/v1 reviewed 2026-10-17
