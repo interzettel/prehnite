@@ -34,6 +34,15 @@ def validate_job(manifest: Manifest, profile: Profile, input_root: Path) -> None
     for name, allowed in supported.items():
         if getattr(profile, name).provider not in allowed:
             raise ValueError(f"Unsupported {name} provider: {getattr(profile, name).provider}")
+    # Native 1K is a true local-size tier, not a small render relabeled or
+    # silently enlarged to 4K. Enforce both configured provider and output size.
+    if "native_1k" in profile.variants:
+        from .registry import MICRO_1K_DIMENSIONS
+        if profile.generation.provider != "comfyui":
+            raise ValueError("native_1k supports only local ComfyUI generation")
+        for asset in manifest.assets:
+            if asset.prompt and asset.target_size != MICRO_1K_DIMENSIONS[asset.aspect_ratio]:
+                raise ValueError("native_1k requires exact native 1K target_size; no upscaling")
     for a in manifest.assets:
         if a.source:
             resolve_input(input_root, a.source)
