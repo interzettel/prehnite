@@ -161,10 +161,10 @@
       "type": "issue",
       "number": 40,
       "title": "Model, dependency and artifact licensing inventory",
-      "lane": "Backlog",
+      "lane": "In progress",
       "priority": "P1",
       "stream": "Licensing",
-      "note": "Dependency/model weight terms inventory"
+      "note": "R06-A02 source-dated model checkpoint and training-rights provenance in PR #131; owner review required. R06-A01 is separately in PR #130, not yet merged."
     },
     {
       "type": "issue",
@@ -939,6 +939,15 @@
       "priority": "P1",
       "stream": "Tracking",
       "note": "Merged as 1e28ea7 with 14/14 green jobs. Evidence-backed 10/73 atomic tasks, 1 review; no double counting."
+    },
+    {
+      "type": "pr",
+      "number": 131,
+      "title": "Model checkpoint and hosted API rights provenance",
+      "lane": "In review",
+      "priority": "P1",
+      "stream": "Licensing",
+      "note": "Covers 9 external model interfaces, 4 optional weight families, training restrictions and noninheritance safeguards; CI pending. No license clearance."
     }
   ]
 }

@@ -662,10 +662,11 @@
       "parent": "R06",
       "title": "Audit optional model checkpoints and training restrictions",
       "acceptance": "Separate weight/source terms recorded; no implicit MIT relicensing",
-      "state": "planned",
+      "state": "in_review",
       "issue": 40,
       "owner": "Agent cloud",
-      "dependsOn": []
+      "dependsOn": [],
+      "review_url": "https://github.com/interzettel/prehnite/pull/131"
     },
     {
       "id": "R06-A03",
