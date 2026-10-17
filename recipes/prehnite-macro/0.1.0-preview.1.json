@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "id": "prehnite-macro",
+  "version": "0.1.0-preview.1",
+  "kind": "macro",
+  "release_status": "blueprint_only",
+  "hardware_status": "unverified",
+  "capability_status": "registry_declared_only",
+  "description": "Design-only optional hosted recipe skeleton based on fal FLUX.3 Klein and SAM 3.1. No calls, cloud uploads, model weights or spending permitted without a separate execution contract.",
+  "policy": {
+    "auto_download_weights": false,
+    "bundle_model_weights": false,
+    "allow_paid": false,
+    "allow_cloud_uploads": false,
+    "max_usd": 0,
+    "provider_retries_enabled": false
+  },
+  "stages": [
+    {
+      "id": "generate",
+      "operation": "generate",
+      "execution": "hosted",
+      "model": {
+        "provider": "fal",
+        "model": "blackforestlabs/flux-3/klein/text-to-image",
+        "source_url": "https://fal.ai/models/blackforestlabs/flux-3/klein/text-to-image",
+        "pin_status": "unresolved",
+        "license_review": "required"
+      },
+      "depends_on": []
+    },
+    {
+      "id": "cutout",
+      "operation": "segment",
+      "execution": "hosted",
+      "model": {
+        "provider": "fal",
+        "model": "fal-ai/sam-3-1/image",
+        "source_url": "https://fal.ai/models/fal-ai/sam-3-1/image",
+        "pin_status": "unresolved",
+        "license_review": "required"
+      },
+      "depends_on": [
+        "generate"
+      ]
+    },
+    {
+      "id": "quality",
+      "operation": "judge",
+      "execution": "local",
+      "model": {
+        "provider": "demo",
+        "model": "technical",
+        "pin_status": "unresolved",
+        "license_review": "bundled_demo_code_only"
+      },
+      "depends_on": [
+        "generate",
+        "cutout"
+      ]
+    }
+  ]
+}

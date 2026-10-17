@@ -11,9 +11,9 @@
 | Lane | Cards |
 | --- | ---: |
 | Backlog | 18 |
-| Ready | 4 |
-| In progress | 1 |
-| In review | 0 |
+| Ready | 3 |
+| In progress | 2 |
+| In review | 1 |
 | Blocked | 7 |
 | Done | 81 |
 
@@ -49,19 +49,19 @@
 | P1 | [Issue #12 — Mocked fal API conformance contract](https://github.com/interzettel/prehnite/issues/12) | Providers | No credentials or paid calls; use recorded fixture schemas. |
 | P1 | [Issue #40 — Model, dependency and artifact licensing inventory](https://github.com/interzettel/prehnite/issues/40) | Licensing | R06-A01 and R06-A02 merged; remaining media rights and final release compliance separate. |
 | P1 | [Issue #25 — Judge schema and A/B order-bias tests](https://github.com/interzettel/prehnite/issues/25) | Quality | Typed verdict tranche merged in #61; controlled same-rubric A/B positional-bias measurement (Q03) remains unverified |
-| P1 | [Issue #133 — Recipe contract and capability DAG validation](https://github.com/interzettel/prehnite/issues/133) | Recipes | Next independent PR. Contract-only: no model downloads, no proven hardware support. |
 
 ## In progress
 
 | Priority | Work item | Stream | Handoff / blocker |
 | --- | --- | --- | --- |
 | P2 | [Issue #100 — Provenance-bound transforms and tiled 4K comparison](https://github.com/interzettel/prehnite/issues/100) | Delivery | Integer 4K tiles + SHA-bound affine v2 validator merged; real affine warp/execution still open. |
+| P1 | [Issue #133 — Recipe contract and capability DAG validation](https://github.com/interzettel/prehnite/issues/133) | Recipes | PR #138: offline versioned DAG contract + micro/macro blueprint samples. Hardware execution, installed weights and paid APIs explicitly unresolved. |
 
 ## In review
 
 | Priority | Work item | Stream | Handoff / blocker |
 | --- | --- | --- | --- |
-| — | No cards currently | — | — |
+| P1 | [PR #138 — Versioned micro/macro recipe DAG contracts](https://github.com/interzettel/prehnite/pull/138) | Recipes | Blueprint-only manifests and offline validator, tests and provenance SHA. No model execution or installed weights. CI pending. |
 
 ## Blocked
 
