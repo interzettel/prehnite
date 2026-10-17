@@ -1,0 +1,13 @@
+# One real local ComfyUI generation + cutout trial. Never bundled with real private images.
+id: first-local-asset
+assets:
+  - id: desk-lamp
+    prompt: "A clean editorial studio photograph of a matte ceramic table lamp on a neutral background"
+    aspect_ratio: "3:4"
+    target_size: [3072, 4096]
+    seed: 42
+    targets: [lamp]
+    output:
+      image: "photos/desk-lamp.png"
+      cutouts:
+        lamp: "cutouts/desk-lamp.png"

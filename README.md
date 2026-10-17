@@ -136,6 +136,10 @@ Prehnite now has **versioned model-workflow blueprints** rather than a single ha
 
 **Read the [recipe roadmap](docs/ROADMAP.md#model-recipes-workstream--versioned-micromacro-october-2026) and [recipe architecture](docs/MODEL_RECIPES.md)** for the work completed, outstanding milestones and exact evidence gates. Neither mode claims a tested 4/6/8/12 GB laptop tier or preinstalled models.
 
+### First real model test — local or opt-in fal.ai
+
+The development CLI offers **`prehnite micro-setup`** for create-only, hash-verified local graph/weight bindings and **`prehnite trial-plan`** for a one-asset, zero-provider-call dry-run with explicit cost caps before any local ComfyUI or fal.ai inference. The [operator runbook](docs/FIRST_REAL_ASSET.md) includes platform setup, graph mapping, source-rights checks, error/evidence collection and carefully gated first API testing. These are **development changes**, not present in the already published immutable `0.1.0a1` wheel; use a current source checkout until a subsequent alpha is approved. No pretrained weights or live GPU/paid-provider results are supplied.
+
 ### Explicit local ComfyUI recipe execution (experimental)
 
 The existing `prehnite run` command can now pin an operator-supplied micro recipe

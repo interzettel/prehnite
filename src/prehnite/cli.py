@@ -62,6 +62,63 @@ def recipe_resolve(
         raise typer.BadParameter(str(exc)) from exc
     typer.echo(json.dumps(result, indent=2, sort_keys=True))
 
+@app.command("micro-setup")
+def micro_setup(
+        recipe: Path = typer.Option(..., "--recipe"),
+        workflows: Path = typer.Option(..., "--workflows"),
+        checkpoints: Path = typer.Option(..., "--checkpoints"),
+        generation_graph: str = typer.Option(..., "--generation-graph"),
+        generation_checkpoint: str = typer.Option(..., "--generation-checkpoint"),
+        generation_revision: str = typer.Option(..., "--generation-revision"),
+        generation_terms_url: str = typer.Option(..., "--generation-terms-url"),
+        cutout_graph: str = typer.Option(..., "--cutout-graph"),
+        cutout_checkpoint: str = typer.Option(..., "--cutout-checkpoint"),
+        cutout_revision: str = typer.Option(..., "--cutout-revision"),
+        cutout_terms_url: str = typer.Option(..., "--cutout-terms-url"),
+        output: Path = typer.Option(..., "--output", help="Private create-only bindings JSON"),
+        acknowledge_model_terms: bool = typer.Option(
+            False, "--acknowledge-model-terms",
+            help="I reviewed each exact model's local-use terms; does not confer rights"),
+        profile: Path | None = typer.Option(None, "--profile",
+                                            help="Optional strict run-profile compatibility check"),
+):
+    """Create offline SHA256 micro bindings once; NEVER download weights or run models."""
+    from .model_setup import prepare_micro_bindings
+    try:
+        prepared = prepare_micro_bindings(
+            recipe_path=recipe, workflows_root=workflows, checkpoints_root=checkpoints,
+            generation_graph=generation_graph, generation_checkpoint=generation_checkpoint,
+            generation_revision=generation_revision, generation_terms_url=generation_terms_url,
+            cutout_graph=cutout_graph, cutout_checkpoint=cutout_checkpoint,
+            cutout_revision=cutout_revision, cutout_terms_url=cutout_terms_url,
+            acknowledged_terms=acknowledge_model_terms, destination=output,
+            profile=load_profile(profile) if profile else None,
+        )
+    except (ValueError, OSError) as exc:
+        raise typer.BadParameter(str(exc)) from exc
+    typer.echo(json.dumps(prepared, indent=2, sort_keys=True))
+    typer.echo("Next: prehnite recipe-resolve --recipe ... --bindings ...")
+
+
+@app.command("trial-plan")
+def trial_plan_cli(
+        manifest: Path,
+        profile: Path = typer.Option(..., "--profile"),
+        mode: str = typer.Option(..., "--mode", help="local or fal"),
+        max_test_usd: float = typer.Option(
+            0.0, "--max-test-usd", help="Explicit owner trial cap; zero for local"),
+        inputs: Path = typer.Option(Path("inputs"), "--inputs")):
+    """Zero-network one-asset readiness and cost preflight; no model/provider calls."""
+    from .trial_preflight import trial_plan
+    from .manifest import load_manifest, load_profile
+    try:
+        report = trial_plan(load_manifest(manifest), load_profile(profile),
+                            mode=mode, max_test_usd=max_test_usd, input_root=inputs)
+    except (ValueError, OSError) as exc:
+        raise typer.BadParameter(str(exc)) from exc
+    typer.echo(json.dumps(report, indent=2, sort_keys=True))
+
+
 @app.command()
 def validate(manifest: Path, profile: Path = typer.Option(...),
              inputs: Path = typer.Option(Path("inputs"))):

@@ -2,6 +2,8 @@
 
 This connects the offline-only model binding from [#135](https://github.com/interzettel/prehnite/issues/135) to the existing engine/SQLite journal. It supports an **explicitly configured local ComfyUI run**, not a certified model installation, quality result or GPU profile. Unlike `prehnite recipe-resolve`, the `prehnite run` command **does attempt real local inference** when a configured ComfyUI server is available. No third-party weights ship with Prehnite.
 
+To prepare private, hash-pinned local bindings without hand-writing JSON, use the create-only `prehnite micro-setup` command in [First Real Asset](FIRST_REAL_ASSET.md). An optional `--profile` guards mismatched workflow IDs/configuration before writing the receipt. Run `prehnite trial-plan` separately for a no-network, no-inference first-asset check; neither of these setup commands runs a GPU or a hosted API.
+
 ## Before attempting a run
 
 - Install and operate ComfyUI and your own separately licensed generation/segmentation models locally. You are responsible for terms and checkpoint provenance.

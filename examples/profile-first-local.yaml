@@ -1,0 +1,34 @@
+# LOCAL-ONLY TEMPLATE. Replace EVERY *_node with IDs from *your* ComfyUI API graphs.
+# Keep workflow names equal to the files registered in private SHA256 bindings.
+variants: [native_4k]
+generation:
+  provider: comfyui
+  model: user-workflow
+  options:
+    base_url: http://127.0.0.1:8188
+    workflow: generation_api.json
+    prompt_node: "6"
+    seed_node: "3"
+    size_node: "5"
+    output_node: "9"
+segmentation:
+  provider: comfyui
+  model: user-segmentation
+  options:
+    base_url: http://127.0.0.1:8188
+    workflow: cutout_api.json
+    input_node: "10"
+    target_node: "11"
+    output_node: "12"
+upscale: {provider: disabled}
+judge: {provider: demo, model: technical}
+policy:
+  minimum_score: 0.75
+  maximum_attempts: 1
+  uncertain: reject
+cache: {enabled: false}
+costs:
+  allow_paid: false
+  allow_cloud_uploads: false
+  max_usd: 0
+  estimates_usd: {}

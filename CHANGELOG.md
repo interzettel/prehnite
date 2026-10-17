@@ -6,6 +6,10 @@ This project follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) an
 
 ## [Unreleased]
 
+### Added
+- Offline create-only `prehnite micro-setup` for SHA256-bound, owner-supplied ComfyUI workflow/model input bindings and explicit local-use term acknowledgement; strict micro profile compatibility and tamper/overwrite guards, without model downloads or inference (#135).
+- One-asset no-provider-call `prehnite trial-plan` for local and opted-in fal.ai smoke tests with explicit maximum operator budget, attempt/variant restrictions and clearly **unverified** price assumptions; owner first-GPU/API runbook and reusable YAML examples (#134/#132).
+
 ### Changed
 - Documented the successful first public alpha release and added cross-platform clean-install verification against the actual PyPI wheel and its audited SHA256; source version remains 0.1.0a1.
 
