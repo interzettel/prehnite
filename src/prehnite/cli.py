@@ -46,6 +46,22 @@ def hardware():
     typer.echo(json.dumps(hardware_report(), indent=2, sort_keys=True))
 
 
+@app.command("recipe-resolve")
+def recipe_resolve(
+        recipe: Path = typer.Option(..., "--recipe"),
+        bindings: Path = typer.Option(..., "--bindings"),
+        workflows: Path = typer.Option(..., "--workflows"),
+        checkpoints: Path = typer.Option(..., "--checkpoints")):
+    """Verify operator-supplied micro recipe input bytes; never run models."""
+    from .recipe_resolver import load_local_bindings, resolve_local_micro
+    from .recipes import load_recipe
+    try:
+        result = resolve_local_micro(load_recipe(recipe), load_local_bindings(bindings),
+                                     workflows, checkpoints)
+    except (ValueError, OSError) as exc:
+        raise typer.BadParameter(str(exc)) from exc
+    typer.echo(json.dumps(result, indent=2, sort_keys=True))
+
 @app.command()
 def validate(manifest: Path, profile: Path = typer.Option(...),
              inputs: Path = typer.Option(Path("inputs"))):

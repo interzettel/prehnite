@@ -11,11 +11,11 @@
 | Lane | Cards |
 | --- | ---: |
 | Backlog | 17 |
-| Ready | 3 |
+| Ready | 4 |
 | In progress | 2 |
-| In review | 0 |
+| In review | 1 |
 | Blocked | 7 |
-| Done | 84 |
+| Done | 83 |
 
 **WIP limits:** In progress ≤ 2; In review ≤ 3. Counts are issue/PR cards, not unique completed engineering features or a percentage.
 
@@ -38,7 +38,7 @@
 | P2 | [Issue #107 — Experimental Jev typed image/Box judge and staged frame evaluation](https://github.com/interzettel/prehnite/issues/107) | Quality | Mock stages A/B merged, no Jev transport; TypeSafe experimental vision needs explicit authorized trial and real gold calibration. |
 | P1 | [Issue #111 — Jev Stage B mock wire fixtures and gold-set calibration](https://github.com/interzettel/prehnite/issues/111) | Quality | Offline Jev wire fixtures #113 and calibration #114 merged; owner-reviewed real gold cohort and reliability threshold still needed before production. |
 | P1 | [Issue #132 — Versioned model recipes: micro/macro architecture](https://github.com/interzettel/prehnite/issues/132) | Recipes | New owner-directed recipe roadmap; future reviewed atomic scope migration. |
-| P1 | [Issue #135 — Rights-aware model acquisition and installation](https://github.com/interzettel/prehnite/issues/135) | Recipes | New owner-directed recipe roadmap; future reviewed atomic scope migration. |
+| P1 | [Issue #134 — Local GPU feasibility doctor and benchmark](https://github.com/interzettel/prehnite/issues/134) | Local GPU | PR #139 offline hardware doctor merged; non-NVIDIA probes and real local recipe GPU benchmarks remain. |
 | P1 | [Issue #136 — Memory-aware batch scheduling and profiling](https://github.com/interzettel/prehnite/issues/136) | Local GPU | New owner-directed recipe roadmap; future reviewed atomic scope migration. |
 
 ## Ready
@@ -48,19 +48,20 @@
 | P1 | [Issue #12 — Mocked fal API conformance contract](https://github.com/interzettel/prehnite/issues/12) | Providers | No credentials or paid calls; use recorded fixture schemas. |
 | P1 | [Issue #40 — Model, dependency and artifact licensing inventory](https://github.com/interzettel/prehnite/issues/40) | Licensing | R06-A01 and R06-A02 merged; remaining media rights and final release compliance separate. |
 | P1 | [Issue #25 — Judge schema and A/B order-bias tests](https://github.com/interzettel/prehnite/issues/25) | Quality | Typed verdict tranche merged in #61; controlled same-rubric A/B positional-bias measurement (Q03) remains unverified |
+| P1 | [Issue #133 — Recipe contract and capability DAG validation](https://github.com/interzettel/prehnite/issues/133) | Recipes | PR #138 blueprint validator merged; per-batch immutable journal pinning and replay guard still open; no model runtime. |
 
 ## In progress
 
 | Priority | Work item | Stream | Handoff / blocker |
 | --- | --- | --- | --- |
 | P2 | [Issue #100 — Provenance-bound transforms and tiled 4K comparison](https://github.com/interzettel/prehnite/issues/100) | Delivery | Integer 4K tiles + SHA-bound affine v2 validator merged; real affine warp/execution still open. |
-| P1 | [Issue #134 — Local GPU feasibility doctor and benchmark](https://github.com/interzettel/prehnite/issues/134) | Local GPU | PR #139 delivers offline read-only hardware diagnostics; real GPU model benchmarks and other accelerator backends remain open. |
+| P1 | [Issue #135 — Rights-aware model acquisition and installation](https://github.com/interzettel/prehnite/issues/135) | Recipes | PR #140 verifies user-supplied local graph/checkpoint bytes offline; installation and license/source validation remain open. |
 
 ## In review
 
 | Priority | Work item | Stream | Handoff / blocker |
 | --- | --- | --- | --- |
-| — | No cards currently | — | — |
+| P1 | [PR #140 — Offline micro checkpoint and ComfyUI graph resolver](https://github.com/interzettel/prehnite/pull/140) | Recipes | PR #140: local SHA256 and terms-attested input identity; no installer, execution, rights approval or journal pinning. |
 
 ## Blocked
 
@@ -159,9 +160,8 @@
 | P1 | [PR #129 — Stage opt-in bounded opaque repair for cutout review](https://github.com/interzettel/prehnite/pull/129) | Cutouts | Merged and verified 2026-10-17. Scope delivered, broader release acceptance still pending. |
 | P1 | [PR #130 — Dependency SBOM and exact environment pins](https://github.com/interzettel/prehnite/pull/130) | Licensing | Merged and verified 2026-10-17. Scope delivered, broader release acceptance still pending. |
 | P1 | [PR #131 — Model and checkpoint rights inventory](https://github.com/interzettel/prehnite/pull/131) | Licensing | Merged and verified 2026-10-17. Scope delivered, broader release acceptance still pending. |
-| P1 | [Issue #133 — Recipe contract and capability DAG validation](https://github.com/interzettel/prehnite/issues/133) | Recipes | Versioned micro/macro offline DAG contract merged via PR #138; executable model installation and real GPU tests remain separate. |
-| P1 | [PR #138 — Versioned micro/macro recipe DAG contracts](https://github.com/interzettel/prehnite/pull/138) | Recipes | Merged PR #138; strict preview-only recipe validation; no installed weights or model inference. |
-| P1 | [PR #139 — Offline hardware doctor and provenance-aware memory probes](https://github.com/interzettel/prehnite/pull/139) | Local GPU | PR #139 merged hardware-readiness diagnostics only; real recipe execution and physical GPU benchmarks unverified. |
+| P1 | [PR #138 — Versioned micro/macro recipe DAG contracts](https://github.com/interzettel/prehnite/pull/138) | Recipes | Merged PR #138, offline recipe preview contract only; no journal pinning, weights or real inference. |
+| P1 | [PR #139 — Offline hardware doctor and provenance-aware memory probes](https://github.com/interzettel/prehnite/pull/139) | Local GPU | Merged PR #139, offline hardware diagnostic with unknown/unprobed states; no real-model GPU benchmark. |
 
 ## How to update this board
 
