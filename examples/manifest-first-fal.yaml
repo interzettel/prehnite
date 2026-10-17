@@ -1,0 +1,11 @@
+# One authorized text-to-image trial. No private inputs or cutout uploads.
+id: first-fal-asset
+assets:
+  - id: desk-lamp
+    prompt: "A clean editorial studio photograph of a matte ceramic table lamp on a neutral background"
+    aspect_ratio: "3:4"
+    target_size: [3072, 4096]
+    seed: 42
+    targets: []
+    output:
+      image: "photos/desk-lamp.png"
