@@ -912,6 +912,33 @@
       "priority": "P1",
       "stream": "Cutouts",
       "note": "Merged 39c84d3 with 14/14 CI: verified 84 private JPEG inputs and 50 unreviewed local masks; no independent alpha references or QA acceptance."
+    },
+    {
+      "type": "issue",
+      "number": 126,
+      "title": "Atomic task progress alongside the 61-unit evidence ledger",
+      "lane": "In progress",
+      "priority": "P1",
+      "stream": "Tracking",
+      "note": "73 PR-sized tasks under frozen 19-parent scope; separate verified percentage and CI checks; PR #127 under review, original 61-unit ledger unchanged."
+    },
+    {
+      "type": "pr",
+      "number": 125,
+      "title": "Validated offline human-review ZIP and repair triage",
+      "lane": "In review",
+      "priority": "P1",
+      "stream": "Cutouts",
+      "note": "CI green; owner reviewing cutout UI, PR unmerged. In-review atomic work earns no completion credit."
+    },
+    {
+      "type": "pr",
+      "number": 127,
+      "title": "Evidence-backed atomic task register and dual progress chart",
+      "lane": "In review",
+      "priority": "P1",
+      "stream": "Tracking",
+      "note": "Task register, independent progress UI, generator and tests; PR CI/review pending, no release score inflation."
     }
   ]
 }

@@ -19,6 +19,7 @@ jobs:
       - run: python scripts/check_governance.py
       - run: python scripts/board.py --check
       - run: python scripts/progress.py --check
+      - run: python scripts/atomic_progress.py --check
       - run: python -m pip wheel --no-deps -w dist .
       - run: pytest -q
       - run: prehnite validate examples/manifest.yaml --profile examples/profile-demo.yaml

@@ -1,0 +1,150 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="1101" viewBox="0 0 1100 1101" role="img" aria-labelledby="title desc">
+<title id="title">Prehnite roadmap and atomic delivery progress</title>
+<desc id="desc">Separate verified 61-unit release roadmap and verified tasks under the frozen 19 unfinished-unit baseline. The second percentage is not total project completeness.</desc>
+<rect width="1100" height="1101" fill="#F6EFE2"/>
+<g font-family="system-ui,Segoe UI,Arial,sans-serif">
+<text x="32" y="43" font-size="27" font-weight="700" fill="#075231">PREHNITE / DELIVERY EVIDENCE</text>
+<text x="32" y="70" font-size="14" fill="#384F45">Two independent meters: merged proof only, not visual acceptance or estimated effort.</text>
+<text x="32" y="105" font-size="16" font-weight="600" fill="#075231">Release roadmap / original 61 units</text>
+<text x="1060" y="105" font-size="18" font-weight="700" text-anchor="end" fill="#075231">42/61 · 68.85%</text>
+<rect x="32" y="118" width="810" height="18" rx="5" fill="#D5DCD5"/>
+<rect x="32" y="118" width="557.7" height="18" rx="5" fill="#075231"/>
+<text x="32" y="190" font-size="16" font-weight="600" fill="#075231">Atomic delivery / initially unfinished 19 units</text>
+<text x="1060" y="190" font-size="18" font-weight="700" text-anchor="end" fill="#075231">10/73 · 13.70%</text>
+<rect x="32" y="203" width="810" height="18" rx="5" fill="#D5DCD5"/>
+<rect x="32" y="203" width="111.0" height="18" rx="5" fill="#075231"/>
+<text x="32" y="249" font-size="13" fill="#53675A">Second measure covers only frozen open-unit tasks, never an overall completion estimate.</text>
+<text x="32" y="273" font-size="13" fill="#53675A">Review 1 · Active 0 · Blocked 27 · Planned 35 · baseline 2026-10-17</text>
+<text x="32" y="305" font-size="16" font-weight="600" fill="#075231">PR-SIZED TASKS BY UNFINISHED UNIT</text>
+<text x="32" y="333" font-size="14" font-weight="700" fill="#075231">C06</text>
+<text x="120" y="333" font-size="12" fill="#384F45">Versioned pricing quotes and bill reconcili</text>
+<g><title>C06-A01 / planned / Freeze dated price quote schema</title><rect x="565.00" y="319" width="100.75" height="17" rx="2" fill="#D5DCD5"/></g>
+<g><title>C06-A02 / planned / Versioned quote receipts for every rate estimate</title><rect x="668.75" y="319" width="100.75" height="17" rx="2" fill="#D5DCD5"/></g>
+<g><title>C06-A03 / blocked / Collect authorized real invoice samples</title><rect x="772.50" y="319" width="100.75" height="17" rx="2" fill="#A63D35"/></g>
+<g><title>C06-A04 / blocked / Reconcile sample invoices against reserves</title><rect x="876.25" y="319" width="100.75" height="17" rx="2" fill="#A63D35"/></g>
+<text x="1060" y="333" font-size="13" text-anchor="end" fill="#075231">0/4</text>
+<text x="32" y="372" font-size="14" font-weight="700" fill="#075231">C08</text>
+<text x="120" y="372" font-size="12" fill="#384F45">Resumable cross-platform interrupted 90-ite</text>
+<g><title>C08-A01 / planned / 90-slot interrupted batch failure matrix</title><rect x="565.00" y="358" width="100.75" height="17" rx="2" fill="#D5DCD5"/></g>
+<g><title>C08-A02 / planned / Verify 90-slot restart on Ubuntu</title><rect x="668.75" y="358" width="100.75" height="17" rx="2" fill="#D5DCD5"/></g>
+<g><title>C08-A03 / planned / Verify 90-slot restart on Windows</title><rect x="772.50" y="358" width="100.75" height="17" rx="2" fill="#D5DCD5"/></g>
+<g><title>C08-A04 / planned / Publish combined restart acceptance report</title><rect x="876.25" y="358" width="100.75" height="17" rx="2" fill="#D5DCD5"/></g>
+<text x="1060" y="372" font-size="13" text-anchor="end" fill="#075231">0/4</text>
+<text x="32" y="411" font-size="14" font-weight="700" fill="#075231">C09</text>
+<text x="120" y="411" font-size="12" fill="#384F45">Actual provider charges reconciled to reser</text>
+<g><title>C09-A01 / planned / Persist billed/provider request IDs for reconciliation</title><rect x="565.00" y="397" width="100.75" height="17" rx="2" fill="#D5DCD5"/></g>
+<g><title>C09-A02 / blocked / Import real provider billing statement privately</title><rect x="668.75" y="397" width="100.75" height="17" rx="2" fill="#A63D35"/></g>
+<g><title>C09-A03 / blocked / Match reserve and actual charges</title><rect x="772.50" y="397" width="100.75" height="17" rx="2" fill="#A63D35"/></g>
+<g><title>C09-A04 / blocked / Owner review variance thresholds</title><rect x="876.25" y="397" width="100.75" height="17" rx="2" fill="#A63D35"/></g>
+<text x="1060" y="411" font-size="13" text-anchor="end" fill="#075231">0/4</text>
+<text x="32" y="450" font-size="14" font-weight="700" fill="#075231">P08</text>
+<text x="120" y="450" font-size="12" fill="#384F45">8GB VRAM local model feasibility benchmark</text>
+<g><title>P08-A01 / planned / Record local GPU environment and free VRAM</title><rect x="565.00" y="436" width="100.75" height="17" rx="2" fill="#D5DCD5"/></g>
+<g><title>P08-A02 / blocked / Run bounded 8GB model load and forward pass</title><rect x="668.75" y="436" width="100.75" height="17" rx="2" fill="#A63D35"/></g>
+<g><title>P08-A03 / blocked / Verify repeated local inference without OOM</title><rect x="772.50" y="436" width="100.75" height="17" rx="2" fill="#A63D35"/></g>
+<g><title>P08-A04 / planned / Publish compatibility profile by model size</title><rect x="876.25" y="436" width="100.75" height="17" rx="2" fill="#D5DCD5"/></g>
+<text x="1060" y="450" font-size="13" text-anchor="end" fill="#075231">0/4</text>
+<text x="32" y="489" font-size="14" font-weight="700" fill="#075231">P09</text>
+<text x="120" y="489" font-size="12" fill="#384F45">User-approved end-to-end live inference pil</text>
+<g><title>P09-A01 / blocked / Select explicitly authorized hosted inference experiment</title><rect x="565.00" y="475" width="135.33" height="17" rx="2" fill="#A63D35"/></g>
+<g><title>P09-A02 / blocked / Execute isolated authenticated provider smoke call</title><rect x="703.33" y="475" width="135.33" height="17" rx="2" fill="#A63D35"/></g>
+<g><title>P09-A03 / blocked / Verify failure/retry/billing behavior against live response</title><rect x="841.67" y="475" width="135.33" height="17" rx="2" fill="#A63D35"/></g>
+<text x="1060" y="489" font-size="13" text-anchor="end" fill="#075231">0/3</text>
+<text x="32" y="528" font-size="14" font-weight="700" fill="#075231">P10</text>
+<text x="120" y="528" font-size="12" fill="#384F45">Provider-choice plan by cost, hardware and </text>
+<g><title>P10-A01 / planned / Compare provider capability and output contracts</title><rect x="565.00" y="514" width="135.33" height="17" rx="2" fill="#D5DCD5"/></g>
+<g><title>P10-A02 / planned / Create cost and 8GB-local fallback matrix</title><rect x="703.33" y="514" width="135.33" height="17" rx="2" fill="#D5DCD5"/></g>
+<g><title>P10-A03 / planned / Owner decision rubric for default/optional adapters</title><rect x="841.67" y="514" width="135.33" height="17" rx="2" fill="#D5DCD5"/></g>
+<text x="1060" y="528" font-size="13" text-anchor="end" fill="#075231">0/3</text>
+<text x="32" y="567" font-size="14" font-weight="700" fill="#075231">Q05</text>
+<text x="120" y="567" font-size="12" fill="#384F45">Optional local quality judge plugin contrac</text>
+<g><title>Q05-A01 / planned / Define optional local quality-judge typed boundary</title><rect x="565.00" y="553" width="135.33" height="17" rx="2" fill="#D5DCD5"/></g>
+<g><title>Q05-A02 / planned / Add threshold/version provenance receipts</title><rect x="703.33" y="553" width="135.33" height="17" rx="2" fill="#D5DCD5"/></g>
+<g><title>Q05-A03 / blocked / Validate optional weights and local inference license</title><rect x="841.67" y="553" width="135.33" height="17" rx="2" fill="#A63D35"/></g>
+<text x="1060" y="567" font-size="13" text-anchor="end" fill="#075231">0/3</text>
+<text x="32" y="606" font-size="14" font-weight="700" fill="#075231">Q06</text>
+<text x="120" y="606" font-size="12" fill="#384F45">Rights-cleared human-rated reference set</text>
+<g><title>Q06-A01 / done / Register owner-authorized product photo cohort</title><rect x="565.00" y="592" width="100.75" height="17" rx="2" fill="#075231"/></g>
+<g><title>Q06-A02 / planned / Record human Review Studio decisions privately</title><rect x="668.75" y="592" width="100.75" height="17" rx="2" fill="#D5DCD5"/></g>
+<g><title>Q06-A03 / planned / Verify review source hashes against private JPEGs</title><rect x="772.50" y="592" width="100.75" height="17" rx="2" fill="#D5DCD5"/></g>
+<g><title>Q06-A04 / blocked / Independently annotate real alpha reference set</title><rect x="876.25" y="592" width="100.75" height="17" rx="2" fill="#A63D35"/></g>
+<text x="1060" y="606" font-size="13" text-anchor="end" fill="#075231">1/4</text>
+<text x="32" y="645" font-size="14" font-weight="700" fill="#075231">Q07</text>
+<text x="120" y="645" font-size="12" fill="#384F45">Calibration report for accepted/rejected qu</text>
+<g><title>Q07-A01 / planned / Pre-register human scoring rubric and abstention labels</title><rect x="565.00" y="631" width="135.33" height="17" rx="2" fill="#D5DCD5"/></g>
+<g><title>Q07-A02 / blocked / Measure inter-reviewer calibration on real cohort</title><rect x="703.33" y="631" width="135.33" height="17" rx="2" fill="#A63D35"/></g>
+<g><title>Q07-A03 / blocked / Publish versioned judge calibration report</title><rect x="841.67" y="631" width="135.33" height="17" rx="2" fill="#A63D35"/></g>
+<text x="1060" y="645" font-size="13" text-anchor="end" fill="#075231">0/3</text>
+<text x="32" y="684" font-size="14" font-weight="700" fill="#075231">Q08</text>
+<text x="120" y="684" font-size="12" fill="#384F45">Rejection/repair behavior validated across </text>
+<g><title>Q08-A01 / planned / Define cross-judge repair comparison fixtures</title><rect x="565.00" y="670" width="135.33" height="17" rx="2" fill="#D5DCD5"/></g>
+<g><title>Q08-A02 / planned / Verify judge disagreement triggers review not automation</title><rect x="703.33" y="670" width="135.33" height="17" rx="2" fill="#D5DCD5"/></g>
+<g><title>Q08-A03 / blocked / Measure live judge disagreement on accepted corpus</title><rect x="841.67" y="670" width="135.33" height="17" rx="2" fill="#A63D35"/></g>
+<text x="1060" y="684" font-size="13" text-anchor="end" fill="#075231">0/3</text>
+<text x="32" y="723" font-size="14" font-weight="700" fill="#075231">R06</text>
+<text x="120" y="723" font-size="12" fill="#384F45">Audit dependencies and model-weight licensi</text>
+<g><title>R06-A01 / planned / Inventory Python dependencies and transitive licenses</title><rect x="565.00" y="709" width="100.75" height="17" rx="2" fill="#D5DCD5"/></g>
+<g><title>R06-A02 / planned / Audit optional model checkpoints and training restrictions</title><rect x="668.75" y="709" width="100.75" height="17" rx="2" fill="#D5DCD5"/></g>
+<g><title>R06-A03 / planned / Scan produced artifacts, embedded fonts and photos for redistribution rights</title><rect x="772.50" y="709" width="100.75" height="17" rx="2" fill="#D5DCD5"/></g>
+<g><title>R06-A04 / planned / Publish actionable license compliance/upgrade report</title><rect x="876.25" y="709" width="100.75" height="17" rx="2" fill="#D5DCD5"/></g>
+<text x="1060" y="723" font-size="13" text-anchor="end" fill="#075231">0/4</text>
+<text x="32" y="762" font-size="14" font-weight="700" fill="#075231">R08</text>
+<text x="120" y="762" font-size="12" fill="#384F45">90-asset live pilot and owner quality accep</text>
+<g><title>R08-A01 / blocked / Approve live 90-asset test scope and external spend</title><rect x="565.00" y="748" width="135.33" height="17" rx="2" fill="#A63D35"/></g>
+<g><title>R08-A02 / blocked / Run live mixed-format 90-asset quality and recovery test</title><rect x="703.33" y="748" width="135.33" height="17" rx="2" fill="#A63D35"/></g>
+<g><title>R08-A03 / blocked / Owner sign off accepted pilot results</title><rect x="841.67" y="748" width="135.33" height="17" rx="2" fill="#A63D35"/></g>
+<text x="1060" y="762" font-size="13" text-anchor="end" fill="#075231">0/3</text>
+<text x="32" y="801" font-size="14" font-weight="700" fill="#075231">R09</text>
+<text x="120" y="801" font-size="12" fill="#384F45">Owner-approved version tag and first releas</text>
+<g><title>R09-A01 / planned / Prepare versioned package release manifest and rollback notes</title><rect x="565.00" y="787" width="135.33" height="17" rx="2" fill="#D5DCD5"/></g>
+<g><title>R09-A02 / blocked / Audit final prerelease gates and owner acceptance</title><rect x="703.33" y="787" width="135.33" height="17" rx="2" fill="#A63D35"/></g>
+<g><title>R09-A03 / blocked / Create owner-approved v0.1 release tag</title><rect x="841.67" y="787" width="135.33" height="17" rx="2" fill="#A63D35"/></g>
+<text x="1060" y="801" font-size="13" text-anchor="end" fill="#075231">0/3</text>
+<text x="32" y="840" font-size="14" font-weight="700" fill="#075231">R10</text>
+<text x="120" y="840" font-size="12" fill="#384F45">Native GitHub Projects issue/PR state sync</text>
+<g><title>R10-A01 / planned / Specify Project v2 field mapping and sync contract</title><rect x="565.00" y="826" width="135.33" height="17" rx="2" fill="#D5DCD5"/></g>
+<g><title>R10-A02 / blocked / Obtain Projects v2 write permission for narrow scope</title><rect x="703.33" y="826" width="135.33" height="17" rx="2" fill="#A63D35"/></g>
+<g><title>R10-A03 / planned / Test idempotent Projects v2 issue and PR synchronization</title><rect x="841.67" y="826" width="135.33" height="17" rx="2" fill="#D5DCD5"/></g>
+<text x="1060" y="840" font-size="13" text-anchor="end" fill="#075231">0/3</text>
+<text x="32" y="879" font-size="14" font-weight="700" fill="#075231">S03</text>
+<text x="120" y="879" font-size="12" fill="#384F45">Foreground matte cleanup and edge decontami</text>
+<g><title>S03-A01 / done / Demonstrate bounded synthetic product alpha correction</title><rect x="565.00" y="865" width="80.00" height="17" rx="2" fill="#075231"/></g>
+<g><title>S03-A02 / done / Prove unsafe scene/material abstention</title><rect x="648.00" y="865" width="80.00" height="17" rx="2" fill="#075231"/></g>
+<g><title>S03-A03 / planned / Implement true color spill edge decontamination</title><rect x="731.00" y="865" width="80.00" height="17" rx="2" fill="#D5DCD5"/></g>
+<g><title>S03-A04 / planned / Support translucent and fine-strand alpha transitions</title><rect x="814.00" y="865" width="80.00" height="17" rx="2" fill="#D5DCD5"/></g>
+<g><title>S03-A05 / blocked / Human validate genuine product edges</title><rect x="897.00" y="865" width="80.00" height="17" rx="2" fill="#A63D35"/></g>
+<text x="1060" y="879" font-size="13" text-anchor="end" fill="#075231">2/5</text>
+<text x="32" y="918" font-size="14" font-weight="700" fill="#075231">S04</text>
+<text x="120" y="918" font-size="12" fill="#384F45">Multiple-instance selection and named outpu</text>
+<g><title>S04-A01 / done / Fail closed on disconnected product instances</title><rect x="565.00" y="904" width="100.75" height="17" rx="2" fill="#075231"/></g>
+<g><title>S04-A02 / planned / Define stable target instance identity and hierarchy</title><rect x="668.75" y="904" width="100.75" height="17" rx="2" fill="#D5DCD5"/></g>
+<g><title>S04-A03 / planned / Implement owner-selected region to instance binding</title><rect x="772.50" y="904" width="100.75" height="17" rx="2" fill="#D5DCD5"/></g>
+<g><title>S04-A04 / planned / Round-trip multi-object export and resume</title><rect x="876.25" y="904" width="100.75" height="17" rx="2" fill="#D5DCD5"/></g>
+<text x="1060" y="918" font-size="13" text-anchor="end" fill="#075231">1/4</text>
+<text x="32" y="957" font-size="14" font-weight="700" fill="#075231">S05</text>
+<text x="120" y="957" font-size="12" fill="#384F45">Failure classification and bounded targeted</text>
+<g><title>S05-A01 / done / Typed zero-spend repair decision plan</title><rect x="565.00" y="943" width="80.00" height="17" rx="2" fill="#075231"/></g>
+<g><title>S05-A02 / done / Idempotent journal-backed local repair executor</title><rect x="648.00" y="943" width="80.00" height="17" rx="2" fill="#075231"/></g>
+<g><title>S05-A03 / done / Hard-case refusal and one-attempt coverage</title><rect x="731.00" y="943" width="80.00" height="17" rx="2" fill="#075231"/></g>
+<g><title>S05-A04 / planned / Wire the bounded repair into production Engine.cutout</title><rect x="814.00" y="943" width="80.00" height="17" rx="2" fill="#D5DCD5"/></g>
+<g><title>S05-A05 / blocked / Verify repaired real-photo acceptance contract</title><rect x="897.00" y="943" width="80.00" height="17" rx="2" fill="#A63D35"/></g>
+<text x="1060" y="957" font-size="13" text-anchor="end" fill="#075231">3/5</text>
+<text x="32" y="996" font-size="14" font-weight="700" fill="#075231">S06</text>
+<text x="120" y="996" font-size="12" fill="#384F45">Transparent cutout benchmark with alpha met</text>
+<g><title>S06-A01 / done / Build withheld-reference synthetic alpha challenge suite</title><rect x="565.00" y="982" width="66.17" height="17" rx="2" fill="#075231"/></g>
+<g><title>S06-A02 / done / Add private RGB/mask reference scoring CLI</title><rect x="634.17" y="982" width="66.17" height="17" rx="2" fill="#075231"/></g>
+<g><title>S06-A03 / done / Inspect owner-provided 84-image source-only pilot</title><rect x="703.33" y="982" width="66.17" height="17" rx="2" fill="#075231"/></g>
+<g><title>S06-A04 / blocked / Curate source-aligned independent alpha reference pairs</title><rect x="772.50" y="982" width="66.17" height="17" rx="2" fill="#A63D35"/></g>
+<g><title>S06-A05 / blocked / Compute reproducible real-category alpha scores</title><rect x="841.67" y="982" width="66.17" height="17" rx="2" fill="#A63D35"/></g>
+<g><title>S06-A06 / planned / Compare versioned segmenters with a real-mask benchmark</title><rect x="910.83" y="982" width="66.17" height="17" rx="2" fill="#D5DCD5"/></g>
+<text x="1060" y="996" font-size="13" text-anchor="end" fill="#075231">3/6</text>
+<text x="32" y="1035" font-size="14" font-weight="700" fill="#075231">S07</text>
+<text x="120" y="1035" font-size="12" fill="#384F45">Human-accepted cutout samples across tricky</text>
+<g><title>S07-A01 / planned / Define human acceptance rubric across tricky materials</title><rect x="565.00" y="1021" width="80.00" height="17" rx="2" fill="#D5DCD5"/></g>
+<g><title>S07-A02 / in_review / Implement strict human-review feedback ingestion</title><rect x="648.00" y="1021" width="80.00" height="17" rx="2" fill="#E5955B"/></g>
+<g><title>S07-A03 / planned / Owner review 12 representative cutout candidates</title><rect x="731.00" y="1021" width="80.00" height="17" rx="2" fill="#D5DCD5"/></g>
+<g><title>S07-A04 / blocked / Independently produce/reference-review corrected mattes</title><rect x="814.00" y="1021" width="80.00" height="17" rx="2" fill="#A63D35"/></g>
+<g><title>S07-A05 / blocked / Demonstrate accepted samples across all target materials</title><rect x="897.00" y="1021" width="80.00" height="17" rx="2" fill="#A63D35"/></g>
+<text x="1060" y="1035" font-size="13" text-anchor="end" fill="#075231">0/5</text>
+<text x="32" y="1081" font-size="12" fill="#53675A">Green done · Orange review · Amber active · Coral blocked · Grey planned · registry 2026-10-17</text>
+</g></svg>
