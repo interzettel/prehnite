@@ -81,3 +81,25 @@ def test_no_probe_output_contains_sensitive_environment(monkeypatch):
     monkeypatch.setattr(hw.shutil, "which", lambda _: None)
     report = hw.hardware_report()
     assert "secret-value" not in str(report)
+
+def test_windows_memory_native_api_is_source_labeled(monkeypatch):
+    def fake_global_memory_status(pointer):
+        pointer._obj.ullTotalPhys = 16 * 1024**3
+        pointer._obj.ullAvailPhys = 7 * 1024**3
+        return 1
+    monkeypatch.setattr(hw.ctypes, "windll", SimpleNamespace(
+        kernel32=SimpleNamespace(GlobalMemoryStatusEx=fake_global_memory_status)),
+        raising=False)
+    memory = hw._windows_ram()
+    assert memory["source"] == "GlobalMemoryStatusEx"
+    assert memory["status"] == "observed"
+    assert memory["total_bytes"] == 16 * 1024**3
+    assert memory["available_bytes"] == 7 * 1024**3
+
+
+def test_timeout_does_not_claim_nvidia_suitability(monkeypatch):
+    monkeypatch.setattr(hw.shutil, "which", lambda _: "/usr/bin/nvidia-smi")
+    def timeout(*args, **kwargs):
+        raise hw.subprocess.TimeoutExpired(cmd="nvidia-smi", timeout=5)
+    monkeypatch.setattr(hw.subprocess, "run", timeout)
+    assert hw._nvidia_gpus()["status"] == "unavailable"
