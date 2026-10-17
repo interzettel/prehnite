@@ -10,12 +10,12 @@
 
 | Lane | Cards |
 | --- | ---: |
-| Backlog | 16 |
+| Backlog | 15 |
 | Ready | 2 |
-| In progress | 1 |
-| In review | 1 |
+| In progress | 2 |
+| In review | 2 |
 | Blocked | 6 |
-| Done | 75 |
+| Done | 77 |
 
 **WIP limits:** In progress ≤ 2; In review ≤ 3. Counts are issue/PR cards, not unique completed engineering features or a percentage.
 
@@ -32,7 +32,6 @@
 | P2 | [Issue #44 — Synchronize canonical issue ledger with organization GitHub Projects v2](https://github.com/interzettel/prehnite/issues/44) | Tracking | GitHub Project #1 sync needs Projects v2 write permission |
 | P1 | [Issue #40 — Model, dependency and artifact licensing inventory](https://github.com/interzettel/prehnite/issues/40) | Licensing | Dependency/model weight terms inventory |
 | P1 | [Issue #33 — Self-contained offline HTML gallery and comparisons](https://github.com/interzettel/prehnite/issues/33) | Reporting | Offline thumbnail gallery #67 merged; opt-in private original comparisons remain issue #68 |
-| P1 | [Issue #31 — Targeted repair planner for failed cutouts](https://github.com/interzettel/prehnite/issues/31) | Cutouts | Controlled journaled synthetic repair delivered in merged PR #119; full targeted S05 failure classification and Engine integration not complete. |
 | P2 | [Issue #30 — Multi-instance object cutout selection](https://github.com/interzettel/prehnite/issues/30) | Cutouts | Multi-instance target matching |
 | P1 | [Issue #29 — Transparent alpha matting and halo removal](https://github.com/interzettel/prehnite/issues/29) | Cutouts | Merged #120 synthetic safety matrix; full S03 real-photo matte/color decontamination still open for separate implementation. |
 | P2 | [Issue #27 — Local aesthetic and fidelity judge plugin boundary](https://github.com/interzettel/prehnite/issues/27) | Quality | Optional local weights and licenses |
@@ -51,13 +50,15 @@
 
 | Priority | Work item | Stream | Handoff / blocker |
 | --- | --- | --- | --- |
+| P1 | [Issue #31 — Targeted repair planner for failed cutouts](https://github.com/interzettel/prehnite/issues/31) | Cutouts | S05-A04 opt-in production staging in PR #129, review-only, no visual acceptance; S05-A05 real photo evidence blocked. |
 | P2 | [Issue #100 — Provenance-bound transforms and tiled 4K comparison](https://github.com/interzettel/prehnite/issues/100) | Delivery | Integer 4K tiles + SHA-bound affine v2 validator merged; real affine warp/execution still open. |
 
 ## In review
 
 | Priority | Work item | Stream | Handoff / blocker |
 | --- | --- | --- | --- |
-| P1 | [PR #125 — Validate offline Review Studio ZIP and import human feedback](https://github.com/interzettel/prehnite/pull/125) | Cutouts | Draft PR #125: private mask integrity, review counters, defect triage; synthetic-only tests. Owner's actual ratings and independent gold mattes pending. |
+| P1 | [PR #125 — Validated offline human-review ZIP and repair triage](https://github.com/interzettel/prehnite/pull/125) | Cutouts | CI green; owner reviewing cutout UI, PR unmerged. In-review atomic work earns no completion credit. |
+| P1 | [PR #129 — Stage opt-in bounded opaque repair for cutout review](https://github.com/interzettel/prehnite/pull/129) | Cutouts | Strict owner-declared opaque product, isolate journaled repair, preserve selected assets; CI pending. No human acceptance or parent unit done. |
 
 ## Blocked
 
@@ -149,6 +150,8 @@
 | P1 | [PR #120 — Twenty challenging cutout fixtures and safety guards](https://github.com/interzettel/prehnite/pull/120) | Cutouts | Merged as e3026a1 after 12/12 green CI; synthetic-only, no S03/S05 evidence completion. |
 | P1 | [PR #122 — Rights-aware local real-image alpha benchmark intake](https://github.com/interzettel/prehnite/pull/122) | Cutouts | Merged 463d3c2; local rights-aware alpha scorer, source-only R2 WebP preflight. No reference-alpha production claims. |
 | P1 | [PR #123 — Private apparel ZIP inspection and unreviewed mask probe](https://github.com/interzettel/prehnite/pull/123) | Cutouts | Merged 39c84d3 with 14/14 CI: verified 84 private JPEG inputs and 50 unreviewed local masks; no independent alpha references or QA acceptance. |
+| P1 | [Issue #126 — Atomic task progress alongside the 61-unit evidence ledger](https://github.com/interzettel/prehnite/issues/126) | Tracking | Delivered in merged PR #127 (14/14 CI). Frozen atomic register, dual progress view; original release ledger unchanged. |
+| P1 | [PR #127 — Evidence-backed atomic task register and dual progress chart](https://github.com/interzettel/prehnite/pull/127) | Tracking | Merged as 1e28ea7 with 14/14 green jobs. Evidence-backed 10/73 atomic tasks, 1 review; no double counting. |
 
 ## How to update this board
 

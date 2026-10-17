@@ -4,13 +4,16 @@
 Deliver reliable, quality-gated visual assets at low cost. This repository is an MIT-licensed, local-first integration layer. Model weights and external inference are optional and separately licensed.
 
 ## Project governance (read before taking work)
-- Read [docs/AGILE.md](docs/AGILE.md), [docs/SPRINT.md](docs/SPRINT.md), [docs/progress/STATUS.md](docs/progress/STATUS.md), [progress/ledger.json](progress/ledger.json), [CHANGELOG.md](CHANGELOG.md) and A2A [issue #9](https://github.com/interzettel/prehnite/issues/9).
+- Read [docs/AGILE.md](docs/AGILE.md), [docs/SPRINT.md](docs/SPRINT.md), [docs/progress/STATUS.md](docs/progress/STATUS.md), [progress/ledger.json](progress/ledger.json), [docs/progress/ATOMIC.md](docs/progress/ATOMIC.md), [progress/atomic.json](progress/atomic.json), [CHANGELOG.md](CHANGELOG.md) and A2A [issue #9](https://github.com/interzettel/prehnite/issues/9).
 - Claim one scope on issue #9, and update an existing GitHub issue before opening a duplicate.
 - Work through Backlog → Ready → In progress → Review → Done; flag Blocked separately.
 - Do not merge another agent's PR, or auto-merge unfinished work. Every merged user-visible change gets an Unreleased changelog entry.
 - Version changes require a dedicated PR and follow docs/VERSIONING.md. Never make a Git tag or publish packages without owner approval.
 - Keep docs/SPRINT.md as a current snapshot when moving a ticket between states.
-- For independently testable delivery work, use stable IDs in progress/ledger.json with dependencies and evidence links. Run `python scripts/progress.py --write` after a verified change, and never mark a unit done without a merged PR or owner-approved evidence.
+- Claim one atomic child task ID (e.g. S05-A04) from progress/atomic.json on A2A issue #9 before implementing it. Deliver one independently testable acceptance criterion per PR; the 61-unit ledger represents coarser release gates.
+- Never mark an atomic child done before a merged, verifiable PR. Use in_review for an open PR (zero done credit). Run python scripts/atomic_progress.py --write in the same PR as a register edit.
+- Keep progress/ledger.json as the authoritative 61-unit evidence contract. Run python scripts/progress.py --write only after all original parent acceptance and dependency requirements are proven. Do not claim real image quality or paid inference from a synthetic subtask.
+- The 73-task October 17 baseline denominator is frozen. New child scope needs an explicit reviewed scope/version migration, not silent deletion of blocked items.
 - The native organization Project #1 exists, but automatic field synchronization is not implemented: compare live cards before claiming agreement.
 
 ## Visual identity rules

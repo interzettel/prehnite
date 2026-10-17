@@ -1,6 +1,6 @@
 # Roadmap (issues should reference acceptance tests)
 
-**Granular roadmap and milestone progress:** [Evidence ledger dashboard](progress/STATUS.md) · [61 tracked scoped units](../progress/ledger.json) · [Current iteration board](SPRINT.md). This historical thematic checklist is not the canonical percentage.
+**Progress and agent tasks:** [Verified 61-unit release ledger](progress/STATUS.md) · [Atomic task dashboard and acceptance criteria](progress/ATOMIC.md) · [Frozen PR-sized register](../progress/atomic.json) · [Current iteration board](SPRINT.md). The atomic percentage is scoped only to the 19 unfinished release units from its initial baseline, not overall project progress.
 
 ## v0.1: executable architecture, no mandatory cloud costs
 - [x] Strict manifest/profile validation and output path safety

@@ -19,6 +19,7 @@ from .providers import get_provider
 from .reporting import export_report, package
 from .schema import Asset, Endpoint, Manifest, Profile
 from .store import Journal, JobStopped
+from .repair import run_product_repair
 from .failures import (BudgetExceeded, RecoveryBlocked, classify_exception,
                        classify_asset)
 
@@ -36,6 +37,7 @@ class Engine:
         self.manifest = manifest
         self.job_token = job_token
         self.profile = profile
+        self._run_lock_held = False
         self.inputs = inputs
         self.journal = Journal(workspace, manifest.id)
         self.cache = StageCache(workspace, profile.cache) if profile.cache.enabled else None
@@ -298,11 +300,53 @@ class Engine:
         root = self.journal.root / "intermediates" / asset.id / "cutouts" / target_key
         mask = root / "mask.png"
         key = f"{asset.id}:cutout:{name}:mask"
+        # Staging an optional repair requires a fresh cutout destination.
+        # A preexisting output may already have been accepted: never clobber it.
+        review_mode = self.profile.policy.local_repair_mode == "stage_for_review"
+        if review_mode and target_output.exists():
+            raise ArtifactIntegrityError("Existing cutout cannot be overwritten by a review-only repair")
         self.stage(key, "segmentation", ep, mask,
                    lambda on_submit, resume, temp: provider.segment(
                        selected, name, temp, ep, on_submit, resume), "segmentation",
                    cache_request={"source_sha256": sha256(selected),
                                   "target": name})
+        if review_mode:
+            material = asset.cutout_materials.get(name, "unknown")
+            # Unspecified, translucent, hair, glass or cloth must abstain.
+            # The executor independently checks strict RGB/PNG/mask geometry
+            # and a genuinely verifiable opaque-on-uniform-background fringe.
+            if material != "opaque":
+                self.journal.put(f"{asset.id}:cutout:{name}:local_review",
+                                 "cutout_repair", "review", provider="local",
+                                 reserved_usd=0.0,
+                                 data={"reason": "material_not_qualified_for_opaque_repair",
+                                       "human_visual_acceptance": False})
+                raise ValueError("Local cutout repair requires review: material_not_qualified_for_opaque_repair")
+            result = run_product_repair(
+                self.journal, selected, mask,
+                asset_id=hashlib.sha256(asset.id.encode("utf-8")).hexdigest()[:20],
+                target_id=target_key, cohort="product", material="opaque",
+                accepted_output_exists=False,
+                # An uncertain provider stage cannot be retried or used to
+                # bypass billable recovery safeguards.
+                remote_charge_uncertain=False,
+                awaiting_provider_submission=False,
+                selected_source_only=True,
+                lock_already_held=self._run_lock_held,
+            )
+            review = {"reason": result["reason"], "human_visual_acceptance": False,
+                      "result_status": result["status"], "would_spend_usd": 0}
+            if result["status"] == "technically_accepted":
+                review.update({"candidate_path": result["output"],
+                               "candidate_sha256": result["output_sha256"],
+                               "operation_id": result["operation_id"],
+                               "technical_metrics": result["metrics"]})
+            self.journal.put(f"{asset.id}:cutout:{name}:local_review",
+                             "cutout_repair", "review", provider="local",
+                             reserved_usd=0.0, data=review)
+            # Even a technically improved alpha is not a gold reference or
+            # visual acceptance. Source/output artifacts are left untouched.
+            raise ValueError("Local cutout repair staged for human review: " + result["reason"])
         # Retry is a real edge-refinement alternative, not a redundant paid model call.
         problems = []
         for refine in (False, True)[:self.profile.policy.maximum_attempts]:
@@ -472,6 +516,13 @@ class Engine:
 
     def run(self) -> dict:
         with self.journal.exclusive():
+            self._run_lock_held = True
+            try:
+                return self._run_with_lock()
+            finally:
+                self._run_lock_held = False
+
+    def _run_with_lock(self) -> dict:
             if self.job_token is not None:
                 self.journal.job_start(self.job_token)
             try:

@@ -50,6 +50,14 @@ GitHub labels aren't provisioned automatically here. **Do not label an issue wit
 
 [progress/ledger.json](../progress/ledger.json) defines stable, independently completable units with dependencies, execution lanes and evidence. [scripts/progress.py](../scripts/progress.py) generates [the SVG dashboard and work report](progress/STATUS.md). **Only done with evidence counts; issue cards, active work and PRs under review do not.** A milestone is reached only when named gate units are done. CI rejects unknown/duplicate dependencies, cycles, false completion and generated-file drift. The separate [production-readiness gate matrix](PROGRESS.md) is not a release claim.
 
+### PR-sized atomic tasks and two progress counters
+
+The 61-unit progress/ledger.json remains the authoritative verified release milestone counter. The independent progress/atomic.json lists **73 smaller tasks beneath 19 originally unfinished parent units**. Each has a stable ID, an objective PR-sized acceptance test, the linked issue and a blocker or evidence URL. This second percentage measures delivery **inside that frozen backlog scope only**; it is not another overall project-completion or quality estimate.
+
+Agents choose an ID such as S05-A04 from [the full atomic register](progress/ATOMIC.md), post an ownership claim on issue #9 and its linked issue, then complete one bounded PR. Record in_review for an open PR; only a merged PR and objective acceptance evidence can set done. Blocked tasks stay in the denominator. A parent can remain unfinished after one or several child tasks are done.
+
+Run python scripts/atomic_progress.py --write to regenerate [the dual-metric SVG](progress/atomic.svg) and [task dashboard](progress/ATOMIC.md). CI checks these **and** the original 61-unit reports. The frozen 73-task denominator cannot be quietly reduced; scope migrations need explicit reviewed version changes. Native Projects v2 syncing remains a separate item #44.
+
 One human maintainer owns priorities, provider spend and final acceptance; agents own isolated implementation changes and write #9 handoffs. Hardware-heavy work stays in a local lane so a cloud agent cannot fabricate GPU measurements.
 
 ## Version and releases

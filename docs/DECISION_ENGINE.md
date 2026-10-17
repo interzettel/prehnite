@@ -36,7 +36,33 @@
 | Existing accepted image, ambiguous billable submission, active remote submission, exhausted total stage attempts | Human review, **no remote retry or overwrite** |
 | Jev/OpenAI/Anthropic probability or rubric alone, regardless of confidence | Human review until real calibration + another reviewed policy gate |
 
-There is no model-driven automatic accept or irreversible deletion. Explicit permission to *attempt* automatic local repair is not permission for the model to bill, overwrite or delete an accepted asset. The existing engine's cutout refine path remains unchanged in this tranche; **this planner is a tested decision contract, not yet a connected repair executor**. Wiring it to the persistent journal/unique local operation IDs and trustworthy alpha-edge detectors is next in #31/#29. That code must revalidate all preconditions on replay, preserve accepted artifacts, and avoid a paid re-segmentation call for a local mask-only repair.
+There is no model-driven automatic accept or irreversible deletion. Explicit permission to *attempt* automatic local repair is not permission for the model to bill, overwrite or delete an accepted asset. The original pure planner remains a decision contract. Later PR #119 added the journaled isolated repair executor; PR #120 added strict material fail-closed challenge cases. The production Engine opt-in integration is tracked by atomic task S05-A04 and adds **review-only staging**, not automatic accepted masks.
+
+### Explicit Engine.cutout review staging (S05-A04)
+
+The normal segmentation/cutout behavior is unchanged by default. To opt in **per profile and target**, set:
+
+```yaml
+policy:
+  local_repair_mode: stage_for_review
+```
+
+In the asset manifest, declare the exact target as opaque:
+
+```yaml
+assets:
+  - id: opaque-test
+    source: input.png
+    target_size: [160, 160]
+    aspect_ratio: "1:1"
+    targets: [cup]
+    cutout_materials: {cup: opaque}
+    output: {image: selected.png, cutouts: {cup: cup.png}}
+```
+
+The repair only attempts zero-spend alpha correction for an isolated solid opaque object on a demonstrably uniform background. This is **not** a general apparel/matting model: hair, cloth, glass, transparent materials, absent declarations, and nonuniform backgrounds abstain. The source must decode as unoriented RGB PNG and its candidate mask as grayscale PNG. A technically repaired candidate remains under `batches/<id>/repairs/<operation-id>/repaired.png`; it is not copied into the selected cutout or packaged as an accepted asset.
+
+The Engine writes a non-accepted `cutout_repair/review` journal receipt with hashes and reason, and reports the cutout as needing review. Existing selected images are read only, existing cutout targets are refused *before segmentation*, and repeated calls reuse the same journaled local operation after crash recovery. The engine already holds the batch lock, so the repair executor uses that lock context instead of attempting a second lock. No inference call is made as part of local repair, and neither a technical improvement nor a higher mask coverage percentage establishes visual quality. The original quality acceptance and full S05 parent remain open; real independent alpha references and human review are still needed.
 
 ### Synthetic product / portrait acceptance fixtures
 
@@ -46,7 +72,7 @@ The suite uses synthetic **records**, not images. It therefore does **not** prov
 
 ## Next reviewable increments
 
-1. Wire the deterministic local-repair plan to a persistent per-mask operation with bounded retry, result SHA256, and isolated saved outputs; test hard-kill/replay.
+1. Calibrate the review-only candidate against independently annotated product alpha references before any automated production acceptance policy.
 2. Add concrete foreground matte cleanup and edge/color contamination diagnostics against synthetic checkerboards, hard backgrounds, translucent edges and hair-like fixtures, separately for portrait/product.
 3. Assemble permitted human-reviewed cohorts; compare provider/judge disagreement and **cost per human-accepted deliverable** under explicitly authorized inference budgets. The Jev danger-zone switch remains independently opt-in, and no live model credentials are needed now.
 
