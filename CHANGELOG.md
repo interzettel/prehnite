@@ -6,6 +6,9 @@ This project follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) an
 
 ## [Unreleased]
 
+### Changed
+- Separated public PyPI alpha publishing from ordinary CI: dedicated manually dispatched, same-SHA CI-artifact-verified `publish.yml`, owner-reviewed `pypi` environment, annotated tag, short-lived OIDC upload and GitHub prerelease after success; requires updating the owner's existing pending PyPI publisher from `ci.yml` to `publish.yml` before first upload. No new license, inference quality claims or automatic publishing.
+
 ### Added
 - Manual, tokenless PyPI publishing preparation (#144): PyPI-specific accurate release description/project metadata, offline wheel/sdist content and version audit, strict Twine validation and inspectable candidate artifacts in ordinary CI; OIDC release job requires owner-dispatched main-only alpha, existing annotated matching tag, all CI gates and a GitHub `pypi` environment reviewer before the first authorized upload. No package released, tag created or Python version incremented by this work.\n- Experimental local ComfyUI recipe/engine bridge (#133): upfront and pre-run SHA256 checks, strict recipe/profile and graph model-reference compatibility, atomic SQLite per-batch recipe identity and refusal of changed/unbound/legacy resumes; no hardware or live-model performance claims.
 - Read-only offline micro recipe resolver: operator-supplied ComfyUI API graph and checkpoint file hashing, explicit local-use terms acknowledgement, reproducible resolved-input digest and refusal of unsafe paths/mismatched bytes (#135). No downloads, model execution, verified rights or per-batch journal integration.

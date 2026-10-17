@@ -1,6 +1,6 @@
 # Release playbook (manual releases only)
 
-**Current state:** development baseline only. No release tag, GitHub Release or PyPI distribution is created merely by adding publishing infrastructure. A legitimate early alpha can ship only after explicit owner approval. See [PyPI OIDC publication runbook](PYPI_PUBLISHING.md) for the registered `ci.yml` workflow, artifact validation, annotated-tag and protected-environment requirements.
+**Current state:** development baseline only. No release tag, GitHub Release or PyPI distribution is created merely by adding publishing infrastructure. A legitimate early alpha can ship only after explicit owner approval. See [PyPI OIDC publication runbook](PYPI_PUBLISHING.md) for the dedicated `publish.yml` workflow, artifact validation, annotated-tag and protected-environment requirements.
 
 ## Release candidate checklist
 
@@ -10,7 +10,7 @@
 4. Open a **dedicated version-bump PR** updating `src/prehnite/_version.py` to the approved alpha, beta, release-candidate or stable version. On public release, move only the shipped notes out of `[Unreleased]` in `CHANGELOG.md` into `[X.Y.Z] - YYYY-MM-DD` and update docs/migrations as needed.
 5. Obtain human review and green CI on that exact commit. Build wheel/sdist and test clean-install imports/CLI; verify their embedded version equals the target and validate hashes.
 6. Obtain explicit owner approval for shipping, including any public distribution or external publishing. **Do not tag before approval.**
-7. Only *after* approval, create an immutable annotated `vX.Y.Z` tag at the approved release commit. Manually dispatch `ci.yml` from `main` with the exact alpha version, typed release confirmation, verified tag and full CI. The PyPI job requires the owner-configured protected `pypi` environment, then publishes via OIDC. Create a GitHub Release from the approved changelog and tag; PyPI publication is separately authorized, **not** an automatic consequence of tagging.
+7. Only *after* approval, create an immutable annotated `vX.Y.Z` tag at the approved release commit. After successful main CI at the approved versioned SHA, update the PyPI pending publisher to `publish.yml` and configure the protected `pypi` GitHub environment. Manually dispatch `publish.yml` from `main` with the exact alpha version and typed confirmation. Its read-only verification job checks successful same-SHA CI and the exact dist; after environment review it creates the annotated tag, publishes via OIDC and creates the GitHub prerelease only after upload succeeds. Create a GitHub Release from the approved changelog and tag; PyPI publication is separately authorized, **not** an automatic consequence of tagging.
 8. After publishing, bump to the next `.dev0` series in a separate follow-up PR. Keep `[Unreleased]` ready for further changes.
 9. Record the release commit, tag, checksums, release URL, known limitations and deployment notes in #9 and roadmap.
 

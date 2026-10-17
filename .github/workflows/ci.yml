@@ -4,22 +4,6 @@ on:
     branches: [main]
   pull_request:
   workflow_dispatch:
-    inputs:
-      publish_to_pypi:
-        description: "Publish approved prehnite release to PyPI (never automatic)"
-        type: boolean
-        required: true
-        default: false
-      release_version:
-        description: "Exact pre-approved package version (example: 0.1.0a1)"
-        type: string
-        required: false
-        default: ""
-      confirmation:
-        description: "Type exactly: PUBLISH PREHNITE TO PYPI"
-        type: string
-        required: false
-        default: ""
 permissions:
   contents: read
 jobs:
@@ -322,76 +306,3 @@ jobs:
           if-no-files-found: error
           retention-days: 7
 
-  release-verify:
-    name: Verify explicitly approved alpha tag and CI
-    runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && inputs.publish_to_pypi == true }}
-    needs:
-      - unit
-      - package-smoke
-      - mcp-windows
-      - offline-90
-      - parquet-optional
-      - repair-demo
-      - cutout-challenge-matrix
-      - real-alpha-local-evaluator
-      - license-sbom
-      - recipe-journal-bridge
-      - local-recipe-resolver
-      - hardware-doctor
-      - release-dist-audit
-    permissions:
-      contents: read
-    env:
-      RELEASE_VERSION: ${{ inputs.release_version }}
-      RELEASE_CONFIRMATION: ${{ inputs.confirmation }}
-    steps:
-      - uses: actions/checkout@v5
-        with:
-          fetch-depth: 0
-          persist-credentials: false
-      - uses: actions/setup-python@v6
-        with:
-          python-version: "3.12"
-      - name: Verify manual confirmation and existing annotated same-commit tag
-        shell: bash
-        run: |
-          set -euo pipefail
-          test "$RELEASE_CONFIRMATION" = "PUBLISH PREHNITE TO PYPI"
-          [[ "$RELEASE_VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+a[0-9]+$ ]]
-          test "$(git cat-file -t "refs/tags/v${RELEASE_VERSION}")" = "tag"
-          test "$(git rev-parse "refs/tags/v${RELEASE_VERSION}^{commit}")" = "$GITHUB_SHA"
-          echo "Approved annotated tag v${RELEASE_VERSION} matches selected main commit"
-      - uses: actions/download-artifact@v4
-        with:
-          name: candidate-python-distributions
-          path: dist/
-      - name: Recheck exact approved alpha version and immutable distribution content
-        run: |
-          python -m pip install packaging twine
-          python scripts/check_release_artifacts.py --expected-version "$RELEASE_VERSION" --require-public-release
-          python -m twine check --strict dist/*
-        env:
-          RELEASE_VERSION: ${{ inputs.release_version }}
-        shell: bash
-
-  publish-pypi:
-    name: Publish approved release to PyPI (OIDC)
-    runs-on: ubuntu-latest
-    concurrency:
-      group: prehnite-pypi-publication
-      cancel-in-progress: false
-    needs: [release-verify]
-    if: ${{ github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && inputs.publish_to_pypi == true }}
-    environment:
-      name: pypi
-      url: https://pypi.org/p/prehnite
-    permissions:
-      id-token: write
-    steps:
-      - uses: actions/download-artifact@v4
-        with:
-          name: candidate-python-distributions
-          path: dist/
-      - name: Publish distribution with GitHub OIDC and PyPI attestations
-        uses: pypa/gh-action-pypi-publish@dc37677b2e1c63e2034f94d8a5b11f265b73ba33 # release/v1 reviewed 2026-10-17
