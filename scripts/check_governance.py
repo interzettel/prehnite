@@ -28,7 +28,7 @@ def source_version() -> str:
     if len(versions) != 1:
         raise ValueError("Canonical version file must contain one literal __version__")
     value = versions[0]
-    if not re.fullmatch(r"\d+\.\d+\.\d+(?:(?:a|b|rc|\.dev)\d+)?", value):
+    if not re.fullmatch(r"\d+\.\d+\.\d+(?:(?:a|b|rc)\d+(?:\.dev\d+)?|\.dev\d+)?", value):
         raise ValueError("Version must follow the project's PEP 440 subset")
     return value
 

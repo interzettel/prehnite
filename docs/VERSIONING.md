@@ -1,6 +1,6 @@
 # Versioning policy
 
-**Canonical version:** [src/prehnite/_version.py](../src/prehnite/_version.py), currently `0.1.0a1` ([first public alpha published on PyPI](https://pypi.org/project/prehnite/0.1.0a1/)). For shipped/reviewed changes consult the [changelog](../CHANGELOG.md) and [release playbook](RELEASING.md).
+**Canonical version:** [src/prehnite/_version.py](../src/prehnite/_version.py), currently `0.1.0a2.dev0` (**unpublished development**, following [public alpha 0.1.0a1](https://pypi.org/project/prehnite/0.1.0a1/)). For shipped/reviewed changes consult the [changelog](../CHANGELOG.md) and [release playbook](RELEASING.md).
 
 The `[project]` metadata in `pyproject.toml` specifies `dynamic = ["version"]`, and Hatchling reads the value from `src/prehnite/_version.py`. The public `prehnite.__version__` imports from that same file; no copy-pasted version constant exists elsewhere in executable metadata.
 
