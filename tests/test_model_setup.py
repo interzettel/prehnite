@@ -104,7 +104,7 @@ def test_wrong_checkpoint_reference_refuses_with_profile(setup):
 
 def test_rejects_unsafe_checkpoint_and_terms(setup):
     setup["generation_checkpoint"] = "../fixture.safetensors"
-    with pytest.raises(ValueError, match="Unsafe"):
+    with pytest.raises(ValueError, match="Path traversal|non-canonical"):
         prepare_micro_bindings(**setup)
     assert not setup["destination"].exists()
 
