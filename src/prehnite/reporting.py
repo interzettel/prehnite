@@ -39,6 +39,7 @@ def export_report(journal: Journal) -> dict:
         "analytics": analytics,
         "failure_summary": failure_summary,
         "batch_failure": journal.fact("batch_failure"),
+        "recipe_run_identity": journal.fact("recipe_run_identity"),
     }
     atomic_text(journal.root / "report.json",
                 json.dumps(data, indent=2, ensure_ascii=False))

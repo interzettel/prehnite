@@ -15,7 +15,7 @@
 | In progress | 2 |
 | In review | 1 |
 | Blocked | 7 |
-| Done | 83 |
+| Done | 84 |
 
 **WIP limits:** In progress ≤ 2; In review ≤ 3. Counts are issue/PR cards, not unique completed engineering features or a percentage.
 
@@ -48,20 +48,20 @@
 | P1 | [Issue #12 — Mocked fal API conformance contract](https://github.com/interzettel/prehnite/issues/12) | Providers | No credentials or paid calls; use recorded fixture schemas. |
 | P1 | [Issue #40 — Model, dependency and artifact licensing inventory](https://github.com/interzettel/prehnite/issues/40) | Licensing | R06-A01 and R06-A02 merged; remaining media rights and final release compliance separate. |
 | P1 | [Issue #25 — Judge schema and A/B order-bias tests](https://github.com/interzettel/prehnite/issues/25) | Quality | Typed verdict tranche merged in #61; controlled same-rubric A/B positional-bias measurement (Q03) remains unverified |
-| P1 | [Issue #133 — Recipe contract and capability DAG validation](https://github.com/interzettel/prehnite/issues/133) | Recipes | PR #138 blueprint validator merged; per-batch immutable journal pinning and replay guard still open; no model runtime. |
+| P1 | [Issue #135 — Rights-aware model acquisition and installation](https://github.com/interzettel/prehnite/issues/135) | Recipes | PR #140 offline resolver merged; checkpoint acquisition/import, rights sourcing and installation remain. |
 
 ## In progress
 
 | Priority | Work item | Stream | Handoff / blocker |
 | --- | --- | --- | --- |
 | P2 | [Issue #100 — Provenance-bound transforms and tiled 4K comparison](https://github.com/interzettel/prehnite/issues/100) | Delivery | Integer 4K tiles + SHA-bound affine v2 validator merged; real affine warp/execution still open. |
-| P1 | [Issue #135 — Rights-aware model acquisition and installation](https://github.com/interzettel/prehnite/issues/135) | Recipes | PR #140 verifies user-supplied local graph/checkpoint bytes offline; installation and license/source validation remain open. |
+| P1 | [Issue #133 — Recipe contract and capability DAG validation](https://github.com/interzettel/prehnite/issues/133) | Recipes | PR #138 contract merged; PR #141 pending immutable per-batch recipe/run binding. Live GPU evidence separate. |
 
 ## In review
 
 | Priority | Work item | Stream | Handoff / blocker |
 | --- | --- | --- | --- |
-| P1 | [PR #140 — Offline micro checkpoint and ComfyUI graph resolver](https://github.com/interzettel/prehnite/pull/140) | Recipes | PR #140: local SHA256 and terms-attested input identity; no installer, execution, rights approval or journal pinning. |
+| P1 | [PR #141 — Recipe-locked local engine run and immutable journal identity](https://github.com/interzettel/prehnite/pull/141) | Recipes | PR #141: profile/checkpoint/graph-validated local Comfy bridge and journal identity; physical GPU unverified. |
 
 ## Blocked
 
@@ -162,6 +162,7 @@
 | P1 | [PR #131 — Model and checkpoint rights inventory](https://github.com/interzettel/prehnite/pull/131) | Licensing | Merged and verified 2026-10-17. Scope delivered, broader release acceptance still pending. |
 | P1 | [PR #138 — Versioned micro/macro recipe DAG contracts](https://github.com/interzettel/prehnite/pull/138) | Recipes | Merged PR #138, offline recipe preview contract only; no journal pinning, weights or real inference. |
 | P1 | [PR #139 — Offline hardware doctor and provenance-aware memory probes](https://github.com/interzettel/prehnite/pull/139) | Local GPU | Merged PR #139, offline hardware diagnostic with unknown/unprobed states; no real-model GPU benchmark. |
+| P1 | [PR #140 — Offline micro checkpoint and ComfyUI graph resolver](https://github.com/interzettel/prehnite/pull/140) | Recipes | Merged PR #140, verified local graph/checkpoint bytes only; no acquisition, full rights clearance or GPU run. |
 
 ## How to update this board
 

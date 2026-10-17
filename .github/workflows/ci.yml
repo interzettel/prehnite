@@ -224,6 +224,24 @@ jobs:
           path: license-inventory/
           if-no-files-found: error
           retention-days: 14
+  recipe-journal-bridge:
+    name: Recipe/engine journal identity (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+      - run: python -m pip install -e ".[dev]"
+      - name: Check recipe pinning, replay and fail-closed model profile mapping
+        run: python -m pytest -q tests/test_recipe_execution.py tests/test_recipe_resolver.py
+      - name: Check explicit CLI run flags are discoverable
+        run: prehnite run --help
+
   local-recipe-resolver:
     name: Offline micro model resolver (${{ matrix.os }})
     runs-on: ${{ matrix.os }}

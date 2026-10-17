@@ -130,6 +130,50 @@ class Journal:
         ).fetchall()
         return [dict(row) for row in rows]
 
+    def pin_recipe_identity(self, receipt: dict | None) -> None:
+        """Atomically prevent recipe swaps and upgrades across batch resumes.
+
+        Legacy populated batches cannot be retroactively claimed as pinned.
+        Recipe-bearing batches cannot be launched through old unbound routes.
+        """
+        self.db.execute("BEGIN IMMEDIATE")
+        try:
+            row = self.db.execute(
+                "SELECT value FROM facts WHERE key='recipe_run_identity'"
+            ).fetchone()
+            if row is not None:
+                saved = json.loads(row[0])
+                if receipt is None or receipt != saved:
+                    raise ValueError(
+                        "Recipe-bound batch identity mismatch or unbound resume; "
+                        "start a fresh batch ID"
+                    )
+            elif receipt is not None:
+                # Refuse retroactive provenance for any legacy initialized job,
+                # including accepted results or previously attempted tasks.
+                touched = any(self.db.execute(query).fetchone()[0] for query in (
+                    "SELECT COUNT(*) FROM facts",
+                    "SELECT COUNT(*) FROM tasks",
+                    "SELECT COUNT(*) FROM task_attempts",
+                    "SELECT COUNT(*) FROM job_control",
+                ))
+                if touched:
+                    raise ValueError(
+                        "Cannot attach recipe identity to an existing legacy batch"
+                    )
+                if (receipt.get("schema_version") != 1
+                        or receipt.get("profile_connection") != "local_comfyui_only"
+                        or receipt.get("automatic_spending_enabled") is not False):
+                    raise ValueError("Invalid or unsafe recipe execution identity")
+                self.db.execute(
+                    "INSERT INTO facts(key,value) VALUES (?,?)",
+                    ("recipe_run_identity", json.dumps(receipt, sort_keys=True)),
+                )
+            self.db.commit()
+        except BaseException:
+            self.db.rollback()
+            raise
+
     def set_fact(self, key: str, value: Any) -> None:
         self.db.execute("INSERT OR REPLACE INTO facts VALUES (?,?)",
                         (key, json.dumps(value)))

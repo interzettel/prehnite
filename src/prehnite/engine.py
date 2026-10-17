@@ -32,16 +32,32 @@ def fingerprint(manifest: Manifest, profile: Profile) -> str:
 
 class Engine:
     def __init__(self, manifest: Manifest, profile: Profile, workspace: Path,
-                 inputs: Path = Path("inputs"), job_token: str | None = None):
+                 inputs: Path = Path("inputs"), job_token: str | None = None,
+                 recipe_execution=None):
         validate_job(manifest, profile, inputs)
+        # The MCP worker contract does not carry recipe identity yet; refuse a
+        # recipe on that route rather than silently dropping immutable intent.
+        if recipe_execution is not None and job_token is not None:
+            raise ValueError("Recipe-bound MCP execution is not implemented")
         self.manifest = manifest
         self.job_token = job_token
         self.profile = profile
         self._run_lock_held = False
         self.inputs = inputs
+        self.recipe_execution = recipe_execution
         self.journal = Journal(workspace, manifest.id)
         self.cache = StageCache(workspace, profile.cache) if profile.cache.enabled else None
         checksum = fingerprint(manifest, profile)
+        try:
+            # Rehash concrete local model/graph bytes BEFORE setting any batch
+            # facts, then atomically refuse changed/no recipe on resume.
+            identity = (recipe_execution.verify(profile) if recipe_execution else None)
+            if identity is not None:
+                identity = {**identity, "configuration_sha256": checksum}
+            self.journal.pin_recipe_identity(identity)
+        except BaseException:
+            self.journal.close()
+            raise
         if job_token is not None:
             launch = self.journal.job_record()
             if (not launch or launch["token"] != job_token
@@ -545,6 +561,14 @@ class Engine:
                 return result
 
     def _run_locked(self) -> dict:
+        # Check again under the exclusive worker lock; a preflight may have
+        # happened earlier and local checkpoint bytes may have changed.
+        identity = (self.recipe_execution.verify(self.profile)
+                    if self.recipe_execution else None)
+        if identity is not None:
+            identity = {**identity, "configuration_sha256": fingerprint(
+                self.manifest, self.profile)}
+        self.journal.pin_recipe_identity(identity)
         self.verify_input_sources()
         self.journal.job_checkpoint(self.job_token)
         results = self.journal.fact("results", {})
