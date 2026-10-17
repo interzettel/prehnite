@@ -143,6 +143,9 @@ class LocalBindings(Strict):
                 x.additional_files or x.checkpoint_graph_reference is not None
                 for x in self.stages.values()):
             raise ValueError("New multi-file model references require schema_version=2")
+        if self.schema_version == 2 and not any(
+                x.additional_files for x in self.stages.values()):
+            raise ValueError("Schema-v2 requires at least one supplemental model file")
         return self
 
 
@@ -251,7 +254,7 @@ def resolve_local_micro(recipe: Recipe, bindings: LocalBindings,
             graph = _json_document(graph_path, _MAX_GRAPH)
             discovered = _graph_weight_references(graph)
             declared = {binding.checkpoint_graph_reference or binding.checkpoint} | {f.graph_reference for f in extras}
-            if not extras or discovered != declared:
+            if discovered != declared:
                 raise ValueError(
                     f"Stage {stage.id} graph model references do not match complete "
                     "schema-v2 declared files; cannot assert static provenance"
