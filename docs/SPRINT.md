@@ -62,7 +62,7 @@
 | --- | --- | --- | --- |
 | P1 | [Issue #133 — Recipe contract and capability DAG validation](https://github.com/interzettel/prehnite/issues/133) | Recipes | PR #138 blueprints have passed 16/16 CI checks and await owner review; recipe execution still unimplemented. |
 | P1 | [PR #138 — Versioned micro/macro recipe DAG contracts](https://github.com/interzettel/prehnite/pull/138) | Recipes | Blueprint-only DAG contract, 16/16 CI green; owner merge pending; no weights or runtime. |
-| P1 | [PR #139 — Offline hardware doctor and provenance-aware memory probes](https://github.com/interzettel/prehnite/pull/139) | Local GPU | Read-only source-labeled Linux/Windows/macOS RAM and NVIDIA VRAM; no GPU benchmarking; CI pending. |
+| P1 | [PR #139 — Offline hardware doctor and provenance-aware memory probes](https://github.com/interzettel/prehnite/pull/139) | Local GPU | Read-only source-labeled RAM and NVIDIA VRAM, cross-platform CI; no model-specific GPU benchmarking or tier certification. |
 
 ## Blocked
 
