@@ -1,6 +1,6 @@
 # Release playbook (manual releases only)
 
-**Current state:** development baseline only. No release tag, GitHub Release or PyPI distribution is created merely by adding publishing infrastructure. A legitimate early alpha can ship only after explicit owner approval. See [PyPI OIDC publication runbook](PYPI_PUBLISHING.md) for the dedicated `publish.yml` workflow, artifact validation, annotated-tag and protected-environment requirements.
+**Current state:** public alpha `0.1.0a1` was shipped on 2026-10-17, with matching GitHub release and PyPI artifacts. Subsequent development occurs under an unpublished `0.1.0a2.dev0`; no new public release is created merely by adding publishing infrastructure. A further alpha requires separate owner approval. See [PyPI OIDC publication runbook](PYPI_PUBLISHING.md) for the dedicated `publish.yml` workflow, artifact validation, annotated-tag and protected-environment requirements.
 
 ## Release candidate checklist
 
