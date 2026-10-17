@@ -10,10 +10,10 @@
 
 | Lane | Cards |
 | --- | ---: |
-| Backlog | 18 |
-| Ready | 4 |
-| In progress | 1 |
-| In review | 0 |
+| Backlog | 17 |
+| Ready | 3 |
+| In progress | 2 |
+| In review | 3 |
 | Blocked | 7 |
 | Done | 81 |
 
@@ -38,7 +38,6 @@
 | P2 | [Issue #107 — Experimental Jev typed image/Box judge and staged frame evaluation](https://github.com/interzettel/prehnite/issues/107) | Quality | Mock stages A/B merged, no Jev transport; TypeSafe experimental vision needs explicit authorized trial and real gold calibration. |
 | P1 | [Issue #111 — Jev Stage B mock wire fixtures and gold-set calibration](https://github.com/interzettel/prehnite/issues/111) | Quality | Offline Jev wire fixtures #113 and calibration #114 merged; owner-reviewed real gold cohort and reliability threshold still needed before production. |
 | P1 | [Issue #132 — Versioned model recipes: micro/macro architecture](https://github.com/interzettel/prehnite/issues/132) | Recipes | New owner-directed recipe roadmap; future reviewed atomic scope migration. |
-| P1 | [Issue #134 — Local GPU feasibility doctor and benchmark](https://github.com/interzettel/prehnite/issues/134) | Local GPU | New owner-directed recipe roadmap; future reviewed atomic scope migration. |
 | P1 | [Issue #135 — Rights-aware model acquisition and installation](https://github.com/interzettel/prehnite/issues/135) | Recipes | New owner-directed recipe roadmap; future reviewed atomic scope migration. |
 | P1 | [Issue #136 — Memory-aware batch scheduling and profiling](https://github.com/interzettel/prehnite/issues/136) | Local GPU | New owner-directed recipe roadmap; future reviewed atomic scope migration. |
 
@@ -49,19 +48,21 @@
 | P1 | [Issue #12 — Mocked fal API conformance contract](https://github.com/interzettel/prehnite/issues/12) | Providers | No credentials or paid calls; use recorded fixture schemas. |
 | P1 | [Issue #40 — Model, dependency and artifact licensing inventory](https://github.com/interzettel/prehnite/issues/40) | Licensing | R06-A01 and R06-A02 merged; remaining media rights and final release compliance separate. |
 | P1 | [Issue #25 — Judge schema and A/B order-bias tests](https://github.com/interzettel/prehnite/issues/25) | Quality | Typed verdict tranche merged in #61; controlled same-rubric A/B positional-bias measurement (Q03) remains unverified |
-| P1 | [Issue #133 — Recipe contract and capability DAG validation](https://github.com/interzettel/prehnite/issues/133) | Recipes | Next independent PR. Contract-only: no model downloads, no proven hardware support. |
 
 ## In progress
 
 | Priority | Work item | Stream | Handoff / blocker |
 | --- | --- | --- | --- |
 | P2 | [Issue #100 — Provenance-bound transforms and tiled 4K comparison](https://github.com/interzettel/prehnite/issues/100) | Delivery | Integer 4K tiles + SHA-bound affine v2 validator merged; real affine warp/execution still open. |
+| P1 | [Issue #134 — Local GPU feasibility doctor and benchmark](https://github.com/interzettel/prehnite/issues/134) | Local GPU | PR #139 read-only offline hardware doctor under review; real GPU recipe benchmarking and non-NVIDIA probing not verified. |
 
 ## In review
 
 | Priority | Work item | Stream | Handoff / blocker |
 | --- | --- | --- | --- |
-| — | No cards currently | — | — |
+| P1 | [Issue #133 — Recipe contract and capability DAG validation](https://github.com/interzettel/prehnite/issues/133) | Recipes | PR #138 blueprints have passed 16/16 CI checks and await owner review; recipe execution still unimplemented. |
+| P1 | [PR #138 — Versioned micro/macro recipe DAG contracts](https://github.com/interzettel/prehnite/pull/138) | Recipes | Blueprint-only DAG contract, 16/16 CI green; owner merge pending; no weights or runtime. |
+| P1 | [PR #139 — Offline hardware doctor and provenance-aware memory probes](https://github.com/interzettel/prehnite/pull/139) | Local GPU | Read-only source-labeled Linux/Windows/macOS RAM and NVIDIA VRAM; no GPU benchmarking; CI pending. |
 
 ## Blocked
 
