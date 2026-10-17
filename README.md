@@ -207,7 +207,7 @@ batch with zero accepted assets has no meaningful cost-per-accepted figure.
 
 ## Where things stand
 
-**`0.1.0a1` · first public developer alpha candidate.** Public PyPI installation is available only after the separately gated, verified [publishing workflow](docs/PYPI_PUBLISHING.md) succeeds; a version number or Git tag alone does not prove publication. See [Changelog](CHANGELOG.md), [Versioning](docs/VERSIONING.md) and [Release policy](docs/RELEASING.md). The core synthetic workflow works; **photorealistic quality, 4K GPU feasibility, segmentation accuracy and actual API billing have not been certified**.
+**`0.1.0a1` · first public developer alpha — [published on PyPI](https://pypi.org/project/prehnite/0.1.0a1/) and [tagged on GitHub](https://github.com/interzettel/prehnite/releases/tag/v0.1.0a1) on 2026-10-17.** Install with `python -m pip install prehnite==0.1.0a1`. See [Changelog](CHANGELOG.md), [Versioning](docs/VERSIONING.md) and [Release policy](docs/RELEASING.md). The core synthetic workflow works; **photorealistic quality, 4K GPU feasibility, segmentation accuracy and actual API billing have not been certified**.
 
 The tracker distinguishes implemented scaffolding from independently evidenced completions, and records issues blocked by local hardware, human calibration or paid-call authorization.
 
@@ -233,4 +233,4 @@ To contribute or extend the engine, start with [Contributing](CONTRIBUTING.md), 
 
 **[MIT](LICENSE)** for Prehnite's own code. Image models, checkpoints, external APIs, datasets, and other installed applications retain **their own** terms; nothing about this repository grants a license to third-party weights. See [Licensing](docs/LICENSING.md) and the [release policy](docs/RELEASING.md).
 
-No model checkpoint ships with the repo. No mandatory hosted product or subscription. No release tags until a version has passed its gates and the maintainer approves it.
+No model checkpoint ships with the repo. No mandatory hosted product or subscription. Further release tags and uploads require separate owner approval and verified gates.
