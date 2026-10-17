@@ -118,6 +118,18 @@ assets:
 
 The **manifest** says *what* to make. A separate **profile** says *how*: which provider/model to use, whether to compare 2K-upscaled and 4K variants, what to accept, the retry limit, and whether cloud calls may cost money. See the [working examples](examples/).
 
+### Versioned Model Recipes: prehnite-micro / prehnite-macro (preview only)
+
+The future local-first image-production system is described by pinned, inspectable
+[Model Recipes](docs/MODEL_RECIPES.md): `prehnite-micro` for hardware-conscious
+laptop workflows and `prehnite-macro` for higher-capability local/hybrid/API
+workflows. Each blueprint declares ordered adapter capabilities, model provenance,
+unresolved weights, rights, hardware and cloud-spend gates, and a canonical
+SHA256 identity. Current examples are **read-only contract previews**:
+they do not run generation, contain model weights, download anything,
+authorize cloud calls or assert laptop VRAM performance. See
+[architecture epic #132](https://github.com/interzettel/prehnite/issues/132).
+
 ### Bring your own models, not your own orchestration subscription
 
 | Route | What it means today |
