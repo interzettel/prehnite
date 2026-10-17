@@ -7,6 +7,7 @@ This project follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) an
 ## [Unreleased]
 
 ### Added
+- Frozen 73-task, 19-parent atomic delivery register (#126) with PR-sized acceptance criteria, separate verified-parent/atomic progress dashboard, recent merge evidence and CI guards against false completion, denominator drift and stale generated SVG/Markdown; original 61-unit milestone score unchanged.
 - Owner-authorized AI-generated JPEG apparel pilot QA: source-only inventory of 84 images, 50 exploratory zero-inference product mask candidates with no false ground-truth scores; add a private ZIP inspection CLI, explicitly opt-in OpenCV GrabCut probe and cross-platform safety regressions (#32).
 - Owner-authorized AI-generated apparel R2 pilot technical intake (#32): 23 object metadata records inspected (18 front WebPs, 5 care-label WebPs), with no raw image redistribution. Added private exact-byte SHA256/size/decoder preflight, WebP input support and cross-platform synthetic refusal tests; real cutout IoU remains unmeasured without independent alpha references.
 - Local rights-aware real-photo alpha benchmark intake (#32): SHA256-bound private photo/reference/candidate matching, owner-attested processing permission and third-party provenance checks, per-category IoU/continuous alpha MAE/SAD/boundary error, local-only text receipts and cross-platform synthetic fixture regression tests. No bundled real images, automatic licensing judgments, hosted inference or human-rated quality claims.
