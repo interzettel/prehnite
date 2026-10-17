@@ -96,6 +96,7 @@ class LocalStage(Strict):
     workflow_sha256: str
     checkpoint: str = Field(min_length=5, max_length=260)
     checkpoint_sha256: str
+    checkpoint_graph_reference: str | None = None
     model_revision: str = Field(min_length=2, max_length=127)
     model_terms_url: str = Field(min_length=12, max_length=600)
     acknowledged_terms_for_local_use: Literal[True]
@@ -116,13 +117,15 @@ class LocalStage(Strict):
             raise ValueError("Workflow must be a ComfyUI API-format JSON file")
         if Path(self.checkpoint).suffix.lower() not in _EXTENSIONS:
             raise ValueError("Unknown checkpoint file extension")
+        if self.checkpoint_graph_reference is not None:
+            _safe_model_name(self.checkpoint_graph_reference)
         _public_terms_url(self.model_terms_url)
         extra_paths = [f.filename.casefold() for f in self.additional_files]
         refs = [f.graph_reference.casefold() for f in self.additional_files]
         if (len(extra_paths) != len(set(extra_paths))
                 or len(refs) != len(set(refs))
                 or self.checkpoint.casefold() in extra_paths
-                or self.checkpoint.casefold() in refs):
+                or (self.checkpoint_graph_reference or self.checkpoint).casefold() in refs):
             raise ValueError("Duplicate or conflicting supplemental model files/references")
         return self
 
@@ -136,8 +139,10 @@ class LocalBindings(Strict):
     def validate_identity(self) -> "LocalBindings":
         if not _SHA.fullmatch(self.recipe_sha256):
             raise ValueError("Bindings require canonical recipe SHA256")
-        if self.schema_version == 1 and any(x.additional_files for x in self.stages.values()):
-            raise ValueError("Supplemental model files require schema_version=2")
+        if self.schema_version == 1 and any(
+                x.additional_files or x.checkpoint_graph_reference is not None
+                for x in self.stages.values()):
+            raise ValueError("New multi-file model references require schema_version=2")
         return self
 
 
@@ -245,7 +250,7 @@ def resolve_local_micro(recipe: Recipe, bindings: LocalBindings,
         if bindings.schema_version == 2:
             graph = _json_document(graph_path, _MAX_GRAPH)
             discovered = _graph_weight_references(graph)
-            declared = {binding.checkpoint} | {f.graph_reference for f in extras}
+            declared = {binding.checkpoint_graph_reference or binding.checkpoint} | {f.graph_reference for f in extras}
             if not extras or discovered != declared:
                 raise ValueError(
                     f"Stage {stage.id} graph model references do not match complete "
