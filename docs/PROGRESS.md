@@ -17,10 +17,10 @@ There are **16 release gates**, each counted once. **4 have reproducible evidenc
 | G03 | Zero-cost synthetic batch | Verified | Offline two-asset demo end-to-end and repeat-run tests |
 | G04 | ZIP/report integrity | Verified | ZIP filenames, CRC and reports tested on demo |
 | G05 | Provider-independent hosted APIs | Partial | fal adapter written; current endpoint input/output contracts not smoke-tested |
-| G06 | Local ComfyUI support | Partial | Loopback graph API and basic unit tests; no validated local model workflow or VRAM measurements |
+| G06 | Local ComfyUI support | Partial | Loopback API, opt-in micro recipe-to-engine bridge with journal-locked hashes and Windows/Linux synthetic tests; **no physical GPU, verified live model graph or VRAM measurement** |
 | G07 | Model-based image judge | Partial | Haiku rubric implementation; no API validation, image quality calibration or crop checks |
 | G08 | Object cutouts and refinement | Partial | Mask-to-alpha demo checks; real SAM/matting accuracy not tested |
-| G09 | Durable restart and remote-id recovery | Partial | Mocked replay/uncertain-call tests and exclusive process lock; real crash injection pending |
+| G09 | Durable restart and remote-id recovery | Partial | Mocked replay/uncertain-call tests, exclusive lock and atomic recipe/config identity refusal on resume; real crash injection pending |
 | G10 | Estimated spending limits | Partial | Offline reserved-cost tests and preflight prices; live rates/invoices not verified |
 | G11 | MCP worker and exports | Partial | stdio entrypoint and subprocess implemented; live agent disconnect/cancel not verified |
 | G12 | Evaluator calibration and high-res QA | Unverified | Need local judges, test assets and crop/edge evaluation |
@@ -50,6 +50,7 @@ There are **16 release gates**, each counted once. **4 have reproducible evidenc
 
 ## Work log / milestones
 
+- **2026-10-17:** Recipe architecture contracts and local bridge landed in [#138](https://github.com/interzettel/prehnite/pull/138), [#139](https://github.com/interzettel/prehnite/pull/139), [#140](https://github.com/interzettel/prehnite/pull/140), [#141](https://github.com/interzettel/prehnite/pull/141) and [#142](https://github.com/interzettel/prehnite/pull/142), with synthetic CI only. Hardware and independent cutout-quality gates remain open ([recipe roadmap](ROADMAP.md#model-recipes-workstream--versioned-micromacro-october-2026)). **No release-gate status advanced.**
 - **2026-10-16:** v0.1 foundation merged with CI and MIT license ([PR #1](https://github.com/interzettel/prehnite/pull/1)).
 - **2026-10-16:** #5 safety tranche in progress: deny uncertain paid re-submissions; tighten estimate preflight; one-worker batch lock; regression tests (see corresponding PR).
 - No live paid model executions have been performed or validated by this project.
