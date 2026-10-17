@@ -202,7 +202,7 @@ class Engine:
             raise
 
     def generate(self, asset: Asset, variant: str, attempt: int, root: Path) -> Path:
-        tier = "2k" if variant == "enhanced_2k" else "4k"
+        tier = {"enhanced_2k": "2k", "native_4k": "4k", "native_1k": "1k"}[variant]
         prefix = f"{asset.id}:a{attempt}:{variant}"
         original = root / "generated.png"
         ep = self.profile.generation
@@ -226,6 +226,12 @@ class Engine:
                        cache_request={"source_sha256": sha256(original),
                                       "scale": 2})
             original = up
+        # The low-memory native tier must produce the requested pixels. Never
+        # mask an undersized model output by resizing it as if native.
+        if variant == "native_1k":
+            measured = image_info(original)
+            if (measured["width"], measured["height"]) != asset.target_size:
+                raise ValueError("native_1k model output dimensions differ; no implicit resize")
         final = root / "final.png"
         atomic_resize(original, final, asset.target_size)
         return final
