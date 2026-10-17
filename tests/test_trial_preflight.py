@@ -19,10 +19,12 @@ def profile(mode, cutout=False):
         "variants": ["native_4k"],
         "generation": {"provider": "fal" if mode == "fal" else "comfyui",
                        "model": "blackforestlabs/flux-3/klein/text-to-image"
-                       if mode == "fal" else "user-workflow"},
+                       if mode == "fal" else "user-workflow",
+                       "options": {} if mode == "fal" else {"workflow": "generate.json"}},
         "segmentation": {"provider": "fal" if mode == "fal" else "comfyui",
                          "model": "fal-ai/sam-3-1/image"
-                         if mode == "fal" else "user-segmentation"}
+                         if mode == "fal" else "user-segmentation",
+                         "options": {} if mode == "fal" else {"workflow": "cutout.json"}}
                         if cutout else {"provider": "disabled"},
         "upscale": {"provider": "disabled"},
         "judge": {"provider": "demo", "model": "technical"},
