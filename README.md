@@ -123,6 +123,15 @@ assets:
 
 The **manifest** says *what* to make. A separate **profile** says *how*: which provider/model to use, whether to compare 2K-upscaled and 4K variants, what to accept, the retry limit, and whether cloud calls may cost money. See the [working examples](examples/).
 
+### Explicit local ComfyUI recipe execution (experimental)
+
+The existing `prehnite run` command can now pin an operator-supplied micro recipe
+and exact local workflow/checkpoint SHA256 to a batch's SQLite journal using
+`--recipe --bindings --workflows --checkpoints`. Model/graph mismatches and
+unbound resumes fail closed; **actual ComfyUI execution requires the operator's
+separate local ComfyUI process, checkpoints and compatible graphs** and has not
+been GPU-benchmarked. See [recipe execution limitations](docs/RECIPE_EXECUTION.md).
+
 ### Local micro recipe input verification (non-executable)
 
 `prehnite recipe-resolve` verifies explicitly supplied local ComfyUI API graphs and
