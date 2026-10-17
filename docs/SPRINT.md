@@ -12,10 +12,10 @@
 | --- | ---: |
 | Backlog | 17 |
 | Ready | 4 |
-| In progress | 2 |
-| In review | 1 |
+| In progress | 1 |
+| In review | 0 |
 | Blocked | 7 |
-| Done | 84 |
+| Done | 86 |
 
 **WIP limits:** In progress ≤ 2; In review ≤ 3. Counts are issue/PR cards, not unique completed engineering features or a percentage.
 
@@ -55,13 +55,12 @@
 | Priority | Work item | Stream | Handoff / blocker |
 | --- | --- | --- | --- |
 | P2 | [Issue #100 — Provenance-bound transforms and tiled 4K comparison](https://github.com/interzettel/prehnite/issues/100) | Delivery | Integer 4K tiles + SHA-bound affine v2 validator merged; real affine warp/execution still open. |
-| P1 | [Issue #133 — Recipe contract and capability DAG validation](https://github.com/interzettel/prehnite/issues/133) | Recipes | PR #138 contract merged; PR #141 pending immutable per-batch recipe/run binding. Live GPU evidence separate. |
 
 ## In review
 
 | Priority | Work item | Stream | Handoff / blocker |
 | --- | --- | --- | --- |
-| P1 | [PR #141 — Recipe-locked local engine run and immutable journal identity](https://github.com/interzettel/prehnite/pull/141) | Recipes | PR #141: profile/checkpoint/graph-validated local Comfy bridge and journal identity; physical GPU unverified. |
+| — | No cards currently | — | — |
 
 ## Blocked
 
@@ -160,9 +159,11 @@
 | P1 | [PR #129 — Stage opt-in bounded opaque repair for cutout review](https://github.com/interzettel/prehnite/pull/129) | Cutouts | Merged and verified 2026-10-17. Scope delivered, broader release acceptance still pending. |
 | P1 | [PR #130 — Dependency SBOM and exact environment pins](https://github.com/interzettel/prehnite/pull/130) | Licensing | Merged and verified 2026-10-17. Scope delivered, broader release acceptance still pending. |
 | P1 | [PR #131 — Model and checkpoint rights inventory](https://github.com/interzettel/prehnite/pull/131) | Licensing | Merged and verified 2026-10-17. Scope delivered, broader release acceptance still pending. |
+| P1 | [Issue #133 — Recipe contract and capability DAG validation](https://github.com/interzettel/prehnite/issues/133) | Recipes | PR #138 recipe contract and PR #141 immutable per-batch recipe/profile/input lock both merged; actual GPU inference remains separate epic #132. |
 | P1 | [PR #138 — Versioned micro/macro recipe DAG contracts](https://github.com/interzettel/prehnite/pull/138) | Recipes | Merged PR #138, offline recipe preview contract only; no journal pinning, weights or real inference. |
 | P1 | [PR #139 — Offline hardware doctor and provenance-aware memory probes](https://github.com/interzettel/prehnite/pull/139) | Local GPU | Merged PR #139, offline hardware diagnostic with unknown/unprobed states; no real-model GPU benchmark. |
 | P1 | [PR #140 — Offline micro checkpoint and ComfyUI graph resolver](https://github.com/interzettel/prehnite/pull/140) | Recipes | Merged PR #140, verified local graph/checkpoint bytes only; no acquisition, full rights clearance or GPU run. |
+| P1 | [PR #141 — Recipe-locked local engine run and immutable journal identity](https://github.com/interzettel/prehnite/pull/141) | Recipes | Merged PR #141, recipe-bound local ComfyUI engine path and SQLite replay identity; no physical GPU execution or quality certification. |
 
 ## How to update this board
 
