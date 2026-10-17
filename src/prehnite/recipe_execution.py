@@ -100,6 +100,9 @@ def verify_micro_profile(recipe: Recipe, bindings: LocalBindings,
             value for node in graph.values() for value in node["inputs"].values()
             if isinstance(value, str)
         }
-        if binding.checkpoint not in references:
+        if (binding.checkpoint_graph_reference or binding.checkpoint) not in references:
             raise ValueError(f"Stage {stage.id} graph has no pinned checkpoint reference")
+        if bindings.schema_version == 2 and not all(
+                f.graph_reference in references for f in binding.additional_files):
+            raise ValueError(f"Stage {stage.id} graph has missing supplemental model reference")
 

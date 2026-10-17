@@ -7,10 +7,11 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
+from pydantic import BaseModel, ConfigDict, Field
 
 from .recipe_resolver import (
-    LocalBindings, LocalStage, _local_file, _sha256_file, _validate_graph,
-    resolve_local_micro,
+    LocalBindings, LocalStage, LocalModelFile, _json_document, _local_file, _sha256_file,
+    _validate_graph, resolve_local_micro,
 )
 from .recipes import load_recipe, recipe_sha256
 from .schema import Profile
@@ -50,6 +51,45 @@ def _check_graph_node_mappings(profile: Profile, workflows_root: Path,
             raise ValueError(f"{name}.output_node must be a saved output image node")
 
 
+class _Selection(BaseModel):
+    model_config = ConfigDict(extra="forbid", strict=True)
+    role: str
+    filename: str
+    graph_reference: str
+    model_revision: str
+    model_terms_url: str
+
+
+class _SelectionFile(BaseModel):
+    model_config = ConfigDict(extra="forbid", strict=True)
+    schema_version: int
+    stages: dict[str, list[_Selection]]
+
+
+def _supplemental_models(path: Path, checkpoints_root: Path) -> dict[str, list[LocalModelFile]]:
+    """Read a small private list of user-selected files. Never download weights."""
+    payload = _SelectionFile.model_validate(_json_document(path, 128 * 1024))
+    if payload.schema_version != 1 or set(payload.stages) != {"generate", "cutout"}:
+        raise ValueError("Supplemental model manifest must list generate and cutout stages")
+    if not any(payload.stages.values()):
+        raise ValueError("Supplemental model manifest cannot be empty")
+    result = {}
+    for stage, entries in payload.stages.items():
+        if len(entries) > 24:
+            raise ValueError("Too many supplemental model files")
+        result[stage] = []
+        for entry in entries:
+            proposed = LocalModelFile.model_validate({
+                **entry.model_dump(), "sha256": "0" * 64,
+                "acknowledged_terms_for_local_use": True,
+            })
+            file = _local_file(checkpoints_root, proposed.filename)
+            result[stage].append(proposed.model_copy(update={
+                "sha256": _sha256_file(file),
+            }))
+    return result
+
+
 def prepare_micro_bindings(
     *,
     recipe_path: Path,
@@ -66,6 +106,9 @@ def prepare_micro_bindings(
     acknowledged_terms: bool,
     destination: Path,
     profile: Profile | None = None,
+    additional_models: Path | None = None,
+    generation_checkpoint_graph_ref: str | None = None,
+    cutout_checkpoint_graph_ref: str | None = None,
 ) -> dict:
     """Create bindings once only after exact bytes, rights acknowledgement and DAG checks.
 
@@ -85,6 +128,13 @@ def prepare_micro_bindings(
     }
     if {s.id for s in recipe.stages if s.model.provider != "demo"} != set(stage_inputs):
         raise ValueError("Micro recipe external stage layout changed: refuse setup")
+    supplemental = (_supplemental_models(additional_models, checkpoints_root)
+                    if additional_models else {"generate": [], "cutout": []})
+    schema_version = 2 if additional_models else 1
+    checkpoint_refs = {"generate": generation_checkpoint_graph_ref,
+                       "cutout": cutout_checkpoint_graph_ref}
+    if any(v is not None for v in checkpoint_refs.values()) and not additional_models:
+        raise ValueError("Explicit loader aliases require --additional-models schema v2")
     stages = {}
     for stage_id, (workflow, checkpoint, revision, terms_url) in stage_inputs.items():
         # Validate file names/terms *before* accessing disk, including Windows rules.
@@ -93,6 +143,8 @@ def prepare_micro_bindings(
             "workflow_sha256": "0" * 64,
             "checkpoint": checkpoint,
             "checkpoint_sha256": "0" * 64,
+            "checkpoint_graph_reference": checkpoint_refs[stage_id],
+            "additional_files": supplemental[stage_id],
             "model_revision": revision,
             "model_terms_url": terms_url,
             "acknowledged_terms_for_local_use": True,
@@ -105,7 +157,7 @@ def prepare_micro_bindings(
             "checkpoint_sha256": _sha256_file(model_path),
         })
     bindings = LocalBindings(
-        schema_version=1,
+        schema_version=schema_version,
         recipe_sha256=recipe_sha256(recipe),
         stages=stages,
     )
@@ -132,11 +184,13 @@ def prepare_micro_bindings(
     with target.open("x", encoding="utf-8", newline="\n") as stream:
         stream.write(payload)
     return {
-        "schema_version": 1,
+        "schema_version": schema_version,
         "status": "local_bindings_written_not_executed",
         "recipe_sha256": result["recipe_sha256"],
         "resolved_inputs_sha256": result["resolved_inputs_sha256"],
         "external_stages_bound": sorted(stages),
+        "supplemental_model_file_count": sum(len(x) for x in supplemental.values()),
+        "graph_file_reference_coverage": result["graph_file_reference_coverage"],
         "rights_independently_verified": False,
         "runtime_verified": False,
         "physical_gpu_verified": False,

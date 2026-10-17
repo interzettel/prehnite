@@ -7,6 +7,9 @@ This project follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) an
 ## [Unreleased]
 
 ### Added
+- Explicit schema-v2 multi-file ComfyUI model bindings for owner-selected transformers, text encoders, VAEs and auxiliary weights; SHA256 and exact graph-reference coverage for recognized weight file extensions, changed-byte resume refusal, private create-only manifest and stable legacy schema-v1 receipts. Runtime-loaded weights, undiscoverable custom-node dependencies and third-party rights remain unverified (#135).
+
+### Added
 - Separate native-1K local ComfyUI `prehnite-micro` preview.2 recipe and one-asset fixtures, true 768×1024 at 3:4 (not a renamed 4K output), exact target/output geometry checks, no silent resize, paid-provider fallback or changed preview.1 batch receipts (#134/#132). Actual 8 GB GPU/model runtime remains unverified.
 
 ### Added

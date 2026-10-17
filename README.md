@@ -136,6 +136,10 @@ Prehnite now has **versioned model-workflow blueprints** rather than a single ha
 
 **Read the [recipe roadmap](docs/ROADMAP.md#model-recipes-workstream--versioned-micromacro-october-2026) and [recipe architecture](docs/MODEL_RECIPES.md)** for the work completed, outstanding milestones and exact evidence gates. Neither mode claims a tested 4/6/8/12 GB laptop tier or preinstalled models.
 
+### Multi-file local model identity (static, not runtime certification)
+
+The new [schema-v2 model bindings](docs/MULTIFILE_PROVENANCE.md) hash every explicitly declared graph-loaded transformer/text-encoder/VAE/auxiliary weight file under the operator-controlled model root, and refuse undeclared file-style model references or changed bytes on resume. Legacy single-file receipts remain compatible. File-level SHA256 **cannot establish** which weights ComfyUI actually loaded in memory or whether model licenses permit use.
+
 ### True 1K laptop micro preview (no fake 4K resize)
 
 A separate [native-1K local preview](docs/FIRST_REAL_ASSET.md#8-gb-laptop-smoke-test--genuine-native-1k) now requests **768×1024** pixels at 3:4 for one small smoke test. It refuses to upscale undersized model output silently and does not change the legacy native-4K preview or any hosted pricing and schemas. Real 8 GB GPU success, image quality and third-party weights remain unverified.

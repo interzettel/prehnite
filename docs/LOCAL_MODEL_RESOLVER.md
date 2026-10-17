@@ -4,7 +4,7 @@ This is the offline operator-input preparation path under [issue #135](https://g
 
 ## Operator setup
 
-For a complete first GPU test on an 8 GB laptop use the separate **true native 1K** micro preview.2 recipe documented in [First Real Asset](FIRST_REAL_ASSET.md). The original preview.1 recipe remains 4K only. For a separate fal.ai test see that same guide. The private binding setup reads only files and never bundles/redistributes their contents.
+For operator-selected transformer, text encoder, VAE or other graph-loaded model dependencies, use schema v2 and the [multi-file provenance guide](MULTIFILE_PROVENANCE.md). It supports path/loader-name separation and file-level SHA256 but does not claim live ComfyUI residency or undiscoverable custom-node dependencies. Legacy schema v1 remains readable with primary-checkpoint-only coverage.\n\nFor a complete first GPU test on an 8 GB laptop use the separate **true native 1K** micro preview.2 recipe documented in [First Real Asset](FIRST_REAL_ASSET.md). The original preview.1 recipe remains 4K only. For a separate fal.ai test see that same guide. The private binding setup reads only files and never bundles/redistributes their contents.
 
 1. Export your own ComfyUI API-format generation and segmentation graphs to a private directory. Supply your own appropriately licensed local checkpoint files in a separate approved directory.
 2. Hash each actual local file with SHA256 (`sha256sum` or PowerShell `Get-FileHash -Algorithm SHA256`). Do not use a model's filename or unverified registry hash as proof of local bytes.
