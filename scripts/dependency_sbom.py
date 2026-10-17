@@ -242,9 +242,9 @@ def write_result(inspection: Path, output: Path, *,
                  extras: tuple[str, ...] = (), root: Path = ROOT) -> dict:
     source = inspection.resolve(strict=True)
     destination = output.resolve()
-    require(destination != source and not destination.is_relative_to(source.parent)
-            and (not destination.exists() or
-                 (destination.is_dir() and not any(destination.iterdir()))),
+    # Sibling output folders are allowed, but never overwrite an existing
+    # source file, old SBOM, or another caller-owned directory.
+    require(destination != source and not destination.exists(),
             "output_must_be_new_and_separate")
     require(source.stat().st_size <= MAX_INSPECT_BYTES, "inspect_json_too_large")
     try:
