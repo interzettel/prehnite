@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 from email.parser import BytesParser
 from pathlib import Path, PurePosixPath
 import re
@@ -107,7 +108,10 @@ def check(dist: Path, version: str, *, require_public_release: bool = False) -> 
         if not required.issubset(names):
             raise ValueError("Source archive lacks package source/metadata")
 
-    print(f"Validated {version}: {wheel.name} and {sdist.name} (no upload performed)")
+    for path in files:
+        digest = hashlib.sha256(path.read_bytes()).hexdigest()
+        print(f"Artifact SHA256 {path.name}: {digest} ({path.stat().st_size} bytes)")
+    print(f"Validated {version}: wheel + sdist (no upload performed)")
     return files
 
 
