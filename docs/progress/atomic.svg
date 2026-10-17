@@ -14,7 +14,7 @@
 <rect x="32" y="203" width="810" height="18" rx="5" fill="#D5DCD5"/>
 <rect x="32" y="203" width="111.0" height="18" rx="5" fill="#075231"/>
 <text x="32" y="249" font-size="13" fill="#53675A">Second measure covers only frozen open-unit tasks, never an overall completion estimate.</text>
-<text x="32" y="273" font-size="13" fill="#53675A">Review 1 · Active 0 · Blocked 27 · Planned 35 · baseline 2026-10-17</text>
+<text x="32" y="273" font-size="13" fill="#53675A">Review 2 · Active 0 · Blocked 27 · Planned 34 · baseline 2026-10-17</text>
 <text x="32" y="305" font-size="16" font-weight="600" fill="#075231">PR-SIZED TASKS BY UNFINISHED UNIT</text>
 <text x="32" y="333" font-size="14" font-weight="700" fill="#075231">C06</text>
 <text x="120" y="333" font-size="12" fill="#384F45">Versioned pricing quotes and bill reconcili</text>
@@ -126,7 +126,7 @@
 <g><title>S05-A01 / done / Typed zero-spend repair decision plan</title><rect x="565.00" y="943" width="80.00" height="17" rx="2" fill="#075231"/></g>
 <g><title>S05-A02 / done / Idempotent journal-backed local repair executor</title><rect x="648.00" y="943" width="80.00" height="17" rx="2" fill="#075231"/></g>
 <g><title>S05-A03 / done / Hard-case refusal and one-attempt coverage</title><rect x="731.00" y="943" width="80.00" height="17" rx="2" fill="#075231"/></g>
-<g><title>S05-A04 / planned / Wire the bounded repair into production Engine.cutout</title><rect x="814.00" y="943" width="80.00" height="17" rx="2" fill="#D5DCD5"/></g>
+<g><title>S05-A04 / in_review / Wire the bounded repair into production Engine.cutout</title><rect x="814.00" y="943" width="80.00" height="17" rx="2" fill="#E5955B"/></g>
 <g><title>S05-A05 / blocked / Verify repaired real-photo acceptance contract</title><rect x="897.00" y="943" width="80.00" height="17" rx="2" fill="#A63D35"/></g>
 <text x="1060" y="957" font-size="13" text-anchor="end" fill="#075231">3/5</text>
 <text x="32" y="996" font-size="14" font-weight="700" fill="#075231">S06</text>
