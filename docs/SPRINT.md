@@ -12,10 +12,10 @@
 | --- | ---: |
 | Backlog | 16 |
 | Ready | 2 |
-| In progress | 2 |
-| In review | 2 |
+| In progress | 1 |
+| In review | 1 |
 | Blocked | 6 |
-| Done | 75 |
+| Done | 77 |
 
 **WIP limits:** In progress ≤ 2; In review ≤ 3. Counts are issue/PR cards, not unique completed engineering features or a percentage.
 
@@ -52,14 +52,12 @@
 | Priority | Work item | Stream | Handoff / blocker |
 | --- | --- | --- | --- |
 | P2 | [Issue #100 — Provenance-bound transforms and tiled 4K comparison](https://github.com/interzettel/prehnite/issues/100) | Delivery | Integer 4K tiles + SHA-bound affine v2 validator merged; real affine warp/execution still open. |
-| P1 | [Issue #126 — Atomic task progress alongside the 61-unit evidence ledger](https://github.com/interzettel/prehnite/issues/126) | Tracking | 73 PR-sized tasks under frozen 19-parent scope; separate verified percentage and CI checks; PR #127 under review, original 61-unit ledger unchanged. |
 
 ## In review
 
 | Priority | Work item | Stream | Handoff / blocker |
 | --- | --- | --- | --- |
 | P1 | [PR #125 — Validated offline human-review ZIP and repair triage](https://github.com/interzettel/prehnite/pull/125) | Cutouts | CI green; owner reviewing cutout UI, PR unmerged. In-review atomic work earns no completion credit. |
-| P1 | [PR #127 — Evidence-backed atomic task register and dual progress chart](https://github.com/interzettel/prehnite/pull/127) | Tracking | Task register, independent progress UI, generator and tests; PR CI/review pending, no release score inflation. |
 
 ## Blocked
 
@@ -151,6 +149,8 @@
 | P1 | [PR #120 — Twenty challenging cutout fixtures and safety guards](https://github.com/interzettel/prehnite/pull/120) | Cutouts | Merged as e3026a1 after 12/12 green CI; synthetic-only, no S03/S05 evidence completion. |
 | P1 | [PR #122 — Rights-aware local real-image alpha benchmark intake](https://github.com/interzettel/prehnite/pull/122) | Cutouts | Merged 463d3c2; local rights-aware alpha scorer, source-only R2 WebP preflight. No reference-alpha production claims. |
 | P1 | [PR #123 — Private apparel ZIP inspection and unreviewed mask probe](https://github.com/interzettel/prehnite/pull/123) | Cutouts | Merged 39c84d3 with 14/14 CI: verified 84 private JPEG inputs and 50 unreviewed local masks; no independent alpha references or QA acceptance. |
+| P1 | [Issue #126 — Atomic task progress alongside the 61-unit evidence ledger](https://github.com/interzettel/prehnite/issues/126) | Tracking | Delivered in merged PR #127 (14/14 CI). Frozen atomic register, dual progress view; original release ledger unchanged. |
+| P1 | [PR #127 — Evidence-backed atomic task register and dual progress chart](https://github.com/interzettel/prehnite/pull/127) | Tracking | Merged as 1e28ea7 with 14/14 green jobs. Evidence-backed 10/73 atomic tasks, 1 review; no double counting. |
 
 ## How to update this board
 
