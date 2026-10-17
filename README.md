@@ -205,7 +205,7 @@ batch with zero accepted assets has no meaningful cost-per-accepted figure.
 
 ## Where things stand
 
-**`0.1.0.dev0` · source-only development preview.** Not a tagged release or a published PyPI package. The core synthetic workflow works; **photorealistic quality, 4K GPU feasibility, segmentation accuracy and actual API billing have not been certified**.
+**`0.1.0a1` · first public developer alpha candidate.** Public PyPI installation is available only after the separately gated, verified [publishing workflow](docs/PYPI_PUBLISHING.md) succeeds; a version number or Git tag alone does not prove publication. The core synthetic workflow works; **photorealistic quality, 4K GPU feasibility, segmentation accuracy and actual API billing have not been certified**.
 
 The tracker distinguishes implemented scaffolding from independently evidenced completions, and records issues blocked by local hardware, human calibration or paid-call authorization.
 
