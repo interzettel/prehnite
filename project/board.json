@@ -242,10 +242,10 @@
       "type": "issue",
       "number": 31,
       "title": "Targeted repair planner for failed cutouts",
-      "lane": "Backlog",
+      "lane": "In progress",
       "priority": "P1",
       "stream": "Cutouts",
-      "note": "Controlled journaled synthetic repair delivered in merged PR #119; full targeted S05 failure classification and Engine integration not complete."
+      "note": "S05-A04 opt-in production staging in PR #129, review-only, no visual acceptance; S05-A05 real photo evidence blocked."
     },
     {
       "type": "issue",
@@ -939,6 +939,15 @@
       "priority": "P1",
       "stream": "Tracking",
       "note": "Merged as 1e28ea7 with 14/14 green jobs. Evidence-backed 10/73 atomic tasks, 1 review; no double counting."
+    },
+    {
+      "type": "pr",
+      "number": 129,
+      "title": "Stage opt-in bounded opaque repair for cutout review",
+      "lane": "In review",
+      "priority": "P1",
+      "stream": "Cutouts",
+      "note": "Strict owner-declared opaque product, isolate journaled repair, preserve selected assets; CI pending. No human acceptance or parent unit done."
     }
   ]
 }
