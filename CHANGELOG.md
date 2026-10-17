@@ -7,6 +7,7 @@ This project follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) an
 ## [Unreleased]
 
 ### Added
+- Read-only offline micro recipe resolver: operator-supplied ComfyUI API graph and checkpoint file hashing, explicit local-use terms acknowledgement, reproducible resolved-input digest and refusal of unsafe paths/mismatched bytes (#135). No downloads, model execution, verified rights or per-batch journal integration.
 - Read-only offline hardware doctor (`prehnite hardware`) with source-labeled OS/CPU/RAM/disk and optional NVIDIA-SMI VRAM observations, explicit unsupported/unknown accelerator states and synthetic platform tests (#134). No weight download, GPU benchmark, performance tier certification or inference.
 - Versioned read-only `prehnite-micro` and `prehnite-macro` recipe blueprints (#132/#133), strict registry/DAG/maturity/privacy/budget validation, canonical SHA256 identity, and offline CLI/test coverage; no inference, weights, downloads or hardware quality claims.
 - Source-dated external model/weight rights inventory and deterministic registry coverage checker (#40, R06-A02), distinguishing hosted API access, software licenses, optional checkpoint terms and training restrictions; all model and redistribution permissions remain unapproved pending human review.
