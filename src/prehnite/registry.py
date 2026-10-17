@@ -12,6 +12,12 @@ from .schema import Endpoint, Manifest, Profile
 
 ASPECTS = ("9:16", "3:4", "4:3", "16:9", "1:1")
 TIERS = ("2k", "4k")
+# Only the local ComfyUI adapter supports a genuine 1K tier. Remote provider
+# schemas and costs remain unchanged; no paid 1K fallback is implied.
+MICRO_1K_DIMENSIONS = {
+    "9:16": (576, 1024), "3:4": (768, 1024),
+    "4:3": (1024, 768), "16:9": (1024, 576), "1:1": (1024, 1024),
+}
 KLEIN_2K_DIMENSIONS = {
     "9:16": (1152, 2048), "3:4": (1536, 2048),
     "4:3": (2048, 1536), "16:9": (2048, 1152),
@@ -74,7 +80,7 @@ MODELS = (
               price_status="user_estimate_required"),
     ModelInfo("comfyui", "user-workflow", "generate", False,
               "User-supplied local API graph; hardware not verified",
-              "prompt", aspect_ratios=ASPECTS, resolution_tiers=TIERS,
+              "prompt", aspect_ratios=ASPECTS, resolution_tiers=TIERS + ("1k",),
               adapter_status="user_workflow_unverified",
               licensing="External checkpoints and ComfyUI retain their own licenses."),
     ModelInfo("comfyui", "user-upscale", "upscale", False,
@@ -194,7 +200,7 @@ def validate_workflow_capabilities(manifest: Manifest, profile: Profile) -> None
     for asset in manifest.assets:
         if asset.prompt:
             for variant in profile.variants:
-                tier = "2k" if variant == "enhanced_2k" else "4k"
+                tier = {"enhanced_2k": "2k", "native_4k": "4k", "native_1k": "1k"}[variant]
                 validate_capability(profile.generation, "generate",
                                     ratio=asset.aspect_ratio, tier=tier)
                 if variant == "enhanced_2k":
