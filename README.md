@@ -123,6 +123,14 @@ assets:
 
 The **manifest** says *what* to make. A separate **profile** says *how*: which provider/model to use, whether to compare 2K-upscaled and 4K variants, what to accept, the retry limit, and whether cloud calls may cost money. See the [working examples](examples/).
 
+### Local micro recipe input verification (non-executable)
+
+`prehnite recipe-resolve` verifies explicitly supplied local ComfyUI API graphs and
+checkpoint bytes against SHA256 and operator-acknowledged terms without downloads,
+cloud calls, credentials or inferred GPU suitability. It produces a read-only
+input receipt, **not** an executable model recipe or journal-pinned batch.
+See the [operator setup and limitations](docs/LOCAL_MODEL_RESOLVER.md).
+
 ### Versioned Model Recipes: prehnite-micro / prehnite-macro (preview only)
 
 The future local-first image-production system is described by pinned, inspectable
