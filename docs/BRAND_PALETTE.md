@@ -4,6 +4,12 @@
 
 This document and [`src/prehnite/brand.py`](../src/prehnite/brand.py) establish the source-of-truth color roles for new Prehnite user-facing surfaces. If a new UI, diagram, presentation or chart requires brand colors, use these tokens, not ad hoc mint/teal/gold. Offline HTML embeds these tokens inline: **no external CSS or remote font is needed**. Diagnostic pixels, heatmaps and status colors must retain meaning rather than being arbitrarily replaced by coral.
 
+## Repository hero and secondary mark
+
+The README intentionally **displays the artwork rather than explaining its implementation**. The owner-selected **forest green / coral / warm paper** Riso colorway uses a [2020 × 779 rounded-corner PNG](../assets/prehnite-riso-green-coral.png). The image itself contains transparent clipped corners; this remains visually rounded on GitHub even when GitHub sanitizes custom inline CSS. Preserve the original paper grain and separation texture rather than replacing it with CSS approximations or a low-resolution WebP.
+
+Shared accessible light/dark token roles below also apply to other project surfaces. The separate [mineral symbol SVG](../assets/prehnite-mark.svg) remains available for compact applications; it is not a replacement for the full wordmark. The main README should contain only the visual hero and useful navigation, not this production rationale.
+
 ## Palette roles
 
 | Role | Light mode | Dark mode | Usage |
