@@ -59,6 +59,16 @@ batch/receipt compatibility.
 
 ## A. Local generation + cutout
 
+For multi-file generation models (transformer + text encoder + VAE + optional
+auxiliary weights), use the **schema-v2 supplemental model manifest**
+described in [Multi-file provenance](MULTIFILE_PROVENANCE.md). Add
+`--additional-models /private/supplemental-models.json` to `micro-setup` and
+`--generation-checkpoint-graph-ref` / `--cutout-checkpoint-graph-ref` when
+ComfyUI's loader string differs from the file's path beneath the private model
+root. Every recognized graph weight reference must be pinned; extra file byte
+changes block recipe resume. This still cannot verify runtime-resident model
+bytes or hidden loads by custom nodes.
+
 1. Install [ComfyUI](https://github.com/Comfy-Org/ComfyUI) yourself. Choose a generation model **and** a segmentation/matting model under individually acceptable terms from their original publishers; keep weights in your own ComfyUI-accessible model directories. Do **not** redistribute gated weights or put them in the Prehnite repository. The `--checkpoints` directory must contain the **same actual bytes** that ComfyUI will load (this is not independently verified at runtime).
 2. Export each real workflow as **ComfyUI API JSON**. Use one exact image output per stage. The generation graph must have `text` for the prompt node, seed input, `width` and `height` for size node, and one saved image node; segmentation must have an image-loading node with `image`, a text-target node with `text`, and a saved *mask* image output. Every graph must reference its selected checkpoint by its exact ComfyUI loader value.
 3. Place `generation_api.json` and `cutout_api.json` under your private workflow root. Review the node IDs and edit [profile-first-local.yaml](../examples/profile-first-local.yaml)—the provided numbers are placeholders. Start with the [one-asset manifest](../examples/manifest-first-local.yaml); `native_4k` means an actual **3072×4096** ComfyUI request at 3:4 (not a promise that your GPU can handle it). If your GPU cannot run that, **do not fake the result**; a separate smaller-capacity recipe will require engineering/benchmarking.
