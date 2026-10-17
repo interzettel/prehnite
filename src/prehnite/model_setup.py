@@ -16,6 +16,40 @@ from .recipes import load_recipe, recipe_sha256
 from .schema import Profile
 
 
+def _check_graph_node_mappings(profile: Profile, workflows_root: Path,
+                               generation_graph: str, cutout_graph: str) -> None:
+    """Ensure user-entered node IDs match ComfyUI's adapter input contract.
+
+    Static validation can catch a broken export before the first GPU request,
+    but cannot certify third-party node compatibility or loaded weights.
+    """
+    required = {
+        "generation": (generation_graph, {
+            "prompt_node": ("text",),
+            "seed_node": (str(profile.generation.options.get("seed_input", "seed")),),
+            "size_node": ("width", "height"),
+        }),
+        "segmentation": (cutout_graph, {
+            "input_node": ("image",), "target_node": ("text",),
+        }),
+    }
+    for name, (filename, checks) in required.items():
+        endpoint = getattr(profile, name)
+        graph = json.loads(_local_file(workflows_root, filename).read_text(encoding="utf-8"))
+        for option, inputs in checks.items():
+            node_id = endpoint.options.get(option)
+            if not isinstance(node_id, (str, int)) or str(node_id) not in graph:
+                raise ValueError(f"{name}.{option} requires a real node ID in the API graph")
+            present = graph[str(node_id)].get("inputs")
+            if not isinstance(present, dict) or not all(k in present for k in inputs):
+                raise ValueError(f"{name}.{option} node must expose inputs {inputs}")
+        output_id = endpoint.options.get("output_node")
+        if not isinstance(output_id, (str, int)) or str(output_id) not in graph:
+            raise ValueError(f"{name}.output_node must point to an existing saved image node")
+        if "SaveImage" not in graph[str(output_id)]["class_type"]:
+            raise ValueError(f"{name}.output_node must be a saved output image node")
+
+
 def prepare_micro_bindings(
     *,
     recipe_path: Path,
@@ -82,6 +116,7 @@ def prepare_micro_bindings(
         # the same strict profile invariants without writing a staging file.
         from .recipe_execution import verify_micro_profile
         verify_micro_profile(recipe, bindings, workflows_root, profile)
+        _check_graph_node_mappings(profile, workflows_root, generation_graph, cutout_graph)
 
     target = destination.resolve(strict=False)
     for approved in (workflows_root, checkpoints_root):
