@@ -24,6 +24,10 @@ def setup(tmp_path, monkeypatch):
     graph = json.dumps({
         "1": {"class_type": "CheckpointLoaderSimple", "inputs": {"ckpt_name": "fixture.safetensors"}},
         "2": {"class_type": "SaveImage", "inputs": {"images": ["1", 0]}},
+        "3": {"class_type": "CLIPTextEncode", "inputs": {"text": "prompt"}},
+        "4": {"class_type": "KSampler", "inputs": {"seed": 1}},
+        "5": {"class_type": "EmptyLatentImage", "inputs": {"width": 512, "height": 512}},
+        "6": {"class_type": "LoadImage", "inputs": {"image": "input.png"}},
     })
     (graphs / "gen.json").write_text(graph, encoding="utf-8")
     (graphs / "cut.json").write_text(graph, encoding="utf-8")
@@ -52,9 +56,9 @@ def local_profile():
     return Profile.model_validate({
         "variants": ["native_4k"],
         "generation": {"provider": "comfyui", "model": "user-workflow",
-                       "options": {"workflow": "gen.json", "output_node": "2"}},
+                       "options": {"workflow": "gen.json", "output_node": "2",\n                                   "prompt_node": "3", "seed_node": "4", "size_node": "5"}},
         "segmentation": {"provider": "comfyui", "model": "user-segmentation",
-                         "options": {"workflow": "cut.json", "output_node": "2"}},
+                         "options": {"workflow": "cut.json", "output_node": "2",\n                                   "input_node": "6", "target_node": "3"}},
         "upscale": {"provider": "disabled"},
         "judge": {"provider": "demo", "model": "technical"},
         "costs": {"allow_paid": False, "allow_cloud_uploads": False,
@@ -126,5 +130,21 @@ def test_paid_profile_refused_before_writing(setup):
     profile = local_profile()
     profile.costs.allow_paid = True
     with pytest.raises(ValueError, match="Local micro recipe cannot authorize"):
+        prepare_micro_bindings(**setup, profile=profile)
+    assert not setup["destination"].exists()
+
+
+def test_mismatched_node_ids_fail_before_binding_file_is_written(setup):
+    profile = local_profile()
+    profile.segmentation.options["target_node"] = "404"
+    with pytest.raises(ValueError, match="real node ID"):
+        prepare_micro_bindings(**setup, profile=profile)
+    assert not setup["destination"].exists()
+
+
+def test_wrong_graph_node_input_fails_before_binding_file_is_written(setup):
+    profile = local_profile()
+    profile.generation.options["size_node"] = "3"
+    with pytest.raises(ValueError, match="width.*height"):
         prepare_micro_bindings(**setup, profile=profile)
     assert not setup["destination"].exists()
