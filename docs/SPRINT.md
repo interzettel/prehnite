@@ -12,8 +12,8 @@
 | --- | ---: |
 | Backlog | 16 |
 | Ready | 2 |
-| In progress | 1 |
-| In review | 0 |
+| In progress | 2 |
+| In review | 2 |
 | Blocked | 6 |
 | Done | 75 |
 
@@ -52,12 +52,14 @@
 | Priority | Work item | Stream | Handoff / blocker |
 | --- | --- | --- | --- |
 | P2 | [Issue #100 — Provenance-bound transforms and tiled 4K comparison](https://github.com/interzettel/prehnite/issues/100) | Delivery | Integer 4K tiles + SHA-bound affine v2 validator merged; real affine warp/execution still open. |
+| P1 | [Issue #126 — Atomic task progress alongside the 61-unit evidence ledger](https://github.com/interzettel/prehnite/issues/126) | Tracking | 73 PR-sized tasks under frozen 19-parent scope; separate verified percentage and CI checks; PR #127 under review, original 61-unit ledger unchanged. |
 
 ## In review
 
 | Priority | Work item | Stream | Handoff / blocker |
 | --- | --- | --- | --- |
-| — | No cards currently | — | — |
+| P1 | [PR #125 — Validated offline human-review ZIP and repair triage](https://github.com/interzettel/prehnite/pull/125) | Cutouts | CI green; owner reviewing cutout UI, PR unmerged. In-review atomic work earns no completion credit. |
+| P1 | [PR #127 — Evidence-backed atomic task register and dual progress chart](https://github.com/interzettel/prehnite/pull/127) | Tracking | Task register, independent progress UI, generator and tests; PR CI/review pending, no release score inflation. |
 
 ## Blocked
 
