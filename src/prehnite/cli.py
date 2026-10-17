@@ -119,6 +119,40 @@ def trial_plan_cli(
     typer.echo(json.dumps(report, indent=2, sort_keys=True))
 
 
+@app.command("trial-evidence")
+def trial_evidence_cli(
+        root: Path = typer.Option(..., "--root", help="Private output image directory"),
+        generated: str = typer.Option(..., "--generated",
+                                       help="Relative original generated image path"),
+        cutout: str = typer.Option(..., "--cutout",
+                                    help="Relative RGBA cutout PNG path"),
+        output: Path = typer.Option(..., "--output",
+                                    help="Private create-only evidence JSON outside image root"),
+        elapsed_seconds: float | None = typer.Option(None, "--elapsed-seconds"),
+        peak_vram_mib: float | None = typer.Option(None, "--peak-vram-mib"),
+        measurement_method: str | None = typer.Option(None, "--measurement-method"),
+        human_review: str = typer.Option("unreviewed", "--human-review")):
+    """Create a PRIVATE hash/geometry/GPU-observation receipt; no inference or upload."""
+    from .trial_evidence import evidence_receipt
+    try:
+        report = evidence_receipt(
+            root=root, generated=generated, cutout=cutout, output=output,
+            elapsed_seconds=elapsed_seconds, peak_vram_mib=peak_vram_mib,
+            measurement_method=measurement_method, human_review=human_review,
+        )
+    except (ValueError, OSError) as exc:
+        raise typer.BadParameter(str(exc)) from exc
+    typer.echo(json.dumps({
+        "status": report["status"],
+        "human_review": report["human_review"],
+        "geometry_match": report["geometry_match"],
+        "alpha_has_transparency_and_content": report["alpha_has_transparency_and_content"],
+        "receipt_sha256_files": {k: v["sha256"] for k, v in report["assets"].items()},
+        "report_path": str(output),
+        "provider_calls": 0,
+    }, indent=2, sort_keys=True))
+
+
 @app.command()
 def validate(manifest: Path, profile: Path = typer.Option(...),
              inputs: Path = typer.Option(Path("inputs"))):
