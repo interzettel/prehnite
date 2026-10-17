@@ -169,7 +169,7 @@ class CachePolicy(Strict):
 
 
 class Profile(Strict):
-    variants: list[Literal["enhanced_2k", "native_4k"]] = Field(
+    variants: list[Literal["enhanced_2k", "native_4k", "native_1k"]] = Field(
         default_factory=lambda: ["enhanced_2k", "native_4k"]
     )
     generation: Endpoint = Field(default_factory=Endpoint)
