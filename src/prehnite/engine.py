@@ -471,7 +471,79 @@ class Engine:
                 raise ArtifactIntegrityError("Selected output escapes batch directory")
             verified_image(path, hashes.get(name))
 
+    @staticmethod
+    def reviewed_output_hashes(root: Path, outputs: list[str]) -> dict[str, str]:
+        from .schema import relative_name
+        base = root.resolve()
+        hashes = {}
+        for filename in outputs:
+            path = (base / relative_name(filename)).resolve()
+            if not path.is_relative_to(base):
+                raise ArtifactIntegrityError("Reviewed output escapes batch directory")
+            hashes[filename] = image_info(path)["sha256"]
+        return hashes
+
+    def process_reviewed_source(self, asset: Asset) -> dict:
+        """Source approved for SEGMENTATION only; cutout never automatically accepted."""
+        from .handoff import verify_handoff
+        identity = verify_handoff(self.manifest, self.profile, self.inputs)
+        if (identity != self.handoff_identity
+                or self.journal.fact("human_review_handoff") != identity):
+            raise ArtifactIntegrityError("Reviewed-source identity changed before cutout")
+        pending_root = self.journal.root / "review_pending"
+        saved = self.journal.fact("results", {}).get(asset.id)
+        if saved is not None:
+            if saved.get("status") != "review_pending":
+                raise RecoveryBlocked("Reviewed cutout failed; no automatic retry")
+            for filename, digest in saved["outputs_sha256"].items():
+                from .schema import relative_name
+                path = (pending_root / relative_name(filename)).resolve()
+                if not path.is_relative_to(pending_root.resolve()):
+                    raise ArtifactIntegrityError("Unsafe reviewed output on resume")
+                verified_image(path, digest)
+            return saved
+        source = resolve_input(self.inputs, asset.source)
+        destination = pending_root / asset.output.image
+        target = asset.targets[0]
+        mask_key = f"{asset.id}:cutout:{target}:mask"
+        prior_mask = self.journal.get(mask_key)
+        if prior_mask and prior_mask["status"] != "completed":
+            raise RecoveryBlocked("Previous cutout not completed; do not submit another")
+        if destination.exists():
+            original = image_info(destination)
+            if original["sha256"] != identity["candidate_sha256"]:
+                raise ArtifactIntegrityError("Existing reviewed output differs from approved bytes")
+        else:
+            original = atomic_copy_image(source, destination)
+        if original["sha256"] != identity["candidate_sha256"]:
+            raise ArtifactIntegrityError("Staged source differs from reviewed candidate")
+        outputs = [asset.output.image]
+        mask_destination = pending_root / asset.output.cutouts[target]
+        try:
+            self.cutout(asset, destination, target, 1, mask_destination,
+                        target_prompt=identity["target_phrase"])
+        except ValueError as exc:
+            return {
+                "status": "review_pending", "cutout_status": "failed",
+                "outputs": outputs, "outputs_sha256": self.reviewed_output_hashes(pending_root, outputs),
+                "reason": str(exc)[:500],
+                "human_verdict": "accepted_for_next_stage",
+                "generation_skipped": True, "automatic_quality_verified": False,
+                "visual_quality_verified": False, "cutout_quality_verified": False,
+            }
+        outputs.append(asset.output.cutouts[target])
+        return {
+            "status": "review_pending", "cutout_status": "awaiting_human_review",
+            "outputs": outputs, "outputs_sha256": self.reviewed_output_hashes(pending_root, outputs),
+            "reason": "Reviewed source advanced; generated cutout requires independent human acceptance",
+            "human_verdict": "accepted_for_next_stage",
+            "generation_skipped": True, "automatic_quality_verified": False,
+            "visual_quality_verified": False, "cutout_quality_verified": False,
+        }
+
     def process(self, asset: Asset) -> dict:
+        if self.manifest.handoff is not None:
+            return self.process_reviewed_source(asset)
         output_root = self.journal.root / "selected"
         final_output = output_root / asset.output.image
         saved = self.journal.fact("results", {}).get(asset.id)
