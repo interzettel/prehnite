@@ -60,7 +60,8 @@ def evaluate_readiness(snapshots: Sequence[Mapping[str, Any]],
         ram = snapshot.get("ram", {})
         if not isinstance(ram, Mapping):
             ram = {}
-        available = _byte_count(ram.get("available_bytes")) if ram.get("status") == "observed" else None
+        available = (_byte_count(ram.get("available_bytes"))
+                     if ram.get("status") == "observed" else None)
         commit_limit = (_byte_count(ram.get("commit_limit_bytes"))
                         if ram.get("commit_status") == "observed" else None)
         committed = (_byte_count(ram.get("commit_used_bytes"))
@@ -73,8 +74,10 @@ def evaluate_readiness(snapshots: Sequence[Mapping[str, Any]],
         accelerators = snapshot.get("accelerators", {})
         nvidia = accelerators.get("nvidia", {}) if isinstance(accelerators, Mapping) else {}
         devices = nvidia.get("devices", []) if isinstance(nvidia, Mapping) else []
-        gpu = next((d for d in devices if isinstance(d, Mapping)
-                    and d.get("index") == policy.gpu_index), None) if isinstance(devices, list) else None
+        gpu = None
+        if isinstance(devices, list):
+            gpu = next((d for d in devices if isinstance(d, Mapping)
+                        and d.get("index") == policy.gpu_index), None)
         free_vram = (_byte_count(gpu.get("vram_free_bytes"))
                      if gpu is not None and gpu.get("vram_status") == "observed" else None)
         if (not isinstance(nvidia, Mapping)
@@ -94,7 +97,8 @@ def evaluate_readiness(snapshots: Sequence[Mapping[str, Any]],
             "checks": checks,
             "source": {
                 "ram": ram.get("source"),
-                "commit": ram.get("commit_source") if ram.get("commit_status") == "observed" else None,
+                "commit": (ram.get("commit_source")
+                           if ram.get("commit_status") == "observed" else None),
                 "vram": nvidia.get("source") if isinstance(nvidia, Mapping) else None,
             },
         })
@@ -121,5 +125,7 @@ def evaluate_readiness(snapshots: Sequence[Mapping[str, Any]],
         "model_compatibility": "not_assessed",
         "technical_execution": "not_started",
         "visual_acceptance": "not_assessed",
-        "confirmation": "Observations only. A passing sample does not authorize startup or inference.",
+        "confirmation": (
+            "Observations only. A passing sample does not authorize startup or inference."
+        ),
     }
