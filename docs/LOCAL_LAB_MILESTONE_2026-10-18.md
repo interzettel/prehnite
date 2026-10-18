@@ -46,7 +46,7 @@ The public repository intentionally does **not** contain these private image fil
 advanced from `da7b478` (initial implementation) to **`896fdea`**
 (documentation synchronization, audit and closeout). Reusable source code was
 pushed as **[draft PR #161](https://github.com/interzettel/prehnite/pull/161)**
-(branch `feature/local-cutout-productization`, head `f4c86da`, base
+(branch `feature/local-cutout-productization`, head `9949367`, base
 `848edaf`). The PR is **not merged or released**.
 
 - `src/prehnite/cutout_quality.py`: source/target/workflow/model SHA256
@@ -60,33 +60,42 @@ pushed as **[draft PR #161](https://github.com/interzettel/prehnite/pull/161)**
 - Private `scripts/prehnite_local_runtime.py` consolidates
   `preflight/check/start/status/stop`. It and the model environment remain in
   the private lab, **not shipped in the PR**.
-- **Closeout tests:** 14 new CPU tests passed; host full suite reported **865
-  passed / 15 skipped / 1 Windows symlink-privilege failure**; GitHub Actions
-  [run 39150686394](https://github.com/interzettel/prehnite/actions/runs/39150686394)
+- **Review-resolution tests:** 21 cutout tests passed; host full suite
+  reported **872 passed / 15 skipped / 1 Windows symlink-privilege failure**;
+  GitHub Actions [run 39152075877](https://github.com/interzettel/prehnite/actions/runs/39152075877)
   completed with **25/25 successful jobs** (independently verified via GitHub).
+  This is the final reported source head `9949367`, lab report commit `a33f4bf`.
 - Original accepted lamp Candidate A remains immutable. The new CPU algorithm
   did **not** reproduce identical bytes: hard silhouette IoU 1.0, but **6,749
   alpha pixels changed** and transparent/fringe RGB output differs. No
   transfer of its historical visual acceptance to the new derivative.
-- Independent source review on PR #161 found **unresolved evidence-state,
-  resource receipt, topology counting and runnable runbook concerns**; these
-  must be resolved before merging. The original runner's local `preflight`
-  refused startup below its 6,000 MB physical-RAM floor. **No new GPU inference,
-  ComfyUI startup, downloads or packages** were used for productization.
+- The original independent source review's **five focused findings were
+  addressed in PR #161 head `9949367`** and inspected: file SHA assertions
+  separated from unverified runtime compatibility/execution, versioned PR #159
+  resource observation with `startup_authorized:false`, true hole-component
+  metrics, valid CLI runbook, and measured RGB expansion operation facts.
+  Final maintainer merge approval is still separate. The earlier runner's
+  `preflight` refused startup below its 6,000 MB RAM policy floor.
+  **No new GPU inference, ComfyUI startup, downloads or packages** were used
+  for review resolution.
 
 Private reports:
 `results/2026-10-18-productization-sprint-1.md` (SHA256
 `918961c189104323b852c92cb22307f44a25a343a2209542ae3993b58b89420f`)
 and `results/2026-10-18-productization-closeout.md` (SHA256
-`5a9a4d3db711e5cf79490aff24ab123b1878df6ba3b1347c644c4ddf928f2c84`).
+`5a9a4d3db711e5cf79490aff24ab123b1878df6ba3b1347c644c4ddf928f2c84`),
+plus `results/2026-10-18-pr161-review-resolution.md` (SHA256
+`77507c1048004e483be679d70084664aa03e10e3815ce83a1c789a2aaa6371a0`).
 The private patch, source image, masks, GPU logs, local runtime config and
 weights remain private.
 
-**Next:** complete PR #161 review corrections without another GPU experiment;
-coordinate but do not silently merge [PR #159](https://github.com/interzettel/prehnite/pull/159)
-and [PR #160](https://github.com/interzettel/prehnite/pull/160). Product validation
-on a different object and Engine integration remain separately scoped, untested
-and unauthorized by these documentation updates.
+**Next:** finalize maintainer review and coordinate potential
+`cli.py` branch conflicts across [#159](https://github.com/interzettel/prehnite/pull/159),
+[#160](https://github.com/interzettel/prehnite/pull/160) and
+[#161](https://github.com/interzettel/prehnite/pull/161), preserving independent
+histories and checking post-integration CI. Do not silently merge or tag a
+release. Product validation on a different object and Engine integration remain
+separately scoped, untested and unauthorized by these documentation updates.
 
 ## What explicitly remains open
 
