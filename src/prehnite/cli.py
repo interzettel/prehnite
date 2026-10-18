@@ -45,6 +45,44 @@ def hardware():
     from .hardware import hardware_report
     typer.echo(json.dumps(hardware_report(), indent=2, sort_keys=True))
 
+@app.command("resource-preflight")
+def resource_preflight(
+        min_ram_mib: int = typer.Option(..., "--min-ram-mib"),
+        max_commit_percent: float = typer.Option(..., "--max-commit-percent"),
+        min_vram_mib: int = typer.Option(..., "--min-vram-mib"),
+        gpu_index: int = typer.Option(0, "--gpu-index"),
+        samples: int = typer.Option(3, "--samples"),
+        interval_seconds: float = typer.Option(1.0, "--interval-seconds")):
+    """Sample operator-defined resource limits; never authorize launching models."""
+    import math
+    import time
+    from datetime import datetime, timezone
+    from .hardware import hardware_report
+    from .resource_readiness import ReadinessPolicy, evaluate_readiness
+
+    try:
+        policy = ReadinessPolicy(min_ram_mib, max_commit_percent,
+                                 min_vram_mib, gpu_index)
+    except ValueError as exc:
+        raise typer.BadParameter(str(exc)) from exc
+    if (not 1 <= samples <= 10 or not math.isfinite(interval_seconds)
+            or interval_seconds < 0 or interval_seconds > 10
+            or (samples - 1) * interval_seconds > 60):
+        raise typer.BadParameter("Use 1–10 samples, 0–10s intervals, at most 60s apart")
+    observed = []
+    for i in range(samples):
+        report = hardware_report()
+        report["sampled_at_utc"] = datetime.now(timezone.utc).isoformat()
+        observed.append(report)
+        if i + 1 < samples:
+            time.sleep(interval_seconds)
+    result = evaluate_readiness(observed, policy)
+    for sample, report in zip(result["samples"], observed):
+        sample["sampled_at_utc"] = report["sampled_at_utc"]
+    typer.echo(json.dumps(result, indent=2, sort_keys=True))
+    if result["status"] != "pass":
+        raise typer.Exit(code=2)
+
 
 @app.command("recipe-resolve")
 def recipe_resolve(
