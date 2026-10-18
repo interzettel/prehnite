@@ -69,7 +69,7 @@ failure**; GitHub Actions [run 39150686394](https://github.com/interzettel/prehn
 finished with **25/25 passing jobs**. No new GPU inference occurred. The
 draft remains unmerged pending independent evidence-contract and runbook fixes.
 The public package, automatic Engine QA integration and next-object acceptance
-remain open. See [dated evidence](LOCAL_LAB_MILESTONE_2026-10-18.md#subsequent-productization-sprint-same-date-private-branch-not-yet-public)
+remain open. See [dated evidence](LOCAL_LAB_MILESTONE_2026-10-18.md#subsequent-productization-sprint-and-public-review-same-date)
 and draft documentation [PR #160](https://github.com/interzettel/prehnite/pull/160).
 
 **Counting impact: none yet.** The generated 61-unit release tracker remains
