@@ -81,7 +81,7 @@ plus `results/2026-10-18-pr161-review-resolution.md` (SHA256
 The private patch, source image, masks, GPU logs, local runtime config and
 weights remain private.
 
-**Next:** finish the dated documentation [PR #160](https://github.com/interzettel/prehnite/pull/160) after the source merges; close the temporary integration [PR #162](https://github.com/interzettel/prehnite/pull/162) **unmerged**, with its synthetic tests retained on `main`. Then plan a separately authorized, genuinely different live-object Engine→opt-in `cutout-qa` trial. No release/tag or inference authorization follows automatically.
+**Integration housekeeping:** the three synthetic resource→QA interface tests were retained on `main`; temporary [PR #162](https://github.com/interzettel/prehnite/pull/162) was **closed without merging**. The dated documentation is tracked in [PR #160](https://github.com/interzettel/prehnite/pull/160). **Next:** plan a separately authorized, genuinely different live-object Engine→opt-in `cutout-qa` trial. No release/tag or inference authorization follows automatically.
 
 ## What explicitly remains open
 
