@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated": "2026-10-17",
+  "updated": "2026-10-18",
   "scope": "Only the 19 incomplete units in progress/ledger.json; never a project-wide completion score",
   "parent_ledger": "progress/ledger.json",
   "counting_rule": "Unweighted PR-sized scoped tasks. Only merged, evidenced done child tasks count. In-review, active, blocked and planned are not complete. Parent 61-unit delivery status and 7 release gates remain authoritative and independent.",
@@ -401,10 +401,12 @@
       "parent": "S03",
       "title": "Implement true color spill edge decontamination",
       "acceptance": "Pixel-level tests prove removal without deleting background-colored product regions",
-      "state": "planned",
+      "state": "done",
       "issue": 29,
       "owner": "Agent cloud",
-      "dependsOn": []
+      "dependsOn": [],
+      "evidence": "https://github.com/interzettel/prehnite/pull/164",
+      "verified_at": "2026-10-18"
     },
     {
       "id": "S03-A04",

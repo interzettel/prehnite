@@ -10,11 +10,11 @@
 <rect x="32" y="118" width="810" height="18" rx="5" fill="#D5DCD5"/>
 <rect x="32" y="118" width="557.7" height="18" rx="5" fill="#075231"/>
 <text x="32" y="190" font-size="16" font-weight="600" fill="#075231">Atomic delivery / initially unfinished 19 units</text>
-<text x="1060" y="190" font-size="18" font-weight="700" text-anchor="end" fill="#075231">14/73 · 19.18%</text>
+<text x="1060" y="190" font-size="18" font-weight="700" text-anchor="end" fill="#075231">15/73 · 20.55%</text>
 <rect x="32" y="203" width="810" height="18" rx="5" fill="#D5DCD5"/>
-<rect x="32" y="203" width="155.3" height="18" rx="5" fill="#075231"/>
+<rect x="32" y="203" width="166.4" height="18" rx="5" fill="#075231"/>
 <text x="32" y="249" font-size="13" fill="#53675A">Second measure covers only frozen open-unit tasks, never an overall completion estimate.</text>
-<text x="32" y="273" font-size="13" fill="#53675A">Review 0 · Active 0 · Blocked 27 · Planned 32 · baseline 2026-10-17</text>
+<text x="32" y="273" font-size="13" fill="#53675A">Review 0 · Active 0 · Blocked 27 · Planned 31 · baseline 2026-10-17</text>
 <text x="32" y="305" font-size="16" font-weight="600" fill="#075231">PR-SIZED TASKS BY UNFINISHED UNIT</text>
 <text x="32" y="333" font-size="14" font-weight="700" fill="#075231">C06</text>
 <text x="120" y="333" font-size="12" fill="#384F45">Versioned pricing quotes and bill reconcili</text>
@@ -110,10 +110,10 @@
 <text x="120" y="879" font-size="12" fill="#384F45">Foreground matte cleanup and edge decontami</text>
 <g><title>S03-A01 / done / Demonstrate bounded synthetic product alpha correction</title><rect x="565.00" y="865" width="80.00" height="17" rx="2" fill="#075231"/></g>
 <g><title>S03-A02 / done / Prove unsafe scene/material abstention</title><rect x="648.00" y="865" width="80.00" height="17" rx="2" fill="#075231"/></g>
-<g><title>S03-A03 / planned / Implement true color spill edge decontamination</title><rect x="731.00" y="865" width="80.00" height="17" rx="2" fill="#D5DCD5"/></g>
+<g><title>S03-A03 / done / Implement true color spill edge decontamination</title><rect x="731.00" y="865" width="80.00" height="17" rx="2" fill="#075231"/></g>
 <g><title>S03-A04 / planned / Support translucent and fine-strand alpha transitions</title><rect x="814.00" y="865" width="80.00" height="17" rx="2" fill="#D5DCD5"/></g>
 <g><title>S03-A05 / blocked / Human validate genuine product edges</title><rect x="897.00" y="865" width="80.00" height="17" rx="2" fill="#A63D35"/></g>
-<text x="1060" y="879" font-size="13" text-anchor="end" fill="#075231">2/5</text>
+<text x="1060" y="879" font-size="13" text-anchor="end" fill="#075231">3/5</text>
 <text x="32" y="918" font-size="14" font-weight="700" fill="#075231">S04</text>
 <text x="120" y="918" font-size="12" fill="#384F45">Multiple-instance selection and named outpu</text>
 <g><title>S04-A01 / done / Fail closed on disconnected product instances</title><rect x="565.00" y="904" width="100.75" height="17" rx="2" fill="#075231"/></g>
@@ -146,5 +146,5 @@
 <g><title>S07-A04 / blocked / Independently produce/reference-review corrected mattes</title><rect x="814.00" y="1021" width="80.00" height="17" rx="2" fill="#A63D35"/></g>
 <g><title>S07-A05 / blocked / Demonstrate accepted samples across all target materials</title><rect x="897.00" y="1021" width="80.00" height="17" rx="2" fill="#A63D35"/></g>
 <text x="1060" y="1035" font-size="13" text-anchor="end" fill="#075231">1/5</text>
-<text x="32" y="1081" font-size="12" fill="#53675A">Green done · Orange review · Amber active · Coral blocked · Grey planned · registry 2026-10-17</text>
+<text x="32" y="1081" font-size="12" fill="#53675A">Green done · Orange review · Amber active · Coral blocked · Grey planned · registry 2026-10-18</text>
 </g></svg>

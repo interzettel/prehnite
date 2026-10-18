@@ -30,6 +30,24 @@ def find(atomic, id_):
     return next(t for t in atomic["tasks"] if t["id"] == id_)
 
 
+def unfinished_planned(atomic):
+    """Use the current original registry, not a task assumed planned forever."""
+    return next(t for t in atomic["tasks"]
+                if t["state"] == "planned" and not t["dependsOn"])
+
+
+def planned_pair(atomic):
+    """Find two initially unrelated unfinished tasks under one parent."""
+    for first in atomic["tasks"]:
+        if first["state"] != "planned" or first["dependsOn"]:
+            continue
+        for second in atomic["tasks"]:
+            if (second["parent"] == first["parent"] and second["id"] != first["id"]
+                    and second["state"] == "planned" and not second["dependsOn"]):
+                return first, second
+    raise AssertionError("Need two unblocked planned original tasks to test cycles")
+
+
 def test_frozen_scope_covers_every_initially_unfinished_release_unit():
     module = tracker()
     ledger, atomic = data()
@@ -83,8 +101,7 @@ def test_review_cannot_be_relabelled_done_without_merge_receipt():
     ledger, atomic = data()
     # Construct an unmerged review state instead of assuming a specific PR
     # stays open forever. That state earns no credit even if relabeled.
-    item = find(atomic, "S03-A03")
-    assert item["state"] == "planned"
+    item = unfinished_planned(atomic)
     item["state"] = "in_review"
     item["review_url"] = "https://github.com/interzettel/prehnite/pull/9999"
     assert module.counts(ledger, atomic)["done"] == module.counts(*data())["done"]
@@ -127,7 +144,7 @@ def test_parent_cannot_be_marked_done_with_remaining_subtasks():
 def test_done_child_cannot_depend_on_unfinished_atomic_child():
     module = tracker()
     ledger, atomic = data()
-    find(atomic, "S03-A01")["dependsOn"] = ["S03-A03"]
+    find(atomic, "S03-A01")["dependsOn"] = [unfinished_planned(atomic)["id"]]
     with pytest.raises(ValueError, match="Premature"):
         module.validate(ledger, atomic)
 
@@ -136,8 +153,9 @@ def test_cycles_and_unknown_dependencies_rejected():
     module = tracker()
     ledger, original = data()
     broken = deepcopy(original)
-    find(broken, "S03-A03")["dependsOn"] = ["S03-A04"]
-    find(broken, "S03-A04")["dependsOn"] = ["S03-A03"]
+    first, second = planned_pair(broken)
+    first["dependsOn"] = [second["id"]]
+    second["dependsOn"] = [first["id"]]
     with pytest.raises(ValueError, match="cycle"):
         module.validate(ledger, broken)
     broken = deepcopy(original)
@@ -150,8 +168,7 @@ def test_release_completion_is_unchanged_by_atom_progress_changes():
     module = tracker()
     ledger, atomic = data()
     prev = module.counts(ledger, atomic)
-    item = find(atomic, "S03-A03")
-    assert item["state"] == "planned"
+    item = unfinished_planned(atomic)
     item["state"] = "done"
     item["evidence"] = "https://github.com/interzettel/prehnite/pull/9999"
     item["verified_at"] = atomic["updated"]
