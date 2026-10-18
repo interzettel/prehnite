@@ -166,7 +166,8 @@ class CutoutRecipe(Strict):
 
 
 class StageResult(Strict):
-    status: Literal["not_run", "passed", "failed", "needs_review", "blocked"]
+    status: Literal["not_run", "passed", "failed", "needs_review", "blocked",
+                    "unverified"]
     reason: str = Field(default="", max_length=500)
     evidence_sha256: str | None = None
 
@@ -174,6 +175,26 @@ class StageResult(Strict):
     @classmethod
     def check_evidence(cls, value: str | None) -> str | None:
         return _sha(value) if value is not None else value
+
+
+class FileIntegrity(Strict):
+    """Plain local byte-integrity assertion, not model compatibility."""
+    status: Literal["passed"] = "passed"
+    source_sha256: str
+    workflow_sha256: str
+    model_sha256: dict[str, str]
+
+
+class ResourceObservation(Strict):
+    """Versioned view of PR #159's observation-only readiness report."""
+    schema_version: Literal[1]
+    kind: Literal["resource_readiness_observation"]
+    observation_status: Literal["pass", "blocked", "unknown"]
+    startup_authorized: Literal[False]
+    model_compatibility: str
+    technical_execution: str
+    visual_acceptance: str
+    observation_sha256: str
 
 
 class CandidateResult(Strict):
@@ -193,6 +214,8 @@ class CutoutQualityReport(Strict):
     mask_sha256: str
     target: TargetDefinition
     workflow_sha256: str
+    file_integrity: FileIntegrity
+    resource_observation: ResourceObservation | None = None
     stages: dict[str, StageResult]
     candidates: list[CandidateResult]
     recommended_candidate: str | None = None
@@ -285,8 +308,13 @@ def _hard_alpha(alpha: Image.Image) -> Image.Image:
     return alpha.point(lambda value: 255 if value > 127 else 0)
 
 
-def _count_components_and_holes(mask: Image.Image) -> tuple[int, int]:
-    """Pillow-only connected components and interior hole count."""
+def _count_components_and_holes(mask: Image.Image) -> tuple[int, int, int]:
+    """Return (foreground components, hole components, hole pixels).
+
+    Detection is intentionally 4-connected (Pillow flood fill). All four
+    borders seed the exterior background, so a foreground object touching one
+    corner cannot hide a separate border-connected background region.
+    """
     work = mask.copy()
     pixels = work.load()
     width, height = work.size
@@ -296,12 +324,25 @@ def _count_components_and_holes(mask: Image.Image) -> tuple[int, int]:
             if pixels[x, y] == 255:
                 ImageDraw.floodfill(work, (x, y), 128, thresh=0)
                 components += 1
+
     exterior = ImageOps.invert(mask)
     pixels = exterior.load()
-    if pixels[0, 0] == 255:
-        ImageDraw.floodfill(exterior, (0, 0), 128, thresh=0)
-    holes = sum(1 for value in exterior.tobytes() if value == 255)
-    return components, holes
+    border = []
+    for x in range(width):
+        border.extend(((x, 0), (x, height - 1)))
+    for y in range(1, height - 1):
+        border.extend(((0, y), (width - 1, y)))
+    for x, y in border:
+        if pixels[x, y] == 255:
+            ImageDraw.floodfill(exterior, (x, y), 128, thresh=0)
+    hole_pixels = sum(1 for value in exterior.tobytes() if value == 255)
+    hole_components = 0
+    for y in range(height):
+        for x in range(width):
+            if pixels[x, y] == 255:
+                ImageDraw.floodfill(exterior, (x, y), 128, thresh=0)
+                hole_components += 1
+    return components, hole_components, hole_pixels
 
 
 def _border_fraction(mask: Image.Image) -> float:
@@ -343,7 +384,8 @@ def _fill_foreground_rgb(rgba: Image.Image, hard: Image.Image, radius: int) -> I
     return filled
 
 
-def _alpha_metrics(alpha: Image.Image, original: Image.Image) -> dict:
+def _alpha_metrics(alpha: Image.Image, original: Image.Image,
+                   operation: dict | None = None) -> dict:
     hard = _hard_alpha(alpha)
     orig = _hard_alpha(original)
     hard_bytes = hard.tobytes()
@@ -355,8 +397,9 @@ def _alpha_metrics(alpha: Image.Image, original: Image.Image) -> dict:
     orig_count = max(1, sum(1 for value in orig_bytes if value))
     bbox = hard.getbbox()
     original_bbox = orig.getbbox()
-    components, holes = _count_components_and_holes(hard)
-    original_components, original_holes = _count_components_and_holes(orig)
+    components, hole_components, hole_pixels = _count_components_and_holes(hard)
+    original_components, original_hole_components, original_hole_pixels = (
+        _count_components_and_holes(orig))
     partial = sum(1 for value in alpha.tobytes() if 0 < value < 255)
     width = alpha.width
     # Narrow-structure check: row widths at the bbox quartiles.
@@ -385,20 +428,22 @@ def _alpha_metrics(alpha: Image.Image, original: Image.Image) -> dict:
         "bbox_xyxy": list(bbox) if bbox else [],
         "components": components,
         "original_components": original_components,
-        "holes": holes,
-        "original_holes": original_holes,
+        "hole_components": hole_components,
+        "original_hole_components": original_hole_components,
+        "hole_pixels": hole_pixels,
+        "original_hole_pixels": original_hole_pixels,
         "partial_alpha_pixels": partial,
         "partial_alpha_fraction": round(partial / max(1, alpha.width * alpha.height), 6),
         "max_narrow_width_delta_px": width_delta,
         "alpha_unique_count": len([count for count in histogram if count]),
         "alpha_min": next(index for index, count in enumerate(histogram) if count),
         "alpha_max": max(index for index, count in enumerate(histogram) if count),
-        "transparent_rgb_decontaminated": True,
+        **(operation or {}),
     }
 
 
 def _candidate_image(source: Image.Image, mask: Image.Image, spec: AlphaCandidateSpec
-                     ) -> tuple[Image.Image, Image.Image]:
+                     ) -> tuple[Image.Image, Image.Image, dict]:
     alpha = _mask_alpha(mask, source.size)
     hard = _hard_alpha(alpha)
     filtered = hard.filter(ImageFilter.GaussianBlur(radius=spec.sigma_px))
@@ -406,10 +451,22 @@ def _candidate_image(source: Image.Image, mask: Image.Image, spec: AlphaCandidat
     candidate_alpha = Image.composite(Image.new("L", alpha.size, 255), filtered, core)
     candidate_alpha = candidate_alpha.point(lambda value: 0 if value < 2 else value)
     radius = max(1, math.ceil(spec.sigma_px * 3) + 1)
-    filled = _fill_foreground_rgb(source.convert("RGBA"), hard, radius)
-    candidate = filled.convert("RGBA")
+    source_rgba = source.convert("RGBA")
+    filled = _fill_foreground_rgb(source_rgba, hard, radius)
+    # Operation evidence only: count pixels whose RGB was expanded from the
+    # nearest opaque foreground. This is not a halo/visual-quality claim.
+    original_rgb = source_rgba.convert("RGB")
+    expanded_rgb = filled.convert("RGB")
+    replaced = ImageChops.difference(original_rgb, expanded_rgb).convert("L")
+    replaced_pixels = sum(1 for value in replaced.tobytes() if value)
+    operation = {
+        "foreground_rgb_expansion_applied": True,
+        "foreground_rgb_expansion_radius_px": radius,
+        "transparent_rgb_replaced_pixels": replaced_pixels,
+    }
+    candidate = expanded_rgb.convert("RGBA")
     candidate.putalpha(candidate_alpha)
-    return candidate, alpha
+    return candidate, alpha, operation
 
 
 def _save_png_atomic(image: Image.Image, destination: Path) -> None:
@@ -425,6 +482,63 @@ def _stage(status: str, reason: str = "", evidence: str | None = None) -> StageR
     return StageResult(status=status, reason=reason, evidence_sha256=evidence)
 
 
+def _file_integrity(recipe: CutoutRecipe, source: Path,
+                    bindings: dict[str, Path]) -> FileIntegrity:
+    return FileIntegrity(
+        source_sha256=sha256(source),
+        workflow_sha256=sha256(bindings["workflow"]),
+        model_sha256={role: sha256(path) for role, path in bindings["models"].items()},
+    )
+
+
+def _resource_evidence(path: Path | None) -> tuple[StageResult,
+                                                    ResourceObservation | None]:
+    if path is None:
+        return (_stage("not_run", "caller_did_not_supply_readiness_evidence"), None)
+    if path.is_symlink() or not path.is_file():
+        raise CutoutContractError("Resource observation must be a regular file")
+    try:
+        document = json.loads(path.read_text(encoding="utf-8"))
+    except (UnicodeError, json.JSONDecodeError) as exc:
+        raise CutoutContractError("Resource observation is not valid UTF-8 JSON") from exc
+    if not isinstance(document, dict):
+        raise CutoutContractError("Resource observation must be an object")
+    if (document.get("schema_version") != 1
+            or document.get("kind") != "resource_readiness_observation"):
+        raise CutoutContractError("Unsupported resource observation schema")
+    if document.get("startup_authorized") is not False:
+        raise CutoutContractError("Passing resource observation must not authorize startup")
+    status = document.get("status")
+    if status not in ("pass", "blocked", "unknown"):
+        raise CutoutContractError("Unsupported resource observation status")
+    model_compatibility = document.get("model_compatibility")
+    technical_execution = document.get("technical_execution")
+    visual_acceptance = document.get("visual_acceptance")
+    if not all(isinstance(value, str) and value
+               for value in (model_compatibility, technical_execution, visual_acceptance)):
+        raise CutoutContractError("Resource observation must preserve unverified stage fields")
+    observation = ResourceObservation(
+        schema_version=1,
+        kind="resource_readiness_observation",
+        observation_status=status,
+        startup_authorized=False,
+        model_compatibility=model_compatibility,
+        technical_execution=technical_execution,
+        visual_acceptance=visual_acceptance,
+        observation_sha256=sha256(path),
+    )
+    if status == "pass":
+        stage = _stage("passed", "resource_observation_pass_not_startup_authorization",
+                       observation.observation_sha256)
+    elif status == "blocked":
+        stage = _stage("blocked", "resource_observation_blocked",
+                       observation.observation_sha256)
+    else:
+        stage = _stage("unverified", "resource_observation_unknown",
+                       observation.observation_sha256)
+    return stage, observation
+
+
 def run_cutout_qa(recipe_path: Path, *, source: Path, mask: Path,
                   workflow_root: Path, models_root: Path, output_dir: Path,
                   resource_readiness: Path | None = None) -> Path:
@@ -438,6 +552,8 @@ def run_cutout_qa(recipe_path: Path, *, source: Path, mask: Path,
         raise CutoutContractError("Mask is missing")
     bindings = verify_bindings(recipe, source=source, workflow_root=workflow_root,
                                models_root=models_root)
+    integrity = _file_integrity(recipe, source, bindings)
+    resource, resource_observation = _resource_evidence(resource_readiness)
     mask_path = mask.resolve(strict=True)
     with Image.open(source) as source_image:
         source_rgba = ImageOps.exif_transpose(source_image).convert("RGBA").copy()
@@ -452,9 +568,12 @@ def run_cutout_qa(recipe_path: Path, *, source: Path, mask: Path,
             mask_sha256=sha256(mask_path),
             target=recipe.target,
             workflow_sha256=sha256(bindings["workflow"]),
+            file_integrity=integrity,
+            resource_observation=resource_observation,
             stages={
-                "resource_readiness": _stage("not_run", "caller_did_not_supply_readiness_evidence"),
-                "dependency_compatibility": _stage("passed", "source_workflow_models_hash_bound"),
+                "resource_readiness": resource,
+                "dependency_compatibility": _stage(
+                    "unverified", "file_integrity_verified_runtime_compatibility_unverified"),
                 "technical_execution": _stage("failed", f"mask_decode_failed: {exc}"),
                 "segmentation_validity": _stage("failed", f"mask_geometry_invalid: {exc}"),
                 "alpha_quality": _stage("blocked", "no_geometry_valid_mask"),
@@ -470,7 +589,7 @@ def run_cutout_qa(recipe_path: Path, *, source: Path, mask: Path,
     hard = _hard_alpha(alpha)
     hard_count = sum(1 for value in hard.tobytes() if value)
     border = _border_fraction(hard)
-    components = _count_components_and_holes(hard)[0]
+    components, _, _ = _count_components_and_holes(hard)
     if hard_count == 0:
         segmentation = _stage("failed", "empty_mask")
     elif hard_count == hard.width * hard.height:
@@ -480,7 +599,7 @@ def run_cutout_qa(recipe_path: Path, *, source: Path, mask: Path,
     elif components != 1:
         segmentation = _stage("needs_review", "multiple_disconnected_components")
     else:
-        segmentation = _stage("passed")
+        segmentation = _stage("passed", "supplied_mask_geometry_checked_not_execution_provenance")
 
     output_dir.mkdir(parents=True, exist_ok=True)
     if any(output_dir.iterdir()):
@@ -489,10 +608,10 @@ def run_cutout_qa(recipe_path: Path, *, source: Path, mask: Path,
     if segmentation.status == "passed":
         mask_image = Image.open(mask_path)
         for spec in recipe.alpha_candidates:
-            candidate, _ = _candidate_image(source_rgba, mask_image, spec)
+            candidate, _, operation = _candidate_image(source_rgba, mask_image, spec)
             destination = output_dir / f"{spec.id}.png"
             _save_png_atomic(candidate, destination)
-            metrics = _alpha_metrics(candidate.getchannel("A"), alpha)
+            metrics = _alpha_metrics(candidate.getchannel("A"), alpha, operation)
             reasons = []
             if metrics["hard_iou"] < recipe.qa.min_hard_iou:
                 reasons.append("hard_silhouette_iou_below_threshold")
@@ -504,8 +623,8 @@ def run_cutout_qa(recipe_path: Path, *, source: Path, mask: Path,
                 reasons.append("coverage_change_above_threshold")
             if metrics["components"] != metrics["original_components"]:
                 reasons.append("connected_component_change")
-            if metrics["holes"] != metrics["original_holes"]:
-                reasons.append("hole_change")
+            if metrics["hole_components"] != metrics["original_hole_components"]:
+                reasons.append("hole_component_change")
             if metrics["max_narrow_width_delta_px"] > recipe.qa.max_narrow_width_delta_px:
                 reasons.append("narrow_structure_width_change")
             if metrics["partial_alpha_fraction"] > recipe.qa.max_partial_alpha_fraction:
@@ -522,12 +641,10 @@ def run_cutout_qa(recipe_path: Path, *, source: Path, mask: Path,
         "passed" if passed else "failed",
         "candidate_passed_technical_qa" if passed else "no_candidate_passed_technical_qa",
     )
-    dependency = _stage("passed", "source_workflow_models_hash_bound")
-    technical = _stage("passed", "mask_decoded_and_alpha_available")
-    resource = _stage("not_run", "caller_did_not_supply_readiness_evidence")
-    if resource_readiness is not None:
-        readiness = json.loads(resource_readiness.read_text(encoding="utf-8"))
-        resource = StageResult.model_validate(readiness)
+    dependency = _stage(
+        "unverified", "file_integrity_verified_runtime_compatibility_unverified")
+    technical = _stage(
+        "unverified", "supplied_mask_is_not_a_bound_execution_receipt")
     stages = {
         "resource_readiness": resource,
         "dependency_compatibility": dependency,
@@ -544,6 +661,8 @@ def run_cutout_qa(recipe_path: Path, *, source: Path, mask: Path,
         mask_sha256=sha256(mask_path),
         target=recipe.target,
         workflow_sha256=sha256(bindings["workflow"]),
+        file_integrity=integrity,
+        resource_observation=resource_observation,
         stages=stages,
         candidates=candidates,
         recommended_candidate=recommended,

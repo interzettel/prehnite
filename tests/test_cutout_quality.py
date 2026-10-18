@@ -12,6 +12,7 @@ from typer.testing import CliRunner
 from prehnite.cli import app
 from prehnite.cutout_quality import (
     CutoutContractError,
+    _count_components_and_holes,
     create_acceptance_record,
     load_recipe,
     run_cutout_qa,
@@ -108,6 +109,12 @@ def test_two_candidates_are_qaed_without_automatic_acceptance(tmp_path):
     }
     assert report["visual_acceptance"] == "not_recorded"
     assert report["owner_final_acceptance"] == "not_recorded"
+    assert report["file_integrity"]["status"] == "passed"
+    assert report["file_integrity"]["model_sha256"] == {
+        "detector": digest(report_path.parent.parent / "model.pth")}
+    assert report["stages"]["dependency_compatibility"]["status"] == "unverified"
+    assert report["stages"]["technical_execution"]["status"] == "unverified"
+    assert report["resource_observation"] is None
     assert len(report["candidates"]) == 2
     assert {row["status"] for row in report["candidates"]} == {"passed"}
     assert report["recommended_candidate"] in {"candidate-a", "candidate-b"}
@@ -142,8 +149,9 @@ def test_candidate_hard_geometry_and_transparent_rgb_are_conservative(tmp_path):
             assert candidate.getpixel((0, 0))[3] == 0
             assert candidate.getpixel((0, 0))[:3] != (240, 230, 220)
         assert row["metrics"]["components"] == 1
-        assert row["metrics"]["holes"] == 0
-        assert row["metrics"]["transparent_rgb_decontaminated"] is True
+        assert row["metrics"]["hole_components"] == 0
+        assert row["metrics"]["foreground_rgb_expansion_applied"] is True
+        assert row["metrics"]["transparent_rgb_replaced_pixels"] > 0
         assert row["metrics"]["partial_alpha_pixels"] > 0
 
 
@@ -214,6 +222,75 @@ def test_acceptance_is_explicit_create_only_and_separates_owner_state(tmp_path):
 
 
 
+def test_topology_counts_hole_components_and_all_border_seeds():
+    one = Image.new("L", (64, 64), 0)
+    draw = ImageDraw.Draw(one)
+    draw.rectangle((0, 0, 63, 63), fill=255)
+    draw.rectangle((20, 20, 29, 29), fill=0)  # 100-pixel hole
+    two = Image.new("L", (64, 64), 0)
+    draw = ImageDraw.Draw(two)
+    draw.rectangle((0, 0, 63, 63), fill=255)
+    draw.rectangle((20, 20, 24, 29), fill=0)  # 50 pixels
+    draw.rectangle((35, 20, 39, 29), fill=0)  # 50 pixels
+    assert _count_components_and_holes(one) == (1, 1, 100)
+    assert _count_components_and_holes(two) == (1, 2, 100)
+
+    corner = Image.new("L", (64, 64), 0)
+    ImageDraw.Draw(corner).rectangle((0, 0, 20, 20), fill=255)
+    assert _count_components_and_holes(corner) == (1, 0, 0)
+
+
+def write_resource_observation(tmp_path: Path, status: str,
+                               *, startup_authorized: bool = False) -> Path:
+    path = tmp_path / f"resource-{status}.json"
+    path.write_text(json.dumps({
+        "schema_version": 1,
+        "kind": "resource_readiness_observation",
+        "status": status,
+        "startup_authorized": startup_authorized,
+        "model_compatibility": "not_assessed",
+        "technical_execution": "not_started",
+        "visual_acceptance": "not_assessed",
+    }), encoding="utf-8")
+    return path
+
+
+@pytest.mark.parametrize(("status", "expected"), [
+    ("pass", "passed"), ("blocked", "blocked"), ("unknown", "unverified"),
+])
+def test_pr159_observation_is_adapted_without_authorizing_execution(
+        tmp_path, status, expected):
+    source, mask, _, _, _, recipe_path = write_fixture(tmp_path)
+    resource = write_resource_observation(tmp_path, status)
+    out = tmp_path / f"out-{status}"
+    report_path = run_cutout_qa(
+        recipe_path, source=source, mask=mask, workflow_root=tmp_path,
+        models_root=tmp_path, output_dir=out, resource_readiness=resource)
+    report = json.loads(report_path.read_text(encoding="utf-8"))
+    assert report["stages"]["resource_readiness"]["status"] == expected
+    assert report["resource_observation"]["observation_status"] == status
+    assert report["resource_observation"]["startup_authorized"] is False
+    assert report["stages"]["technical_execution"]["status"] == "unverified"
+
+
+def test_missing_resource_observation_fails_closed(tmp_path):
+    source, mask, _, _, _, recipe_path = write_fixture(tmp_path)
+    with pytest.raises(CutoutContractError, match="regular file"):
+        run_cutout_qa(recipe_path, source=source, mask=mask,
+                      workflow_root=tmp_path, models_root=tmp_path,
+                      output_dir=tmp_path / "out",
+                      resource_readiness=tmp_path / "does-not-exist.json")
+
+
+def test_resource_observation_that_authorizes_startup_is_refused(tmp_path):
+    source, mask, _, _, _, recipe_path = write_fixture(tmp_path)
+    resource = write_resource_observation(tmp_path, "pass", startup_authorized=True)
+    with pytest.raises(CutoutContractError, match="authorize"):
+        run_cutout_qa(recipe_path, source=source, mask=mask,
+                      workflow_root=tmp_path, models_root=tmp_path,
+                      output_dir=tmp_path / "out", resource_readiness=resource)
+
+
 def test_qa_refuses_to_overwrite_an_existing_report(tmp_path):
     source, mask, _, _, _, recipe_path = write_fixture(tmp_path)
     out = tmp_path / "out"
@@ -243,6 +320,26 @@ def test_cli_writes_report_and_keeps_visual_acceptance_unrecorded(tmp_path):
     assert report["visual_acceptance"] == "not_recorded"
     assert report["owner_final_acceptance"] == "not_recorded"
     assert "recommended_candidate" in result.output
+
+
+def test_documented_run_invocation_parses_without_invalid_manifest_flag(tmp_path):
+    manifest = tmp_path / "manifest.yaml"
+    profile = tmp_path / "profile.yaml"
+    manifest.write_text("id: nope\n", encoding="utf-8")
+    profile.write_text("{}\n", encoding="utf-8")
+    result = CliRunner().invoke(app, [
+        "run", str(manifest), "--profile", str(profile),
+        "--workspace", str(tmp_path / "workspace"),
+        "--inputs", str(tmp_path / "inputs"),
+    ])
+    # The files are invalid YAML, so the command may fail after parsing; the
+    # important regression is that the documented positional form is accepted
+    # and that --manifest is not accepted.
+    assert "No such option: --manifest" not in result.output
+    bad = CliRunner().invoke(app, [
+        "run", "--manifest", str(manifest), "--profile", str(profile),
+    ])
+    assert "No such option: --manifest" in bad.output
 
 
 def test_cli_exit_code_distinguishes_failed_qa(tmp_path):

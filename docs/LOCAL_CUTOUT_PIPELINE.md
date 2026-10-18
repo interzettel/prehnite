@@ -22,21 +22,23 @@ reviewed source
 
 ## 1. Produce the mask with the Engine
 
-Use the existing command and a new batch ID. The source and target are in the
-manifest; the workflow and model dependencies are bound in the profile/handoff:
+The manifest is a positional argument. Use the existing reviewed-source profile
+and the actual `run` flags; `--dependencies-root` is valid here. The workflow
+directory is supplied through the existing `PREHNITE_WORKFLOWS` environment
+variable, not as a standalone `--workflows` flag:
 
 ```bash
-prehnite run \
-  --manifest private/manifest-reviewed-cutout.yaml \
+export PREHNITE_WORKFLOWS="$(pwd)/private/workflows"  # PowerShell: $env:PREHNITE_WORKFLOWS = (Resolve-Path private/workflows)
+prehnite run private/manifest-reviewed-cutout.yaml \
   --profile private/profile-segmentation-installed.yaml \
   --workspace workspace \
   --inputs private/inputs \
-  --workflows private/workflows \
   --dependencies-root private/models
 ```
 
-Set `PREHNITE_WORKFLOWS` only if the existing adapter requires it. The Engine
-stages the raw mask under:
+`--recipe`, `--bindings`, `--workflows` and `--checkpoints` are an all-or-none
+quartet for a different recipe-bound execution path; do not pass only
+`--workflows`. The Engine stages the raw mask under:
 
 ```text
 workspace/batches/<new-batch>/intermediates/<asset>/cutouts/<target-hash>/mask.png
@@ -119,15 +121,38 @@ visual_acceptance
 owner_final_acceptance
 ```
 
-There is intentionally no generic `success` field. `visual_acceptance` and
-`owner_final_acceptance` remain `not_recorded` after QA. A failed report may
-still be written when segmentation or alpha QA fails; the CLI exits non-zero
-for `failed`/`blocked` stages.
+There is intentionally no generic `success` field.
+
+- `file_integrity` is a separate assertion that the supplied source, workflow
+  and model files match their declared SHA256 values. It is **not** model
+  compatibility or runtime proof.
+- `dependency_compatibility` and `technical_execution` are `unverified` unless
+  a separately bound execution receipt supplies batch ID, prompt ID, source
+  SHA, mask SHA, workflow SHA and model identities. A supplied mask is not
+  treated as an execution receipt.
+- `segmentation_validity` reports only the geometry of the supplied mask, not
+  its execution provenance.
+- `resource_readiness` accepts only the versioned PR #159
+  `resource_readiness_observation` report. Its status is preserved, its hash is
+  recorded, and `startup_authorized: false` is mandatory. A passing observation
+  is **not** execution authorization.
+- `visual_acceptance` and `owner_final_acceptance` remain `not_recorded` after
+  QA.
+
+A failed report may still be written when segmentation or alpha QA fails; the
+CLI exits non-zero for `failed`/`blocked` stages. Missing or malformed
+resource observations fail closed.
 
 A candidate is rejected by technical QA if it loses hard silhouette, changes
-components/holes, exceeds the configured coverage/feathering limits, changes a
-narrow row width, or fails the hard-IoU threshold. Candidate status is
-`passed` or `rejected`; every candidate remains `review_pending`.
+foreground/hole component topology, exceeds the configured coverage/feathering
+limits, changes a narrow row width, or fails the hard-IoU threshold. Candidate
+status is `passed` or `rejected`; every candidate remains `review_pending`.
+
+The RGB operation evidence is deliberately factual: `foreground_rgb_expansion`
+records that nearest-opaque foreground RGB was expanded, the expansion radius,
+and the measured count of RGB pixels replaced. It does **not** claim absence of
+halos or visual quality; perceptual edge assessment remains under independent
+review.
 
 ## 4. Inspect and decide
 

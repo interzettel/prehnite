@@ -468,7 +468,7 @@ def cutout_qa(
         output: Path = typer.Option(..., "--output", help="New candidate/report directory"),
         resource_readiness: Path | None = typer.Option(
             None, "--resource-readiness",
-            help="Optional JSON StageResult supplied by an observation-only preflight")):
+            help="Optional PR #159 resource-readiness observation JSON; not launch authorization")):
     """CPU-only alpha candidates + seven-stage technical QA; never accepts."""
     from .cutout_quality import CutoutContractError, run_cutout_qa
     try:
