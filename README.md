@@ -150,6 +150,27 @@ The **public package does not yet ship this combined launcher/refinement
 workflow or model weights**. See the [full dated evidence and limitations](docs/LOCAL_LAB_MILESTONE_2026-10-18.md)
 and [current delivery matrix](docs/PROGRESS.md).
 
+### Productization Sprint 1 — implemented locally, awaiting upstream review
+
+After the accepted lamp, the local runner **implemented** a reusable cutout QA
+module and additive `prehnite cutout-qa` / `prehnite cutout-accept` commands.
+They support source/target/workflow/model hash contracts, configurable CPU alpha
+candidates, technical-mask checks, separate resource/compatibility/execution/
+alpha/visual/owner acceptance states, and create-only scoped review receipts.
+The private lab also consolidated the runtime lifecycle into one local CLI
+(`preflight`, `check`, `start`, `status`, `stop`).
+
+**Publication boundary:** the code is currently a local, **unpublished**
+`feature/local-cutout-productization` branch at `f416aa4`, not on public
+`main`, not released and not yet wired into the Engine automatically. The
+local runner reported **12 new tests passed**, **863 passed / 15 skipped /
+1 Windows symlink-privilege test failed** across the full suite; no new
+GPU execution occurred. See [Sprint 1 evidence and remaining review work](docs/LOCAL_LAB_MILESTONE_2026-10-18.md#subsequent-productization-sprint-same-date-private-branch-not-yet-public).
+This is meaningful code progress, but **not a newly shipped public capability**.
+[Draft resource readiness PR #159](https://github.com/interzettel/prehnite/pull/159)
+and [documentation PR #160](https://github.com/interzettel/prehnite/pull/160)
+are separate review tracks.
+
 ### Model Recipe status: micro / macro
 
 Prehnite now has **versioned model-workflow blueprints** rather than a single hard-coded model. `prehnite-micro` targets operator-configured, local-first ComfyUI runs; `prehnite-macro` explores later high-capability/hybrid workflows. The checked-in JSON recipes **do not contain models or execute on their own**.
@@ -259,7 +280,7 @@ batch with zero accepted assets has no meaningful cost-per-accepted figure.
 
 **Latest public release: `0.1.0a1` — [published on PyPI](https://pypi.org/project/prehnite/0.1.0a1/) and [tagged on GitHub](https://github.com/interzettel/prehnite/releases/tag/v0.1.0a1) on 2026-10-17.** Current source development version: **`0.1.0a2.dev0` (unpublished)**. Install the released alpha with `python -m pip install prehnite==0.1.0a1`. See [Changelog](CHANGELOG.md), [Versioning](docs/VERSIONING.md) and [Release policy](docs/RELEASING.md). The core synthetic workflow works and **one native-1K local lamp cutout has independent artifact-level visual approval**; photorealistic quality across categories, 4K GPU feasibility, general segmentation accuracy and actual API billing have **not** been certified.
 
-**Evidence status (2026-10-18):** the private local lab achieved one accepted real cutout,
+**Evidence status (2026-10-18):** the private local lab achieved one accepted real cutout **and completed an initial reusable QA/runtime productization implementation on an unpushed branch**,
 documented in [this dated milestone](docs/LOCAL_LAB_MILESTONE_2026-10-18.md).
 This **does not silently convert** a frozen milestone parent, hardware tier,
 cross-category quality corpus or owner-signed journal gate to complete.
