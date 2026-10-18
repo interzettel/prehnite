@@ -24,7 +24,8 @@ def resolve_input(input_root: Path, relative: str) -> Path:
     return result
 
 
-def validate_job(manifest: Manifest, profile: Profile, input_root: Path,\n                 dependency_root: Path | None = None) -> None:
+def validate_job(manifest: Manifest, profile: Profile, input_root: Path,
+                 dependency_root: Path | None = None) -> None:
     supported = {
         "generation": {"demo", "fal", "comfyui", "disabled"},
         "upscale": {"demo", "fal", "comfyui", "disabled"},
