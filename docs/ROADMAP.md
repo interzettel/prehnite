@@ -2,39 +2,39 @@
 
 **Progress and agent tasks:** [Verified 61-unit release ledger](progress/STATUS.md) · [Atomic task dashboard and acceptance criteria](progress/ATOMIC.md) · [Frozen PR-sized register](../progress/atomic.json) · [Current iteration board](SPRINT.md). The atomic percentage is scoped only to the 19 unfinished release units from its initial baseline, not overall project progress.
 
-## Latest real-machine evidence (2026-10-18)
+## Latest real-machine and integration evidence (2026-10-18)
 
-**One local source-to-cutout case succeeded and Candidate A was independently visually accepted.**
-See [the measured local lab case study](LOCAL_LAB_MILESTONE_2026-10-18.md) for prompt/asset hashes, version compatibility, the failed first attempt, the single successful segmentation job, observed GPU/RAM telemetry and approval scope. The private launcher, model files and CPU-refinement implementation are **not yet shipped in the public Prehnite package**. The frozen 61-unit and 73-atomic ledgers remain unchanged pending their distinct acceptance conditions.
+**First artifact-level success:** one local 768×1024 SDXL lamp source was
+processed with GroundingDINO/SAM2, CPU alpha-refined, and Candidate A received
+independent visual approval at the inspected scale. The private launcher and
+checkpoints are **not** bundled in Prehnite, and the image has not received an
+owner-signed Prehnite journal promotion. [Exact evidence and limitations](LOCAL_LAB_MILESTONE_2026-10-18.md).
 
-**Productization Sprint 1 has now implemented the first reusable step locally**:
-the publicly submitted [draft PR #161](https://github.com/interzettel/prehnite/pull/161)
-(branch `feature/local-cutout-productization`, head `9949367`) adds opt-in CPU `cutout-qa` / `cutout-accept` commands,
-configurable alpha candidates, seven-stage evidence and create-only visual
-review receipts; the private lab consolidates its runtime launcher as
-`prehnite_local_runtime.py`. The local runner's review-resolution pass reports **21 passing cutout tests**
-and **872 host full-suite passes / 15 skipped / 1 Windows symlink-privilege
-failure**; GitHub Actions [run 39152075877](https://github.com/interzettel/prehnite/actions/runs/39152075877)
-finished with **25/25 successful jobs**. The previous five focused code-review
-findings were corrected in commit `9949367`; the updated contracts were
-independently source-inspected. **None of this is merged into public `main`
-yet, Engine QA is still opt-in and a second real-object test has not run.**
-[Evidence and source boundaries](LOCAL_LAB_MILESTONE_2026-10-18.md#subsequent-productization-sprint-and-public-review-same-date).
+**Reusable public source merged:** [PR #159](https://github.com/interzettel/prehnite/pull/159)
+provides read-only, fail-closed resource observations; [PR #161](https://github.com/interzettel/prehnite/pull/161)
+provides CPU-only cutout QA, alpha candidates, separate integrity/execution
+states and create-only review receipts. The three #159→#161 synthetic
+interface tests from temporary [integration PR #162](https://github.com/interzettel/prehnite/pull/162)
+were preserved in the merged source. The temporary branch passed 25/25
+GitHub Actions checks but should **not** be merged again. This is development
+`main` functionality, **not** a newly published package version, model-run
+authorization, live next-object proof or a production hardware tier.
 
-**Immediate work:** obtain maintainer review/merge decisions for the corrected
-[PR #161](https://github.com/interzettel/prehnite/pull/161), finish
-independent review of [PR #159](https://github.com/interzettel/prehnite/pull/159)
-and [documentation PR #160](https://github.com/interzettel/prehnite/pull/160),
-then seek separate authorization for a diverse next-object test.
+**Next engineering steps:** independently validate one new object under
+separate inference authorization, bind a truthful execution receipt to the
+real Engine→QA handoff, keep alpha review and owner journal approval distinct,
+and qualify repeatability on more than one material/scene. This does not
+require revisiting the accepted lamp or reopening the original Gate 3 batch.
 
-## Local productization review checklist (2026-10-18)
+## Local productization integration checklist (2026-10-18)
 
-- [x] Private lab implements a reusable CPU cutout-quality module, two additive CLI commands, candidate/approval receipts and local-runtime wrapper; local offline tests reported as passing.
-- [x] Resolve initial independent code-review findings on **[draft PR #161](https://github.com/interzettel/prehnite/pull/161)** (execution evidence, PR #159 observation, topology, CLI runbook, RGB operation facts); head `9949367`, CI 25/25. This checkbox is for the **review fixes only**, not merge/release approval.
-- [ ] Obtain final maintainer merge approval and reconcile branch interactions with PR #159/#160; maintain separate integration and GPU acceptance boundaries.
-- [ ] Integrate reviewed cutout QA optionally with the existing Engine and journal semantics; no new job engine.
-- [ ] Verify behavior against a second distinct real object under separate GPU authorization, with visual review; no automatic acceptance.
-- [ ] Evaluate gold-reference alpha scoring, material diversity, multiple instances and long-running/batch operations before marketing production readiness.
+- [x] First real local desk-lamp cutout and artifact-level independent visual acceptance, with immutable historical evidence.
+- [x] Public source merges of resource observations (#159) and opt-in cutout QA/acceptance (#161).
+- [x] Preserve pass/blocked/unknown readiness-to-QA integration regression tests from #162 in development `main`.
+- [x] Independently review original QA evidence/status contract, topology and CLI-runbook findings; corrections merged in #161.
+- [ ] Live second-object Engine → optional `cutout-qa` run and independent visual review (requires separate, bounded GPU authorization).
+- [ ] Model execution receipts binding actual run to source/target/mask/workflow/model identity.
+- [ ] Gold-reference alpha scoring, diversity, long-running/batch operations and model/weight rights clearance before release claims.
 
 ## v0.1: executable architecture, no mandatory cloud costs
 - [x] Strict manifest/profile validation and output path safety
@@ -84,7 +84,7 @@ This is a **new, separately tracked architecture scope** under [issue #132](http
 - [x] **First artifact-level local proof:** owner-authorized 768×1024 SDXL lamp source → one successful GroundingDINO/SAM2 cutout → conservative CPU alpha refinement → independently accepted Candidate A; measured 8.994 s cutout job and 2,533 MiB sampled VRAM ([2026-10-18 lab evidence](LOCAL_LAB_MILESTONE_2026-10-18.md)). This checks off **only the case study**, not the recipe/release acceptance task below.
 - [ ] **First fully integrated and reproducible `prehnite-micro` acceptance run:** make the validated private launcher/refinement a maintainable opt-in public workflow, preserve exact source/model/decision receipts in Prehnite's own journal, pass independent review and reproduce on supported hardware. The current successful workflow is a **private local lab experiment**; an owner-signed journal promotion is still absent ([#132](https://github.com/interzettel/prehnite/issues/132), [#32](https://github.com/interzettel/prehnite/issues/32)).
 - [ ] Record reproducible GPU/OS/driver, exact runtime/checkpoint hashes, peak VRAM/RAM, cold/warm stage latency, OOM/recovery behaviour and output-quality evidence on identified physical hardware before claiming any 4/6/8/12 GB `micro` tier ([#134](https://github.com/interzettel/prehnite/issues/134))
-- [ ] Model residency/unload, memory-aware scheduling, tiling, bounded failure fallback and measured per-human-accepted-cutout throughput ([#136](https://github.com/interzettel/prehnite/issues/136)); **draft observation-only resource preflight [PR #159](https://github.com/interzettel/prehnite/pull/159)** is not an operational watchdog or an approved production scheduler.
+- [ ] Model residency/unload, memory-aware scheduling, tiling, bounded failure fallback and measured per-human-accepted-cutout throughput ([#136](https://github.com/interzettel/prehnite/issues/136)); **merged observation-only resource preflight [PR #159](https://github.com/interzettel/prehnite/pull/159)** is not an operational watchdog or an approved production scheduler.
 - [ ] Operationalize versioned `prehnite-macro` with independently cleared rights, explicitly consented hosted APIs/budgets where applicable, and distinct benchmark evidence ([#132](https://github.com/interzettel/prehnite/issues/132))
 - [ ] Nontechnical installation/recipe selection and real-model end-to-end reproducibility on supported operating systems, with manual release approval ([#132](https://github.com/interzettel/prehnite/issues/132))
 
