@@ -19,7 +19,7 @@ QA remains opt-in and lacks a second real-object end-to-end test.** Closeout
 added two new tests (14 total); GitHub Actions reports 25/25 jobs successful,
 but an independent code review found evidence/status semantics and runbook errors
 to correct before merge.
-[Evidence and source boundaries](LOCAL_LAB_MILESTONE_2026-10-18.md#subsequent-productization-sprint-same-date-private-branch-not-yet-public).
+[Evidence and source boundaries](LOCAL_LAB_MILESTONE_2026-10-18.md#subsequent-productization-sprint-and-public-review-same-date).
 
 **Immediate work:** finish the focused source review and regression fixes in
 [PR #161](https://github.com/interzettel/prehnite/pull/161), finish
