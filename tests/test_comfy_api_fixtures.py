@@ -192,3 +192,47 @@ def test_comfy_rejects_workflow_outside_allowed_fixture_directory(api, tmp_path)
     with pytest.raises(ValueError, match="Workflow name"):
         Comfy().generate("test", "3:4", "2k", 10, tmp_path/"out.png", bad)
     assert api.posts == []
+
+
+@pytest.mark.parametrize("target_input,class_type", [
+    ("prompt", "GroundingDinoSAM2Segment"),
+    ("value", "PrimitiveString"),
+])
+def test_segmentation_uses_explicit_real_target_field_before_upload(
+        api, tmp_path, monkeypatch, target_input, class_type):
+    import json
+    graphs = tmp_path / "workflow"
+    graphs.mkdir()
+    template = json.loads((FIXTURES / "segment_api.json").read_text())
+    template["21"] = {"class_type": class_type, "inputs": {target_input: "old"}}
+    (graphs / "segment_api.json").write_text(json.dumps(template), encoding="utf-8")
+    monkeypatch.setenv("PREHNITE_WORKFLOWS", str(graphs))
+    source = tmp_path / "private.png"
+    Image.new("RGB", (64, 64), "navy").save(source)
+    Comfy().segment(source, "ceramic lamp", tmp_path / "mask.png",
+                    endpoint("segment", input_node="20", target_node="21",
+                             target_input=target_input))
+    assert len([x for x in api.posts if x[0].endswith("/upload/image")]) == 1
+    sent = next(x[1]["prompt"] for x in api.posts if x[0].endswith("/prompt"))
+    assert sent["21"]["inputs"][target_input] == "ceramic lamp"
+
+
+@pytest.mark.parametrize("field", ["filename_prefix", "image", "", 5, True])
+def test_invalid_or_disallowed_target_input_never_uploads(api, tmp_path, field):
+    source = tmp_path / "private.png"
+    Image.new("RGB", (64, 64), "navy").save(source)
+    with pytest.raises(ValueError, match="target_input must be"):
+        Comfy().segment(source, "lamp", tmp_path / "mask.png",
+                        endpoint("segment", input_node="20", target_node="21",
+                                 target_input=field))
+    assert api.posts == []
+
+
+def test_target_field_mismatch_refuses_private_upload(api, tmp_path):
+    source = tmp_path / "private.png"
+    Image.new("RGB", (64, 64), "navy").save(source)
+    with pytest.raises(ValueError, match="no 'prompt' input"):
+        Comfy().segment(source, "lamp", tmp_path / "mask.png",
+                        endpoint("segment", input_node="20", target_node="21",
+                                 target_input="prompt"))
+    assert api.posts == []
