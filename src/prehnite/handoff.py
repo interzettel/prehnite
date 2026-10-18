@@ -18,7 +18,8 @@ from .schema import Manifest, Profile
 MAX_RECEIPT_BYTES = 64 * 1024
 
 
-def verify_handoff(manifest: Manifest, profile: Profile, inputs: Path) -> dict:
+def verify_handoff(manifest: Manifest, profile: Profile, inputs: Path,
+                   dependency_root: Path | None = None) -> dict:
     """Fail closed before creating a journal, performing inference or uploading."""
     handoff = manifest.handoff
     if handoff is None:
@@ -79,7 +80,17 @@ def verify_handoff(manifest: Manifest, profile: Profile, inputs: Path) -> dict:
     }
     if evidence != expected:
         raise ValueError("Human review receipt disagrees with pinned handoff claims")
-    return {
+    implicit = None
+    if handoff.implicit_manifest is not None:
+        if dependency_root is None:
+            raise ValueError("Pinned implicit dependencies require --dependencies-root")
+        from .implicit_dependencies import verify_implicit_dependencies
+        spec_path = resolve_input(inputs, handoff.implicit_manifest)
+        implicit = verify_implicit_dependencies(
+            spec_path, dependency_root, handoff.implicit_manifest_sha256)
+    elif dependency_root is not None:
+        raise ValueError("Dependency root supplied without a pinned implicit manifest")
+    receipt = {
         "schema_version": 1,
         "source_batch": handoff.source_batch,
         "candidate_sha256": handoff.candidate_sha256,
@@ -95,3 +106,6 @@ def verify_handoff(manifest: Manifest, profile: Profile, inputs: Path) -> dict:
         "segmentation_quality_verified": False,
         "operator_attested_not_independently_authenticated": True,
     }
+    if implicit is not None:
+        receipt["implicit_dependency_attestation"] = implicit
+    return receipt

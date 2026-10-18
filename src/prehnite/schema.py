@@ -104,6 +104,8 @@ class ReviewedSourceHandoff(Strict):
     review_receipt_sha256: str
     review_document: str
     review_document_sha256: str
+    implicit_manifest: str | None = None
+    implicit_manifest_sha256: str | None = None
     verdict: Literal["accepted_for_next_stage"]
     target_phrase: str = Field(min_length=2, max_length=120)
     include: list[str] = Field(min_length=1, max_length=12)
@@ -119,6 +121,14 @@ class ReviewedSourceHandoff(Strict):
             relative_name(getattr(self, field))
         if self.review_receipt == self.review_document:
             raise ValueError("Structured handoff receipt and original review must be distinct")
+        if (self.implicit_manifest is None) != (self.implicit_manifest_sha256 is None):
+            raise ValueError("Implicit dependency manifest and SHA256 must be supplied together")
+        if self.implicit_manifest is not None:
+            relative_name(self.implicit_manifest)
+            if self.implicit_manifest in (self.review_document, self.review_receipt):
+                raise ValueError("Implicit manifest must be distinct from review evidence")
+            if not re.fullmatch(r"[0-9a-f]{64}", self.implicit_manifest_sha256):
+                raise ValueError("Implicit dependency manifest requires canonical SHA256")
         if not self.target_phrase.strip() or self.target_phrase != self.target_phrase.strip():
             raise ValueError("Handoff target phrase must be explicit and trimmed")
         both = self.include + self.exclude
