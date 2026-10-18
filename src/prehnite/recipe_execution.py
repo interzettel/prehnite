@@ -15,6 +15,7 @@ from pathlib import Path
 from .recipe_resolver import LocalBindings, load_local_bindings, resolve_local_micro, _local_file
 from .recipes import Recipe, load_recipe
 from .schema import Profile
+from .comfy import segmentation_target_input
 
 
 @dataclass(frozen=True)
@@ -105,4 +106,14 @@ def verify_micro_profile(recipe: Recipe, bindings: LocalBindings,
         if bindings.schema_version == 2 and not all(
                 f.graph_reference in references for f in binding.additional_files):
             raise ValueError(f"Stage {stage.id} graph has missing supplemental model reference")
+        if stage.id == "cutout":
+            # Reject stale/wrong input mappings before any local image upload.
+            # Supports legacy text and explicit prompt/value user-workflow nodes.
+            option = segmentation_target_input(endpoint)
+            node_id = endpoint.options.get("target_node")
+            if not isinstance(node_id, (str, int)) or str(node_id) not in graph:
+                raise ValueError("Cutout target_node must identify a real graph node")
+            inputs = graph[str(node_id)].get("inputs")
+            if not isinstance(inputs, dict) or option not in inputs:
+                raise ValueError(f"Cutout target_node has no configured '{option}' input")
 
