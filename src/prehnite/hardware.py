@@ -46,8 +46,19 @@ def _windows_ram() -> dict[str, Any]:
         total, available = int(memory.ullTotalPhys), int(memory.ullAvailPhys)
         if not total or available > total:
             raise ValueError("Invalid Windows memory report")
-        return {"total_bytes": total, "available_bytes": available,
-                "source": "GlobalMemoryStatusEx", "status": "observed"}
+        report = {"total_bytes": total, "available_bytes": available,
+                  "source": "GlobalMemoryStatusEx", "status": "observed"}
+        # On Windows these are system commit limits, not pagefile disk capacity.
+        limit = int(memory.ullTotalPageFile)
+        remaining = int(memory.ullAvailPageFile)
+        if limit > 0 and 0 <= remaining <= limit:
+            report.update({"commit_limit_bytes": limit,
+                           "commit_used_bytes": limit - remaining,
+                           "commit_source": "GlobalMemoryStatusEx",
+                           "commit_status": "observed"})
+        else:
+            report["commit_status"] = "unavailable"
+        return report
     except (AttributeError, OSError, ValueError):
         return {"total_bytes": None, "available_bytes": None,
                 "source": "GlobalMemoryStatusEx", "status": "unavailable"}
