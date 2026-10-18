@@ -18,7 +18,8 @@ from .schema import Manifest, Profile
 MAX_RECEIPT_BYTES = 64 * 1024
 
 
-def verify_handoff(manifest: Manifest, profile: Profile, inputs: Path,\n                   dependency_root: Path | None = None) -> dict:
+def verify_handoff(manifest: Manifest, profile: Profile, inputs: Path,
+                   dependency_root: Path | None = None) -> dict:
     """Fail closed before creating a journal, performing inference or uploading."""
     handoff = manifest.handoff
     if handoff is None:
