@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "files": [
+    {
+      "role": "groundingdino_weights",
+      "kind": "weight",
+      "path": "grounding-dino/groundingdino_swint_ogc.pth",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "source_url": "https://huggingface.co/ShilongLiu/GroundingDINO",
+      "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "license_url": "https://huggingface.co/ShilongLiu/GroundingDINO/blob/main/LICENSE"
+    },
+    {
+      "role": "sam2_weights",
+      "kind": "weight",
+      "path": "sam2/sam2.1_hiera_base_plus.pt",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "source_url": "https://huggingface.co/facebook/sam2.1-hiera-base-plus",
+      "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "license_url": "https://huggingface.co/facebook/sam2.1-hiera-base-plus"
+    },
+    {
+      "role": "bert_weights",
+      "kind": "weight",
+      "path": "bert-base-uncased/model.safetensors",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "source_url": "https://huggingface.co/google-bert/bert-base-uncased",
+      "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "license_url": "https://huggingface.co/google-bert/bert-base-uncased"
+    },
+    {
+      "role": "groundingdino_config",
+      "kind": "config",
+      "path": "grounding-dino/GroundingDINO_SwinT_OGC.cfg.py",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "source_url": "https://huggingface.co/ShilongLiu/GroundingDINO",
+      "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "license_url": "https://huggingface.co/ShilongLiu/GroundingDINO"
+    },
+    {
+      "role": "bert_tokenizer",
+      "kind": "tokenizer",
+      "path": "bert-base-uncased/tokenizer.json",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "source_url": "https://huggingface.co/google-bert/bert-base-uncased",
+      "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "license_url": "https://huggingface.co/google-bert/bert-base-uncased"
+    }
+  ]
+}
