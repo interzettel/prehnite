@@ -1,0 +1,125 @@
+{
+  "schema_version": 1,
+  "scope_id": "cutout-capability-2026-10-18",
+  "baseline_date": "2026-10-18",
+  "updated": "2026-10-18",
+  "fixed_milestone_count": 13,
+  "scope": "First private real cutout through reusable, independently reviewed non-lamp Engine-to-QA workflow; not the release ledger, PyPI package, or all-product completion.",
+  "counting_rule": "Count each named outcome once only when its acceptance is met and linked evidence exists. Local operator-reported execution is labeled separately from public merged code and independent artifact review. Planned and blocked are zero credit. Scope and denominator cannot be silently reset.",
+  "groups": [
+    "Local proof",
+    "Merged software",
+    "Real-world validation"
+  ],
+  "milestones": [
+    {
+      "id": "LP01",
+      "group": "Local proof",
+      "title": "Native-1K source created and reviewed",
+      "acceptance": "One identified local source, its byte hash and authorization evidence are retained",
+      "state": "done",
+      "evidence": "https://github.com/interzettel/prehnite/blob/main/docs/LOCAL_LAB_MILESTONE_2026-10-18.md",
+      "evidence_kind": "operator_report"
+    },
+    {
+      "id": "LP02",
+      "group": "Local proof",
+      "title": "Compatible private GPU cutout runtime demonstrated",
+      "acceptance": "Pinned GroundingDINO/SAM2 nodes execute with a process-isolated compatibility overlay",
+      "state": "done",
+      "evidence": "https://github.com/interzettel/prehnite/blob/main/docs/LOCAL_LAB_MILESTONE_2026-10-18.md",
+      "evidence_kind": "operator_report"
+    },
+    {
+      "id": "LP03",
+      "group": "Local proof",
+      "title": "Real local segmentation mask produced",
+      "acceptance": "One actual non-synthetic mask with exact prompt, source and mask identity is documented",
+      "state": "done",
+      "evidence": "https://github.com/interzettel/prehnite/blob/main/docs/LOCAL_LAB_MILESTONE_2026-10-18.md",
+      "evidence_kind": "operator_report"
+    },
+    {
+      "id": "LP04",
+      "group": "Local proof",
+      "title": "One refined RGBA candidate independently visually accepted",
+      "acceptance": "Visual decision specifies a particular candidate hash, viewing scale and limited scope",
+      "state": "done",
+      "evidence": "https://github.com/interzettel/prehnite/blob/main/docs/LOCAL_LAB_MILESTONE_2026-10-18.md",
+      "evidence_kind": "independent_visual"
+    },
+    {
+      "id": "SW01",
+      "group": "Merged software",
+      "title": "Read-only fail-closed resource preflight merged",
+      "acceptance": "An explicit policy assesses RAM, commit and VRAM without authorizing inference",
+      "state": "done",
+      "evidence": "https://github.com/interzettel/prehnite/pull/159",
+      "evidence_kind": "merged_pr"
+    },
+    {
+      "id": "SW02",
+      "group": "Merged software",
+      "title": "Configurable CPU cutout refinement and technical QA merged",
+      "acceptance": "Reusable candidate generation, mask topology and alpha checks have public source tests",
+      "state": "done",
+      "evidence": "https://github.com/interzettel/prehnite/pull/161",
+      "evidence_kind": "merged_pr"
+    },
+    {
+      "id": "SW03",
+      "group": "Merged software",
+      "title": "Create-only evidence-bound independent acceptance CLI merged",
+      "acceptance": "Cutout review record verifies candidate/evidence bytes without owner journal promotion",
+      "state": "done",
+      "evidence": "https://github.com/interzettel/prehnite/pull/161",
+      "evidence_kind": "merged_pr"
+    },
+    {
+      "id": "SW04",
+      "group": "Merged software",
+      "title": "Resource readiness to QA interface regression on main",
+      "acceptance": "Public tests cover pass, blocked and unknown observations without implicit startup",
+      "state": "done",
+      "evidence": "https://github.com/interzettel/prehnite/blob/main/tests/test_resource_cutout_integration.py",
+      "evidence_kind": "merged_test"
+    },
+    {
+      "id": "VL01",
+      "group": "Real-world validation",
+      "title": "Rights-cleared non-lamp local source recorded",
+      "acceptance": "Original file on local disk with verified licence, exact path, SHA256 and dimensions",
+      "state": "blocked",
+      "blocker": "Awaiting original JPEG download and local rights/hash verification"
+    },
+    {
+      "id": "VL02",
+      "group": "Real-world validation",
+      "title": "Second real-object Engine to QA trial independently reviewed",
+      "acceptance": "One bounded non-lamp segmentation feeds merged CPU QA and receives explicit human review",
+      "state": "blocked",
+      "blocker": "Requires VL01, a passing resource preflight and one authorized inference"
+    },
+    {
+      "id": "VL03",
+      "group": "Real-world validation",
+      "title": "Bound real-model execution and compatibility receipt",
+      "acceptance": "Execution receipt binds actual run/source/mask/workflow/model identity, not just file presence",
+      "state": "planned"
+    },
+    {
+      "id": "VL04",
+      "group": "Real-world validation",
+      "title": "Optional journal-safe Engine to QA orchestration",
+      "acceptance": "Engine may opt into CPU QA with preserved journal/recovery and no implicit inference",
+      "state": "planned"
+    },
+    {
+      "id": "VL05",
+      "group": "Real-world validation",
+      "title": "Diverse material cutout quality benchmark",
+      "acceptance": "Independent real gold-reference masks and reviews cover multiple object/material categories",
+      "state": "planned"
+    }
+  ]
+}
