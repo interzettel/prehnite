@@ -86,6 +86,8 @@ def test_windows_memory_native_api_is_source_labeled(monkeypatch):
     def fake_global_memory_status(pointer):
         pointer._obj.ullTotalPhys = 16 * 1024**3
         pointer._obj.ullAvailPhys = 7 * 1024**3
+        pointer._obj.ullTotalPageFile = 40 * 1024**3
+        pointer._obj.ullAvailPageFile = 11 * 1024**3
         return 1
     monkeypatch.setattr(hw.ctypes, "windll", SimpleNamespace(
         kernel32=SimpleNamespace(GlobalMemoryStatusEx=fake_global_memory_status)),
@@ -95,6 +97,9 @@ def test_windows_memory_native_api_is_source_labeled(monkeypatch):
     assert memory["status"] == "observed"
     assert memory["total_bytes"] == 16 * 1024**3
     assert memory["available_bytes"] == 7 * 1024**3
+    assert memory["commit_limit_bytes"] == 40 * 1024**3
+    assert memory["commit_used_bytes"] == 29 * 1024**3
+    assert memory["commit_status"] == "observed"
 
 
 def test_timeout_does_not_claim_nvidia_suitability(monkeypatch):
