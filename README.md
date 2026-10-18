@@ -290,9 +290,7 @@ live-validated on another object or released as a new PyPI version. See
 [the dated milestone](docs/LOCAL_LAB_MILESTONE_2026-10-18.md).
 This **does not silently convert** a frozen milestone parent, hardware tier,
 cross-category quality corpus or owner-signed journal gate to complete.
-The original release ledger remains **42/61 (68.9%)**, and the separately
-scoped atomic register remains **14/73 (19.18%)** until their specific
-acceptance conditions are met. The merged #159/#161 changes are development
+The original release ledger remains **42/61 (68.9%)**. The frozen atomic register is now **15/73 (20.55%)** after [S03-A03's exact pixel-level acceptance](https://github.com/interzettel/prehnite/pull/164) was met and merged. Other atomic tasks and parent release gates remain open until their distinct criteria are met. See the [unchanged 73-task baseline](docs/progress/ATOMIC.md) and [two-day reconciliation](docs/progress/RETROSPECTIVE_2026-10-18.md). The merged #159/#161 changes are development
 source only; they are not included in the published `0.1.0a1` package.
 
 The tracker distinguishes implemented scaffolding from independently evidenced completions, and records issues blocked by broader hardware validation, human calibration or paid-call authorization.
