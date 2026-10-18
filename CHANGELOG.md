@@ -7,6 +7,7 @@ This project follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) an
 ## [Unreleased]
 
 ### Added
+- Reusable post-segmentation cutout contract: explicit source/target/workflow/model bindings, configurable CPU alpha candidates with nearest-foreground RGB decontamination, seven separate evidence stages, technical QA, and create-only independent visual acceptance records. Existing Engine remains the job lifecycle owner; no automatic visual acceptance or inference is added (`docs/LOCAL_CUTOUT_PIPELINE.md`).
 - Optional strict operator-declared implicit segmentation dependency SHA256 manifest for human-reviewed source cutout batches. Hashes privately staged GroundingDINO/SAM2/BERT weights, configs and tokenizer files without loading them; binds receipt to new batch identity and rechecks before cutout. Legacy handoffs unchanged, runtime-loaded bytes/graph completeness/licensing not certified (#156).
 
 ### Added
