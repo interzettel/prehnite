@@ -61,13 +61,15 @@ memory and constraints](LOCAL_LAB_MILESTONE_2026-10-18.md).
 
 **Follow-up code progress (reported 2026-10-18):** Productization
 Sprint 1 prepared a source branch now submitted as **[draft PR #161](https://github.com/interzettel/prehnite/pull/161)**
-(commit `f4c86da`), with additive `cutout-qa` and `cutout-accept` commands,
+(current head `9949367`), with additive `cutout-qa` and `cutout-accept` commands,
 configurable CPU alpha candidates and separate evidence states; the consolidated
-runtime entry point remains private. Closeout ran **14 new CPU tests**;
-host full suite reported **865 passed, 15 skipped, 1 Windows symlink-privilege
-failure**; GitHub Actions [run 39150686394](https://github.com/interzettel/prehnite/actions/runs/39150686394)
-finished with **25/25 passing jobs**. No new GPU inference occurred. The
-draft remains unmerged pending independent evidence-contract and runbook fixes.
+runtime entry point remains private. Review resolution ran **21 new cutout tests**;
+host full suite reported **872 passed, 15 skipped, 1 Windows symlink-privilege
+failure**; GitHub Actions [run 39152075877](https://github.com/interzettel/prehnite/actions/runs/39152075877)
+finished with **25/25 passing jobs**, independently checked. Source inspection
+confirmed that the original five review findings were addressed in `9949367`.
+No new GPU inference occurred, and the draft remains unmerged pending final
+maintainer merge decision, cross-PR integration review and later live-object validation.
 The public package, automatic Engine QA integration and next-object acceptance
 remain open. See [dated evidence](LOCAL_LAB_MILESTONE_2026-10-18.md#subsequent-productization-sprint-and-public-review-same-date)
 and draft documentation [PR #160](https://github.com/interzettel/prehnite/pull/160).
