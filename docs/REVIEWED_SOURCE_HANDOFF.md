@@ -43,6 +43,19 @@ After copying the reviewed source/document, writing the structured receipt and r
 
 Only validation is safe without installed segmentation models. The profile node IDs are **placeholders**, not verified against ComfyUI-SAM2, and a later `prehnite run` will execute actual local segmentation. Do not run until model rights, installed nodes, graph mappings, and explicit user approval are established.
 
+## Optional strict implicit-model byte attestation
+
+For a GroundingDINO/SAM2/BERT custom-node stack, add a separate
+[operator-declared dependency manifest](IMPLICIT_DEPENDENCIES.md) to the
+private reviewed-source packet, pin its SHA256 with
+`handoff.implicit_manifest` and `handoff.implicit_manifest_sha256`,
+and pass `--dependencies-root` to both `prehnite validate` and the later
+separately authorized `prehnite run`. The engine rehashes declared model,
+config and tokenizer files before execution and cutout, then records them
+under `human_review_handoff.implicit_dependency_attestation`. An old packet
+without this optional extension remains valid but cannot claim implicit
+dependency coverage. No inference or download is authorized by attestation.
+
 ## Limits
 
 These hashes establish file integrity and a claimed operator review, **not** independent human authentication, runtime GPU model provenance, actual cord exclusion, mask accuracy or automatic quality acceptance. Implicit GroundingDINO/BERT dependencies in custom nodes still need separate, byte-pinned runtime-adjacent model evidence. See [multi-file provenance](MULTIFILE_PROVENANCE.md).
