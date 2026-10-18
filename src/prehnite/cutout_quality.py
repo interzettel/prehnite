@@ -20,6 +20,7 @@ from typing import Literal
 from PIL import Image, ImageChops, ImageDraw, ImageFilter, ImageOps, ImageStat
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
+from .color_spill import ColorSpillRefused, unmix_known_uniform_background
 from .images import _mask_alpha, sha256
 from .schema import relative_name
 
@@ -122,13 +123,31 @@ class ModelBinding(Strict):
         return relative_name(value)
 
 
+class KnownBackgroundSpill(Strict):
+    """Operator-asserted uniform backdrop; never inferred from arbitrary photos."""
+
+    background_rgb: list[int] = Field(min_length=3, max_length=3)
+    border_tolerance: int = Field(default=8, ge=0, le=16)
+    min_alpha: int = Field(default=48, ge=32, le=224)
+    max_clipped_fraction: float = Field(default=0.1, ge=0, le=0.25)
+
+    @field_validator("background_rgb")
+    @classmethod
+    def check_rgb(cls, value: list[int]) -> list[int]:
+        if any(type(component) is not int or not 0 <= component <= 255
+               for component in value):
+            raise ValueError("Known background RGB must be exactly three bytes")
+        return value
+
+
 class AlphaCandidateSpec(Strict):
     id: str
     sigma_px: float = Field(gt=0.1, le=3.0)
-    # Decontamination is deliberately mandatory: feathering without
-    # foreground RGB expansion can reintroduce background colors.
+    # Foreground RGB expansion is mandatory; actual color spill unmixing is
+    # separately opt-in and requires a declared/verified uniform background.
     decontaminate: Literal[True] = True
     preserve_core_px: int = Field(default=1, ge=0, le=4)
+    color_spill: KnownBackgroundSpill | None = None
 
     @field_validator("id")
     @classmethod
@@ -452,17 +471,32 @@ def _candidate_image(source: Image.Image, mask: Image.Image, spec: AlphaCandidat
     candidate_alpha = candidate_alpha.point(lambda value: 0 if value < 2 else value)
     radius = max(1, math.ceil(spec.sigma_px * 3) + 1)
     source_rgba = source.convert("RGBA")
+    spill_metrics: dict = {"color_spill_unmix_applied": False}
+    if spec.color_spill is not None:
+        try:
+            corrected, spill_metrics = unmix_known_uniform_background(
+                source_rgba, candidate_alpha, hard,
+                background_rgb=tuple(spec.color_spill.background_rgb),
+                border_tolerance=spec.color_spill.border_tolerance,
+                min_alpha=spec.color_spill.min_alpha,
+                max_clipped_fraction=spec.color_spill.max_clipped_fraction,
+            )
+        except ColorSpillRefused as exc:
+            raise CutoutContractError(f"color_spill_refused:{exc}") from exc
+        source_rgba = corrected.convert("RGBA")
     filled = _fill_foreground_rgb(source_rgba, hard, radius)
-    # Operation evidence only: count pixels whose RGB was expanded from the
-    # nearest opaque foreground. This is not a halo/visual-quality claim.
+    # Count only changes outside the hard foreground as foreground expansion.
+    # Separate spill corrections within the hard mask are reported above.
     original_rgb = source_rgba.convert("RGB")
     expanded_rgb = filled.convert("RGB")
     replaced = ImageChops.difference(original_rgb, expanded_rgb).convert("L")
+    replaced = ImageChops.multiply(replaced, ImageOps.invert(hard))
     replaced_pixels = sum(1 for value in replaced.tobytes() if value)
     operation = {
         "foreground_rgb_expansion_applied": True,
         "foreground_rgb_expansion_radius_px": radius,
         "transparent_rgb_replaced_pixels": replaced_pixels,
+        **spill_metrics,
     }
     candidate = expanded_rgb.convert("RGBA")
     candidate.putalpha(candidate_alpha)
