@@ -2,7 +2,7 @@
 
 This connects the offline-only model binding from [#135](https://github.com/interzettel/prehnite/issues/135) to the existing engine/SQLite journal. It supports an **explicitly configured local ComfyUI run**, not a certified model installation, quality result or GPU profile. Unlike `prehnite recipe-resolve`, the `prehnite run` command **does attempt real local inference** when a configured ComfyUI server is available. No third-party weights ship with Prehnite.
 
-To prepare private, hash-pinned local bindings without hand-writing JSON, use the create-only `prehnite micro-setup` command in [First Real Asset](FIRST_REAL_ASSET.md). An optional `--profile` guards mismatched workflow IDs/configuration before writing the receipt. Run `prehnite trial-plan` separately for a no-network, no-inference first-asset check; neither of these setup commands runs a GPU or a hosted API.
+For a text-targeted cutout, set `segmentation.options.target_input` to the real ComfyUI API node field: `prompt` on GroundingDinoSAM2Segment or `value` on PrimitiveString, with the actual `target_node`. Omitting the option preserves the legacy `text` default. The setup, recipe verification and adapter all reject a mismatched node/field before local ComfyUI upload; no third-party node or model installation is implied.\n\nTo prepare private, hash-pinned local bindings without hand-writing JSON, use the create-only `prehnite micro-setup` command in [First Real Asset](FIRST_REAL_ASSET.md). An optional `--profile` guards mismatched workflow IDs/configuration before writing the receipt. Run `prehnite trial-plan` separately for a no-network, no-inference first-asset check; neither of these setup commands runs a GPU or a hosted API.
 
 ## Before attempting a run
 

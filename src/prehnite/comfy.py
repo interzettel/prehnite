@@ -52,6 +52,18 @@ def graph_file(endpoint: Endpoint) -> dict:
     return graph
 
 
+def segmentation_target_input(endpoint: Endpoint) -> str:
+    """Select a known literal ComfyUI target field, defaulting to legacy text.
+
+    An explicit field prevents silently injecting a prompt into the wrong node.
+    This never changes file/graph identity or authorizes remote execution.
+    """
+    value = endpoint.options.get("target_input", "text")
+    if not isinstance(value, str) or value not in ("text", "prompt", "value"):
+        raise ValueError("segmentation target_input must be text, prompt or value")
+    return value
+
+
 def put_node(graph: dict, node: str | int | None, key: str, value) -> None:
     if node is None or str(node) not in graph:
         raise ValueError(f"ComfyUI graph requires valid node for {key}")
@@ -237,7 +249,8 @@ class Comfy:
         if not resume_id:
             # Fail fast on *both* node mappings before sending an image upload.
             put_node(graph, endpoint.options.get("input_node"), "image", "__preflight__")
-            put_node(graph, endpoint.options.get("target_node"), "text", target)
+            put_node(graph, endpoint.options.get("target_node"),
+                     segmentation_target_input(endpoint), target)
             name = self._upload(source, endpoint)
             put_node(graph, endpoint.options.get("input_node"), "image", name)
         return self._render(graph, endpoint, output, on_submit, resume_id)

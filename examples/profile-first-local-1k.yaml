@@ -19,6 +19,9 @@ segmentation:
     workflow: cutout_api.json
     input_node: "10"
     target_node: "11"
+    # For GroundingDinoSAM2Segment set target_input: prompt; for PrimitiveString set value.
+    # Legacy graphs without target_input continue to use text.
+    target_input: text
     output_node: "12"
 upscale: {provider: disabled}
 judge: {provider: demo, model: technical}

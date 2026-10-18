@@ -15,6 +15,7 @@ from .recipe_resolver import (
 )
 from .recipes import load_recipe, recipe_sha256
 from .schema import Profile
+from .comfy import segmentation_target_input
 
 
 def _check_graph_node_mappings(profile: Profile, workflows_root: Path,
@@ -31,7 +32,8 @@ def _check_graph_node_mappings(profile: Profile, workflows_root: Path,
             "size_node": ("width", "height"),
         }),
         "segmentation": (cutout_graph, {
-            "input_node": ("image",), "target_node": ("text",),
+            "input_node": ("image",),
+            "target_node": (segmentation_target_input(profile.segmentation),),
         }),
     }
     for name, (filename, checks) in required.items():
