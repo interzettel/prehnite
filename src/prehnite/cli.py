@@ -165,9 +165,11 @@ def trial_evidence_cli(
 
 @app.command()
 def validate(manifest: Path, profile: Path = typer.Option(...),
-             inputs: Path = typer.Option(Path("inputs"))):
+             inputs: Path = typer.Option(Path("inputs")),
+             dependencies_root: Path | None = typer.Option(None, "--dependencies-root",
+                 help="Approved root for explicit implicit-model file attestations")):
     m, p = load_manifest(manifest), load_profile(profile)
-    validate_job(m, p, inputs)
+    validate_job(m, p, inputs, dependencies_root)
     typer.echo(f"Valid: {m.id}, {len(m.assets)} assets")
 
 @app.command()
@@ -212,7 +214,9 @@ def run(manifest: Path, profile: Path = typer.Option(...),
         recipe: Path | None = typer.Option(None, "--recipe"),
         bindings: Path | None = typer.Option(None, "--bindings"),
         workflows: Path | None = typer.Option(None, "--workflows"),
-        checkpoints: Path | None = typer.Option(None, "--checkpoints")):
+        checkpoints: Path | None = typer.Option(None, "--checkpoints"),
+        dependencies_root: Path | None = typer.Option(None, "--dependencies-root",
+            help="Operator-owned root for strictly pinned implicit cutout dependencies")):
     """Run a batch; optional all-or-nothing local recipe binding refuses drift."""
     from .engine import Engine
     from .recipe_execution import MicroExecution
@@ -228,7 +232,8 @@ def run(manifest: Path, profile: Path = typer.Option(...),
         raise typer.BadParameter("Recipe-bound MCP worker launching is not implemented")
     try:
         engine = Engine(load_manifest(manifest), load_profile(profile), workspace, inputs,
-                        job_token=job_token, recipe_execution=execution)
+                        job_token=job_token, recipe_execution=execution,
+                        dependency_root=dependencies_root)
     except (ValueError, OSError) as exc:
         raise typer.BadParameter(str(exc)) from exc
     try:
