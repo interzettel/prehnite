@@ -12,7 +12,7 @@
 - **First accepted cutout:** one desk lamp produced by local GroundingDINO+SAM2, CPU-refined, with Candidate A independently visually approved at the reviewed comparison scale. This is **not** general quality certification or an owner-signed Prehnite journal acceptance.
 - **Full public evidence index:** [LOCAL_LAB_MILESTONE_2026-10-18.md](LOCAL_LAB_MILESTONE_2026-10-18.md).
 - **Release counting:** original **42/61 (68.9%)** evidenced units, **2/7** milestone gates, frozen scoped atomic **14/73 (19.18%)**, unchanged because the remaining parent acceptance criteria exceed a single approved case study. See [release readiness](PROGRESS.md) and [roadmap](ROADMAP.md).
-- **Documentation:** [PR #160](https://github.com/interzettel/prehnite/pull/160) contains this dated evidence/status update and is being merged **after** #159/#161. [Temporary integration PR #162](https://github.com/interzettel/prehnite/pull/162) demonstrated the combined branch and its test was preserved in #161; **close #162 without merging it**. Development `main` now contains `resource-preflight`, `cutout-qa`, and `cutout-accept`; released PyPI `0.1.0a1` does not.
+- **Documentation:** [PR #160](https://github.com/interzettel/prehnite/pull/160) contains this dated evidence/status update and is being merged **after** #159/#161. [Temporary integration PR #162](https://github.com/interzettel/prehnite/pull/162) demonstrated the combined branch and its test was preserved in #161; **#162 was closed unmerged**. Development `main` now contains `resource-preflight`, `cutout-qa`, and `cutout-accept`; released PyPI `0.1.0a1` does not.
 
 ## 2. Immutable source, failure and successful candidate
 
@@ -64,11 +64,11 @@ and the preceding Gate 4B-N/O, Gate 4A and Gate 3 reports.
 ## 5. Next real milestone — a distinct object through the merged code
 
 1. **Already complete:** the owner's source merge authorization, #159→#161 integration, retention of the #162 synthetic interface tests, and passing post-merge `main` CI. Do not redo these steps or re-run the lamp.
-2. **Documentation delivery:** finish merging #160 after correcting references from "unmerged draft" to "development main" and verifying docs/governance checks. Close temporary #162 **without merge**. No release or tag.
+2. **Documentation delivery:** this dated #160 record documents the now-merged source. Temporary #162 is already **closed unmerged** with its integration test preserved. No release or tag.
 3. **Local agent:** fast-forward/reconcile its private public checkout with current `main` while preserving private artifacts and script environment. Update the private lab handover only if the changed public-state links require it; avoid repeating the completed productization sprint.
 4. **Next-object pilot (separate explicit authorization required):** choose a distinct, reviewed, rights-permitted source and one target; run an operator-configured resource preflight and one bounded local Engine segmentation, then the merged opt-in `cutout-qa` step, human review and create-only evidence-bound acceptance. Record batch/prompt/source/model/mask/output receipts and actual resource telemetry; no automatic retries or implicit inference authorization.
 5. Only after that real trial assess opt-in Engine→QA automation, multi-object quality benchmark, rights and hardware-tier evidence. **One accepted lamp is not production readiness.**
 
 **Operational safety:** No implicit inference retries; stop after a failed authorized cutout, never replay the rejected Gate 3 batch, do not silently clear startup attempt markers, avoid sharing original model images publicly, and respect original `uncertain: reject` policy. No additional public PR merge or release tag without authorization.
 
-**Latest state:** #159 and #161 are merged to development main, #160 is the dated documentation change, and #162 must be closed unmerged. The new local cutout commands are public **source** functionality, not a new PyPI release or live-validated multi-object workflow.
+**Latest state:** #159 and #161 are merged to development main, #160 is the dated documentation change, and #162 is closed unmerged. The new local cutout commands are public **source** functionality, not a new PyPI release or live-validated multi-object workflow.
