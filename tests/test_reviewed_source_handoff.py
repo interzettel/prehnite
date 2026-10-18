@@ -137,10 +137,11 @@ def test_mismatches_rejected_before_any_batch_or_network(packet, mutation):
     elif mutation == "receipt":
         (inputs / "review-handoff.json").write_text('{"verdict":"rejected"}')
     elif mutation == "wrong_verdict":
+        raw = manifest.model_dump()
+        raw["handoff"]["verdict"] = "rejected"
         with pytest.raises(ValueError):
-            manifest.handoff.verdict = "rejected"
-        # Assigning Pydantic models isn't validated unless reloaded; force
-        # strict serialized-contract evaluation via model validation instead.
+            Manifest.model_validate(raw)
+        assert not (workspace / "batches").exists()
         return
     elif mutation == "wrong_phrase":
         manifest.handoff.target_phrase = "power cord"
