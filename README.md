@@ -161,9 +161,9 @@ The private lab also consolidated the runtime lifecycle into one local CLI
 (`preflight`, `check`, `start`, `status`, `stop`).
 
 **Publication boundary:** the audited code is now in **[draft PR #161](https://github.com/interzettel/prehnite/pull/161)**
-(branch `feature/local-cutout-productization`, head `f4c86da`), **not merged into `main`**, not released and not automatically wired into Engine. The
-closeout reported **14 new tests passing** and **865 passed / 15 skipped /
-1 Windows symlink-privilege failure** on the host; GitHub Actions [run 39150686394](https://github.com/interzettel/prehnite/actions/runs/39150686394) finished with **25/25 successful jobs**. An independent source review of #161 identified evidence-contract and documentation issues that need resolution before merge. No new GPU execution occurred. See [Sprint 1 evidence and remaining review work](docs/LOCAL_LAB_MILESTONE_2026-10-18.md#subsequent-productization-sprint-and-public-review-same-date).
+(branch `feature/local-cutout-productization`, current head `9949367`), **not merged into `main`**, not released and not automatically wired into Engine. The
+review resolution added **21 passing cutout tests**; host full suite reports **872 passed / 15 skipped /
+1 Windows symlink-privilege failure**; GitHub Actions [run 39152075877](https://github.com/interzettel/prehnite/actions/runs/39152075877) finished with **25/25 successful jobs**. The five prior code-review findings (execution evidence, resource observation, topology, runnable commands and RGB claims) were corrected and independently re-inspected. Maintainer merge approval and live next-object verification are separate. No new GPU execution occurred. See [Sprint 1 evidence and remaining review work](docs/LOCAL_LAB_MILESTONE_2026-10-18.md#subsequent-productization-sprint-and-public-review-same-date).
 This is meaningful code progress, but **not a newly shipped public capability**.
 [Draft resource readiness PR #159](https://github.com/interzettel/prehnite/pull/159)
 and [documentation PR #160](https://github.com/interzettel/prehnite/pull/160)
