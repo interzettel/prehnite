@@ -44,9 +44,10 @@ For measured-versus-unknown OS/RAM/GPU inventory, run `prehnite hardware`.
 This **offline, read-only** command can query local `nvidia-smi`; it never
 certifies a GPU memory tier or recipe feasibility. See
 [hardware doctor limitations](docs/HARDWARE_DOCTOR.md) (issue #134).
-A [draft resource-readiness preflight](https://github.com/interzettel/prehnite/pull/159)
-is under review, not available in the released alpha; it only observes
-operator-defined thresholds and never authorizes execution.
+The **read-only `prehnite resource-preflight`** command is now available in
+development `main` via [merged PR #159](https://github.com/interzettel/prehnite/pull/159),
+but not in released PyPI `0.1.0a1`. It evaluates explicit operator-set RAM,
+commit and VRAM thresholds; passing observations **never authorize inference**.
 
 ## Try it in two minutes
 
@@ -150,24 +151,28 @@ The **public package does not yet ship this combined launcher/refinement
 workflow or model weights**. See the [full dated evidence and limitations](docs/LOCAL_LAB_MILESTONE_2026-10-18.md)
 and [current delivery matrix](docs/PROGRESS.md).
 
-### Productization closeout — public draft PR #161 under review
+### Reusable cutout QA and resource observations — merged into development main
 
-After the accepted lamp, the local runner **implemented** a reusable cutout QA
-module and additive `prehnite cutout-qa` / `prehnite cutout-accept` commands.
-They support source/target/workflow/model hash contracts, configurable CPU alpha
-candidates, technical-mask checks, separate resource/compatibility/execution/
-alpha/visual/owner acceptance states, and create-only scoped review receipts.
-The private lab also consolidated the runtime lifecycle into one local CLI
-(`preflight`, `check`, `start`, `status`, `stop`).
+**[PR #159](https://github.com/interzettel/prehnite/pull/159) and
+[PR #161](https://github.com/interzettel/prehnite/pull/161) are merged into
+`main`.** Prehnite now has an opt-in, CPU-only `cutout-qa` and
+`cutout-accept` workflow, backed by source/target/workflow/model hashes,
+conservative configurable alpha candidates, separate file integrity and
+execution-evidence states, topology checks and create-only independent visual
+review records. `resource-preflight` provides independent, observation-only
+resource evidence. None of these commands starts ComfyUI or automatically
+authorizes a GPU job.
 
-**Publication boundary:** the audited code is now in **[draft PR #161](https://github.com/interzettel/prehnite/pull/161)**
-(branch `feature/local-cutout-productization`, current head `9949367`), **not merged into `main`**, not released and not automatically wired into Engine. The
-review resolution added **21 passing cutout tests**; host full suite reports **872 passed / 15 skipped /
-1 Windows symlink-privilege failure**; GitHub Actions [run 39152075877](https://github.com/interzettel/prehnite/actions/runs/39152075877) finished with **25/25 successful jobs**. The five prior code-review findings (execution evidence, resource observation, topology, runnable commands and RGB claims) were corrected and independently re-inspected. Maintainer merge approval and live next-object verification are separate. No new GPU execution occurred. See [Sprint 1 evidence and remaining review work](docs/LOCAL_LAB_MILESTONE_2026-10-18.md#subsequent-productization-sprint-and-public-review-same-date).
-This is meaningful code progress, but **not a newly shipped public capability**.
-[Draft resource readiness PR #159](https://github.com/interzettel/prehnite/pull/159)
-and [documentation PR #160](https://github.com/interzettel/prehnite/pull/160)
-are separate review tracks.
+The cross-module **pass/blocked/unknown** regression tests from integration
+[PR #162](https://github.com/interzettel/prehnite/pull/162) were preserved in
+`tests/test_resource_cutout_integration.py` through #161. GitHub CI for
+the combined code passed **25/25 jobs** on #161's updated branch; post-merge
+CI on `main` should be checked separately. This is source code on development
+`main`, **not** a new PyPI release or a validated unattended Engine→cutout QA
+pipeline. The short-lived local ComfyUI launcher, dependency overlay and model
+weights remain private. The new alpha-refinement implementation is not
+byte-identical to the originally accepted lamp candidate, and that approval
+has not been transferred. See [the dated evidence and scope](docs/LOCAL_LAB_MILESTONE_2026-10-18.md).
 
 ### Model Recipe status: micro / macro
 
@@ -278,14 +283,17 @@ batch with zero accepted assets has no meaningful cost-per-accepted figure.
 
 **Latest public release: `0.1.0a1` — [published on PyPI](https://pypi.org/project/prehnite/0.1.0a1/) and [tagged on GitHub](https://github.com/interzettel/prehnite/releases/tag/v0.1.0a1) on 2026-10-17.** Current source development version: **`0.1.0a2.dev0` (unpublished)**. Install the released alpha with `python -m pip install prehnite==0.1.0a1`. See [Changelog](CHANGELOG.md), [Versioning](docs/VERSIONING.md) and [Release policy](docs/RELEASING.md). The core synthetic workflow works and **one native-1K local lamp cutout has independent artifact-level visual approval**; photorealistic quality across categories, 4K GPU feasibility, general segmentation accuracy and actual API billing have **not** been certified.
 
-**Evidence status (2026-10-18):** the private local lab achieved one accepted real cutout **and published the first reusable QA code as unmerged draft PR #161**,
-documented in [this dated milestone](docs/LOCAL_LAB_MILESTONE_2026-10-18.md).
+**Evidence status (2026-10-18):** the private lab achieved one accepted
+real cutout; the optional source-code QA implementation and resource observations
+are now **merged into development `main`**, not yet independently
+live-validated on another object or released as a new PyPI version. See
+[the dated milestone](docs/LOCAL_LAB_MILESTONE_2026-10-18.md).
 This **does not silently convert** a frozen milestone parent, hardware tier,
 cross-category quality corpus or owner-signed journal gate to complete.
 The original release ledger remains **42/61 (68.9%)**, and the separately
 scoped atomic register remains **14/73 (19.18%)** until their specific
-acceptance conditions are met. [Draft resource readiness PR #159](https://github.com/interzettel/prehnite/pull/159)
-is not merged into the current public release.
+acceptance conditions are met. The merged #159/#161 changes are development
+source only; they are not included in the published `0.1.0a1` package.
 
 The tracker distinguishes implemented scaffolding from independently evidenced completions, and records issues blocked by broader hardware validation, human calibration or paid-call authorization.
 
