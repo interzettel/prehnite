@@ -19,7 +19,7 @@ There are **16 release gates**, each counted once. **4 have reproducible evidenc
 | G05 | Provider-independent hosted APIs | Partial | fal adapter written; current endpoint input/output contracts not smoke-tested |
 | G06 | Local ComfyUI support | Partial | Loopback API and recipe-to-engine bridge have synthetic tests; **one owner-authorized local 768×1024 SDXL generation and one real GroundingDINO/SAM2 cutout were observed**, with live graph registration and sampled VRAM. Private launcher/overlay is not packaged; cross-machine and repeatable product workflow remain unverified ([local evidence](LOCAL_LAB_MILESTONE_2026-10-18.md)) |
 | G07 | Model-based image judge | Partial | Haiku rubric implementation; no API validation, image quality calibration or crop checks |
-| G08 | Object cutouts and refinement | Partial | **One real lamp segmentation plus CPU alpha-refined Candidate A independently visually accepted** at a specific comparison scale; no gold/reference-mask calibration, fine materials, multi-object benchmark or public reusable refinement pipeline ([local evidence](LOCAL_LAB_MILESTONE_2026-10-18.md)) |
+| G08 | Object cutouts and refinement | Partial | **One real lamp segmentation plus CPU alpha-refined Candidate A independently visually accepted** at a specific comparison scale; reusable CPU-only refinement and review-receipt code now merged, but no gold/reference-mask calibration, fine materials, multi-object benchmark or validated live Engine→QA workflow ([local evidence](LOCAL_LAB_MILESTONE_2026-10-18.md)) |
 | G09 | Durable restart and remote-id recovery | Partial | Mocked replay/uncertain-call tests, exclusive lock and atomic recipe/config identity refusal on resume; real crash injection pending |
 | G10 | Estimated spending limits | Partial | Offline reserved-cost tests and preflight prices; live rates/invoices not verified |
 | G11 | MCP worker and exports | Partial | stdio entrypoint and subprocess implemented; live agent disconnect/cancel not verified |
@@ -59,20 +59,25 @@ visually approved for this artifact. The laboratory's acceptance record is
 **not an owner-signed Prehnite journal decision**. [Evidence, hashes, times,
 memory and constraints](LOCAL_LAB_MILESTONE_2026-10-18.md).
 
-**Follow-up code progress (reported 2026-10-18):** Productization
-Sprint 1 prepared a source branch now submitted as **[draft PR #161](https://github.com/interzettel/prehnite/pull/161)**
-(current head `9949367`), with additive `cutout-qa` and `cutout-accept` commands,
-configurable CPU alpha candidates and separate evidence states; the consolidated
-runtime entry point remains private. Review resolution ran **21 new cutout tests**;
-host full suite reported **872 passed, 15 skipped, 1 Windows symlink-privilege
-failure**; GitHub Actions [run 39152075877](https://github.com/interzettel/prehnite/actions/runs/39152075877)
-finished with **25/25 passing jobs**, independently checked. Source inspection
-confirmed that the original five review findings were addressed in `9949367`.
-No new GPU inference occurred, and the draft remains unmerged pending final
-maintainer merge decision, cross-PR integration review and later live-object validation.
-The public package, automatic Engine QA integration and next-object acceptance
-remain open. See [dated evidence](LOCAL_LAB_MILESTONE_2026-10-18.md#subsequent-productization-sprint-and-public-review-same-date)
-and draft documentation [PR #160](https://github.com/interzettel/prehnite/pull/160).
+**Source integration milestone (2026-10-18):** the reusable CPU-only
+`cutout-qa`/`cutout-accept` feature, conservative alpha candidates, integrity
+and independent review states and read-only resource preflight are now merged
+in development `main` via [#159](https://github.com/interzettel/prehnite/pull/159)
+and [#161](https://github.com/interzettel/prehnite/pull/161). The synthetic
+pass/blocked/unknown resource-to-QA tests originally added on temporary
+[#162](https://github.com/interzettel/prehnite/pull/162) were copied into
+#161 before merge, so the interface test is retained. Each final feature
+head passed 25/25 GitHub Actions checks; the integrated temporary branch
+also passed 25/25. The separately recorded Windows host symlink privilege
+limitation remains. **The compatibility adapter is not an inference permit**;
+without a real bound runtime receipt, compatibility and execution remain
+unverified. The private ComfyUI launcher, models and accepted lamp image are
+not packaged; no new GPU inference was done during integration.
+
+**Source delivery is not release acceptance:** live Engine→QA validation,
+additional materials, independent reference masks, operational repeatability
+and signed journal approval remain outstanding. Documentation [#160](https://github.com/interzettel/prehnite/pull/160)
+is the final status-reconciliation merge.
 
 **Counting impact: none yet.** The generated 61-unit release tracker remains
 **42/61 (68.9%)**, its seven milestone gates remain **2/7**, and the atomic
@@ -81,9 +86,9 @@ requires repeatable 8 GiB recipe feasibility evidence, and S06/S07 still
 require diverse, independently reviewed real masks. This is **new verified
 case-study progress**, not proof those broader contracts have passed.
 The 16 technical release gates remain **4 verified / 7 partial / 5 unverified**;
-G06 and G08 descriptions have been updated, not promoted. Draft [PR #159](https://github.com/interzettel/prehnite/pull/159)
-adds observation-only resource policy but is not merged. Productization of the
-private launcher/refinement and measured diverse-object tests are next.
+G06 and G08 descriptions have been updated, not promoted. The observation-only #159 resource policy and opt-in #161 CPU
+refinement/QA are merged into development `main`; the **private launcher,
+live second-object validation and diverse-category quality tests** remain open.
 
 ## Work log / milestones
 
