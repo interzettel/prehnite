@@ -457,5 +457,65 @@ def export(batch_id: str, workspace: Path = typer.Option(Path("workspace")),
     finally:
         j.close()
 
+@app.command("cutout-qa")
+def cutout_qa(
+        recipe: Path = typer.Option(..., "--recipe",
+            help="Explicit cutout recipe: source/target/workflow/model bindings"),
+        source: Path = typer.Option(..., "--source", help="Reviewed source image"),
+        mask: Path = typer.Option(..., "--mask", help="Segmenter mask PNG"),
+        workflow_root: Path = typer.Option(Path("workflows"), "--workflow-root"),
+        models_root: Path = typer.Option(Path("models"), "--models-root"),
+        output: Path = typer.Option(..., "--output", help="New candidate/report directory"),
+        resource_readiness: Path | None = typer.Option(
+            None, "--resource-readiness",
+            help="Optional JSON StageResult supplied by an observation-only preflight")):
+    """CPU-only alpha candidates + seven-stage technical QA; never accepts."""
+    from .cutout_quality import CutoutContractError, run_cutout_qa
+    try:
+        report_path = run_cutout_qa(
+            recipe, source=source, mask=mask, workflow_root=workflow_root,
+            models_root=models_root, output_dir=output, 
+            resource_readiness=resource_readiness,
+        )
+    except (CutoutContractError, FileExistsError, OSError) as exc:
+        raise typer.BadParameter(str(exc)) from exc
+    report = json.loads(report_path.read_text(encoding="utf-8"))
+    typer.echo(json.dumps({
+        "report": str(report_path),
+        "recommended_candidate": report["recommended_candidate"],
+        "stages": {name: row["status"] for name, row in report["stages"].items()},
+        "visual_acceptance": report["visual_acceptance"],
+        "owner_final_acceptance": report["owner_final_acceptance"],
+    }, indent=2, sort_keys=True))
+    if any(row["status"] in ("failed", "blocked")
+           for row in report["stages"].values()):
+        raise typer.Exit(code=2)
+
+
+@app.command("cutout-accept")
+def cutout_accept(
+        quality_report: Path = typer.Option(..., "--quality-report"),
+        candidate_id: str = typer.Option(..., "--candidate-id"),
+        reviewer: str = typer.Option(..., "--reviewer"),
+        decision: str = typer.Option(..., "--decision", help="accepted or rejected"),
+        scope: str = typer.Option(..., "--scope",
+            help="Explicit review scope; never blanket certification"),
+        output: Path = typer.Option(..., "--output", help="New acceptance JSON"),
+        evidence: list[Path] = typer.Option([], "--evidence")):
+    """Record one explicit visual review decision; create-only, no auto-accept."""
+    from .cutout_quality import CutoutContractError, create_acceptance_record
+    if decision not in ("accepted", "rejected"):
+        raise typer.BadParameter("decision must be accepted or rejected")
+    try:
+        record = create_acceptance_record(
+            quality_report=quality_report, candidate_id=candidate_id,
+            reviewer=reviewer, decision=decision, scope=scope,
+            evidence=evidence, output=output,
+        )
+    except (CutoutContractError, FileExistsError, OSError) as exc:
+        raise typer.BadParameter(str(exc)) from exc
+    typer.echo(json.dumps(record, indent=2, sort_keys=True))
+
+
 if __name__ == "__main__":
     app()
