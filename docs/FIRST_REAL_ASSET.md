@@ -140,6 +140,8 @@ prehnite run examples/manifest-first-fal.yaml \
 
 Never retry ambiguous remote requests blindly. Save fal request IDs, final provider invoice and output hashes privately; compare the actual invoice to the planning estimate. Paid endpoint schema and rates can change independently of Prehnite. Additional fal segmentation is a *separate future test* requiring image-upload authorization and fresh rights review, not automatically enabled.
 
+The [human-reviewed source handoff](REVIEWED_SOURCE_HANDOFF.md) permits an owner-approved existing PNG to advance into a separate source-only cutout batch without rerunning its original generation or weakening default strict visual acceptance. It requires an unchanged original review document and a new structured attestation; generated cutouts remain pending independent human review. This is distinct from machine-generated alpha evidence and does not provide segmentation weights.
+
 ## C. Create private technical evidence after an actual run
 
 When you have **real** generated and transparent cutout files inside your private output directory, use the *development checkout* to collect a no-network, create-only evidence receipt:
