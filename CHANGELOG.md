@@ -7,6 +7,9 @@ This project follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) an
 ## [Unreleased]
 
 ### Added
+- Optional strict operator-declared implicit segmentation dependency SHA256 manifest for human-reviewed source cutout batches. Hashes privately staged GroundingDINO/SAM2/BERT weights, configs and tokenizer files without loading them; binds receipt to new batch identity and rechecks before cutout. Legacy handoffs unchanged, runtime-loaded bytes/graph completeness/licensing not certified (#156).
+
+### Added
 - Explicit hash-bound, generation-disabled human-reviewed source handoff: verifies original PNG, original review document and structured typed receipt before new batch journal creation; performs one local cutout with the actual target phrase, preserves original rejected batch, and stages output as `review_pending` rather than accepted. No cloud/paid/automatic retry or model install (#134).
 
 
