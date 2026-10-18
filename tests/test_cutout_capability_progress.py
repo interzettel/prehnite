@@ -33,7 +33,7 @@ def test_capability_evidence_is_distinct_from_release_denominators():
     assert sum(item["state"] == "done" for item in doc["milestones"]) >= 8
     assert module.headline(doc) in (ROOT / "README.md").read_text(encoding="utf-8")
     assert module.headline(doc) in (ROOT / "docs" / "PROGRESS.md").read_text(encoding="utf-8")
-    assert "42/61" in (ROOT / "docs" / "progress" / "STATUS.md").read_text(encoding="utf-8")
+    assert "42 / 61" in (ROOT / "docs" / "progress" / "STATUS.md").read_text(encoding="utf-8")
     assert "14/73" in (ROOT / "docs" / "progress" / "ATOMIC.md").read_text(encoding="utf-8")
 
 
