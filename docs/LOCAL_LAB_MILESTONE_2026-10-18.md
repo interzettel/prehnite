@@ -89,7 +89,7 @@ weights remain private.
 - No general **4/6/8/12 GiB model tier**, multiple-machine reproducibility, 4K real image viability, uninterrupted long-batch behavior or cost/quality throughput distribution has been established.
 - No independent alpha reference corpus, measured hair/glass/translucency/multi-instance benchmark, calibrated judge or robust single-object model comparison exists.
 - No comprehensive model-rights certification, runtime-loaded dependency completeness, third-party weight redistribution approval, real paid API reconciliation or production release gate follows.
-- The original **61-unit release ledger remains 42/61**, the frozen **73-task register remains 14/73**, and the release matrix remains **4 verified / 7 partial / 5 unverified**. Those denominators refer to stricter, separately scoped contracts. This **new case-study evidence** does not satisfy a full outstanding parent unit such as 8 GiB feasibility across recipes, gold-standard category benchmark, 90-item live run or final release.
+- The original **61-unit release ledger remains 42/61**, and the technical release matrix remains **4 verified / 7 partial / 5 unverified**. At the time of this lamp case study, the frozen 73-task atomic register was **14/73**. A **separate subsequent merged implementation [PR #164](https://github.com/interzettel/prehnite/pull/164)** fulfills the original S03-A03 CPU color-spill pixel-test criterion and changes the same canonical atomic register to **15/73**; **the lamp evidence alone never earned that credit**. These denominators retain their original independent acceptance conditions: no real multiple-category alpha benchmark, 8 GiB feasibility tier or production release has been certified.
 
 ## Next product milestone
 
