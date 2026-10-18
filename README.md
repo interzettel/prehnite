@@ -163,11 +163,11 @@ review records. `resource-preflight` provides independent, observation-only
 resource evidence. None of these commands starts ComfyUI or automatically
 authorizes a GPU job.
 
-The cross-module **pass/blocked/unknown** regression tests from integration
-[PR #162](https://github.com/interzettel/prehnite/pull/162) were preserved in
+The cross-module **pass/blocked/unknown** regression tests from
+[closed, unmerged integration PR #162](https://github.com/interzettel/prehnite/pull/162) were preserved in
 `tests/test_resource_cutout_integration.py` through #161. GitHub CI for
 the combined code passed **25/25 jobs** on #161's updated branch; post-merge
-CI on `main` should be checked separately. This is source code on development
+`main` [CI run 39153867726](https://github.com/interzettel/prehnite/actions/runs/39153867726) also passed **25/25 jobs**. This is source code on development
 `main`, **not** a new PyPI release or a validated unattended Engine→cutout QA
 pipeline. The short-lived local ComfyUI launcher, dependency overlay and model
 weights remain private. The new alpha-refinement implementation is not
