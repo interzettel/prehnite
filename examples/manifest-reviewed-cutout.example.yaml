@@ -1,0 +1,23 @@
+# Template only: replace the zeroed JSON SHA after creating a PRIVATE typed receipt.
+id: lamp-reviewed-cutout-new-batch
+assets:
+  - id: desk-lamp
+    source: reviewed-source.png
+    aspect_ratio: "3:4"
+    target_size: [768, 1024]
+    targets: [table-lamp]
+    output:
+      image: photos/desk-lamp-reviewed.png
+      cutouts:
+        table-lamp: cutouts/desk-lamp-table-lamp.png
+handoff:
+  source_batch: sdxl-1k-generation
+  candidate_sha256: "282e6d4af8ab3a68cafef674ff33d8bd20001be3b4dfedfb216c853fca6832d3"
+  review_receipt: review-handoff.json
+  review_receipt_sha256: "0000000000000000000000000000000000000000000000000000000000000000"
+  review_document: original-human-review.md
+  review_document_sha256: "97f66bcd94f2752894279576276facd5839d652cbdd605226834f67551c15dad"
+  verdict: accepted_for_next_stage
+  target_phrase: table lamp
+  include: [lamp body, lampshade]
+  exclude: [power cord, tabletop, cast shadow, background]
