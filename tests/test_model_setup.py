@@ -150,3 +150,27 @@ def test_wrong_graph_node_input_fails_before_binding_file_is_written(setup):
     with pytest.raises(ValueError, match="width.*height"):
         prepare_micro_bindings(**setup, profile=profile)
     assert not setup["destination"].exists()
+
+
+@pytest.mark.parametrize("field,class_type", [
+    ("prompt", "GroundingDinoSAM2Segment"),
+    ("value", "PrimitiveString"),
+])
+def test_local_setup_accepts_existing_real_target_input_fields(setup, field, class_type):
+    p = setup["workflows_root"] / "cut.json"
+    graph = json.loads(p.read_text(encoding="utf-8"))
+    graph["7"] = {"class_type": class_type, "inputs": {field: "lamp"}}
+    p.write_text(json.dumps(graph), encoding="utf-8")
+    profile = local_profile()
+    profile.segmentation.options.update(target_node="7", target_input=field)
+    receipt = prepare_micro_bindings(**setup, profile=profile)
+    assert receipt["provider_calls"] == 0
+    assert receipt["runtime_verified"] is False
+
+
+def test_target_input_mismatch_refuses_binding_file_without_network(setup):
+    profile = local_profile()
+    profile.segmentation.options["target_input"] = "prompt"
+    with pytest.raises(ValueError, match="no configured 'prompt' input|must expose inputs"):
+        prepare_micro_bindings(**setup, profile=profile)
+    assert not setup["destination"].exists()
