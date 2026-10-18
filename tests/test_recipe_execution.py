@@ -33,6 +33,7 @@ def config(tmp_path, monkeypatch):
         "1": {"class_type": "CheckpointLoaderSimple",
               "inputs": {"ckpt_name": "synthetic.safetensors"}},
         "2": {"class_type": "SaveImage", "inputs": {"images": ["1", 0]}},
+        "3": {"class_type": "CLIPTextEncode", "inputs": {"text": "object"}},
     })
     for filename in ("generate.json", "cutout.json"):
         (workflows / filename).write_text(graph, encoding="utf-8")
@@ -63,7 +64,8 @@ def config(tmp_path, monkeypatch):
                                    "size_node": "1", "output_node": "2"}},
         "segmentation": {"provider": "comfyui", "model": "user-segmentation",
                          "options": {"workflow": "cutout.json",
-                                     "input_node": "1", "output_node": "2"}},
+                                     "input_node": "1", "target_node": "3",
+                                     "output_node": "2"}},
         "upscale": {"provider": "disabled"},
         "judge": {"provider": "demo", "model": "technical"},
         "policy": {"uncertain": "reject"},
@@ -198,3 +200,21 @@ def test_mcp_route_refuses_recipe_bound_execution(config, tmp_path):
     manifest, profile, execution, _, _ = config
     with pytest.raises(ValueError, match="MCP execution is not implemented"):
         Engine(manifest, profile, tmp_path, job_token="fake", recipe_execution=execution)
+
+
+def test_recipe_verifies_explicit_target_field_without_reupload(config):
+    _, profile, execution, _, _ = config
+    baseline = execution.verify(profile)
+    assert baseline["runtime_verified"] is False
+    bad = profile.model_copy(deep=True)
+    bad.segmentation.options["target_input"] = "prompt"
+    with pytest.raises(ValueError, match="no configured 'prompt' input"):
+        execution.verify(bad)
+    wrong_node = profile.model_copy(deep=True)
+    wrong_node.segmentation.options["target_node"] = "999"
+    with pytest.raises(ValueError, match="real graph node"):
+        execution.verify(wrong_node)
+    invalid = profile.model_copy(deep=True)
+    invalid.segmentation.options["target_input"] = "filename_prefix"
+    with pytest.raises(ValueError, match="target_input must be"):
+        execution.verify(invalid)
