@@ -1,5 +1,14 @@
 # Reviewed-source handoff — exact bytes, separate quality gates
 
+> **Status update (2026-10-18):** A later, separately authorized private
+> desk-lamp segmentation job succeeded, followed by CPU-only alpha
+> refinement and **independent visual acceptance of Candidate A** at the
+> inspected comparison scale. See the [first real accepted cutout](LOCAL_LAB_MILESTONE_2026-10-18.md).
+> This does **not** retroactively accept the original SDXL generation batch
+> or turn the source-only attestation into owner-signed cutout acceptance.
+> The CLI example and placeholders below are a **pre-execution template**,
+> not instructions to rerun the already completed lamp.
+
 Prehnite can process a human-approved generated image into a cutout candidate without regenerating it, changing its original rejected batch or weakening `uncertain: reject`. **A source approved for the next stage is not an accepted alpha cutout.** This is unpublished development work, not PyPI `0.1.0a1`.
 
 ## Private files required
