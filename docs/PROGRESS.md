@@ -60,13 +60,14 @@ visually approved for this artifact. The laboratory's acceptance record is
 memory and constraints](LOCAL_LAB_MILESTONE_2026-10-18.md).
 
 **Follow-up code progress (reported 2026-10-18):** Productization
-Sprint 1 prepared a **local, unpushed** `feature/local-cutout-productization`
-source branch (`f416aa4`) with additive `cutout-qa` and `cutout-accept`
-commands, configurable CPU alpha candidate/QA receipts, 12 new passing CPU
-tests and one consolidated private runtime entry point. The local runner
-reported 863 full-suite tests passed, 15 skipped, 1 Windows symlink-privilege
-failure; it did **not** run new GPU inference or publish the branch. These are
-local reported results, not yet independently assessed in public CI.
+Sprint 1 prepared a source branch now submitted as **[draft PR #161](https://github.com/interzettel/prehnite/pull/161)**
+(commit `f4c86da`), with additive `cutout-qa` and `cutout-accept` commands,
+configurable CPU alpha candidates and separate evidence states; the consolidated
+runtime entry point remains private. Closeout ran **14 new CPU tests**;
+host full suite reported **865 passed, 15 skipped, 1 Windows symlink-privilege
+failure**; GitHub Actions [run 39150686394](https://github.com/interzettel/prehnite/actions/runs/39150686394)
+finished with **25/25 passing jobs**. No new GPU inference occurred. The
+draft remains unmerged pending independent evidence-contract and runbook fixes.
 The public package, automatic Engine QA integration and next-object acceptance
 remain open. See [dated evidence](LOCAL_LAB_MILESTONE_2026-10-18.md#subsequent-productization-sprint-same-date-private-branch-not-yet-public)
 and draft documentation [PR #160](https://github.com/interzettel/prehnite/pull/160).
