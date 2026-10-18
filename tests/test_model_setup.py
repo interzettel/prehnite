@@ -139,7 +139,7 @@ def test_paid_profile_refused_before_writing(setup):
 def test_mismatched_node_ids_fail_before_binding_file_is_written(setup):
     profile = local_profile()
     profile.segmentation.options["target_node"] = "404"
-    with pytest.raises(ValueError, match="real node ID"):
+    with pytest.raises(ValueError, match="real graph node|real node ID"):
         prepare_micro_bindings(**setup, profile=profile)
     assert not setup["destination"].exists()
 
