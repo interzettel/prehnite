@@ -35,6 +35,8 @@ class Engine:
                  inputs: Path = Path("inputs"), job_token: str | None = None,
                  recipe_execution=None):
         validate_job(manifest, profile, inputs)
+        if manifest.handoff is not None and (recipe_execution is not None or job_token is not None):
+            raise ValueError("Reviewed handoff is not supported by recipe/MCP worker routes")
         # The MCP worker contract does not carry recipe identity yet; refuse a
         # recipe on that route rather than silently dropping immutable intent.
         if recipe_execution is not None and job_token is not None:
@@ -45,6 +47,10 @@ class Engine:
         self._run_lock_held = False
         self.inputs = inputs
         self.recipe_execution = recipe_execution
+        self.handoff_identity = None
+        if manifest.handoff is not None:
+            from .handoff import verify_handoff
+            self.handoff_identity = verify_handoff(manifest, profile, inputs)
         self.journal = Journal(workspace, manifest.id)
         self.cache = StageCache(workspace, profile.cache) if profile.cache.enabled else None
         checksum = fingerprint(manifest, profile)
@@ -67,7 +73,17 @@ class Engine:
                 )
         previous = self.journal.fact("configuration_sha256")
         if previous is not None and previous != checksum:
+            self.journal.close()
             raise ValueError("Batch ID reused with changed manifest/profile; choose a new ID")
+        existing_handoff = self.journal.fact("human_review_handoff")
+        if existing_handoff is not None and existing_handoff != self.handoff_identity:
+            self.journal.close()
+            raise ArtifactIntegrityError("Reviewed-source identity mismatch on resume")
+        if self.handoff_identity is not None and existing_handoff is None:
+            if previous is not None or self.journal.tasks():
+                self.journal.close()
+                raise ValueError("Cannot retroactively attach a human review to an existing batch")
+            self.journal.set_fact("human_review_handoff", self.handoff_identity)
         self.journal.set_fact("configuration_sha256", checksum)
         self.journal.set_fact("manifest", manifest.model_dump())
         self.journal.set_fact("profile", profile.model_dump())
@@ -315,7 +331,7 @@ class Engine:
         return selection, score, "Two independent Haiku rubrics"
 
     def cutout(self, asset: Asset, selected: Path, name: str, attempt: int,
-               target_output: Path) -> dict:
+               target_output: Path, *, target_prompt: str | None = None) -> dict:
         ep = self.profile.segmentation
         provider = get_provider(ep)
         target_key = hashlib.sha256(name.encode("utf-8")).hexdigest()[:12]
@@ -329,7 +345,7 @@ class Engine:
             raise ArtifactIntegrityError("Existing cutout cannot be overwritten by a review-only repair")
         self.stage(key, "segmentation", ep, mask,
                    lambda on_submit, resume, temp: provider.segment(
-                       selected, name, temp, ep, on_submit, resume), "segmentation",
+                       selected, target_prompt or name, temp, ep, on_submit, resume), "segmentation",
                    cache_request={"source_sha256": sha256(selected),
                                   "target": name})
         if review_mode:
@@ -576,6 +592,11 @@ class Engine:
                 self.manifest, self.profile)}
         self.journal.pin_recipe_identity(identity)
         self.verify_input_sources()
+        if self.manifest.handoff is not None:
+            from .handoff import verify_handoff
+            if (verify_handoff(self.manifest, self.profile, self.inputs) != self.handoff_identity
+                    or self.journal.fact("human_review_handoff") != self.handoff_identity):
+                raise ArtifactIntegrityError("Reviewed source/receipt identity changed before run")
         self.journal.job_checkpoint(self.job_token)
         results = self.journal.fact("results", {})
         for asset in self.manifest.assets:
