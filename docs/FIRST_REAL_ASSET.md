@@ -1,5 +1,15 @@
 # First real asset: local ComfyUI or opt-in fal.ai
 
+> **2026-10-18 local-lab outcome:** A real native-1K SDXL desk-lamp image
+> was generated locally and later cut out by one successful GroundingDINO/SAM2
+> inference, followed by CPU alpha refinement and **artifact-specific independent
+> visual approval**. This is not a validated 4K recipe, a broadly supported 8 GiB
+> tier, an owner-signed Prehnite journal acceptance or an installable model bundle.
+> Read the [evidence and limits](LOCAL_LAB_MILESTONE_2026-10-18.md)
+> before following the earlier *pre-execution* checklist below. The original
+> first-trial instructions remain useful for a **different new authorized batch**;
+> they are not authorization to rerun the accepted lamp.
+
 **Development workflow, not part of the already published `prehnite==0.1.0a1` wheel.** Use a checkout of the latest `main` after this feature PR merges. No model weights, subscriptions, private photographs, GPUs or API credits are included. One good accepted transparent cutout is the next *unverified* milestone, not a claim already achieved.
 
 ## Choose a lane

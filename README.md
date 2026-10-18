@@ -44,6 +44,9 @@ For measured-versus-unknown OS/RAM/GPU inventory, run `prehnite hardware`.
 This **offline, read-only** command can query local `nvidia-smi`; it never
 certifies a GPU memory tier or recipe feasibility. See
 [hardware doctor limitations](docs/HARDWARE_DOCTOR.md) (issue #134).
+A [draft resource-readiness preflight](https://github.com/interzettel/prehnite/pull/159)
+is under review, not available in the released alpha; it only observes
+operator-defined thresholds and never authorizes execution.
 
 ## Try it in two minutes
 
@@ -122,6 +125,50 @@ assets:
 
 The **manifest** says *what* to make. A separate **profile** says *how*: which provider/model to use, whether to compare 2K-upscaled and 4K variants, what to accept, the retry limit, and whether cloud calls may cost money. See the [working examples](examples/).
 
+### First real local cutout — one independently accepted artifact (2026-10-18)
+
+**First hardware milestone achieved in the private local lab:** An RTX 4070
+Laptop GPU produced a real **768×1024** SDXL desk-lamp source, followed by one
+successful local **GroundingDINO + SAM2** segmentation submission. The raw
+binary mask was refined on CPU; **Candidate A (σ = 0.65 px)** received
+independent visual approval at the presented comparison scale. Approved
+derivative SHA256: `5e925240e2c527a9922ffad2729fcb9111ed25251f3c2aedfba8c87903bd6450`.
+
+The successful segmentation job completed in **8.994 s** including model loading
+and inference, with **2,533 MiB sampled peak VRAM**. It used a short-lived
+ComfyUI child process and a private Transformers 4.57.6 compatibility overlay,
+without cloud calls, inference retries or changing the existing ComfyUI
+environment. The original source generation took ~46.04 s, separately, with
+7,763/8,188 MiB sampled peak VRAM; these are **one-off measurements**, not
+sustained benchmark or 4K feasibility figures.
+
+The original generation journal's quality rejection, initial failed
+segmentation attempt and all historical evidence remain intact. The accepted
+candidate has a private local-lab approval record, **not** an owner-signed
+Prehnite journal acceptance or a certification of other scenes and materials.
+The **public package does not yet ship this combined launcher/refinement
+workflow or model weights**. See the [full dated evidence and limitations](docs/LOCAL_LAB_MILESTONE_2026-10-18.md)
+and [current delivery matrix](docs/PROGRESS.md).
+
+### Productization closeout — public draft PR #161 under review
+
+After the accepted lamp, the local runner **implemented** a reusable cutout QA
+module and additive `prehnite cutout-qa` / `prehnite cutout-accept` commands.
+They support source/target/workflow/model hash contracts, configurable CPU alpha
+candidates, technical-mask checks, separate resource/compatibility/execution/
+alpha/visual/owner acceptance states, and create-only scoped review receipts.
+The private lab also consolidated the runtime lifecycle into one local CLI
+(`preflight`, `check`, `start`, `status`, `stop`).
+
+**Publication boundary:** the audited code is now in **[draft PR #161](https://github.com/interzettel/prehnite/pull/161)**
+(branch `feature/local-cutout-productization`, current head `9949367`), **not merged into `main`**, not released and not automatically wired into Engine. The
+review resolution added **21 passing cutout tests**; host full suite reports **872 passed / 15 skipped /
+1 Windows symlink-privilege failure**; GitHub Actions [run 39152075877](https://github.com/interzettel/prehnite/actions/runs/39152075877) finished with **25/25 successful jobs**. The five prior code-review findings (execution evidence, resource observation, topology, runnable commands and RGB claims) were corrected and independently re-inspected. Maintainer merge approval and live next-object verification are separate. No new GPU execution occurred. See [Sprint 1 evidence and remaining review work](docs/LOCAL_LAB_MILESTONE_2026-10-18.md#subsequent-productization-sprint-and-public-review-same-date).
+This is meaningful code progress, but **not a newly shipped public capability**.
+[Draft resource readiness PR #159](https://github.com/interzettel/prehnite/pull/159)
+and [documentation PR #160](https://github.com/interzettel/prehnite/pull/160)
+are separate review tracks.
+
 ### Model Recipe status: micro / macro
 
 Prehnite now has **versioned model-workflow blueprints** rather than a single hard-coded model. `prehnite-micro` targets operator-configured, local-first ComfyUI runs; `prehnite-macro` explores later high-capability/hybrid workflows. The checked-in JSON recipes **do not contain models or execute on their own**.
@@ -132,9 +179,9 @@ Prehnite now has **versioned model-workflow blueprints** rather than a single ha
 | Local model/input hash resolver | Implemented, operator-supplied | Not implemented |
 | Recipe-bound engine/journal execution path | Experimental, opt-in | Not implemented |
 | Checkpoint installer and rights review | Planned | Planned |
-| Real GPU & human-cutout-quality benchmark | Unverified | Unverified |
+| Real GPU & human-cutout-quality benchmark | **One local lamp cutout visually accepted; general benchmark open** | Unverified |
 
-**Read the [recipe roadmap](docs/ROADMAP.md#model-recipes-workstream--versioned-micromacro-october-2026) and [recipe architecture](docs/MODEL_RECIPES.md)** for the work completed, outstanding milestones and exact evidence gates. Neither mode claims a tested 4/6/8/12 GB laptop tier or preinstalled models.
+**Read the [recipe roadmap](docs/ROADMAP.md#model-recipes-workstream--versioned-micromacro-october-2026) and [recipe architecture](docs/MODEL_RECIPES.md)** for completed code, the single local-lab cutout demonstration and the still-open release gates. Neither mode claims a certified 4/6/8/12 GB laptop tier or preinstalled models.
 
 ### Multi-file local model identity (static, not runtime certification)
 
@@ -142,7 +189,9 @@ The new [schema-v2 model bindings](docs/MULTIFILE_PROVENANCE.md) hash every expl
 
 ### True 1K laptop micro preview (no fake 4K resize)
 
-A separate [native-1K local preview](docs/FIRST_REAL_ASSET.md#8-gb-laptop-smoke-test--genuine-native-1k) now requests **768×1024** pixels at 3:4 for one small smoke test. It refuses to upscale undersized model output silently and does not change the legacy native-4K preview or any hosted pricing and schemas. Real 8 GB GPU success, image quality and third-party weights remain unverified.
+A separate [native-1K local preview](docs/FIRST_REAL_ASSET.md#8-gb-laptop-smoke-test--genuine-native-1k) now requests **768×1024** pixels at 3:4 for one small smoke test. It refuses to upscale undersized model output silently and does not change the legacy native-4K preview or any hosted pricing and schemas. One later owner-authorized native-1K SDXL lamp generation and an independent local
+cutout have now been demonstrated; the original **preview recipe's general hardware
+compatibility, quality thresholds and third-party licensing** remain unverified.
 
 ### Implicit segmentation model-file attestation (opt-in)
 
@@ -179,7 +228,7 @@ See the [operator setup and limitations](docs/LOCAL_MODEL_RESOLVER.md).
 | Route | What it means today |
 | --- | --- |
 | **Demo (no-cost)** | Synthetic generator + Pillow resize and technical checks. Runs offline and is covered by CI. |
-| **Local ComfyUI** | Adapter for your own ComfyUI API-format workflows on localhost. You supply model weights and real graph/node mappings; no validated GPU workflow is bundled yet. |
+| **Local ComfyUI** | Operator-supplied ComfyUI workflows and model weights on localhost. One pinned SDXL → GroundingDINO/SAM2 lamp case was run locally and its refined derivative independently accepted; **that private setup is not yet bundled or validated as a general-purpose installable workflow**. |
 | **fal.ai (optional paid)** | Opt-in hosted image generation/upscaling/segmentation adapter. Interfaces exist, but real endpoint schemas, pricing and image results still require live integration tests. |
 | **Anthropic judge (optional paid)** | An opt-in image comparison/rubric adapter. It is not a calibrated or production-validated quality benchmark. |
 
@@ -227,9 +276,18 @@ batch with zero accepted assets has no meaningful cost-per-accepted figure.
 
 ## Where things stand
 
-**Latest public release: `0.1.0a1` — [published on PyPI](https://pypi.org/project/prehnite/0.1.0a1/) and [tagged on GitHub](https://github.com/interzettel/prehnite/releases/tag/v0.1.0a1) on 2026-10-17.** Current source development version: **`0.1.0a2.dev0` (unpublished)**. Install the released alpha with `python -m pip install prehnite==0.1.0a1`. See [Changelog](CHANGELOG.md), [Versioning](docs/VERSIONING.md) and [Release policy](docs/RELEASING.md). The core synthetic workflow works; **photorealistic quality, 4K GPU feasibility, segmentation accuracy and actual API billing have not been certified**.
+**Latest public release: `0.1.0a1` — [published on PyPI](https://pypi.org/project/prehnite/0.1.0a1/) and [tagged on GitHub](https://github.com/interzettel/prehnite/releases/tag/v0.1.0a1) on 2026-10-17.** Current source development version: **`0.1.0a2.dev0` (unpublished)**. Install the released alpha with `python -m pip install prehnite==0.1.0a1`. See [Changelog](CHANGELOG.md), [Versioning](docs/VERSIONING.md) and [Release policy](docs/RELEASING.md). The core synthetic workflow works and **one native-1K local lamp cutout has independent artifact-level visual approval**; photorealistic quality across categories, 4K GPU feasibility, general segmentation accuracy and actual API billing have **not** been certified.
 
-The tracker distinguishes implemented scaffolding from independently evidenced completions, and records issues blocked by local hardware, human calibration or paid-call authorization.
+**Evidence status (2026-10-18):** the private local lab achieved one accepted real cutout **and published the first reusable QA code as unmerged draft PR #161**,
+documented in [this dated milestone](docs/LOCAL_LAB_MILESTONE_2026-10-18.md).
+This **does not silently convert** a frozen milestone parent, hardware tier,
+cross-category quality corpus or owner-signed journal gate to complete.
+The original release ledger remains **42/61 (68.9%)**, and the separately
+scoped atomic register remains **14/73 (19.18%)** until their specific
+acceptance conditions are met. [Draft resource readiness PR #159](https://github.com/interzettel/prehnite/pull/159)
+is not merged into the current public release.
+
+The tracker distinguishes implemented scaffolding from independently evidenced completions, and records issues blocked by broader hardware validation, human calibration or paid-call authorization.
 
 [![Prehnite roadmap and atomic-task delivery progress](docs/progress/atomic.svg)](docs/progress/ATOMIC.md)
 
