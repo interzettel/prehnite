@@ -59,6 +59,18 @@ visually approved for this artifact. The laboratory's acceptance record is
 **not an owner-signed Prehnite journal decision**. [Evidence, hashes, times,
 memory and constraints](LOCAL_LAB_MILESTONE_2026-10-18.md).
 
+**Follow-up code progress (reported 2026-10-18):** Productization
+Sprint 1 prepared a **local, unpushed** `feature/local-cutout-productization`
+source branch (`f416aa4`) with additive `cutout-qa` and `cutout-accept`
+commands, configurable CPU alpha candidate/QA receipts, 12 new passing CPU
+tests and one consolidated private runtime entry point. The local runner
+reported 863 full-suite tests passed, 15 skipped, 1 Windows symlink-privilege
+failure; it did **not** run new GPU inference or publish the branch. These are
+local reported results, not yet independently assessed in public CI.
+The public package, automatic Engine QA integration and next-object acceptance
+remain open. See [dated evidence](LOCAL_LAB_MILESTONE_2026-10-18.md#subsequent-productization-sprint-same-date-private-branch-not-yet-public)
+and draft documentation [PR #160](https://github.com/interzettel/prehnite/pull/160).
+
 **Counting impact: none yet.** The generated 61-unit release tracker remains
 **42/61 (68.9%)**, its seven milestone gates remain **2/7**, and the atomic
 unfinished-work register remains **14/73 (19.18%)**. For example, P08 still
