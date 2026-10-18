@@ -483,6 +483,8 @@ def run_cutout_qa(recipe_path: Path, *, source: Path, mask: Path,
         segmentation = _stage("passed")
 
     output_dir.mkdir(parents=True, exist_ok=True)
+    if any(output_dir.iterdir()):
+        raise CutoutContractError("QA output directory must be new or empty")
     candidates: list[CandidateResult] = []
     if segmentation.status == "passed":
         mask_image = Image.open(mask_path)
@@ -556,6 +558,8 @@ def _sha256_file_if_exists(path: Path) -> str | None:
 
 
 def _write_json_exclusive(path: Path, payload: dict) -> None:
+    if path.exists() or path.is_symlink():
+        raise FileExistsError("QA report already exists; will not overwrite")
     path.parent.mkdir(parents=True, exist_ok=True)
     temporary = path.with_name(path.name + ".tmp")
     with temporary.open("x", encoding="utf-8", newline="\n") as stream:
@@ -576,6 +580,8 @@ def create_acceptance_record(*, quality_report: Path, candidate_id: str,
         raise CutoutContractError("Reviewer must be nonempty and bounded")
     if not scope.strip() or len(scope) > 800:
         raise CutoutContractError("Review scope must be nonempty and bounded")
+    if decision == "accepted" and not evidence:
+        raise CutoutContractError("Accepted review requires at least one evidence file")
     report = json.loads(quality_report.read_text(encoding="utf-8"))
     rows = [row for row in report.get("candidates", []) if row.get("id") == candidate_id]
     if len(rows) != 1:
@@ -583,6 +589,9 @@ def create_acceptance_record(*, quality_report: Path, candidate_id: str,
     candidate = rows[0]
     if decision == "accepted" and candidate.get("status") != "passed":
         raise CutoutContractError("Rejected technical candidate cannot be accepted")
+    alpha_status = report.get("stages", {}).get("alpha_quality", {}).get("status")
+    if decision == "accepted" and alpha_status != "passed":
+        raise CutoutContractError("Candidate cannot be accepted unless alpha QA passed")
     candidate_path = Path(candidate["path"]).resolve(strict=True)
     if sha256(candidate_path) != candidate["sha256"]:
         raise CutoutContractError("Candidate bytes changed since QA")

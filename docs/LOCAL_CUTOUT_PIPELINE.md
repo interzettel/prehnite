@@ -46,9 +46,10 @@ No generation, judge, retry or automatic acceptance is involved.
 
 ## 2. Create a cutout recipe
 
-A recipe is explicit JSON; it contains source/target definitions, the exact
-workflow SHA256 and node bindings, model file hashes, and one or more alpha
-candidate specifications. Candidate sigmas are **never defaulted**.
+A recipe is explicit plain-UTF-8 JSON (no BOM); it contains source/target
+definitions, the exact workflow SHA256 and node bindings, model file hashes, and
+one or more alpha candidate specifications. Paths are canonical relative POSIX
+paths (use `/`, not Windows `\\`). Candidate sigmas are **never defaulted**.
 
 ```json
 {

@@ -204,7 +204,27 @@ def test_acceptance_is_explicit_create_only_and_separates_owner_state(tmp_path):
             scope="duplicate must not overwrite", evidence=[source],
             output=record_path,
         )
+    with pytest.raises(CutoutContractError, match="evidence"):
+        create_acceptance_record(
+            quality_report=report_path, candidate_id=candidate_id,
+            reviewer="independent reviewer", decision="accepted",
+            scope="must include evidence", evidence=[],
+            output=tmp_path / "missing-evidence.json",
+        )
 
+
+
+def test_qa_refuses_to_overwrite_an_existing_report(tmp_path):
+    source, mask, _, _, _, recipe_path = write_fixture(tmp_path)
+    out = tmp_path / "out"
+    report_path = run_cutout_qa(recipe_path, source=source, mask=mask,
+                                workflow_root=tmp_path, models_root=tmp_path,
+                                output_dir=out)
+    before = report_path.read_bytes()
+    with pytest.raises(CutoutContractError, match="new or empty"):
+        run_cutout_qa(recipe_path, source=source, mask=mask,
+                      workflow_root=tmp_path, models_root=tmp_path, output_dir=out)
+    assert report_path.read_bytes() == before
 
 
 def test_cli_writes_report_and_keeps_visual_acceptance_unrecorded(tmp_path):
@@ -223,6 +243,17 @@ def test_cli_writes_report_and_keeps_visual_acceptance_unrecorded(tmp_path):
     assert report["visual_acceptance"] == "not_recorded"
     assert report["owner_final_acceptance"] == "not_recorded"
     assert "recommended_candidate" in result.output
+
+
+def test_cli_exit_code_distinguishes_failed_qa(tmp_path):
+    source, mask, _, _, _, recipe_path = write_fixture(tmp_path, mask_mode="empty")
+    result = CliRunner().invoke(app, [
+        "cutout-qa", "--recipe", str(recipe_path), "--source", str(source),
+        "--mask", str(mask), "--workflow-root", str(tmp_path),
+        "--models-root", str(tmp_path), "--output", str(tmp_path / "failed-out"),
+    ])
+    assert result.exit_code == 2
+    assert (tmp_path / "failed-out" / "cutout-quality.json").is_file()
 
 
 def test_rejected_technical_candidate_cannot_be_accepted(tmp_path):

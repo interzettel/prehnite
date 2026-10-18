@@ -188,8 +188,8 @@ def estimate(manifest: Path, profile: Path = typer.Option(...),
 @app.command()
 def crops(source: Path, output: Path = typer.Option(..., help="Local evidence folder"),
           edge: int = typer.Option(768, help="Native pixel size of each square crop"),
-          anchor_x: float | None = typer.Option(None, help="Normalized subject X, 0–1"),
-          anchor_y: float | None = typer.Option(None, help="Normalized subject Y, 0–1")):
+          anchor_x: float | None = typer.Option(None, help="Normalized subject X, 0â€“1"),
+          anchor_y: float | None = typer.Option(None, help="Normalized subject Y, 0â€“1")):
     """Inspect image corners, center and optional manually selected subject at 1:1."""
     from .crops import make_detail_crops
     if (anchor_x is None) != (anchor_y is None):
@@ -474,7 +474,7 @@ def cutout_qa(
     try:
         report_path = run_cutout_qa(
             recipe, source=source, mask=mask, workflow_root=workflow_root,
-            models_root=models_root, output_dir=output, 
+            models_root=models_root, output_dir=output,
             resource_readiness=resource_readiness,
         )
     except (CutoutContractError, FileExistsError, OSError) as exc:
