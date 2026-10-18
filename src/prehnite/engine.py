@@ -35,6 +35,8 @@ class Engine:
                  inputs: Path = Path("inputs"), job_token: str | None = None,
                  recipe_execution=None):
         validate_job(manifest, profile, inputs)
+        if manifest.handoff is not None and (recipe_execution is not None or job_token is not None):
+            raise ValueError("Reviewed handoff is not supported by recipe/MCP worker routes")
         # The MCP worker contract does not carry recipe identity yet; refuse a
         # recipe on that route rather than silently dropping immutable intent.
         if recipe_execution is not None and job_token is not None:
@@ -45,6 +47,10 @@ class Engine:
         self._run_lock_held = False
         self.inputs = inputs
         self.recipe_execution = recipe_execution
+        self.handoff_identity = None
+        if manifest.handoff is not None:
+            from .handoff import verify_handoff
+            self.handoff_identity = verify_handoff(manifest, profile, inputs)
         self.journal = Journal(workspace, manifest.id)
         self.cache = StageCache(workspace, profile.cache) if profile.cache.enabled else None
         checksum = fingerprint(manifest, profile)
@@ -67,7 +73,17 @@ class Engine:
                 )
         previous = self.journal.fact("configuration_sha256")
         if previous is not None and previous != checksum:
+            self.journal.close()
             raise ValueError("Batch ID reused with changed manifest/profile; choose a new ID")
+        existing_handoff = self.journal.fact("human_review_handoff")
+        if existing_handoff is not None and existing_handoff != self.handoff_identity:
+            self.journal.close()
+            raise ArtifactIntegrityError("Reviewed-source identity mismatch on resume")
+        if self.handoff_identity is not None and existing_handoff is None:
+            if previous is not None or self.journal.tasks():
+                self.journal.close()
+                raise ValueError("Cannot retroactively attach a human review to an existing batch")
+            self.journal.set_fact("human_review_handoff", self.handoff_identity)
         self.journal.set_fact("configuration_sha256", checksum)
         self.journal.set_fact("manifest", manifest.model_dump())
         self.journal.set_fact("profile", profile.model_dump())
@@ -315,7 +331,7 @@ class Engine:
         return selection, score, "Two independent Haiku rubrics"
 
     def cutout(self, asset: Asset, selected: Path, name: str, attempt: int,
-               target_output: Path) -> dict:
+               target_output: Path, *, target_prompt: str | None = None) -> dict:
         ep = self.profile.segmentation
         provider = get_provider(ep)
         target_key = hashlib.sha256(name.encode("utf-8")).hexdigest()[:12]
@@ -329,7 +345,7 @@ class Engine:
             raise ArtifactIntegrityError("Existing cutout cannot be overwritten by a review-only repair")
         self.stage(key, "segmentation", ep, mask,
                    lambda on_submit, resume, temp: provider.segment(
-                       selected, name, temp, ep, on_submit, resume), "segmentation",
+                       selected, target_prompt or name, temp, ep, on_submit, resume), "segmentation",
                    cache_request={"source_sha256": sha256(selected),
                                   "target": name})
         if review_mode:
@@ -455,7 +471,79 @@ class Engine:
                 raise ArtifactIntegrityError("Selected output escapes batch directory")
             verified_image(path, hashes.get(name))
 
+    @staticmethod
+    def reviewed_output_hashes(root: Path, outputs: list[str]) -> dict[str, str]:
+        from .schema import relative_name
+        base = root.resolve()
+        hashes = {}
+        for filename in outputs:
+            path = (base / relative_name(filename)).resolve()
+            if not path.is_relative_to(base):
+                raise ArtifactIntegrityError("Reviewed output escapes batch directory")
+            hashes[filename] = image_info(path)["sha256"]
+        return hashes
+
+    def process_reviewed_source(self, asset: Asset) -> dict:
+        """Source approved for SEGMENTATION only; cutout never automatically accepted."""
+        from .handoff import verify_handoff
+        identity = verify_handoff(self.manifest, self.profile, self.inputs)
+        if (identity != self.handoff_identity
+                or self.journal.fact("human_review_handoff") != identity):
+            raise ArtifactIntegrityError("Reviewed-source identity changed before cutout")
+        pending_root = self.journal.root / "review_pending"
+        saved = self.journal.fact("results", {}).get(asset.id)
+        if saved is not None:
+            if saved.get("status") != "review_pending":
+                raise RecoveryBlocked("Reviewed cutout failed; no automatic retry")
+            for filename, digest in saved["outputs_sha256"].items():
+                from .schema import relative_name
+                path = (pending_root / relative_name(filename)).resolve()
+                if not path.is_relative_to(pending_root.resolve()):
+                    raise ArtifactIntegrityError("Unsafe reviewed output on resume")
+                verified_image(path, digest)
+            return saved
+        source = resolve_input(self.inputs, asset.source)
+        destination = pending_root / asset.output.image
+        target = asset.targets[0]
+        mask_key = f"{asset.id}:cutout:{target}:mask"
+        prior_mask = self.journal.get(mask_key)
+        if prior_mask and prior_mask["status"] != "completed":
+            raise RecoveryBlocked("Previous cutout not completed; do not submit another")
+        if destination.exists():
+            original = image_info(destination)
+            if original["sha256"] != identity["candidate_sha256"]:
+                raise ArtifactIntegrityError("Existing reviewed output differs from approved bytes")
+        else:
+            original = atomic_copy_image(source, destination)
+        if original["sha256"] != identity["candidate_sha256"]:
+            raise ArtifactIntegrityError("Staged source differs from reviewed candidate")
+        outputs = [asset.output.image]
+        mask_destination = pending_root / asset.output.cutouts[target]
+        try:
+            self.cutout(asset, destination, target, 1, mask_destination,
+                        target_prompt=identity["target_phrase"])
+        except ValueError as exc:
+            return {
+                "status": "review_pending", "cutout_status": "failed",
+                "outputs": outputs, "outputs_sha256": self.reviewed_output_hashes(pending_root, outputs),
+                "reason": str(exc)[:500],
+                "human_verdict": "accepted_for_next_stage",
+                "generation_skipped": True, "automatic_quality_verified": False,
+                "visual_quality_verified": False, "cutout_quality_verified": False,
+            }
+        outputs.append(asset.output.cutouts[target])
+        return {
+            "status": "review_pending", "cutout_status": "awaiting_human_review",
+            "outputs": outputs, "outputs_sha256": self.reviewed_output_hashes(pending_root, outputs),
+            "reason": "Reviewed source advanced; generated cutout requires independent human acceptance",
+            "human_verdict": "accepted_for_next_stage",
+            "generation_skipped": True, "automatic_quality_verified": False,
+            "visual_quality_verified": False, "cutout_quality_verified": False,
+        }
+
     def process(self, asset: Asset) -> dict:
+        if self.manifest.handoff is not None:
+            return self.process_reviewed_source(asset)
         output_root = self.journal.root / "selected"
         final_output = output_root / asset.output.image
         saved = self.journal.fact("results", {}).get(asset.id)
@@ -576,6 +664,11 @@ class Engine:
                 self.manifest, self.profile)}
         self.journal.pin_recipe_identity(identity)
         self.verify_input_sources()
+        if self.manifest.handoff is not None:
+            from .handoff import verify_handoff
+            if (verify_handoff(self.manifest, self.profile, self.inputs) != self.handoff_identity
+                    or self.journal.fact("human_review_handoff") != self.handoff_identity):
+                raise ArtifactIntegrityError("Reviewed source/receipt identity changed before run")
         self.journal.job_checkpoint(self.job_token)
         results = self.journal.fact("results", {})
         for asset in self.manifest.assets:

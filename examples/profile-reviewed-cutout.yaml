@@ -1,0 +1,21 @@
+# Replace node IDs after exporting an actual installed ComfyUI-SAM2 API graph.
+variants: []
+generation: {provider: disabled}
+upscale: {provider: disabled}
+judge: {provider: disabled}
+segmentation:
+  provider: comfyui
+  model: user-segmentation
+  options:
+    workflow: cutout_api.json
+    base_url: http://127.0.0.1:8188
+    input_node: "1"
+    target_node: "4"
+    target_input: prompt
+    output_node: "6"
+policy:
+  maximum_attempts: 1
+  uncertain: reject
+  local_repair_mode: disabled
+cache: {enabled: false}
+costs: {allow_paid: false, allow_cloud_uploads: false, max_usd: 0, estimates_usd: {}}

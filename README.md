@@ -144,6 +144,10 @@ The new [schema-v2 model bindings](docs/MULTIFILE_PROVENANCE.md) hash every expl
 
 A separate [native-1K local preview](docs/FIRST_REAL_ASSET.md#8-gb-laptop-smoke-test--genuine-native-1k) now requests **768×1024** pixels at 3:4 for one small smoke test. It refuses to upscale undersized model output silently and does not change the legacy native-4K preview or any hosted pricing and schemas. Real 8 GB GPU success, image quality and third-party weights remain unverified.
 
+### Human-reviewed source → new cutout batch (opt-in, local only)
+
+The [reviewed-source handoff](docs/REVIEWED_SOURCE_HANDOFF.md) hashes the original generated PNG, its human review and an explicit structured attestation before opening a **new source-only batch**. Segmentation produces a `review_pending/` candidate and never converts the original rejected generation batch to accepted, runs generation again, changes `uncertain: reject`, or claims the cutout passed human review. Requires separately installed/licensed local segmentation graphs/weights; this development feature is not in PyPI `0.1.0a1`.
+
 ### First real model test — local or opt-in fal.ai
 
 The development CLI offers **`prehnite trial-evidence`** to produce a private, hash-bound technical receipt for a real generated image and transparent cutout without uploading or mutating either image. A valid image receipt is not proof of a human-accepted mask or measured GPU performance.\n\nThe development CLI offers **`prehnite micro-setup`** for create-only, hash-verified local graph/weight bindings and **`prehnite trial-plan`** for a one-asset, zero-provider-call dry-run with explicit cost caps before any local ComfyUI or fal.ai inference. The [operator runbook](docs/FIRST_REAL_ASSET.md) includes platform setup, graph mapping, source-rights checks, error/evidence collection and carefully gated first API testing. These are **development changes**, not present in the already published immutable `0.1.0a1` wheel; use a current source checkout until a subsequent alpha is approved. No pretrained weights or live GPU/paid-provider results are supplied.

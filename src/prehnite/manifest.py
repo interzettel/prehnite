@@ -34,6 +34,12 @@ def validate_job(manifest: Manifest, profile: Profile, input_root: Path) -> None
     for name, allowed in supported.items():
         if getattr(profile, name).provider not in allowed:
             raise ValueError(f"Unsupported {name} provider: {getattr(profile, name).provider}")
+    if manifest.handoff is not None:
+        from .handoff import verify_handoff
+        # Full review/source byte preflight happens BEFORE Engine creates a journal.
+        verify_handoff(manifest, profile, input_root)
+    elif not profile.variants:
+        raise ValueError("Empty variants require an explicit reviewed-source handoff")
     # Native 1K is a true local-size tier, not a small render relabeled or
     # silently enlarged to 4K. Enforce both configured provider and output size.
     if "native_1k" in profile.variants:
