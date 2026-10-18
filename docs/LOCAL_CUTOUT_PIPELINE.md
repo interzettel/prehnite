@@ -148,6 +148,54 @@ foreground/hole component topology, exceeds the configured coverage/feathering
 limits, changes a narrow row width, or fails the hard-IoU threshold. Candidate
 status is `passed` or `rejected`; every candidate remains `review_pending`.
 
+### Optional S03-A03 true color-spill unmixing (uniform backdrops only)
+
+The default CPU candidate **only expands nearest foreground RGB** into feathered
+transparent pixels. That operation is not true removal of background colour
+already mixed into an edge pixel.
+
+For a source with a **known, operator-declared, uniform RGB background** and an
+accurate alpha estimate, a candidate can separately opt into analytical RGB
+unmixing. Example candidate (not a new default):
+
+```json
+{
+  "id": "uniform-spill-correction",
+  "sigma_px": 0.65,
+  "preserve_core_px": 1,
+  "color_spill": {
+    "background_rgb": [240, 230, 220],
+    "border_tolerance": 8,
+    "min_alpha": 48,
+    "max_clipped_fraction": 0.10
+  }
+}
+```
+
+The declared backdrop and every image-border pixel must agree within the
+per-channel tolerance, and the hard subject mask must not reach the frame.
+For a partially transparent pixel **inside the existing hard foreground**,
+the algorithm uses the straight-alpha compositing identity:
+
+`observed_RGB = alpha * foreground_RGB + (1 - alpha) * background_RGB`.
+
+It inverts this equation per RGB channel using the candidate alpha; the exact
+alpha image/hard silhouette are **not** modified, and fully opaque interior
+pixels (including product areas colored exactly like the backdrop) remain
+byte-for-byte unchanged. Background-colored partially covered foreground
+pixels also retain their color and alpha. A low alpha, mismatched/nonuniform
+frame, cropped subject or excessive out-of-gamut inversions causes abstention
+rather than destructive automatic cleanup.
+
+The JSON report includes factual `color_spill_*` counts; it does not claim
+that a photographed subject was correctly matted, a foreground material is
+opaque, or every halo is absent. The actual background may vary inside the
+frame despite uniform corners; source rights, background validity and candidate
+edge appearance still require review. **Do not enable this for general indoor
+photos, natural gradients, glass, hair/fur, thin mesh or other unknown
+materials.** This is an optional S03-A03 pixel-level implementation, not proof
+of S03-A04/S03-A05 or a replacement for independently annotated real masks.
+
 The RGB operation evidence is deliberately factual: `foreground_rgb_expansion`
 records that nearest-opaque foreground RGB was expanded, the expansion radius,
 and the measured count of RGB pixels replaced. It does **not** claim absence of
