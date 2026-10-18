@@ -144,6 +144,10 @@ The new [schema-v2 model bindings](docs/MULTIFILE_PROVENANCE.md) hash every expl
 
 A separate [native-1K local preview](docs/FIRST_REAL_ASSET.md#8-gb-laptop-smoke-test--genuine-native-1k) now requests **768×1024** pixels at 3:4 for one small smoke test. It refuses to upscale undersized model output silently and does not change the legacy native-4K preview or any hosted pricing and schemas. Real 8 GB GPU success, image quality and third-party weights remain unverified.
 
+### Implicit segmentation model-file attestation (opt-in)
+
+Reviewed-source cutout batches can now pin a [private dependency manifest](docs/IMPLICIT_DEPENDENCIES.md) for GroundingDINO/SAM2/BERT model weights, tokenizer/config files and declared custom-node source files. SHA256 is rechecked before local execution and resume; this does **not** prove custom-node runtime loads, permissions or model quality. Existing reviewed-source packets remain compatible and never silently acquire a "verified" claim.
+
 ### Human-reviewed source → new cutout batch (opt-in, local only)
 
 The [reviewed-source handoff](docs/REVIEWED_SOURCE_HANDOFF.md) hashes the original generated PNG, its human review and an explicit structured attestation before opening a **new source-only batch**. Segmentation produces a `review_pending/` candidate and never converts the original rejected generation batch to accepted, runs generation again, changes `uncertain: reject`, or claims the cutout passed human review. Requires separately installed/licensed local segmentation graphs/weights; this development feature is not in PyPI `0.1.0a1`.
