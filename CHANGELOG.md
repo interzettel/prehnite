@@ -6,6 +6,11 @@ This project follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) an
 
 ## [Unreleased]
 
+### Documentation / measured local-lab evidence (2026-10-18)
+- Record a real owner-authorized **768×1024 local SDXL lamp source**, one completed GroundingDINO/SAM2 segmentation prompt (8.994 s including load/inference, sampled peak 2,533 MiB VRAM), CPU-only alpha refinement and **independent artifact-specific visual acceptance of Candidate A**. Maintain unchanged original rejected generation journal and separately failed first segmentation batch. Keep private images, model files and acceptance records outside public source; evidence and limitations in [the dated local-lab milestone](docs/LOCAL_LAB_MILESTONE_2026-10-18.md).
+- Correct README, roadmap, release matrix, handoff and first-trial runbooks to distinguish **private, demonstrated real GPU execution** from an **installable, generally validated Prehnite feature**. The 61-unit and atomic completion counts do not advance without their own acceptance conditions. Draft [resource-readiness PR #159](https://github.com/interzettel/prehnite/pull/159) is separate and unmerged.
+
+
 ### Added
 - Optional strict operator-declared implicit segmentation dependency SHA256 manifest for human-reviewed source cutout batches. Hashes privately staged GroundingDINO/SAM2/BERT weights, configs and tokenizer files without loading them; binds receipt to new batch identity and rechecks before cutout. Legacy handoffs unchanged, runtime-loaded bytes/graph completeness/licensing not certified (#156).
 
