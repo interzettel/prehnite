@@ -9,19 +9,19 @@ See [the measured local lab case study](LOCAL_LAB_MILESTONE_2026-10-18.md) for p
 
 **Productization Sprint 1 has now implemented the first reusable step locally**:
 the publicly submitted [draft PR #161](https://github.com/interzettel/prehnite/pull/161)
-(branch `feature/local-cutout-productization`, head `f4c86da`) adds opt-in CPU `cutout-qa` / `cutout-accept` commands,
+(branch `feature/local-cutout-productization`, head `9949367`) adds opt-in CPU `cutout-qa` / `cutout-accept` commands,
 configurable alpha candidates, seven-stage evidence and create-only visual
 review receipts; the private lab consolidates its runtime launcher as
-`prehnite_local_runtime.py`. The local runner reports 12 new tests passing
-and 863 passing overall (15 skipped; 1 pre-existing Windows symlink-privilege
-failure). **None of this is merged into public `main` yet; new Engine cutout
-QA remains opt-in and lacks a second real-object end-to-end test.** Closeout
-added two new tests (14 total); GitHub Actions reports 25/25 jobs successful,
-but an independent code review found evidence/status semantics and runbook errors
-to correct before merge.
+`prehnite_local_runtime.py`. The local runner's review-resolution pass reports **21 passing cutout tests**
+and **872 host full-suite passes / 15 skipped / 1 Windows symlink-privilege
+failure**; GitHub Actions [run 39152075877](https://github.com/interzettel/prehnite/actions/runs/39152075877)
+finished with **25/25 successful jobs**. The previous five focused code-review
+findings were corrected in commit `9949367`; the updated contracts were
+independently source-inspected. **None of this is merged into public `main`
+yet, Engine QA is still opt-in and a second real-object test has not run.**
 [Evidence and source boundaries](LOCAL_LAB_MILESTONE_2026-10-18.md#subsequent-productization-sprint-and-public-review-same-date).
 
-**Immediate work:** finish the focused source review and regression fixes in
+**Immediate work:** obtain maintainer review/merge decisions for the corrected
 [PR #161](https://github.com/interzettel/prehnite/pull/161), finish
 independent review of [PR #159](https://github.com/interzettel/prehnite/pull/159)
 and [documentation PR #160](https://github.com/interzettel/prehnite/pull/160),
@@ -30,7 +30,8 @@ then seek separate authorization for a diverse next-object test.
 ## Local productization review checklist (2026-10-18)
 
 - [x] Private lab implements a reusable CPU cutout-quality module, two additive CLI commands, candidate/approval receipts and local-runtime wrapper; local offline tests reported as passing.
-- [ ] Complete independent code review of **[draft PR #161](https://github.com/interzettel/prehnite/pull/161)** and resolve evidence-state, readiness-compatibility, topology and CLI-runbook findings; CI currently 25/25 passed, but review fixes remain open. No merge authorization.
+- [x] Resolve initial independent code-review findings on **[draft PR #161](https://github.com/interzettel/prehnite/pull/161)** (execution evidence, PR #159 observation, topology, CLI runbook, RGB operation facts); head `9949367`, CI 25/25. This checkbox is for the **review fixes only**, not merge/release approval.
+- [ ] Obtain final maintainer merge approval and reconcile branch interactions with PR #159/#160; maintain separate integration and GPU acceptance boundaries.
 - [ ] Integrate reviewed cutout QA optionally with the existing Engine and journal semantics; no new job engine.
 - [ ] Verify behavior against a second distinct real object under separate GPU authorization, with visual review; no automatic acceptance.
 - [ ] Evaluate gold-reference alpha scoring, material diversity, multiple instances and long-running/batch operations before marketing production readiness.
