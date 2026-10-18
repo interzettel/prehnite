@@ -95,9 +95,44 @@ class Asset(Strict):
         return self
 
 
+
+class ReviewedSourceHandoff(Strict):
+    """Explicit operator-attested source approval, distinct from cutout approval."""
+    source_batch: str
+    candidate_sha256: str
+    review_receipt: str
+    review_receipt_sha256: str
+    review_document: str
+    review_document_sha256: str
+    verdict: Literal["accepted_for_next_stage"]
+    target_phrase: str = Field(min_length=2, max_length=120)
+    include: list[str] = Field(min_length=1, max_length=12)
+    exclude: list[str] = Field(min_length=1, max_length=12)
+
+    @model_validator(mode="after")
+    def check_handoff(self) -> "ReviewedSourceHandoff":
+        Asset.check_id(self.source_batch)
+        for field in ("candidate_sha256", "review_receipt_sha256", "review_document_sha256"):
+            if not re.fullmatch(r"[0-9a-f]{64}", getattr(self, field)):
+                raise ValueError(f"{field} must be lowercase SHA256")
+        for field in ("review_receipt", "review_document"):
+            relative_name(getattr(self, field))
+        if self.review_receipt == self.review_document:
+            raise ValueError("Structured handoff receipt and original review must be distinct")
+        if not self.target_phrase.strip() or self.target_phrase != self.target_phrase.strip():
+            raise ValueError("Handoff target phrase must be explicit and trimmed")
+        both = self.include + self.exclude
+        if any(not value.strip() or len(value) > 120 for value in both):
+            raise ValueError("Include/exclude entries must be nonempty and bounded")
+        if len({s.casefold() for s in both}) != len(both):
+            raise ValueError("Handoff include/exclude entries cannot overlap or repeat")
+        return self
+
+
 class Manifest(Strict):
     id: str
     assets: list[Asset] = Field(min_length=1)
+    handoff: ReviewedSourceHandoff | None = None
 
     @field_validator("id")
     @classmethod
@@ -106,6 +141,13 @@ class Manifest(Strict):
 
     @model_validator(mode="after")
     def unique_destinations(self) -> "Manifest":
+        if self.handoff is not None:
+            if self.id == self.handoff.source_batch:
+                raise ValueError("Reviewed handoff requires a new batch ID")
+            if len(self.assets) != 1 or not self.assets[0].source or self.assets[0].prompt:
+                raise ValueError("Reviewed handoff requires exactly one existing source asset")
+            if len(self.assets[0].targets) != 1:
+                raise ValueError("Reviewed handoff requires exactly one explicit cutout target")
         ids = [a.id for a in self.assets]
         if len(ids) != len(set(ids)):
             raise ValueError("Duplicate asset IDs")
@@ -182,8 +224,10 @@ class Profile(Strict):
 
     @model_validator(mode="after")
     def valid_profile(self) -> "Profile":
-        if not self.variants or len(set(self.variants)) != len(self.variants):
-            raise ValueError("Variants must be non-empty and unique")
+        if len(set(self.variants)) != len(self.variants):
+            raise ValueError("Variants must be unique")
+        if not self.variants and self.generation.provider != "disabled":
+            raise ValueError("Empty variants require generator disabled (reviewed-source mode)")
         if self.generation.provider == "disabled" and self.variants:
             # Existing-image manifests may bypass generation.
             pass
