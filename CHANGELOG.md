@@ -6,6 +6,9 @@ This project follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) an
 
 ## [Unreleased]
 
+### Fixed
+- Allow an explicit ComfyUI segmentation `target_input` (`text` default, `prompt`, or `value`) consistently through graph preflight, recipe-bound verification and local adapter, rejecting unknown fields or missing graph inputs before local uploads. This unblocks real GroundingDINO/SAM2 target routing once separately licensed nodes and weights are installed; no runtime proof or model download (#134/#135).
+
 ### Added
 - Explicit schema-v2 multi-file ComfyUI model bindings for owner-selected transformers, text encoders, VAEs and auxiliary weights; SHA256 and exact graph-reference coverage for recognized weight file extensions, changed-byte resume refusal, private create-only manifest and stable legacy schema-v1 receipts. Runtime-loaded weights, undiscoverable custom-node dependencies and third-party rights remain unverified (#135).
 
