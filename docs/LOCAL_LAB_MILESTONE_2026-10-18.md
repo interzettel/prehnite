@@ -40,14 +40,11 @@ The public repository intentionally does **not** contain these private image fil
 - A workable **process-isolated dependency compatibility overlay** was demonstrated without downgrading the shared ComfyUI environment.
 - Source, dependency, workflow, submission count, runtime observations and acceptance records can be traced across the local lab.
 
-## Subsequent productization sprint and public review (same date)
+## Productization and merged public source (same date)
 
 **Productization Sprint 1 and closeout are complete locally.** The local lab
 advanced from `da7b478` (initial implementation) to **`896fdea`**
-(documentation synchronization, audit and closeout). Reusable source code was
-pushed as **[draft PR #161](https://github.com/interzettel/prehnite/pull/161)**
-(branch `feature/local-cutout-productization`, head `9949367`, base
-`848edaf`). The PR is **not merged or released**.
+(documentation synchronization, audit and closeout). Reusable source code was reviewed and **merged to development `main`** as [PR #161](https://github.com/interzettel/prehnite/pull/161) at squash commit `ca78b8b`, after [PR #159](https://github.com/interzettel/prehnite/pull/159) resource-readiness integration (`ef54488`). The preceding #161 code-review fix head was `9949367`. These merges are **not a new packaged PyPI release**.
 
 - `src/prehnite/cutout_quality.py`: source/target/workflow/model SHA256
   contracts, configurable CPU alpha candidates, nearest-foreground RGB
@@ -60,11 +57,7 @@ pushed as **[draft PR #161](https://github.com/interzettel/prehnite/pull/161)**
 - Private `scripts/prehnite_local_runtime.py` consolidates
   `preflight/check/start/status/stop`. It and the model environment remain in
   the private lab, **not shipped in the PR**.
-- **Review-resolution tests:** 21 cutout tests passed; host full suite
-  reported **872 passed / 15 skipped / 1 Windows symlink-privilege failure**;
-  GitHub Actions [run 39152075877](https://github.com/interzettel/prehnite/actions/runs/39152075877)
-  completed with **25/25 successful jobs** (independently verified via GitHub).
-  This is the final reported source head `9949367`, lab report commit `a33f4bf`.
+- **Engineering checks:** review-resolution head `9949367` reported 21 cutout tests passed; host full suite **872 passed / 15 skipped / 1 Windows symlink-privilege failure**; private combined integration session (`3a08740`) reported **890 passed / 15 skipped / 1 host symlink case deselected**. The three cross-PR interface tests from temporary [PR #162](https://github.com/interzettel/prehnite/pull/162) were preserved in merged #161. After the source merges, [development `main` CI 39153867726](https://github.com/interzettel/prehnite/actions/runs/39153867726) passed **25/25 jobs**, independently checked. Private review-resolution report commit `a33f4bf`.
 - Original accepted lamp Candidate A remains immutable. The new CPU algorithm
   did **not** reproduce identical bytes: hard silhouette IoU 1.0, but **6,749
   alpha pixels changed** and transparent/fringe RGB output differs. No
@@ -74,8 +67,7 @@ pushed as **[draft PR #161](https://github.com/interzettel/prehnite/pull/161)**
   separated from unverified runtime compatibility/execution, versioned PR #159
   resource observation with `startup_authorized:false`, true hole-component
   metrics, valid CLI runbook, and measured RGB expansion operation facts.
-  Final maintainer merge approval is still separate. The earlier runner's
-  `preflight` refused startup below its 6,000 MB RAM policy floor.
+  The owner subsequently authorized source merges; the corrected contracts are now on development `main`. The earlier runner's `preflight` refused startup below its 6,000 MB RAM policy floor.
   **No new GPU inference, ComfyUI startup, downloads or packages** were used
   for review resolution.
 
@@ -89,17 +81,11 @@ plus `results/2026-10-18-pr161-review-resolution.md` (SHA256
 The private patch, source image, masks, GPU logs, local runtime config and
 weights remain private.
 
-**Next:** finalize maintainer review and coordinate potential
-`cli.py` branch conflicts across [#159](https://github.com/interzettel/prehnite/pull/159),
-[#160](https://github.com/interzettel/prehnite/pull/160) and
-[#161](https://github.com/interzettel/prehnite/pull/161), preserving independent
-histories and checking post-integration CI. Do not silently merge or tag a
-release. Product validation on a different object and Engine integration remain
-separately scoped, untested and unauthorized by these documentation updates.
+**Next:** finish the dated documentation [PR #160](https://github.com/interzettel/prehnite/pull/160) after the source merges; close the temporary integration [PR #162](https://github.com/interzettel/prehnite/pull/162) **unmerged**, with its synthetic tests retained on `main`. Then plan a separately authorized, genuinely different live-object Engine→opt-in `cutout-qa` trial. No release/tag or inference authorization follows automatically.
 
 ## What explicitly remains open
 
-- The current public package does **not** bundle the local launcher, 4.57.6 overlay, models or turnkey accepted pipeline. An initial reusable cutout QA/acceptance proposal and private runtime wrapper **now exist in public draft PR #161**, but are not yet fully reviewed/merged or certified with a second real object; [public integration](ROADMAP.md) remains open.
+- The **development source** now includes resource preflight, CPU cutout QA/acceptance and the integration regressions (#159/#161). The **released PyPI `0.1.0a1`** does not. The private local launcher, Transformers overlay and weights remain unbundled. Engine→QA remains opt-in/manual, with no second real-object certification ([roadmap](ROADMAP.md)).
 - No general **4/6/8/12 GiB model tier**, multiple-machine reproducibility, 4K real image viability, uninterrupted long-batch behavior or cost/quality throughput distribution has been established.
 - No independent alpha reference corpus, measured hair/glass/translucency/multi-instance benchmark, calibrated judge or robust single-object model comparison exists.
 - No comprehensive model-rights certification, runtime-loaded dependency completeness, third-party weight redistribution approval, real paid API reconciliation or production release gate follows.
@@ -107,11 +93,9 @@ separately scoped, untested and unauthorized by these documentation updates.
 
 ## Next product milestone
 
-Turn the local-runner success into reviewed, reproducible, optional Prehnite functionality:
-
-1. **Review and integrate** the already implemented and publicly PR'd cutout QA/acceptance patch and private consolidated runtime interface; no longer describe these as not yet written. Keep code optional and weights/private paths out of public GitHub.
-2. Finish **[draft resource-readiness PR #159](https://github.com/interzettel/prehnite/pull/159)** independently of the private hardware runner; a passing resource preflight is not authorization to infer.
-3. Review the newly proposed seven-stage cutout QA and create-only acceptance records, then integrate only after source/tests/CI review; maintain the distinction between **resource observation**, **compatibility**, **technical completion**, **mask quality**, **independent visual approval** and **owner-signed journal promotion**.
-4. Test offline synthetic/mock error paths first, then seek separate authorization for diverse-image, real-model validation. Never treat this one accepted lamp as an automated quality metric.
+1. **Source integration complete:** #159 and #161 merged into development `main`, with synthetic cross-interface tests preserved. CI passed 25/25 on `main`.
+2. **Documentation closeout:** #160 describes the merged source accurately; temporary #162 should be closed without merging. The private lab reports and review history remain immutable.
+3. **Next new evidence:** under separate operator authorization, verify the merged optional Engine→CPU QA workflow on a **different real object** with provenance-bound execution receipts and independent visual review.
+4. **Later quality/release work:** gold-reference diverse masks, model and weight rights, long-running batch safety, reviewed owner journal promotion and representative hardware-tier measurements. One accepted lamp and passing synthetic CI do not complete these tasks.
 
 See [delivery readiness](PROGRESS.md), [roadmap](ROADMAP.md), [61-unit tracker](progress/STATUS.md), [atomic task tracker](progress/ATOMIC.md), and [first-real-asset operator guide](FIRST_REAL_ASSET.md).
