@@ -6,6 +6,10 @@ This project follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) an
 
 ## [Unreleased]
 
+### Added
+- Explicit hash-bound, generation-disabled human-reviewed source handoff: verifies original PNG, original review document and structured typed receipt before new batch journal creation; performs one local cutout with the actual target phrase, preserves original rejected batch, and stages output as `review_pending` rather than accepted. No cloud/paid/automatic retry or model install (#134).
+
+
 ### Fixed
 - Allow an explicit ComfyUI segmentation `target_input` (`text` default, `prompt`, or `value`) consistently through graph preflight, recipe-bound verification and local adapter, rejecting unknown fields or missing graph inputs before local uploads. This unblocks real GroundingDINO/SAM2 target routing once separately licensed nodes and weights are installed; no runtime proof or model download (#134/#135).
 
