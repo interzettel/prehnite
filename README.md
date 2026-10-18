@@ -281,6 +281,8 @@ batch with zero accepted assets has no meaningful cost-per-accepted figure.
 
 ## Where things stand
 
+**Focused cutout capability: 8/13 (61.5%)** — a separate, fixed-scope, [evidence-linked delivery tracker](docs/progress/CUTOUT_CAPABILITY.md) for the completed private lamp proof, merged source work and remaining real-object validation. **This is not an overall project completion estimate, release certification, or a replacement for the 42/61 release and 14/73 atomic trackers.** The next measurable increment requires a verified non-lamp source on the laptop; the most recent resource preflight was blocked below the 6,000 MiB RAM floor.
+
 **Latest public release: `0.1.0a1` — [published on PyPI](https://pypi.org/project/prehnite/0.1.0a1/) and [tagged on GitHub](https://github.com/interzettel/prehnite/releases/tag/v0.1.0a1) on 2026-10-17.** Current source development version: **`0.1.0a2.dev0` (unpublished)**. Install the released alpha with `python -m pip install prehnite==0.1.0a1`. See [Changelog](CHANGELOG.md), [Versioning](docs/VERSIONING.md) and [Release policy](docs/RELEASING.md). The core synthetic workflow works and **one native-1K local lamp cutout has independent artifact-level visual approval**; photorealistic quality across categories, 4K GPU feasibility, general segmentation accuracy and actual API billing have **not** been certified.
 
 **Evidence status (2026-10-18):** the private lab achieved one accepted
