@@ -1,5 +1,7 @@
 # Prehnite — delivery readiness and work limits
 
+**Focused cutout capability: 8/13 (61.5%)** — a separate, fixed-scope [cutout delivery tracker](progress/CUTOUT_CAPABILITY.md) covering the completed private proof, merged source code and remaining real-object validation. It moves when a scoped outcome is evidenced, **not** when an unrelated production/release gate is asserted. This is not the project-wide completion percentage or a model-quality certification. The original 61-unit and frozen 73-atomic denominators remain independently governed.
+
 See also the [granular milestone tracker](progress/STATUS.md), generated from 61 independently verifiable work units. This 16-gate matrix is deliberately separate: passing small tasks does not prove release readiness.
 
 **Baseline:** 2026-10-16 · **Local evidence update:** 2026-10-18 ([first accepted lamp cutout](LOCAL_LAB_MILESTONE_2026-10-18.md)) · Source of truth: GitHub [issues](https://github.com/interzettel/prehnite/issues), [PRs](https://github.com/interzettel/prehnite/pulls), [CI](https://github.com/interzettel/prehnite/actions), and [A2A log #9](https://github.com/interzettel/prehnite/issues/9).
