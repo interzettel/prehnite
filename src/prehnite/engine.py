@@ -33,8 +33,8 @@ def fingerprint(manifest: Manifest, profile: Profile) -> str:
 class Engine:
     def __init__(self, manifest: Manifest, profile: Profile, workspace: Path,
                  inputs: Path = Path("inputs"), job_token: str | None = None,
-                 recipe_execution=None):
-        validate_job(manifest, profile, inputs)
+                 recipe_execution=None, dependency_root: Path | None = None):
+        validate_job(manifest, profile, inputs, dependency_root)
         if manifest.handoff is not None and (recipe_execution is not None or job_token is not None):
             raise ValueError("Reviewed handoff is not supported by recipe/MCP worker routes")
         # The MCP worker contract does not carry recipe identity yet; refuse a
@@ -46,11 +46,12 @@ class Engine:
         self.profile = profile
         self._run_lock_held = False
         self.inputs = inputs
+        self.dependency_root = dependency_root
         self.recipe_execution = recipe_execution
         self.handoff_identity = None
         if manifest.handoff is not None:
             from .handoff import verify_handoff
-            self.handoff_identity = verify_handoff(manifest, profile, inputs)
+            self.handoff_identity = verify_handoff(manifest, profile, inputs, dependency_root)
         self.journal = Journal(workspace, manifest.id)
         self.cache = StageCache(workspace, profile.cache) if profile.cache.enabled else None
         checksum = fingerprint(manifest, profile)
@@ -486,7 +487,7 @@ class Engine:
     def process_reviewed_source(self, asset: Asset) -> dict:
         """Source approved for SEGMENTATION only; cutout never automatically accepted."""
         from .handoff import verify_handoff
-        identity = verify_handoff(self.manifest, self.profile, self.inputs)
+        identity = verify_handoff(self.manifest, self.profile, self.inputs, self.dependency_root)
         if (identity != self.handoff_identity
                 or self.journal.fact("human_review_handoff") != identity):
             raise ArtifactIntegrityError("Reviewed-source identity changed before cutout")
@@ -666,7 +667,7 @@ class Engine:
         self.verify_input_sources()
         if self.manifest.handoff is not None:
             from .handoff import verify_handoff
-            if (verify_handoff(self.manifest, self.profile, self.inputs) != self.handoff_identity
+            if (verify_handoff(self.manifest, self.profile, self.inputs, self.dependency_root) != self.handoff_identity
                     or self.journal.fact("human_review_handoff") != self.handoff_identity):
                 raise ArtifactIntegrityError("Reviewed source/receipt identity changed before run")
         self.journal.job_checkpoint(self.job_token)
