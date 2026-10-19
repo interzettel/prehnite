@@ -6,12 +6,12 @@ This project follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) an
 
 ## [Unreleased]
 
-### Proposed product focus clarification (2026-10-19)
+### Canonical product roadmap migration (2026-10-19)
 
-- Add [separate research/build/experiment/acceptance milestone proposal](docs/PRODUCT_MILESTONES.md) and a versioned machine-readable [v2 register](progress/product_milestones.v2.proposed.json), guarded by offline consistency tests. Original 61/73 ledgers, completion evidence, releases and authorizations remain unchanged; no new milestone is claimed verified.
-
-- Add [8 GiB laptop-first product strategy proposal](docs/PRODUCT_STRATEGY_LOW_VRAM.md): Phase 1 measured efficient image generation/batching on the existing RTX 4070 laptop (with system-RAM constraints; no 4/6 GiB test program) and Phase 2 reproducible LoRA, visual variation and privacy-first appearance experiments. Reuse ComfyUI and existing runtimes instead of replacing their inference engines; research InvokeAI/Diffusers/sd.cpp as comparators and Higgsfield as an optional, separately consented hosted image API. Documentation only; no model execution, new API credentials, changes to approved resource ceilings, ledger credit or accepted release-scope migration.
-
+- Replace overlapping active 61-unit, 73-task, and proposed product trackers with **one evidence-gated v2 roadmap** in [progress/roadmap.json](progress/roadmap.json), rendered and validated by [scripts/roadmap.py](scripts/roadmap.py). Two phases and 9 outcome milestones (including the verified foundation) contain 26 typed research/decision/implementation/experiment/acceptance tasks; existing F01–F06 merge evidence carries forward without fabricated GPU or image-quality credit.
+- Freeze the original **43/61** release and **21/73** atomic snapshots and their reports/charts/generators in immutable [v1 archives](docs/ROADMAP_MIGRATION_V2.md), preserving an explicit crosswalk for all 18 original unfinished obligations. Only v2 contributes current product milestones; historical paid-provider, 90-item pilot, licensing and admin obligations are not silently credited.
+- Update README, roadmap, AGENTS, AGILE, contributors, CI and offline tests to use one current register. No GPU run, paid inference, private images, new licence rights, new model downloads, release/tag or merge of independent agents' work is implied.
+- Retain the research-backed [8 GiB laptop-first strategy](docs/PRODUCT_STRATEGY_LOW_VRAM.md), with ComfyUI as first runtime, optional larger hardware/APIs, LoRA/appearance experimentation in phase 2, and no 4/6 GiB hardware certification campaign or video production phase.
 
 ### First real local image/cutout and source productization (2026-10-18)
 
