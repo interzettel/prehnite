@@ -4,11 +4,11 @@
 **Original acceptance:** "Per-instance IDs and intended outputs remain deterministic
 after retries."
 
-This contract defines **identity and intention only**. It neither segments an
-image, assigns a detected mask to an instance, exports a cutout, nor approves a
-candidate. Those operations remain the separate S04-A03 (owner-selected
-region→instance binding), S04-A04 (multi-object export/resume), and quality
-acceptance tasks. The existing `prehnite run` reviewed-source path stays
+This S04-A02 contract defines **identity and intention only**. It never
+segments, binds or exports an image, or approves a candidate. Subsequent
+[S04-A03](OWNER_REGION_INSTANCE_BINDING.md) provides a separate opt-in,
+read-only owner-region to candidate-mask binding contract. **S04-A04
+(multi-object export/resume) and independent quality acceptance remain open.** The existing `prehnite run` reviewed-source path stays
 single-target; this change does not advertise new multi-instance inference.
 
 ## Namespace and identity
@@ -77,8 +77,10 @@ namespace uniqueness across same-phrase objects; source/target/key revision
 isolation; strict resume-plan comparison; rejection of ambiguous duplicate
 keys, unsafe paths and excessive instances; and no generated image outputs.
 
-This is the **S04-A02 identity contract only**. Multi-mask selection, spatial
-matching, missing/overlapping candidates, output publication and journal-backed
-interrupted export remain unimplemented by this contract. Those are still open
-under **S04-A03 and S04-A04**. S04's parent unit and the 61-unit release
-percentage must not move on the strength of this one atomic requirement.
+This is the **S04-A02 identity contract only**. The separate merged
+[S04-A03 owner binding](OWNER_REGION_INSTANCE_BINDING.md) handles explicit
+image-region/point selection of already available candidate masks and refuses
+ambiguous overlap. Automatic semantic matching remains unclaimed.
+**S04-A04's actual image export, interrupted/resumed named output hashes and
+parent S04 acceptance are not delivered by either contract**. The 61-unit
+release count must not move on the strength of these two atomic requirements.
