@@ -65,6 +65,49 @@ SAM2 custom node blocks in temporary-file creation during grammar loading.
 driver or other host state). The failure is also nondeterministic: an earlier
 startup-only run using the same diagnostic base became ready in 9.328 s.
 
+## Upstream Windows YAPF grammar-cache candidate (independent review)
+
+An independent review found a notably similar [upstream YAPF issue
+#1311](https://github.com/google/yapf/issues/1311). On **Windows +
+Python 3.11/3.12**, YAPF **0.43.0** was reported to repeatedly attempt
+creation of its generated grammar-cache temporary file when the cache
+directory appears writable but rejects creation with `PermissionError`.
+The upstream stack (`pygram → driver.load_grammar → grammar.dump →
+NamedTemporaryFile → _mkstemp_inner`) matches the **captured code
+path** in this incident. The proposed upstream [fix #1314](
+https://github.com/google/yapf/pull/1314) is not merged as of this
+review. Neither report establishes this laptop's exact installed YAPF
+version, cache path, permissions or reason for the stall.
+
+**Do not treat the upstream mechanism as proven locally.** In particular,
+the current traces do not show which `os.open` failures occurred or
+whether file security filtering, cache permissions, other processes or
+another cause prevented the operation. A successful earlier startup
+does not disprove an intermittent cache-write problem.
+
+**Next offline diagnostic — no ComfyUI or CUDA startup:**
+
+1. Read package metadata for the **exact ComfyUI-venv YAPF version**,
+   Python version and `platformdirs` version without importing YAPF.
+2. Resolve the cache path using installed source and inspect directory
+   existence, ACLs, timestamps, pending `.pickle`/temporary files and
+   path redirection read-only; redact private paths in any public receipt.
+3. In a **short-timeout isolated CPU subprocess**, separately test YAPF
+   grammar import and a uniquely named disposable cache-directory file
+   creation, logging the precise return/error and terminating a stalled
+   child. Do not delete existing caches or silently change the user's
+   actual cache permissions.
+4. Contrast default-cache and clean **disposable cache** behaviour in
+   otherwise identical CPU-only processes. Avoid changing the global
+   `LOCALAPPDATA`, dependency versions or permanent ComfyUI environment.
+5. If this reproduces a denied-cache retry, propose a narrowly scoped,
+   reversible cache workaround with tests and an exact evidence chain.
+   A subsequent ComfyUI startup or cold/warm inference benchmark still
+   requires separate explicit owner authorization.
+
+This is a **possible root-cause mechanism to verify**, not a completed
+P08-A02 benchmark or automatic permission to launch GPU processes.
+
 ## Acceptance status
 
 P08-A02's original acceptance is **not met**:
