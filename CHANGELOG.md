@@ -6,6 +6,13 @@ This project follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) an
 
 ## [Unreleased]
 
+### Zero-network SDXL pilot graph inspection (2026-10-19)
+
+- Add `prehnite pilot-inspect` for the fixed native-1K, ten-image ComfyUI profile: read-only API graph lookup, exact node/input mapping validation, candidate node IDs, workflow digest and a truthful `execution_ready: false` result even when static IDs match.
+- Refuse unsafe graph paths, malformed/oversized graphs, nonlocal provider settings and paid/cross-cloud policy. Do not disclose embedded private prompt/weight filenames or contact any provider/GPU.
+- Add CLI and Python regressions for correct/incorrect node IDs, output node, ambiguous prompts, invalid exports and output confidentiality. The private laptop model and physical preflight remain separately operated and unauthorized for inference.
+
+
 ### First SDXL 8 GiB generation pilot, offline preparation (2026-10-19)
 
 - Select SDXL Base 1.0 through stock local ComfyUI as a **provisional**, source-linked reference baseline using a previous single observed native-1K run, not a new repeatability result or owner-approved final model decision. Compare a FLUX.1 schnell FP8 alternative and optional fal.ai without downloading weights, calling APIs or consuming GPU time.
