@@ -1,89 +1,87 @@
 <svg xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc" viewBox="0 0 1340 675">
 <title id="title">Prehnite two-phase roadmap with verified task counts</title>
-<desc id="desc">43 of 63 engineering evidence tasks have been verified, while only the foundation outcome has been accepted. Phase 1 has six milestones, including model, hardware, optimization, batching and quality gates. Phase 2 has three unaccepted LoRA and appearance milestones. Each card shows verified supporting tasks and whether the complete outcome has been accepted.</desc>
+<desc id="desc">60 of 80 scoped engineering tasks have evidence, while only the foundation milestone has passed all outcome gates. Six Phase 1 milestones and three Phase 2 milestones show completed implementation separately from still-needed experiment and human acceptance.</desc>
 <rect width="1340" height="675" fill="#F6EFE2"/>
 <text x="45" y="58" font-size="27" font-weight="700" fill="#075231" font-family="Arial,Helvetica,sans-serif">PRODUCT DEVELOPMENT</text>
-<text x="45" y="89" font-size="18" font-weight="700" fill="#075231" font-family="Arial,Helvetica,sans-serif">Engineering evidence 43 / 63 (68.3%)</text>
+<text x="45" y="89" font-size="18" font-weight="700" fill="#075231" font-family="Arial,Helvetica,sans-serif">Engineering evidence 60 / 80 (75.0%)</text>
 <text x="445" y="89" font-size="18" font-weight="700" fill="#A63D35" font-family="Arial,Helvetica,sans-serif">Accepted outcomes 1 / 9 (11.1%)</text>
 <rect x="45" y="111" width="72" height="4" rx="2" fill="#F7655B"/>
 <text x="45" y="148" font-size="14" font-weight="700" fill="#A63D35" font-family="Arial,Helvetica,sans-serif">PHASE 1</text>
 <text x="158" y="148" font-size="19" font-weight="700" fill="#075231" font-family="Arial,Helvetica,sans-serif">An efficient, useful image workbench for an 8 GiB laptop</text>
 <rect x="45" y="174" width="400" height="105" rx="8" fill="#E7EDE3" stroke="#075231" stroke-width="1.5"/>
-<text x="59" y="197" font-size="14" font-weight="700" fill="#A63D35" font-family="Arial,Helvetica,sans-serif">P1-M00</text>
-<text x="362" y="197" font-size="11" font-weight="700" fill="#075231" font-family="Arial,Helvetica,sans-serif">VERIFIED</text>
-<text x="59" y="222" font-size="17" font-weight="700" fill="#075231" font-family="Arial,Helvetica,sans-serif">Foundation and project tooling</text>
-<rect x="59" y="241" width="312" height="9" rx="4" fill="#D8CBB8"/>
-<rect x="59" y="241" width="312" height="9" rx="4" fill="#075231"/>
-<text x="380" y="251" font-size="15" font-weight="700" fill="#075231" font-family="Arial,Helvetica,sans-serif">11/11</text>
-<text x="59" y="268" font-size="11" font-weight="400" fill="#53675A" font-family="Arial,Helvetica,sans-serif">Outcome accepted</text>
+ <text x="59" y="197" font-size="14" font-weight="700" fill="#A63D35" font-family="Arial,Helvetica,sans-serif">P1-M00</text>
+ <text x="362" y="197" font-size="11" font-weight="700" fill="#075231" font-family="Arial,Helvetica,sans-serif">VERIFIED</text>
+ <text x="59" y="222" font-size="17" font-weight="700" fill="#075231" font-family="Arial,Helvetica,sans-serif">Foundation and project tooling</text>
+ <rect x="59" y="241" width="312" height="9" rx="4" fill="#D8CBB8"/>
+ <rect x="59" y="241" width="312.00" height="9" rx="4" fill="#075231"/>
+ <text x="380" y="251" font-size="15" font-weight="700" fill="#075231" font-family="Arial,Helvetica,sans-serif">11/11</text>
+ <text x="59" y="268" font-size="11" font-weight="400" fill="#53675A" font-family="Arial,Helvetica,sans-serif">Outcome accepted</text>
 <rect x="470" y="174" width="400" height="105" rx="8" fill="#FFF9EC" stroke="#D8CBB8" stroke-width="1.5"/>
-<text x="484" y="197" font-size="14" font-weight="700" fill="#A63D35" font-family="Arial,Helvetica,sans-serif">P1-M01</text>
-
-<text x="484" y="222" font-size="17" font-weight="700" fill="#075231" font-family="Arial,Helvetica,sans-serif">Model and provider selection</text>
-<rect x="484" y="241" width="312" height="9" rx="4" fill="#D8CBB8"/>
-<rect x="484" y="241" width="208" height="9" rx="4" fill="#075231"/>
-<text x="805" y="251" font-size="15" font-weight="700" fill="#075231" font-family="Arial,Helvetica,sans-serif">4/6</text>
-<text x="484" y="268" font-size="11" font-weight="400" fill="#53675A" font-family="Arial,Helvetica,sans-serif">Outcome not yet accepted</text>
+ <text x="484" y="197" font-size="14" font-weight="700" fill="#A63D35" font-family="Arial,Helvetica,sans-serif">P1-M01</text>
+ 
+ <text x="484" y="222" font-size="17" font-weight="700" fill="#075231" font-family="Arial,Helvetica,sans-serif">Model and provider selection</text>
+ <rect x="484" y="241" width="312" height="9" rx="4" fill="#D8CBB8"/>
+ <rect x="484" y="241" width="208.00" height="9" rx="4" fill="#075231"/>
+ <text x="805" y="251" font-size="15" font-weight="700" fill="#075231" font-family="Arial,Helvetica,sans-serif">4/6</text>
+ <text x="484" y="268" font-size="11" font-weight="400" fill="#53675A" font-family="Arial,Helvetica,sans-serif">Outcome not yet accepted</text>
 <rect x="895" y="174" width="400" height="105" rx="8" fill="#FFF9EC" stroke="#D8CBB8" stroke-width="1.5"/>
-<text x="909" y="197" font-size="14" font-weight="700" fill="#A63D35" font-family="Arial,Helvetica,sans-serif">P1-M02</text>
-
-<text x="909" y="222" font-size="17" font-weight="700" fill="#075231" font-family="Arial,Helvetica,sans-serif">Real 8 GiB inference evidence</text>
-<rect x="909" y="241" width="312" height="9" rx="4" fill="#D8CBB8"/>
-<rect x="909" y="241" width="187.2" height="9" rx="4" fill="#075231"/>
-<text x="1230" y="251" font-size="15" font-weight="700" fill="#075231" font-family="Arial,Helvetica,sans-serif">3/5</text>
-<text x="909" y="268" font-size="11" font-weight="400" fill="#53675A" font-family="Arial,Helvetica,sans-serif">Outcome not yet accepted</text>
+ <text x="909" y="197" font-size="14" font-weight="700" fill="#A63D35" font-family="Arial,Helvetica,sans-serif">P1-M02</text>
+ 
+ <text x="909" y="222" font-size="17" font-weight="700" fill="#075231" font-family="Arial,Helvetica,sans-serif">Real 8 GiB inference evidence</text>
+ <rect x="909" y="241" width="312" height="9" rx="4" fill="#D8CBB8"/>
+ <rect x="909" y="241" width="234.00" height="9" rx="4" fill="#075231"/>
+ <text x="1230" y="251" font-size="15" font-weight="700" fill="#075231" font-family="Arial,Helvetica,sans-serif">6/8</text>
+ <text x="909" y="268" font-size="11" font-weight="400" fill="#53675A" font-family="Arial,Helvetica,sans-serif">Outcome not yet accepted</text>
 <rect x="45" y="305" width="400" height="105" rx="8" fill="#FFF9EC" stroke="#D8CBB8" stroke-width="1.5"/>
-<text x="59" y="328" font-size="14" font-weight="700" fill="#A63D35" font-family="Arial,Helvetica,sans-serif">P1-M03</text>
-
-<text x="59" y="353" font-size="17" font-weight="700" fill="#075231" font-family="Arial,Helvetica,sans-serif">Memory and throughput</text>
-<rect x="59" y="372" width="312" height="9" rx="4" fill="#D8CBB8"/>
-<rect x="59" y="372" width="0" height="9" rx="4" fill="#075231"/>
-<text x="380" y="382" font-size="15" font-weight="700" fill="#075231" font-family="Arial,Helvetica,sans-serif">0/3</text>
-<text x="59" y="399" font-size="11" font-weight="400" fill="#53675A" font-family="Arial,Helvetica,sans-serif">Outcome not yet accepted</text>
+ <text x="59" y="328" font-size="14" font-weight="700" fill="#A63D35" font-family="Arial,Helvetica,sans-serif">P1-M03</text>
+ 
+ <text x="59" y="353" font-size="17" font-weight="700" fill="#075231" font-family="Arial,Helvetica,sans-serif">Memory and throughput</text>
+ <rect x="59" y="372" width="312" height="9" rx="4" fill="#D8CBB8"/>
+ <rect x="59" y="372" width="0.00" height="9" rx="4" fill="#075231"/>
+ <text x="380" y="382" font-size="15" font-weight="700" fill="#075231" font-family="Arial,Helvetica,sans-serif">0/3</text>
+ <text x="59" y="399" font-size="11" font-weight="400" fill="#53675A" font-family="Arial,Helvetica,sans-serif">Outcome not yet accepted</text>
 <rect x="470" y="305" width="400" height="105" rx="8" fill="#FFF9EC" stroke="#D8CBB8" stroke-width="1.5"/>
-<text x="484" y="328" font-size="14" font-weight="700" fill="#A63D35" font-family="Arial,Helvetica,sans-serif">P1-M04</text>
-
-<text x="484" y="353" font-size="17" font-weight="700" fill="#075231" font-family="Arial,Helvetica,sans-serif">Batch and recovery</text>
-<rect x="484" y="372" width="312" height="9" rx="4" fill="#D8CBB8"/>
-<rect x="484" y="372" width="267.4285714285714" height="9" rx="4" fill="#075231"/>
-<text x="805" y="382" font-size="15" font-weight="700" fill="#075231" font-family="Arial,Helvetica,sans-serif">18/21</text>
-<text x="484" y="399" font-size="11" font-weight="400" fill="#53675A" font-family="Arial,Helvetica,sans-serif">Outcome not yet accepted</text>
+ <text x="484" y="328" font-size="14" font-weight="700" fill="#A63D35" font-family="Arial,Helvetica,sans-serif">P1-M04</text>
+ 
+ <text x="484" y="353" font-size="17" font-weight="700" fill="#075231" font-family="Arial,Helvetica,sans-serif">Batch and recovery</text>
+ <rect x="484" y="372" width="312" height="9" rx="4" fill="#D8CBB8"/>
+ <rect x="484" y="372" width="274.56" height="9" rx="4" fill="#075231"/>
+ <text x="805" y="382" font-size="15" font-weight="700" fill="#075231" font-family="Arial,Helvetica,sans-serif">22/25</text>
+ <text x="484" y="399" font-size="11" font-weight="400" fill="#53675A" font-family="Arial,Helvetica,sans-serif">Outcome not yet accepted</text>
 <rect x="895" y="305" width="400" height="105" rx="8" fill="#FFF9EC" stroke="#D8CBB8" stroke-width="1.5"/>
-<text x="909" y="328" font-size="14" font-weight="700" fill="#A63D35" font-family="Arial,Helvetica,sans-serif">P1-M05</text>
-
-<text x="909" y="353" font-size="17" font-weight="700" fill="#075231" font-family="Arial,Helvetica,sans-serif">Quality and delivery</text>
-<rect x="909" y="372" width="312" height="9" rx="4" fill="#D8CBB8"/>
-<rect x="909" y="372" width="242.66666666666666" height="9" rx="4" fill="#075231"/>
-<text x="1230" y="382" font-size="15" font-weight="700" fill="#075231" font-family="Arial,Helvetica,sans-serif">7/9</text>
-<text x="909" y="399" font-size="11" font-weight="400" fill="#53675A" font-family="Arial,Helvetica,sans-serif">Outcome not yet accepted</text>
-
+ <text x="909" y="328" font-size="14" font-weight="700" fill="#A63D35" font-family="Arial,Helvetica,sans-serif">P1-M05</text>
+ 
+ <text x="909" y="353" font-size="17" font-weight="700" fill="#075231" font-family="Arial,Helvetica,sans-serif">Quality and delivery</text>
+ <rect x="909" y="372" width="312" height="9" rx="4" fill="#D8CBB8"/>
+ <rect x="909" y="372" width="279.16" height="9" rx="4" fill="#075231"/>
+ <text x="1230" y="382" font-size="15" font-weight="700" fill="#075231" font-family="Arial,Helvetica,sans-serif">17/19</text>
+ <text x="909" y="399" font-size="11" font-weight="400" fill="#53675A" font-family="Arial,Helvetica,sans-serif">Outcome not yet accepted</text>
 <text x="45" y="467" font-size="14" font-weight="700" fill="#A63D35" font-family="Arial,Helvetica,sans-serif">PHASE 2</text>
 <text x="158" y="467" font-size="19" font-weight="700" fill="#075231" font-family="Arial,Helvetica,sans-serif">LoRA consistency and private appearance experiments</text>
 <rect x="45" y="492" width="400" height="105" rx="8" fill="#FFF9EC" stroke="#D8CBB8" stroke-width="1.5"/>
-<text x="59" y="515" font-size="14" font-weight="700" fill="#A63D35" font-family="Arial,Helvetica,sans-serif">P2-M01</text>
-
-<text x="59" y="540" font-size="17" font-weight="700" fill="#075231" font-family="Arial,Helvetica,sans-serif">LoRA research</text>
-<rect x="59" y="559" width="312" height="9" rx="4" fill="#D8CBB8"/>
-<rect x="59" y="559" width="0" height="9" rx="4" fill="#075231"/>
-<text x="380" y="569" font-size="15" font-weight="700" fill="#075231" font-family="Arial,Helvetica,sans-serif">0/2</text>
-<text x="59" y="586" font-size="11" font-weight="400" fill="#53675A" font-family="Arial,Helvetica,sans-serif">Outcome not yet accepted</text>
+ <text x="59" y="515" font-size="14" font-weight="700" fill="#A63D35" font-family="Arial,Helvetica,sans-serif">P2-M01</text>
+ 
+ <text x="59" y="540" font-size="17" font-weight="700" fill="#075231" font-family="Arial,Helvetica,sans-serif">LoRA research</text>
+ <rect x="59" y="559" width="312" height="9" rx="4" fill="#D8CBB8"/>
+ <rect x="59" y="559" width="0.00" height="9" rx="4" fill="#075231"/>
+ <text x="380" y="569" font-size="15" font-weight="700" fill="#075231" font-family="Arial,Helvetica,sans-serif">0/2</text>
+ <text x="59" y="586" font-size="11" font-weight="400" fill="#53675A" font-family="Arial,Helvetica,sans-serif">Outcome not yet accepted</text>
 <rect x="470" y="492" width="400" height="105" rx="8" fill="#FFF9EC" stroke="#D8CBB8" stroke-width="1.5"/>
-<text x="484" y="515" font-size="14" font-weight="700" fill="#A63D35" font-family="Arial,Helvetica,sans-serif">P2-M02</text>
-
-<text x="484" y="540" font-size="17" font-weight="700" fill="#075231" font-family="Arial,Helvetica,sans-serif">Controlled style variants</text>
-<rect x="484" y="559" width="312" height="9" rx="4" fill="#D8CBB8"/>
-<rect x="484" y="559" width="0" height="9" rx="4" fill="#075231"/>
-<text x="805" y="569" font-size="15" font-weight="700" fill="#075231" font-family="Arial,Helvetica,sans-serif">0/3</text>
-<text x="484" y="586" font-size="11" font-weight="400" fill="#53675A" font-family="Arial,Helvetica,sans-serif">Outcome not yet accepted</text>
+ <text x="484" y="515" font-size="14" font-weight="700" fill="#A63D35" font-family="Arial,Helvetica,sans-serif">P2-M02</text>
+ 
+ <text x="484" y="540" font-size="17" font-weight="700" fill="#075231" font-family="Arial,Helvetica,sans-serif">Controlled style variants</text>
+ <rect x="484" y="559" width="312" height="9" rx="4" fill="#D8CBB8"/>
+ <rect x="484" y="559" width="0.00" height="9" rx="4" fill="#075231"/>
+ <text x="805" y="569" font-size="15" font-weight="700" fill="#075231" font-family="Arial,Helvetica,sans-serif">0/3</text>
+ <text x="484" y="586" font-size="11" font-weight="400" fill="#53675A" font-family="Arial,Helvetica,sans-serif">Outcome not yet accepted</text>
 <rect x="895" y="492" width="400" height="105" rx="8" fill="#FFF9EC" stroke="#D8CBB8" stroke-width="1.5"/>
-<text x="909" y="515" font-size="14" font-weight="700" fill="#A63D35" font-family="Arial,Helvetica,sans-serif">P2-M03</text>
-
-<text x="909" y="540" font-size="17" font-weight="700" fill="#075231" font-family="Arial,Helvetica,sans-serif">Private appearance trials</text>
-<rect x="909" y="559" width="312" height="9" rx="4" fill="#D8CBB8"/>
-<rect x="909" y="559" width="0" height="9" rx="4" fill="#075231"/>
-<text x="1230" y="569" font-size="15" font-weight="700" fill="#075231" font-family="Arial,Helvetica,sans-serif">0/3</text>
-<text x="909" y="586" font-size="11" font-weight="400" fill="#53675A" font-family="Arial,Helvetica,sans-serif">Outcome not yet accepted</text>
-
-<text x="45" y="640" font-size="14" font-weight="400" fill="#53675A" font-family="Arial,Helvetica,sans-serif">Bars show engineering evidence, not guaranteed end-to-end performance.</text>
+ <text x="909" y="515" font-size="14" font-weight="700" fill="#A63D35" font-family="Arial,Helvetica,sans-serif">P2-M03</text>
+ 
+ <text x="909" y="540" font-size="17" font-weight="700" fill="#075231" font-family="Arial,Helvetica,sans-serif">Private appearance trials</text>
+ <rect x="909" y="559" width="312" height="9" rx="4" fill="#D8CBB8"/>
+ <rect x="909" y="559" width="0.00" height="9" rx="4" fill="#075231"/>
+ <text x="1230" y="569" font-size="15" font-weight="700" fill="#075231" font-family="Arial,Helvetica,sans-serif">0/3</text>
+ <text x="909" y="586" font-size="11" font-weight="400" fill="#53675A" font-family="Arial,Helvetica,sans-serif">Outcome not yet accepted</text>
+<text x="45" y="640" font-size="14" font-weight="400" fill="#53675A" font-family="Arial,Helvetica,sans-serif">Bars show verified supporting work, not guaranteed end-to-end quality.</text>
 <text x="45" y="662" font-size="14" font-weight="400" fill="#53675A" font-family="Arial,Helvetica,sans-serif">A milestone is accepted only when its remaining physical and human gates pass.</text>
 </svg>
