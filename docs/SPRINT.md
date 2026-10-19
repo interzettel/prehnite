@@ -10,10 +10,10 @@
 
 | Lane | Cards |
 | --- | ---: |
-| Backlog | 17 |
+| Backlog | 16 |
 | Ready | 4 |
 | In progress | 1 |
-| In review | 0 |
+| In review | 1 |
 | Blocked | 7 |
 | Done | 86 |
 
@@ -32,7 +32,6 @@
 | P2 | [Issue #44 — Synchronize canonical issue ledger with organization GitHub Projects v2](https://github.com/interzettel/prehnite/issues/44) | Tracking | GitHub Project #1 sync needs Projects v2 write permission |
 | P1 | [Issue #33 — Self-contained offline HTML gallery and comparisons](https://github.com/interzettel/prehnite/issues/33) | Reporting | Offline thumbnail gallery #67 merged; opt-in private original comparisons remain issue #68 |
 | P2 | [Issue #30 — Multi-instance object cutout selection](https://github.com/interzettel/prehnite/issues/30) | Cutouts | Multi-instance target matching |
-| P1 | [Issue #29 — Transparent alpha matting and halo removal](https://github.com/interzettel/prehnite/issues/29) | Cutouts | Merged #120 synthetic safety matrix; full S03 real-photo matte/color decontamination still open for separate implementation. |
 | P2 | [Issue #27 — Local aesthetic and fidelity judge plugin boundary](https://github.com/interzettel/prehnite/issues/27) | Quality | Optional local weights and licenses |
 | P1 | [Issue #68 — Opt-in original-input gallery comparison with privacy consent](https://github.com/interzettel/prehnite/issues/68) | Delivery | Follow-up to #33: never embed private originals without opt-in |
 | P2 | [Issue #107 — Experimental Jev typed image/Box judge and staged frame evaluation](https://github.com/interzettel/prehnite/issues/107) | Quality | Mock stages A/B merged, no Jev transport; TypeSafe experimental vision needs explicit authorized trial and real gold calibration. |
@@ -60,7 +59,7 @@
 
 | Priority | Work item | Stream | Handoff / blocker |
 | --- | --- | --- | --- |
-| — | No cards currently | — | — |
+| P1 | [Issue #29 — Transparent alpha matting and halo removal](https://github.com/interzettel/prehnite/issues/29) | Cutouts | S03-A04 opt-in trusted soft-alpha synthetic evidence in draft PR #182; owner-reviewed genuine material mattes remain unverified. |
 
 ## Blocked
 
