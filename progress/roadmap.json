@@ -42,6 +42,11 @@
       "objective": "Installable local Python CLI, validated input safety, synthetic zero-cost batch, persistent journal, reports and CI demonstration; NOT a verified local model-quality or GPU performance claim",
       "depends_on": [],
       "gate_tasks": [
+        "P1-M00-V1-R05",
+        "P1-M00-V1-R04",
+        "P1-M00-V1-R03",
+        "P1-M00-V1-R02",
+        "P1-M00-V1-R01",
         "P1-M00-F01",
         "P1-M00-F02",
         "P1-M00-F03",
@@ -81,7 +86,10 @@
           "url": "https://github.com/interzettel/prehnite/pull/1",
           "legacy_unit": "F06"
         }
-      ]
+      ],
+      "priority": 4,
+      "workstream": "Foundation and project tooling",
+      "next_action": "Maintained infrastructure; no immediate feature work"
     },
     {
       "id": "P1-M01",
@@ -90,11 +98,18 @@
       "objective": "Choose one lawful real model/graph and reproducible comparison plan; no claim of model compatibility before an observed run.",
       "depends_on": [],
       "gate_tasks": [
+        "P1-M01-V1-P05",
+        "P1-M01-V1-P04",
+        "P1-M01-V1-P03",
+        "P1-M01-V1-P01",
         "P1-M01-R01",
         "P1-M01-R02"
       ],
       "state": "planned",
-      "evidence": []
+      "evidence": [],
+      "priority": 0,
+      "workstream": "Model and provider selection",
+      "next_action": "Compare ComfyUI + fal.ai typed contracts with a reproducible model choice"
     },
     {
       "id": "P1-M02",
@@ -105,11 +120,20 @@
         "P1-M01"
       ],
       "gate_tasks": [
+        "P1-M02-VA-P08-A04",
+        "P1-M02-VA-P08-A02",
+        "P1-M02-VA-P08-A01",
+        "P1-M02-V1-P07",
+        "P1-M02-V1-P06",
+        "P1-M02-V1-P02",
         "P1-M02-E01",
         "P1-M02-A01"
       ],
       "state": "planned",
-      "evidence": []
+      "evidence": [],
+      "priority": 1,
+      "workstream": "Real 8 GiB inference evidence",
+      "next_action": "Separate consent needed for physical three-run benchmark"
     },
     {
       "id": "P1-M03",
@@ -125,7 +149,10 @@
         "P1-M03-E01"
       ],
       "state": "planned",
-      "evidence": []
+      "evidence": [],
+      "priority": 2,
+      "workstream": "Memory and throughput",
+      "next_action": "Profile only after accepted real baseline"
     },
     {
       "id": "P1-M04",
@@ -136,12 +163,37 @@
         "P1-M02"
       ],
       "gate_tasks": [
+        "P1-M04-VA-S05-A04",
+        "P1-M04-VA-S05-A03",
+        "P1-M04-VA-S05-A02",
+        "P1-M04-VA-S05-A01",
+        "P1-M04-V1-R07",
+        "P1-M04-V1-D10",
+        "P1-M04-V1-D09",
+        "P1-M04-V1-D08",
+        "P1-M04-V1-D07",
+        "P1-M04-V1-D06",
+        "P1-M04-V1-D05",
+        "P1-M04-V1-D04",
+        "P1-M04-V1-D03",
+        "P1-M04-V1-D02",
+        "P1-M04-V1-D01",
+        "P1-M04-V1-C10",
+        "P1-M04-V1-C07",
+        "P1-M04-V1-C05",
+        "P1-M04-V1-C04",
+        "P1-M04-V1-C03",
+        "P1-M04-V1-C02",
+        "P1-M04-V1-C01",
         "P1-M04-B01",
         "P1-M04-B02",
         "P1-M04-E01"
       ],
       "state": "planned",
-      "evidence": []
+      "evidence": [],
+      "priority": 1,
+      "workstream": "Batch and recovery",
+      "next_action": "Close the first real ten-image local batch and resume path"
     },
     {
       "id": "P1-M05",
@@ -153,11 +205,31 @@
         "P1-M03"
       ],
       "gate_tasks": [
+        "P1-M05-VA-R06-A02",
+        "P1-M05-VA-R06-A01",
+        "P1-M05-VA-S07-A02",
+        "P1-M05-VA-S06-A03",
+        "P1-M05-VA-S06-A02",
+        "P1-M05-VA-S06-A01",
+        "P1-M05-VA-S03-A03",
+        "P1-M05-VA-S03-A02",
+        "P1-M05-VA-S03-A01",
+        "P1-M05-VA-Q06-A01",
+        "P1-M05-V1-S04",
+        "P1-M05-V1-S02",
+        "P1-M05-V1-S01",
+        "P1-M05-V1-Q04",
+        "P1-M05-V1-Q03",
+        "P1-M05-V1-Q02",
+        "P1-M05-V1-Q01",
         "P1-M05-A01",
         "P1-M05-A02"
       ],
       "state": "planned",
-      "evidence": []
+      "evidence": [],
+      "priority": 2,
+      "workstream": "Quality and delivery",
+      "next_action": "Human acceptance of images, cutouts and installation"
     },
     {
       "id": "P2-M01",
@@ -172,7 +244,10 @@
         "P2-M01-R02"
       ],
       "state": "planned",
-      "evidence": []
+      "evidence": [],
+      "priority": 3,
+      "workstream": "LoRA research",
+      "next_action": "Research lawful local adapters when Phase 1 evidence permits"
     },
     {
       "id": "P2-M02",
@@ -189,7 +264,10 @@
         "P2-M02-E01"
       ],
       "state": "planned",
-      "evidence": []
+      "evidence": [],
+      "priority": 3,
+      "workstream": "Controlled style variants",
+      "next_action": "Implement then measure same model, adapters and seeds"
     },
     {
       "id": "P2-M03",
@@ -205,7 +283,10 @@
         "P2-M03-A01"
       ],
       "state": "planned",
-      "evidence": []
+      "evidence": [],
+      "priority": 3,
+      "workstream": "Private appearance trials",
+      "next_action": "Consented local reference and human consistency checks"
     }
   ],
   "tasks": [
@@ -582,6 +663,1115 @@
       ],
       "state": "planned",
       "evidence": []
+    },
+    {
+      "id": "P1-M04-V1-C01",
+      "milestone": "P1-M04",
+      "kind": "implementation",
+      "owner": "Agent cloud",
+      "issue": 10,
+      "acceptance": "Previously verified C01: Paid call budget authorization gate. Counts as accepted engineering foundation only. Original v1 scope and exact evidence remain authoritative; it does not prove a new GPU, API-billing, model-quality or human acceptance gate.",
+      "depends_on": [
+        "P1-M00-F04"
+      ],
+      "state": "verified",
+      "evidence": [
+        {
+          "type": "merged_pr",
+          "url": "https://github.com/interzettel/prehnite/pull/10",
+          "legacy_unit": "C01"
+        }
+      ],
+      "source": "v1_verified",
+      "original_unit": "C01"
+    },
+    {
+      "id": "P1-M04-V1-C02",
+      "milestone": "P1-M04",
+      "kind": "implementation",
+      "owner": "Agent cloud",
+      "issue": 10,
+      "acceptance": "Previously verified C02: Fail-closed uncertain request recovery. Counts as accepted engineering foundation only. Original v1 scope and exact evidence remain authoritative; it does not prove a new GPU, API-billing, model-quality or human acceptance gate.",
+      "depends_on": [
+        "P1-M00-F04"
+      ],
+      "state": "verified",
+      "evidence": [
+        {
+          "type": "merged_pr",
+          "url": "https://github.com/interzettel/prehnite/pull/10",
+          "legacy_unit": "C02"
+        }
+      ],
+      "source": "v1_verified",
+      "original_unit": "C02"
+    },
+    {
+      "id": "P1-M04-V1-C03",
+      "milestone": "P1-M04",
+      "kind": "implementation",
+      "owner": "Agent cloud",
+      "issue": 10,
+      "acceptance": "Previously verified C03: Single-batch worker lock (offline test). Counts as accepted engineering foundation only. Original v1 scope and exact evidence remain authoritative; it does not prove a new GPU, API-billing, model-quality or human acceptance gate.",
+      "depends_on": [
+        "P1-M00-F04"
+      ],
+      "state": "verified",
+      "evidence": [
+        {
+          "type": "merged_pr",
+          "url": "https://github.com/interzettel/prehnite/pull/10",
+          "legacy_unit": "C03"
+        }
+      ],
+      "source": "v1_verified",
+      "original_unit": "C03"
+    },
+    {
+      "id": "P1-M04-V1-C04",
+      "milestone": "P1-M04",
+      "kind": "implementation",
+      "owner": "Agent cloud",
+      "issue": 15,
+      "acceptance": "Previously verified C04: Cross-process kill-and-restart fault matrix. Counts as accepted engineering foundation only. Original v1 scope and exact evidence remain authoritative; it does not prove a new GPU, API-billing, model-quality or human acceptance gate.",
+      "depends_on": [
+        "P1-M04-V1-C02"
+      ],
+      "state": "verified",
+      "evidence": [
+        {
+          "type": "merged_pr",
+          "url": "https://github.com/interzettel/prehnite/pull/49",
+          "legacy_unit": "C04"
+        }
+      ],
+      "source": "v1_verified",
+      "original_unit": "C04"
+    },
+    {
+      "id": "P1-M04-V1-C05",
+      "milestone": "P1-M04",
+      "kind": "implementation",
+      "owner": "Agent cloud",
+      "issue": 16,
+      "acceptance": "Previously verified C05: Atomic output writes and checksum replay checks. Counts as accepted engineering foundation only. Original v1 scope and exact evidence remain authoritative; it does not prove a new GPU, API-billing, model-quality or human acceptance gate.",
+      "depends_on": [
+        "P1-M04-V1-C02"
+      ],
+      "state": "verified",
+      "evidence": [
+        {
+          "type": "merged_pr",
+          "url": "https://github.com/interzettel/prehnite/pull/52",
+          "legacy_unit": "C05"
+        }
+      ],
+      "source": "v1_verified",
+      "original_unit": "C05"
+    },
+    {
+      "id": "P1-M04-V1-C07",
+      "milestone": "P1-M04",
+      "kind": "implementation",
+      "owner": "Agent cloud",
+      "issue": 18,
+      "acceptance": "Previously verified C07: Content-addressed, privacy-scoped stage cache. Counts as accepted engineering foundation only. Original v1 scope and exact evidence remain authoritative; it does not prove a new GPU, API-billing, model-quality or human acceptance gate.",
+      "depends_on": [
+        "P1-M04-V1-C05"
+      ],
+      "state": "verified",
+      "evidence": [
+        {
+          "type": "merged_pr",
+          "url": "https://github.com/interzettel/prehnite/pull/80",
+          "legacy_unit": "C07"
+        }
+      ],
+      "source": "v1_verified",
+      "original_unit": "C07"
+    },
+    {
+      "id": "P1-M04-V1-C10",
+      "milestone": "P1-M04",
+      "kind": "implementation",
+      "owner": "Agent cloud",
+      "issue": 15,
+      "acceptance": "Previously verified C10: Machine-readable stage-level failure taxonomy. Counts as accepted engineering foundation only. Original v1 scope and exact evidence remain authoritative; it does not prove a new GPU, API-billing, model-quality or human acceptance gate.",
+      "depends_on": [
+        "P1-M04-V1-C04"
+      ],
+      "state": "verified",
+      "evidence": [
+        {
+          "type": "merged_pr",
+          "url": "https://github.com/interzettel/prehnite/pull/87",
+          "legacy_unit": "C10"
+        }
+      ],
+      "source": "v1_verified",
+      "original_unit": "C10"
+    },
+    {
+      "id": "P1-M01-V1-P01",
+      "milestone": "P1-M01",
+      "kind": "implementation",
+      "owner": "Agent cloud",
+      "issue": 1,
+      "acceptance": "Previously verified P01: Demo and optional hosted provider adapter scaffold. Counts as accepted engineering foundation only. Original v1 scope and exact evidence remain authoritative; it does not prove a new GPU, API-billing, model-quality or human acceptance gate.",
+      "depends_on": [
+        "P1-M00-F03"
+      ],
+      "state": "verified",
+      "evidence": [
+        {
+          "type": "merged_pr",
+          "url": "https://github.com/interzettel/prehnite/pull/1",
+          "legacy_unit": "P01"
+        }
+      ],
+      "source": "v1_verified",
+      "original_unit": "P01"
+    },
+    {
+      "id": "P1-M02-V1-P02",
+      "milestone": "P1-M02",
+      "kind": "implementation",
+      "owner": "Agent cloud",
+      "issue": 1,
+      "acceptance": "Previously verified P02: Generic local ComfyUI graph/queue scaffold. Counts as accepted engineering foundation only. Original v1 scope and exact evidence remain authoritative; it does not prove a new GPU, API-billing, model-quality or human acceptance gate.",
+      "depends_on": [
+        "P1-M00-F03"
+      ],
+      "state": "verified",
+      "evidence": [
+        {
+          "type": "merged_pr",
+          "url": "https://github.com/interzettel/prehnite/pull/1",
+          "legacy_unit": "P02"
+        }
+      ],
+      "source": "v1_verified",
+      "original_unit": "P02"
+    },
+    {
+      "id": "P1-M01-V1-P03",
+      "milestone": "P1-M01",
+      "kind": "implementation",
+      "owner": "Agent cloud",
+      "issue": 19,
+      "acceptance": "Previously verified P03: Offline FLUX tier/upscale contract fixtures. Counts as accepted engineering foundation only. Original v1 scope and exact evidence remain authoritative; it does not prove a new GPU, API-billing, model-quality or human acceptance gate.",
+      "depends_on": [
+        "P1-M01-V1-P01"
+      ],
+      "state": "verified",
+      "evidence": [
+        {
+          "type": "merged_pr",
+          "url": "https://github.com/interzettel/prehnite/pull/50",
+          "legacy_unit": "P03"
+        }
+      ],
+      "source": "v1_verified",
+      "original_unit": "P03"
+    },
+    {
+      "id": "P1-M01-V1-P04",
+      "milestone": "P1-M01",
+      "kind": "implementation",
+      "owner": "Agent cloud",
+      "issue": 20,
+      "acceptance": "Previously verified P04: SAM response-shape fixtures and validation. Counts as accepted engineering foundation only. Original v1 scope and exact evidence remain authoritative; it does not prove a new GPU, API-billing, model-quality or human acceptance gate.",
+      "depends_on": [
+        "P1-M01-V1-P01"
+      ],
+      "state": "verified",
+      "evidence": [
+        {
+          "type": "merged_pr",
+          "url": "https://github.com/interzettel/prehnite/pull/53",
+          "legacy_unit": "P04"
+        }
+      ],
+      "source": "v1_verified",
+      "original_unit": "P04"
+    },
+    {
+      "id": "P1-M01-V1-P05",
+      "milestone": "P1-M01",
+      "kind": "implementation",
+      "owner": "Agent cloud",
+      "issue": 21,
+      "acceptance": "Previously verified P05: Typed adapter capabilities and price-estimate provenance. Counts as accepted engineering foundation only. Original v1 scope and exact evidence remain authoritative; it does not prove a new GPU, API-billing, model-quality or human acceptance gate.",
+      "depends_on": [
+        "P1-M01-V1-P03"
+      ],
+      "state": "verified",
+      "evidence": [
+        {
+          "type": "merged_pr",
+          "url": "https://github.com/interzettel/prehnite/pull/55",
+          "legacy_unit": "P05"
+        }
+      ],
+      "source": "v1_verified",
+      "original_unit": "P05"
+    },
+    {
+      "id": "P1-M02-V1-P06",
+      "milestone": "P1-M02",
+      "kind": "implementation",
+      "owner": "Agent cloud",
+      "issue": 22,
+      "acceptance": "Previously verified P06: Offline ComfyUI graph mapping and mock queue fixtures. Counts as accepted engineering foundation only. Original v1 scope and exact evidence remain authoritative; it does not prove a new GPU, API-billing, model-quality or human acceptance gate.",
+      "depends_on": [
+        "P1-M02-V1-P02"
+      ],
+      "state": "verified",
+      "evidence": [
+        {
+          "type": "merged_pr",
+          "url": "https://github.com/interzettel/prehnite/pull/57",
+          "legacy_unit": "P06"
+        }
+      ],
+      "source": "v1_verified",
+      "original_unit": "P06"
+    },
+    {
+      "id": "P1-M02-V1-P07",
+      "milestone": "P1-M02",
+      "kind": "implementation",
+      "owner": "Agent cloud",
+      "issue": 23,
+      "acceptance": "Previously verified P07: ComfyUI queue/recovery without duplicate submits. Counts as accepted engineering foundation only. Original v1 scope and exact evidence remain authoritative; it does not prove a new GPU, API-billing, model-quality or human acceptance gate.",
+      "depends_on": [
+        "P1-M02-V1-P06",
+        "P1-M04-V1-C02"
+      ],
+      "state": "verified",
+      "evidence": [
+        {
+          "type": "merged_pr",
+          "url": "https://github.com/interzettel/prehnite/pull/59",
+          "legacy_unit": "P07"
+        }
+      ],
+      "source": "v1_verified",
+      "original_unit": "P07"
+    },
+    {
+      "id": "P1-M05-V1-Q01",
+      "milestone": "P1-M05",
+      "kind": "implementation",
+      "owner": "Agent cloud",
+      "issue": 1,
+      "acceptance": "Previously verified Q01: Dimension and file-decodability technical checks. Counts as accepted engineering foundation only. Original v1 scope and exact evidence remain authoritative; it does not prove a new GPU, API-billing, model-quality or human acceptance gate.",
+      "depends_on": [
+        "P1-M00-F03"
+      ],
+      "state": "verified",
+      "evidence": [
+        {
+          "type": "merged_pr",
+          "url": "https://github.com/interzettel/prehnite/pull/1",
+          "legacy_unit": "Q01"
+        }
+      ],
+      "source": "v1_verified",
+      "original_unit": "Q01"
+    },
+    {
+      "id": "P1-M05-V1-Q02",
+      "milestone": "P1-M05",
+      "kind": "implementation",
+      "owner": "Agent cloud",
+      "issue": 25,
+      "acceptance": "Previously verified Q02: Judge schema + invalid response handling. Counts as accepted engineering foundation only. Original v1 scope and exact evidence remain authoritative; it does not prove a new GPU, API-billing, model-quality or human acceptance gate.",
+      "depends_on": [
+        "P1-M05-V1-Q01"
+      ],
+      "state": "verified",
+      "evidence": [
+        {
+          "type": "merged_pr",
+          "url": "https://github.com/interzettel/prehnite/pull/61",
+          "legacy_unit": "Q02"
+        }
+      ],
+      "source": "v1_verified",
+      "original_unit": "Q02"
+    },
+    {
+      "id": "P1-M05-V1-Q03",
+      "milestone": "P1-M05",
+      "kind": "implementation",
+      "owner": "Agent cloud",
+      "issue": 63,
+      "acceptance": "Previously verified Q03: Controlled fixed-rubric A/B positional-bias measurement. Counts as accepted engineering foundation only. Original v1 scope and exact evidence remain authoritative; it does not prove a new GPU, API-billing, model-quality or human acceptance gate.",
+      "depends_on": [
+        "P1-M05-V1-Q02"
+      ],
+      "state": "verified",
+      "evidence": [
+        {
+          "type": "merged_pr",
+          "url": "https://github.com/interzettel/prehnite/pull/70",
+          "legacy_unit": "Q03"
+        }
+      ],
+      "source": "v1_verified",
+      "original_unit": "Q03"
+    },
+    {
+      "id": "P1-M05-V1-Q04",
+      "milestone": "P1-M05",
+      "kind": "implementation",
+      "owner": "Agent cloud",
+      "issue": 26,
+      "acceptance": "Previously verified Q04: Lossless 4K crop panel comparisons. Counts as accepted engineering foundation only. Original v1 scope and exact evidence remain authoritative; it does not prove a new GPU, API-billing, model-quality or human acceptance gate.",
+      "depends_on": [
+        "P1-M05-V1-Q02"
+      ],
+      "state": "verified",
+      "evidence": [
+        {
+          "type": "merged_pr",
+          "url": "https://github.com/interzettel/prehnite/pull/65",
+          "legacy_unit": "Q04"
+        }
+      ],
+      "source": "v1_verified",
+      "original_unit": "Q04"
+    },
+    {
+      "id": "P1-M05-V1-S01",
+      "milestone": "P1-M05",
+      "kind": "implementation",
+      "owner": "Agent cloud",
+      "issue": 1,
+      "acceptance": "Previously verified S01: Demo mask-to-RGBA conversion and coverage checks. Counts as accepted engineering foundation only. Original v1 scope and exact evidence remain authoritative; it does not prove a new GPU, API-billing, model-quality or human acceptance gate.",
+      "depends_on": [
+        "P1-M00-F03"
+      ],
+      "state": "verified",
+      "evidence": [
+        {
+          "type": "merged_pr",
+          "url": "https://github.com/interzettel/prehnite/pull/1",
+          "legacy_unit": "S01"
+        }
+      ],
+      "source": "v1_verified",
+      "original_unit": "S01"
+    },
+    {
+      "id": "P1-M05-V1-S02",
+      "milestone": "P1-M05",
+      "kind": "implementation",
+      "owner": "Agent cloud",
+      "issue": 20,
+      "acceptance": "Previously verified S02: Hosted SAM image/mask dimensional conformance. Counts as accepted engineering foundation only. Original v1 scope and exact evidence remain authoritative; it does not prove a new GPU, API-billing, model-quality or human acceptance gate.",
+      "depends_on": [
+        "P1-M05-V1-S01",
+        "P1-M01-V1-P04"
+      ],
+      "state": "verified",
+      "evidence": [
+        {
+          "type": "merged_pr",
+          "url": "https://github.com/interzettel/prehnite/pull/53",
+          "legacy_unit": "S02"
+        }
+      ],
+      "source": "v1_verified",
+      "original_unit": "S02"
+    },
+    {
+      "id": "P1-M05-V1-S04",
+      "milestone": "P1-M05",
+      "kind": "implementation",
+      "owner": "Agent cloud",
+      "issue": 30,
+      "acceptance": "Previously verified S04: Multiple-instance selection and named outputs. Counts as accepted engineering foundation only. Original v1 scope and exact evidence remain authoritative; it does not prove a new GPU, API-billing, model-quality or human acceptance gate.",
+      "depends_on": [
+        "P1-M05-V1-S02"
+      ],
+      "state": "verified",
+      "evidence": [
+        {
+          "type": "merged_pr",
+          "url": "https://github.com/interzettel/prehnite/pull/176",
+          "legacy_unit": "S04"
+        }
+      ],
+      "source": "v1_verified",
+      "original_unit": "S04",
+      "folded_atomic_subtasks": [
+        "S04-A01",
+        "S04-A02",
+        "S04-A03",
+        "S04-A04"
+      ]
+    },
+    {
+      "id": "P1-M04-V1-D01",
+      "milestone": "P1-M04",
+      "kind": "implementation",
+      "owner": "Agent cloud",
+      "issue": 1,
+      "acceptance": "Previously verified D01: CLI validation, run, estimate and export commands. Counts as accepted engineering foundation only. Original v1 scope and exact evidence remain authoritative; it does not prove a new GPU, API-billing, model-quality or human acceptance gate.",
+      "depends_on": [
+        "P1-M00-F03"
+      ],
+      "state": "verified",
+      "evidence": [
+        {
+          "type": "merged_pr",
+          "url": "https://github.com/interzettel/prehnite/pull/1",
+          "legacy_unit": "D01"
+        }
+      ],
+      "source": "v1_verified",
+      "original_unit": "D01"
+    },
+    {
+      "id": "P1-M04-V1-D02",
+      "milestone": "P1-M04",
+      "kind": "implementation",
+      "owner": "Agent cloud",
+      "issue": 1,
+      "acceptance": "Previously verified D02: Machine-readable JSON/CSV plus basic HTML report. Counts as accepted engineering foundation only. Original v1 scope and exact evidence remain authoritative; it does not prove a new GPU, API-billing, model-quality or human acceptance gate.",
+      "depends_on": [
+        "P1-M00-F05"
+      ],
+      "state": "verified",
+      "evidence": [
+        {
+          "type": "merged_pr",
+          "url": "https://github.com/interzettel/prehnite/pull/1",
+          "legacy_unit": "D02"
+        }
+      ],
+      "source": "v1_verified",
+      "original_unit": "D02"
+    },
+    {
+      "id": "P1-M04-V1-D03",
+      "milestone": "P1-M04",
+      "kind": "implementation",
+      "owner": "Agent cloud",
+      "issue": 33,
+      "acceptance": "Previously verified D03: Interactive-free, static results gallery. Counts as accepted engineering foundation only. Original v1 scope and exact evidence remain authoritative; it does not prove a new GPU, API-billing, model-quality or human acceptance gate.",
+      "depends_on": [
+        "P1-M04-V1-D02"
+      ],
+      "state": "verified",
+      "evidence": [
+        {
+          "type": "merged_pr",
+          "url": "https://github.com/interzettel/prehnite/pull/67",
+          "legacy_unit": "D03"
+        }
+      ],
+      "source": "v1_verified",
+      "original_unit": "D03"
+    },
+    {
+      "id": "P1-M04-V1-D04",
+      "milestone": "P1-M04",
+      "kind": "implementation",
+      "owner": "Agent cloud",
+      "issue": 34,
+      "acceptance": "Previously verified D04: Accepted asset efficiency and latency breakdown. Counts as accepted engineering foundation only. Original v1 scope and exact evidence remain authoritative; it does not prove a new GPU, API-billing, model-quality or human acceptance gate.",
+      "depends_on": [
+        "P1-M04-V1-D02"
+      ],
+      "state": "verified",
+      "evidence": [
+        {
+          "type": "merged_pr",
+          "url": "https://github.com/interzettel/prehnite/pull/78",
+          "legacy_unit": "D04"
+        }
+      ],
+      "source": "v1_verified",
+      "original_unit": "D04"
+    },
+    {
+      "id": "P1-M04-V1-D05",
+      "milestone": "P1-M04",
+      "kind": "implementation",
+      "owner": "Agent cloud",
+      "issue": 35,
+      "acceptance": "Previously verified D05: Versioned provenance and exact input/output hashes. Counts as accepted engineering foundation only. Original v1 scope and exact evidence remain authoritative; it does not prove a new GPU, API-billing, model-quality or human acceptance gate.",
+      "depends_on": [
+        "P1-M04-V1-C05"
+      ],
+      "state": "verified",
+      "evidence": [
+        {
+          "type": "merged_pr",
+          "url": "https://github.com/interzettel/prehnite/pull/74",
+          "legacy_unit": "D05"
+        }
+      ],
+      "source": "v1_verified",
+      "original_unit": "D05"
+    },
+    {
+      "id": "P1-M04-V1-D06",
+      "milestone": "P1-M04",
+      "kind": "implementation",
+      "owner": "Agent cloud",
+      "issue": 36,
+      "acceptance": "Previously verified D06: Deterministic ZIP ordering and digest manifest. Counts as accepted engineering foundation only. Original v1 scope and exact evidence remain authoritative; it does not prove a new GPU, API-billing, model-quality or human acceptance gate.",
+      "depends_on": [
+        "P1-M04-V1-D05"
+      ],
+      "state": "verified",
+      "evidence": [
+        {
+          "type": "merged_pr",
+          "url": "https://github.com/interzettel/prehnite/pull/76",
+          "legacy_unit": "D06"
+        }
+      ],
+      "source": "v1_verified",
+      "original_unit": "D06"
+    },
+    {
+      "id": "P1-M04-V1-D07",
+      "milestone": "P1-M04",
+      "kind": "implementation",
+      "owner": "Agent cloud",
+      "issue": 37,
+      "acceptance": "Previously verified D07: Safe offline init and secret-safe doctor CLI. Counts as accepted engineering foundation only. Original v1 scope and exact evidence remain authoritative; it does not prove a new GPU, API-billing, model-quality or human acceptance gate.",
+      "depends_on": [
+        "P1-M04-V1-D01"
+      ],
+      "state": "verified",
+      "evidence": [
+        {
+          "type": "merged_pr",
+          "url": "https://github.com/interzettel/prehnite/pull/71",
+          "legacy_unit": "D07"
+        }
+      ],
+      "source": "v1_verified",
+      "original_unit": "D07"
+    },
+    {
+      "id": "P1-M04-V1-D08",
+      "milestone": "P1-M04",
+      "kind": "implementation",
+      "owner": "Agent cloud",
+      "issue": 38,
+      "acceptance": "Previously verified D08: Safe MCP pause/cancel/reconnect semantics. Counts as accepted engineering foundation only. Original v1 scope and exact evidence remain authoritative; it does not prove a new GPU, API-billing, model-quality or human acceptance gate.",
+      "depends_on": [
+        "P1-M04-V1-C04"
+      ],
+      "state": "verified",
+      "evidence": [
+        {
+          "type": "merged_pr",
+          "url": "https://github.com/interzettel/prehnite/pull/83",
+          "legacy_unit": "D08"
+        }
+      ],
+      "source": "v1_verified",
+      "original_unit": "D08"
+    },
+    {
+      "id": "P1-M04-V1-D09",
+      "milestone": "P1-M04",
+      "kind": "implementation",
+      "owner": "Agent cloud",
+      "issue": 39,
+      "acceptance": "Previously verified D09: Clean Windows and Linux wheel/sdist install smoke matrix. Counts as accepted engineering foundation only. Original v1 scope and exact evidence remain authoritative; it does not prove a new GPU, API-billing, model-quality or human acceptance gate.",
+      "depends_on": [
+        "P1-M04-V1-D07"
+      ],
+      "state": "verified",
+      "evidence": [
+        {
+          "type": "merged_pr",
+          "url": "https://github.com/interzettel/prehnite/pull/72",
+          "legacy_unit": "D09"
+        }
+      ],
+      "source": "v1_verified",
+      "original_unit": "D09"
+    },
+    {
+      "id": "P1-M04-V1-D10",
+      "milestone": "P1-M04",
+      "kind": "implementation",
+      "owner": "Agent cloud",
+      "issue": 41,
+      "acceptance": "Previously verified D10: 90-asset no-cost CLI/MCP fixture bundle. Counts as accepted engineering foundation only. Original v1 scope and exact evidence remain authoritative; it does not prove a new GPU, API-billing, model-quality or human acceptance gate.",
+      "depends_on": [
+        "P1-M04-V1-D06",
+        "P1-M04-V1-D08"
+      ],
+      "state": "verified",
+      "evidence": [
+        {
+          "type": "merged_pr",
+          "url": "https://github.com/interzettel/prehnite/pull/84",
+          "legacy_unit": "D10"
+        }
+      ],
+      "source": "v1_verified",
+      "original_unit": "D10"
+    },
+    {
+      "id": "P1-M00-V1-R01",
+      "milestone": "P1-M00",
+      "kind": "implementation",
+      "owner": "Agent cloud",
+      "issue": 13,
+      "acceptance": "Previously verified R01: Keep a Changelog and canonical PEP 440 version. Counts as accepted engineering foundation only. Original v1 scope and exact evidence remain authoritative; it does not prove a new GPU, API-billing, model-quality or human acceptance gate.",
+      "depends_on": [
+        "P1-M00-F01"
+      ],
+      "state": "verified",
+      "evidence": [
+        {
+          "type": "merged_pr",
+          "url": "https://github.com/interzettel/prehnite/pull/13",
+          "legacy_unit": "R01"
+        }
+      ],
+      "source": "v1_verified",
+      "original_unit": "R01"
+    },
+    {
+      "id": "P1-M00-V1-R02",
+      "milestone": "P1-M00",
+      "kind": "implementation",
+      "owner": "Agent cloud",
+      "issue": 13,
+      "acceptance": "Previously verified R02: Issue-driven Kanban, PR/issue templates and WIP limits. Counts as accepted engineering foundation only. Original v1 scope and exact evidence remain authoritative; it does not prove a new GPU, API-billing, model-quality or human acceptance gate.",
+      "depends_on": [
+        "P1-M00-F01"
+      ],
+      "state": "verified",
+      "evidence": [
+        {
+          "type": "merged_pr",
+          "url": "https://github.com/interzettel/prehnite/pull/13",
+          "legacy_unit": "R02"
+        }
+      ],
+      "source": "v1_verified",
+      "original_unit": "R02"
+    },
+    {
+      "id": "P1-M00-V1-R03",
+      "milestone": "P1-M00",
+      "kind": "implementation",
+      "owner": "Agent cloud",
+      "issue": 9,
+      "acceptance": "Previously verified R03: Persistent A2A coordination and ownership handoffs. Counts as accepted engineering foundation only. Original v1 scope and exact evidence remain authoritative; it does not prove a new GPU, API-billing, model-quality or human acceptance gate.",
+      "depends_on": [
+        "P1-M00-F01"
+      ],
+      "state": "verified",
+      "evidence": [
+        {
+          "type": "historical_receipt",
+          "url": "https://github.com/interzettel/prehnite/issues/9",
+          "legacy_unit": "R03"
+        }
+      ],
+      "source": "v1_verified",
+      "original_unit": "R03"
+    },
+    {
+      "id": "P1-M00-V1-R04",
+      "milestone": "P1-M00",
+      "kind": "implementation",
+      "owner": "Agent cloud",
+      "issue": 14,
+      "acceptance": "Previously verified R04: Evidence-ledger, milestone roadmap and SVG chart. Counts as accepted engineering foundation only. Original v1 scope and exact evidence remain authoritative; it does not prove a new GPU, API-billing, model-quality or human acceptance gate.",
+      "depends_on": [
+        "P1-M00-V1-R02"
+      ],
+      "state": "verified",
+      "evidence": [
+        {
+          "type": "merged_pr",
+          "url": "https://github.com/interzettel/prehnite/pull/45",
+          "legacy_unit": "R04"
+        }
+      ],
+      "source": "v1_verified",
+      "original_unit": "R04"
+    },
+    {
+      "id": "P1-M00-V1-R05",
+      "milestone": "P1-M00",
+      "kind": "implementation",
+      "owner": "Agent cloud",
+      "issue": 43,
+      "acceptance": "Previously verified R05: Human-first README, badge and original mark. Counts as accepted engineering foundation only. Original v1 scope and exact evidence remain authoritative; it does not prove a new GPU, API-billing, model-quality or human acceptance gate.",
+      "depends_on": [
+        "P1-M00-V1-R02"
+      ],
+      "state": "verified",
+      "evidence": [
+        {
+          "type": "merged_pr",
+          "url": "https://github.com/interzettel/prehnite/pull/45",
+          "legacy_unit": "R05"
+        }
+      ],
+      "source": "v1_verified",
+      "original_unit": "R05"
+    },
+    {
+      "id": "P1-M04-V1-R07",
+      "milestone": "P1-M04",
+      "kind": "implementation",
+      "owner": "Agent cloud",
+      "issue": 41,
+      "acceptance": "Previously verified R07: 90-asset offline production dry run. Counts as accepted engineering foundation only. Original v1 scope and exact evidence remain authoritative; it does not prove a new GPU, API-billing, model-quality or human acceptance gate.",
+      "depends_on": [
+        "P1-M04-V1-D10"
+      ],
+      "state": "verified",
+      "evidence": [
+        {
+          "type": "merged_pr",
+          "url": "https://github.com/interzettel/prehnite/pull/84",
+          "legacy_unit": "R07"
+        }
+      ],
+      "source": "v1_verified",
+      "original_unit": "R07"
+    },
+    {
+      "id": "P1-M02-VA-P08-A01",
+      "milestone": "P1-M02",
+      "kind": "implementation",
+      "owner": "Agent local",
+      "issue": 24,
+      "acceptance": "Original atomic work P08-A01: Record local GPU environment and free VRAM. Reproducible OS, CUDA, driver and installed weight licensing record. Previously independently accepted under its original narrow v1 task criteria, not proof that the parent product outcome or current real-image acceptance is complete.",
+      "depends_on": [],
+      "state": "verified",
+      "evidence": [
+        {
+          "type": "merged_pr",
+          "url": "https://github.com/interzettel/prehnite/pull/166",
+          "legacy_atomic_id": "P08-A01"
+        }
+      ],
+      "source": "v1_atomic_verified",
+      "original_atomic_id": "P08-A01"
+    },
+    {
+      "id": "P1-M02-VA-P08-A02",
+      "milestone": "P1-M02",
+      "kind": "implementation",
+      "owner": "Agent local",
+      "issue": 24,
+      "acceptance": "Original atomic work P08-A02: Run bounded 8GB model load and forward pass. Measure peak VRAM, cold/warm latency and failure behavior on actual laptop. Previously independently accepted under its original narrow v1 task criteria, not proof that the parent product outcome or current real-image acceptance is complete.",
+      "depends_on": [],
+      "state": "verified",
+      "evidence": [
+        {
+          "type": "merged_pr",
+          "url": "https://github.com/interzettel/prehnite/pull/177",
+          "legacy_atomic_id": "P08-A02"
+        }
+      ],
+      "source": "v1_atomic_verified",
+      "original_atomic_id": "P08-A02"
+    },
+    {
+      "id": "P1-M02-VA-P08-A04",
+      "milestone": "P1-M02",
+      "kind": "implementation",
+      "owner": "Agent local",
+      "issue": 24,
+      "acceptance": "Original atomic work P08-A04: Publish compatibility profile by model size. Decision table states actually measured versus unknown VRAM configurations. Previously independently accepted under its original narrow v1 task criteria, not proof that the parent product outcome or current real-image acceptance is complete.",
+      "depends_on": [],
+      "state": "verified",
+      "evidence": [
+        {
+          "type": "merged_pr",
+          "url": "https://github.com/interzettel/prehnite/pull/170",
+          "legacy_atomic_id": "P08-A04"
+        }
+      ],
+      "source": "v1_atomic_verified",
+      "original_atomic_id": "P08-A04"
+    },
+    {
+      "id": "P1-M05-VA-Q06-A01",
+      "milestone": "P1-M05",
+      "kind": "implementation",
+      "owner": "Owner",
+      "issue": 28,
+      "acceptance": "Original atomic work Q06-A01: Register owner-authorized product photo cohort. 84 private AI-generated JPEGs inventoried and source privacy preserved. Previously independently accepted under its original narrow v1 task criteria, not proof that the parent product outcome or current real-image acceptance is complete.",
+      "depends_on": [],
+      "state": "verified",
+      "evidence": [
+        {
+          "type": "merged_pr",
+          "url": "https://github.com/interzettel/prehnite/pull/123",
+          "legacy_atomic_id": "Q06-A01"
+        }
+      ],
+      "source": "v1_atomic_verified",
+      "original_atomic_id": "Q06-A01"
+    },
+    {
+      "id": "P1-M05-VA-S03-A01",
+      "milestone": "P1-M05",
+      "kind": "implementation",
+      "owner": "Agent cloud",
+      "issue": 29,
+      "acceptance": "Original atomic work S03-A01: Demonstrate bounded synthetic product alpha correction. Offline flat-background leak pixels removed against withheld reference. Previously independently accepted under its original narrow v1 task criteria, not proof that the parent product outcome or current real-image acceptance is complete.",
+      "depends_on": [],
+      "state": "verified",
+      "evidence": [
+        {
+          "type": "merged_pr",
+          "url": "https://github.com/interzettel/prehnite/pull/119",
+          "legacy_atomic_id": "S03-A01"
+        }
+      ],
+      "source": "v1_atomic_verified",
+      "original_atomic_id": "S03-A01"
+    },
+    {
+      "id": "P1-M05-VA-S03-A02",
+      "milestone": "P1-M05",
+      "kind": "implementation",
+      "owner": "Agent cloud",
+      "issue": 29,
+      "acceptance": "Original atomic work S03-A02: Prove unsafe scene/material abstention. 20-case challenge matrix verifies transparent, hair, gradient and multi-object refusal. Previously independently accepted under its original narrow v1 task criteria, not proof that the parent product outcome or current real-image acceptance is complete.",
+      "depends_on": [],
+      "state": "verified",
+      "evidence": [
+        {
+          "type": "merged_pr",
+          "url": "https://github.com/interzettel/prehnite/pull/120",
+          "legacy_atomic_id": "S03-A02"
+        }
+      ],
+      "source": "v1_atomic_verified",
+      "original_atomic_id": "S03-A02"
+    },
+    {
+      "id": "P1-M05-VA-S03-A03",
+      "milestone": "P1-M05",
+      "kind": "implementation",
+      "owner": "Agent cloud",
+      "issue": 29,
+      "acceptance": "Original atomic work S03-A03: Implement true color spill edge decontamination. Pixel-level tests prove removal without deleting background-colored product regions. Previously independently accepted under its original narrow v1 task criteria, not proof that the parent product outcome or current real-image acceptance is complete.",
+      "depends_on": [],
+      "state": "verified",
+      "evidence": [
+        {
+          "type": "merged_pr",
+          "url": "https://github.com/interzettel/prehnite/pull/164",
+          "legacy_atomic_id": "S03-A03"
+        }
+      ],
+      "source": "v1_atomic_verified",
+      "original_atomic_id": "S03-A03"
+    },
+    {
+      "id": "P1-M04-VA-S05-A01",
+      "milestone": "P1-M04",
+      "kind": "implementation",
+      "owner": "Agent cloud",
+      "issue": 31,
+      "acceptance": "Original atomic work S05-A01: Typed zero-spend repair decision plan. Policy authorizes local repair separately from uncertain paid submission. Previously independently accepted under its original narrow v1 task criteria, not proof that the parent product outcome or current real-image acceptance is complete.",
+      "depends_on": [],
+      "state": "verified",
+      "evidence": [
+        {
+          "type": "merged_pr",
+          "url": "https://github.com/interzettel/prehnite/pull/117",
+          "legacy_atomic_id": "S05-A01"
+        }
+      ],
+      "source": "v1_atomic_verified",
+      "original_atomic_id": "S05-A01"
+    },
+    {
+      "id": "P1-M04-VA-S05-A02",
+      "milestone": "P1-M04",
+      "kind": "implementation",
+      "owner": "Agent cloud",
+      "issue": 31,
+      "acceptance": "Original atomic work S05-A02: Idempotent journal-backed local repair executor. Stable operation receipt, atomic candidate, integrity-verified crash replay. Previously independently accepted under its original narrow v1 task criteria, not proof that the parent product outcome or current real-image acceptance is complete.",
+      "depends_on": [],
+      "state": "verified",
+      "evidence": [
+        {
+          "type": "merged_pr",
+          "url": "https://github.com/interzettel/prehnite/pull/119",
+          "legacy_atomic_id": "S05-A02"
+        }
+      ],
+      "source": "v1_atomic_verified",
+      "original_atomic_id": "S05-A02"
+    },
+    {
+      "id": "P1-M04-VA-S05-A03",
+      "milestone": "P1-M04",
+      "kind": "implementation",
+      "owner": "Agent cloud",
+      "issue": 31,
+      "acceptance": "Original atomic work S05-A03: Hard-case refusal and one-attempt coverage. Oversized leak, multiple objects and material uncertainty safely refuse. Previously independently accepted under its original narrow v1 task criteria, not proof that the parent product outcome or current real-image acceptance is complete.",
+      "depends_on": [],
+      "state": "verified",
+      "evidence": [
+        {
+          "type": "merged_pr",
+          "url": "https://github.com/interzettel/prehnite/pull/120",
+          "legacy_atomic_id": "S05-A03"
+        }
+      ],
+      "source": "v1_atomic_verified",
+      "original_atomic_id": "S05-A03"
+    },
+    {
+      "id": "P1-M04-VA-S05-A04",
+      "milestone": "P1-M04",
+      "kind": "implementation",
+      "owner": "Agent cloud",
+      "issue": 31,
+      "acceptance": "Original atomic work S05-A04: Wire the bounded repair into production Engine.cutout. Real stage transition uses journal, protects selected artifacts and can abstain. Previously independently accepted under its original narrow v1 task criteria, not proof that the parent product outcome or current real-image acceptance is complete.",
+      "depends_on": [],
+      "state": "verified",
+      "evidence": [
+        {
+          "type": "merged_pr",
+          "url": "https://github.com/interzettel/prehnite/pull/129",
+          "legacy_atomic_id": "S05-A04"
+        }
+      ],
+      "source": "v1_atomic_verified",
+      "original_atomic_id": "S05-A04"
+    },
+    {
+      "id": "P1-M05-VA-S06-A01",
+      "milestone": "P1-M05",
+      "kind": "implementation",
+      "owner": "Owner",
+      "issue": 32,
+      "acceptance": "Original atomic work S06-A01: Build withheld-reference synthetic alpha challenge suite. 20 deterministic cases report independent alpha IoU and boundary MAE. Previously independently accepted under its original narrow v1 task criteria, not proof that the parent product outcome or current real-image acceptance is complete.",
+      "depends_on": [],
+      "state": "verified",
+      "evidence": [
+        {
+          "type": "merged_pr",
+          "url": "https://github.com/interzettel/prehnite/pull/120",
+          "legacy_atomic_id": "S06-A01"
+        }
+      ],
+      "source": "v1_atomic_verified",
+      "original_atomic_id": "S06-A01"
+    },
+    {
+      "id": "P1-M05-VA-S06-A02",
+      "milestone": "P1-M05",
+      "kind": "implementation",
+      "owner": "Owner",
+      "issue": 32,
+      "acceptance": "Original atomic work S06-A02: Add private RGB/mask reference scoring CLI. WebP/JPEG source and PNG alpha validated with SHA, geometry and rights attestation. Previously independently accepted under its original narrow v1 task criteria, not proof that the parent product outcome or current real-image acceptance is complete.",
+      "depends_on": [],
+      "state": "verified",
+      "evidence": [
+        {
+          "type": "merged_pr",
+          "url": "https://github.com/interzettel/prehnite/pull/122",
+          "legacy_atomic_id": "S06-A02"
+        }
+      ],
+      "source": "v1_atomic_verified",
+      "original_atomic_id": "S06-A02"
+    },
+    {
+      "id": "P1-M05-VA-S06-A03",
+      "milestone": "P1-M05",
+      "kind": "implementation",
+      "owner": "Owner",
+      "issue": 32,
+      "acceptance": "Original atomic work S06-A03: Inspect owner-provided 84-image source-only pilot. 50 front images get unreviewed baseline masks without false accuracy claims. Previously independently accepted under its original narrow v1 task criteria, not proof that the parent product outcome or current real-image acceptance is complete.",
+      "depends_on": [],
+      "state": "verified",
+      "evidence": [
+        {
+          "type": "merged_pr",
+          "url": "https://github.com/interzettel/prehnite/pull/123",
+          "legacy_atomic_id": "S06-A03"
+        }
+      ],
+      "source": "v1_atomic_verified",
+      "original_atomic_id": "S06-A03"
+    },
+    {
+      "id": "P1-M05-VA-S07-A02",
+      "milestone": "P1-M05",
+      "kind": "implementation",
+      "owner": "Owner",
+      "issue": 32,
+      "acceptance": "Original atomic work S07-A02: Implement strict human-review feedback ingestion. Import approved/needs-work/skip plus RGBA edits without gold-label claims. Previously independently accepted under its original narrow v1 task criteria, not proof that the parent product outcome or current real-image acceptance is complete.",
+      "depends_on": [],
+      "state": "verified",
+      "evidence": [
+        {
+          "type": "merged_pr",
+          "url": "https://github.com/interzettel/prehnite/pull/125",
+          "legacy_atomic_id": "S07-A02"
+        }
+      ],
+      "source": "v1_atomic_verified",
+      "original_atomic_id": "S07-A02"
+    },
+    {
+      "id": "P1-M05-VA-R06-A01",
+      "milestone": "P1-M05",
+      "kind": "implementation",
+      "owner": "Agent cloud",
+      "issue": 40,
+      "acceptance": "Original atomic work R06-A01: Inventory Python dependencies and transitive licenses. CycloneDX SBOM, exact installed-version snapshot (not hashed lock), and named unresolved license exceptions. Previously independently accepted under its original narrow v1 task criteria, not proof that the parent product outcome or current real-image acceptance is complete.",
+      "depends_on": [],
+      "state": "verified",
+      "evidence": [
+        {
+          "type": "merged_pr",
+          "url": "https://github.com/interzettel/prehnite/pull/130",
+          "legacy_atomic_id": "R06-A01"
+        }
+      ],
+      "source": "v1_atomic_verified",
+      "original_atomic_id": "R06-A01"
+    },
+    {
+      "id": "P1-M05-VA-R06-A02",
+      "milestone": "P1-M05",
+      "kind": "implementation",
+      "owner": "Agent cloud",
+      "issue": 40,
+      "acceptance": "Original atomic work R06-A02: Audit optional model checkpoints and training restrictions. Separate weight/source terms recorded; no implicit MIT relicensing. Previously independently accepted under its original narrow v1 task criteria, not proof that the parent product outcome or current real-image acceptance is complete.",
+      "depends_on": [],
+      "state": "verified",
+      "evidence": [
+        {
+          "type": "merged_pr",
+          "url": "https://github.com/interzettel/prehnite/pull/131",
+          "legacy_atomic_id": "R06-A02"
+        }
+      ],
+      "source": "v1_atomic_verified",
+      "original_atomic_id": "R06-A02"
     }
   ],
   "legacy_crosswalk": [
@@ -718,10 +1908,74 @@
       "F03",
       "F04",
       "F05",
-      "F06"
+      "F06",
+      "C01",
+      "C02",
+      "C03",
+      "C04",
+      "C05",
+      "C07",
+      "C10",
+      "P01",
+      "P02",
+      "P03",
+      "P04",
+      "P05",
+      "P06",
+      "P07",
+      "Q01",
+      "Q02",
+      "Q03",
+      "Q04",
+      "S01",
+      "S02",
+      "S04",
+      "D01",
+      "D02",
+      "D03",
+      "D04",
+      "D05",
+      "D06",
+      "D07",
+      "D08",
+      "D09",
+      "D10",
+      "R01",
+      "R02",
+      "R03",
+      "R04",
+      "R05",
+      "R07"
     ],
-    "carried_forward_policy": "Only the 6 verified runnable-foundation units satisfy P1-M00 directly; all other original v1 done work stays in immutable v1 archive until explicitly checked against v2 gate acceptance; no progress credit transferred by name similarity",
-    "unfinished_unit_crosswalk": 18
+    "carried_forward_policy": "All 43 originally verified v1 unit-level engineering receipts are carried into the one active roadmap as scope-limited verified tasks. This does not satisfy new, stricter research, real-GPU, paid-provider, LoRA or human image-acceptance gates. Original evidence URLs and original unit IDs are checked against immutable v1.",
+    "unfinished_unit_crosswalk": 18,
+    "inherited_only_verification": "Previously accepted original contract, not new product usability certification.",
+    "carried_forward_atomic_ids": [
+      "P08-A01",
+      "P08-A02",
+      "P08-A04",
+      "Q06-A01",
+      "S03-A01",
+      "S03-A02",
+      "S03-A03",
+      "S05-A01",
+      "S05-A02",
+      "S05-A03",
+      "S05-A04",
+      "S06-A01",
+      "S06-A02",
+      "S06-A03",
+      "S07-A02",
+      "R06-A01",
+      "R06-A02"
+    ],
+    "folded_atomic_ids": [
+      "S04-A01",
+      "S04-A02",
+      "S04-A03",
+      "S04-A04"
+    ],
+    "atomic_transfer_policy": "The 17 independently verified atomic tasks under unfinished original parents are counted as distinct narrow implementation receipts. The four completed S04 children are linked to the already-verified S04 parent and never counted twice."
   },
-  "completion_rule": "Only verified tasks with auditable merged PR/research approval/authorized experiment/human acceptance evidence count; milestone requires all listed gate tasks verified and its dependencies verified. Progress numbers refer ONLY to current v2 outcome milestones and tasks."
+  "completion_rule": "One canonical 80-task evidence plan: 43 original verified parent capabilities, 17 distinct narrow verified atomic subtasks under incomplete parents, and 20 v2 outcome-specific work tasks. Four S04 atomic subtasks are folded into its already-counted completed parent. Each recorded unit counts once; this task score is technical task coverage, not user-accepted product quality. 9 outcome gates remain independently acceptance-bound."
 }

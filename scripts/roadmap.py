@@ -20,6 +20,7 @@ STATES = {"planned", "active", "in_review", "blocked", "verified"}
 EVIDENCE_TYPES = {
     "merged_pr", "research_review", "owner_decision",
     "observed_experiment", "independent_review", "human_acceptance",
+    "historical_receipt",
 }
 REPO_PREFIX = "https://github.com/interzettel/prehnite/"
 
@@ -130,7 +131,9 @@ def validate(data: dict, root: Path = ROOT) -> dict:
             expected = {
                 "research": {"research_review"},
                 "decision": {"owner_decision"},
-                "implementation": {"merged_pr"},
+                "implementation": ({"merged_pr", "historical_receipt"}
+                                   if task.get("source") == "v1_verified"
+                                   else {"merged_pr"}),
                 "experiment": {"observed_experiment", "independent_review"},
                 "acceptance": {"human_acceptance", "owner_decision"},
             }[task["kind"]]
@@ -167,94 +170,177 @@ def validate(data: dict, root: Path = ROOT) -> dict:
             raise ValueError("legacy crosswalk references missing milestone")
         if not ref.get("note") or not ref.get("relationship"):
             raise ValueError("unexplained legacy obligation")
+    historical_done = {u["id"]: u for u in old_units if u["state"] == "done"}
     carried = data.get("migration_integrity", {}).get("carried_forward_v1_unit_ids")
-    if carried != ["F01", "F02", "F03", "F04", "F05", "F06"]:
-        raise ValueError("evidence migration changed without explicit review")
-    for old_id in carried:
-        old = next(x for x in old_units if x["id"] == old_id)
-        new = tasks.get("P1-M00-" + old_id)
-        if (old["state"] != "done" or new is None or new["state"] != "verified"
-                or not any(e.get("url") == old["evidence"] and e.get("legacy_unit") == old_id
-                           for e in new["evidence"])):
-            raise ValueError("foundation evidence provenance lost")
-    if not set(carried).issubset(original_ids):
-        raise ValueError("missing original evidence")
+    if not isinstance(carried, list) or set(carried) != set(historical_done) or len(carried) != 43:
+        raise ValueError("all 43 originally verified capabilities must be carried exactly once")
+    inherited = [t for t in tasks.values() if any(
+        e.get("legacy_unit") for e in t.get("evidence", [])
+    )]
+    if len(inherited) != 43:
+        raise ValueError("v2 inherited verification count must equal 43")
+    received: set[str] = set()
+    for task in inherited:
+        if task.get("state") != "verified":
+            raise ValueError("historical evidence lost from active roadmap")
+        for proof in task["evidence"]:
+            unit_id = proof.get("legacy_unit")
+            if not unit_id:
+                continue
+            if unit_id not in historical_done or unit_id in received:
+                raise ValueError("duplicate or unverified historical capability")
+            received.add(unit_id)
+            old = historical_done[unit_id]
+            if proof.get("url") != old.get("evidence"):
+                raise ValueError("foundation evidence provenance lost")
+            expected_kind = ("merged_pr" if "/pull/" in old["evidence"]
+                             else "historical_receipt")
+            if proof.get("type") != expected_kind:
+                raise ValueError("historical proof classification mismatch")
+            if task.get("issue") != old.get("issue"):
+                raise ValueError("historical unit issue mismatch")
+            if not task["id"].endswith("-" + unit_id):
+                raise ValueError("historical unit mapping mismatch")
+    if received != set(historical_done):
+        raise ValueError("all original completed work must remain represented")
+    for task in tasks.values():
+        if task.get("source") == "v1_verified" and not any(
+            e.get("legacy_unit") for e in task.get("evidence", [])
+        ):
+            raise ValueError("inherited task has no original evidence")
+        if task.get("source") != "v1_verified" and any(
+            e.get("type") == "historical_receipt" for e in task.get("evidence", [])
+        ):
+            raise ValueError("new work cannot claim a historical receipt")
+    old_atomic_done = {t["id"]: t for t in old_atomic["tasks"] if t["state"] == "done"}
+    original_folded = {key for key, t in old_atomic_done.items() if t["parent"] == "S04"}
+    receipt_ids = data.get("migration_integrity", {}).get("carried_forward_atomic_ids")
+    folded = data.get("migration_integrity", {}).get("folded_atomic_ids")
+    if (not isinstance(receipt_ids, list) or not isinstance(folded, list)
+            or len(receipt_ids) != 17 or len(folded) != 4
+            or set(receipt_ids) != set(old_atomic_done) - original_folded
+            or set(folded) != original_folded):
+        raise ValueError("atomic receipts must carry 17 distinct and fold 4 overlapping tasks")
+    actual = set()
+    for task in tasks.values():
+        atomic_proofs = [p for p in task["evidence"] if p.get("legacy_atomic_id")]
+        if task.get("source") == "v1_atomic_verified" and len(atomic_proofs) != 1:
+            raise ValueError("atomic source requires one original receipt")
+        if task.get("source") != "v1_atomic_verified" and atomic_proofs:
+            raise ValueError("only original atomic sources may claim original receipt")
+        for proof in atomic_proofs:
+            id_ = proof["legacy_atomic_id"]
+            if id_ in actual or id_ not in old_atomic_done or id_ in original_folded:
+                raise ValueError("duplicate or missing original atomic task")
+            actual.add(id_)
+            old = old_atomic_done[id_]
+            if (proof.get("url") != old.get("evidence")
+                    or proof.get("type") != "merged_pr"
+                    or task.get("issue") != old["issue"]
+                    or task["id"][-len(id_):] != id_):
+                raise ValueError("original atomic evidence provenance lost")
+    if actual != set(receipt_ids):
+        raise ValueError("atomic subtask evidence missing")
+    parent_s04 = next((t for t in tasks.values() if t.get("original_unit") == "S04"), None)
+    if parent_s04 is None or set(parent_s04.get("folded_atomic_subtasks", [])) != original_folded:
+        raise ValueError("overlapping S04 work must be folded into its verified parent")
+    for m in milestones.values():
+        if type(m.get("priority")) is not int or m["priority"] not in range(5):
+            raise ValueError("priority ranking must be P0 through P4")
+        if not m.get("workstream") or not m.get("next_action"):
+            raise ValueError("workstream and next action required")
     return {
         "phases": len(phases), "milestones": len(milestones),
         "milestones_verified": sum(m["state"] == "verified" for m in milestones.values()),
         "tasks": len(tasks), "tasks_verified": sum(t["state"] == "verified" for t in tasks.values()),
+        "transferred_verified_capabilities": len(received),
+        "transferred_distinct_atomic": len(actual),
+        "folded_duplicate_atomic": len(original_folded),
         "archived_release_units": 61, "archived_atomic_tasks": 73,
     }
 
 
 def render(data: dict) -> str:
-    milestone_by_id = {m["id"]: m for m in data["milestones"]}
-    task_by_id = {t["id"]: t for t in data["tasks"]}
-    done = sum(m["state"] == "verified" for m in data["milestones"])
+    """Render the one active progress view with granular task and outcome scores."""
+    by_id = {t["id"]: t for t in data["tasks"]}
+    total = len(by_id)
+    done = sum(t["state"] == "verified" for t in by_id.values())
+    m_done = sum(m["state"] == "verified" for m in data["milestones"])
+    milestones = sorted(data["milestones"], key=lambda m: (m["priority"], m["id"]))
     lines = [
-        "# Prehnite — one canonical product roadmap",
-        "",
-        "> Generated from progress/roadmap.json by scripts/roadmap.py. The original",
-        "> 61-unit release scope and 73-task register are archived historical evidence,",
-        "> not competing active project percentages.",
-        "",
-        f"**Product outcomes:** {done}/{len(data['milestones'])} milestones verified.  ",
-        f"**Scope:** 8 GiB RTX 4070 laptop, measured host RAM; two phases; no 4/6 GiB program.  ",
-        "**Evidence rule:** research != code != GPU observations != owner acceptance.",
-        "",
-        "| Phase | Milestone | State | Evidence gates | Next work |",
-        "| --- | --- | --- | ---: | --- |",
+        "# Prehnite | Product progress", "",
+        f"**Engineering tasks verified: {done}/{total} ({100 * done / total:.1f}%).**  ",
+        f"**Outcome milestones accepted: {m_done}/{len(milestones)} "
+        f"({100 * m_done / len(milestones):.1f}%).**", "",
+        "Engineering task completion includes original reviewed implementation receipts. "
+        "Outcome acceptance additionally requires real laptop tests, usable images, "
+        "and human review. Neither percentage alone is a product-quality certificate.", "",
+        "## Prioritized workstreams", "",
+        "| Priority | Workstream | Work evidenced | Completion | Outcome | Next missing task |",
+        "| --- | --- | ---: | ---: | --- | --- |",
     ]
-    for phase in data["phases"]:
-        for mid in phase["milestones"]:
-            m = milestone_by_id[mid]
-            count = sum(task_by_id[t]["state"] == "verified" for t in m["gate_tasks"])
-            next_ = next((t for t in m["gate_tasks"] if task_by_id[t]["state"] != "verified"), None)
-            state = m["state"].replace("_", " ")
-            lines.append(
-                f"| {escape(phase['id'])} | {escape(mid)} — {escape(m['title'])} "
-                f"| {state} | {count}/{len(m['gate_tasks'])} "
-                f"| {escape(next_ or 'Milestone evidenced')} |"
-            )
+    for m in milestones:
+        gate = [by_id[t] for t in m["gate_tasks"]]
+        count = sum(t["state"] == "verified" for t in gate)
+        next_task = next((t["id"] for t in gate if t["state"] != "verified"), "All gates evidenced")
+        state = "Accepted" if m["state"] == "verified" else (
+            "Blocked" if m["state"] == "blocked" else "Open"
+        )
+        lines.append(
+            f"| P{m['priority']} | {m['id']}: {m['workstream']} | "
+            f"{count}/{len(gate)} | {100 * count / len(gate):.1f}% | "
+            f"{state} | {next_task} |"
+        )
     lines += [
-        "",
-        "## Research, implementation, experiment, acceptance",
-        "",
-        "Every gate task has one question to answer and one accepted evidence type.",
-        "The kinds are not interchangeable; an offline CI success cannot prove visual quality.",
-        "",
+        "", "## What is needed next", "",
+        "Listed by priority, not by number of commits or the size of a previous release.",
+        ""
     ]
-    for phase in data["phases"]:
-        lines.extend([f"### {escape(phase['id'])} — {escape(phase['name'])}", ""])
-        for mid in phase["milestones"]:
-            m = milestone_by_id[mid]
-            lines.extend([f"#### {escape(mid)} — {escape(m['title'])}", "", m["objective"], ""])
-            lines.extend(["| Task | Kind | State | Owner | Acceptance / evidence |",
-                          "| --- | --- | --- | --- | --- |"])
-            for tid in m["gate_tasks"]:
-                task = task_by_id[tid]
-                proof = task["acceptance"].replace("|", "/").replace("\n", " ")
-                if task["state"] == "verified":
-                    proof += "; " + ", ".join(
-                        f"[evidence]({entry['url']})" for entry in task["evidence"]
-                    )
-                lines.append(
-                    f"| {tid} | {task['kind']} | {task['state'].replace('_',' ')} "
-                    f"| {task['owner']} | {proof} |"
+    for m in milestones:
+        if m["state"] == "verified":
+            continue
+        pending = [by_id[t] for t in m["gate_tasks"] if by_id[t]["state"] != "verified"]
+        lines.append(
+            f"- **P{m['priority']} · {m['id']} · {m['title']}**: "
+            f"{m['next_action']}. "
+            f"Next: {pending[0]['id']} ({pending[0]['kind']}); "
+            f"{len(pending)} outstanding."
+        )
+    lines += ["", "## Detailed task evidence", "",
+              "Each row is one work item counted once. Imported technical achievements "
+              "are scoped to the originally verified implementation, never to new "
+              "physical or human acceptance.", ""]
+    for m in sorted(data["milestones"], key=lambda v: (v["phase"], v["id"])):
+        gates = [by_id[t] for t in m["gate_tasks"]]
+        count = sum(t["state"] == "verified" for t in gates)
+        lines += [
+            f"### {m['id']} · {m['title']} ({count}/{len(gates)}; "
+            f"{100 * count / len(gates):.1f}%)", "",
+            "| Task | Kind | State | Evidence / required outcome |",
+            "| --- | --- | --- | --- |"
+        ]
+        for t in gates:
+            if t.get("original_unit"):
+                proof = "Previously verified source unit " + t["original_unit"]
+            else:
+                proof = t["acceptance"]
+            proof = proof.replace("|", "/").replace("\n", " ")
+            if t["state"] == "verified":
+                proof += ": " + ", ".join(
+                    f"[evidence]({e['url']})" for e in t["evidence"]
                 )
-            lines.append("")
+            lines.append(
+                f"| {t['id']} | {t['kind']} | "
+                f"{t['state'].replace('_', ' ')} | {proof} |"
+            )
+        lines.append("")
     lines += [
-        "## Historical evidence (archive only)",
-        "",
-        "The previous 43/61 released-scope evidence and 21/73 atomic evidence",
-        "remain preserved without being counted as parallel active progress.",
-        "[Original 61-unit ledger](../../progress/archive/v1/ledger.json) ·",
-        "[Original 73-task ledger](../../progress/archive/v1/atomic.json) ·",
-        "[Migration notes](../ROADMAP_MIGRATION_V2.md).",
-        "",
-        "The old 90-image/paid-provider/licensing/administration obligations remain",
-        "traceable in the crosswalk. A ten-image local test does not falsely close them.",
-        "",
+        "## Evidence and permission rules", "",
+        "A research review, merged implementation, hardware experiment, and human "
+        "quality decision are different types of evidence. An unapproved CUDA run, "
+        "unverified API billing, and a synthetic image cannot complete those gates.", "",
+        "[Canonical machine-readable roadmap](../../progress/roadmap.json) · "
+        "[Milestone acceptance definitions](../PRODUCT_MILESTONES.md).", ""
     ]
     return "\n".join(lines)
 

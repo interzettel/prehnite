@@ -42,3 +42,36 @@ def test_scoped_skill_includes_upstream_license_and_brand():
     guide = (skill / "references/style-guide.md").read_text()
     for token in ("#F6EFE2", "#075231", "#A63D35"):
         assert token in guide
+
+
+def test_readme_is_product_facing_and_backend_accurate():
+    readme = (ROOT / "README.md").read_text(encoding="utf-8")
+    assert "```text" not in readme
+    assert "old ledger" not in readme.lower()
+    assert "owner-mandated" not in readme.lower()
+    assert "fal.ai" in readme
+    assert "ComfyUI" in readme
+    assert "60/80" in readme
+    assert "75.0%" in readme
+    assert "1/9" in readme
+
+
+def test_diagram_coverage_matches_current_roadmap():
+    import json
+
+    current = json.loads((ROOT / "progress/roadmap.json").read_text())
+    diagram = (ROOT / "assets/diagrams/roadmap.svg").read_text()
+    total = len(current["tasks"])
+    done = sum(t["state"] == "verified" for t in current["tasks"])
+    assert (done, total) == (60, 80)
+    assert "Engineering evidence 60 / 80" in diagram
+    for m in current["milestones"]:
+        assert m["id"] in diagram
+        count = sum(
+            next(t for t in current["tasks"] if t["id"] == task_id)["state"] == "verified"
+            for task_id in m["gate_tasks"]
+        )
+        assert f"{count}/{len(m['gate_tasks'])}" in diagram
+    workflow = (ROOT / "assets/diagrams/workflow.svg").read_text()
+    for provider in ("COMFYUI", "FAL.AI", "DEMO", "Anthropic"):
+        assert provider in workflow

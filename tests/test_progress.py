@@ -25,8 +25,13 @@ def test_one_active_roadmap_and_reproducible_status():
     assert result["phases"] == 2
     assert result["milestones"] == 9
     assert result["milestones_verified"] == 1
-    assert result["tasks"] == 26
-    assert result["tasks_verified"] == 6
+    assert result["tasks"] == 80
+    assert result["tasks_verified"] == 60
+    assert result["transferred_verified_capabilities"] == 43
+    assert result["transferred_distinct_atomic"] == 17
+    assert result["folded_duplicate_atomic"] == 4
+    assert "60/80 (75.0%)" in module.render(data)
+    assert "P1-M04: Batch and recovery | 22/25 | 88.0%" in module.render(data)
     assert module.render(data) == (ROOT / "docs/progress/STATUS.md").read_text()
     assert not (ROOT / "progress/ledger.json").exists()
     assert not (ROOT / "progress/atomic.json").exists()
