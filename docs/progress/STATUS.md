@@ -73,7 +73,7 @@ Each row is one work item counted once. Imported technical achievements are scop
 | P1-M02-V1-P07 | implementation | verified | Previously verified source unit P07: [evidence](https://github.com/interzettel/prehnite/pull/59) |
 | P1-M02-V1-P06 | implementation | verified | Previously verified source unit P06: [evidence](https://github.com/interzettel/prehnite/pull/57) |
 | P1-M02-V1-P02 | implementation | verified | Previously verified source unit P02: [evidence](https://github.com/interzettel/prehnite/pull/1) |
-| P1-M02-E01 | experiment | blocked | With separate fresh permission, execute only the exact bounded one-startup/three-run P08-A03 contract; retain true machine/recipe/timing hashes and honest failure evidence. |
+| P1-M02-E01 | experiment | blocked | With separate fresh owner authorization, run a bounded three-identical-prompt SDXL generation baseline on the reference 8 GiB laptop. Keep the same pinned model, graph, input, sampler, steps, seed, resolution and runtime revision; record a truthful preflight, three unique prompt/output receipts, cold/warm timing, sampled peak VRAM, minimum available host RAM, system commit, hashes, failure conditions and cleanup. The separate SAM2 P08-A03 cutout contract is not SDXL generation evidence. |
 | P1-M02-A01 | acceptance | planned | Independent review of real receipt, run provenance, outcomes, peak sampling limitations, safety/rights and whether the specific 8 GiB configuration is actually repeatable. |
 
 ### P1-M03 · Measure one useful optimization (0/3; 0.0%)
