@@ -47,7 +47,7 @@ def oracle_fixture(tmp_path):
     return source, mask, recipe, recipe_path, foreground, alpha
 
 
-def test_soft_alpha_coverage_baseline_preserves_transmission_without_weakening_binary_policy(tmp_path):
+def test_soft_alpha_coverage_uses_correct_reference(tmp_path):
     _, _, _, _, _, original_alpha = oracle_fixture(tmp_path)
     # Legacy binary-feather QA deliberately compares against a hard silhouette.
     legacy = _alpha_metrics(original_alpha, original_alpha)
