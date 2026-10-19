@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated": "2026-10-16",
+  "updated": "2026-10-19",
   "counting_rule": "Each stable unit is independently completable. Progress counts done units only, not active/blocked work or story points. Done requires concrete merged PR, committed tests or owner-accepted evidence. Stage achievement requires every named gate done. Unit counts do not estimate equal engineering effort.",
   "states": {
     "done": "Evidence-linked and verifiably completed within its explicitly scoped contract.",
@@ -469,12 +469,13 @@
         {
           "id": "S04",
           "name": "Multiple-instance selection and named outputs",
-          "state": "planned",
+          "state": "done",
           "issue": 30,
           "owner": "Agent cloud",
           "dependsOn": [
             "S02"
-          ]
+          ],
+          "evidence": "https://github.com/interzettel/prehnite/pull/176"
         },
         {
           "id": "S05",
