@@ -147,6 +147,23 @@ def test_soft_alpha_refuses_colorized_mask_or_wrong_resolution(tmp_path, mutatio
     assert not (tmp_path / "out" / "oracle-preserve.png").exists()
 
 
+def test_trusted_soft_mode_refuses_binary_only_mask_without_relaxing_default(tmp_path):
+    source, mask, recipe, recipe_path, _, alpha = oracle_fixture(tmp_path)
+    # Correctly re-bind the altered bytes, so this tests semantic refusal
+    # rather than the existing SHA mismatch guard.
+    alpha.point(lambda value: 255 if value > 127 else 0).save(mask)
+    recipe["alpha_candidates"][0]["soft_alpha_sha256"] = hashlib.sha256(
+        mask.read_bytes()
+    ).hexdigest()
+    recipe_path.write_text(json.dumps(recipe, sort_keys=True), encoding="utf-8")
+    with pytest.raises(CutoutContractError, match="trusted_soft_alpha_has_no_fractional_transitions"):
+        run_cutout_qa(
+            recipe_path, source=source, mask=mask, workflow_root=tmp_path,
+            models_root=tmp_path, output_dir=tmp_path / "out",
+        )
+    assert not (tmp_path / "out" / "oracle-preserve.png").exists()
+
+
 def test_reference_flags_premultiplied_rgb_misdeclared_as_straight(tmp_path):
     *_, foreground, alpha = oracle_fixture(tmp_path)
     reference = foreground.convert("RGBA")
