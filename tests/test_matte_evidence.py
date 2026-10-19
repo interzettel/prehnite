@@ -77,6 +77,7 @@ def test_preserves_hair_mesh_glass_like_fractional_alpha_and_measured_zero_halo(
     assert report["visual_acceptance"] == "not_recorded"
     assert report["owner_final_acceptance"] == "not_recorded"
     assert row["metrics"]["soft_alpha_preserved"] is True
+    assert row["metrics"]["coverage_delta"] == 0
     assert row["metrics"]["straight_foreground_rgb_verified"] is False
     with Image.open(row["path"]) as actual:
         assert actual.mode == "RGBA"
