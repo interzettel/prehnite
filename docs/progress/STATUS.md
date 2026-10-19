@@ -2,7 +2,7 @@
 
 > Generated from `progress/ledger.json` by `scripts/progress.py`. A unit counts only when done with evidence; percentages are not estimates of engineering time or visual quality.
 
-**42 / 61 units done (68.9%)** · 0 active · 10 blocked · 9 planned.
+**43 / 61 units done (70.5%)** · 0 active · 10 blocked · 8 planned.
 **Milestone gates reached:** 2 / 7.
 
 ![Milestone progress chart](progress.svg)
@@ -15,7 +15,7 @@
 | M1 · Safe production engine | 7/10 (70.0%) | 0 | 2 | 1 | Open: C08, C09 |
 | M2 · Models and local compute | 7/10 (70.0%) | 0 | 2 | 1 | Open: P09 |
 | M3 · Photographic quality gates | 4/8 (50.0%) | 0 | 2 | 2 | Open: Q07, Q08 |
-| M4 · Cutouts and corrections | 2/7 (28.6%) | 0 | 2 | 3 | Open: S06, S07 |
+| M4 · Cutouts and corrections | 3/7 (42.9%) | 0 | 2 | 2 | Open: S06, S07 |
 | M5 · Delivery and usability | 10/10 (100.0%) | 0 | 0 | 0 | Reached |
 | M6 · Community and first release | 6/10 (60.0%) | 0 | 2 | 2 | Open: R08, R09 |
 
@@ -82,7 +82,7 @@
 | `S01` | Demo mask-to-RGBA conversion and coverage checks | done | Agent cloud | F03 | [Evidence](https://github.com/interzettel/prehnite/pull/1) |
 | `S02` | Hosted SAM image/mask dimensional conformance | done | Agent cloud | S01, P04 | [Evidence](https://github.com/interzettel/prehnite/pull/53) |
 | `S03` | Foreground matte cleanup and edge decontamination | planned | Agent cloud | S02 | [#29](https://github.com/interzettel/prehnite/issues/29) |
-| `S04` | Multiple-instance selection and named outputs | planned | Agent cloud | S02 | [#30](https://github.com/interzettel/prehnite/issues/30) |
+| `S04` | Multiple-instance selection and named outputs | done | Agent cloud | S02 | [Evidence](https://github.com/interzettel/prehnite/pull/176) |
 | `S05` | Failure classification and bounded targeted repair | planned | Agent cloud | S03, Q02 | [#31](https://github.com/interzettel/prehnite/issues/31) |
 | `S06` | Transparent cutout benchmark with alpha metrics | blocked | Owner | S03, S04 | [#32](https://github.com/interzettel/prehnite/issues/32) |
 | `S07` | Human-accepted cutout samples across tricky materials | blocked | Owner | S06 | [#32](https://github.com/interzettel/prehnite/issues/32) |
