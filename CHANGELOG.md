@@ -6,6 +6,14 @@ This project follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) an
 
 ## [Unreleased]
 
+### First SDXL 8 GiB generation pilot, offline preparation (2026-10-19)
+
+- Select SDXL Base 1.0 through stock local ComfyUI as a **provisional**, source-linked reference baseline using a previous single observed native-1K run, not a new repeatability result or owner-approved final model decision. Compare a FLUX.1 schnell FP8 alternative and optional fal.ai without downloading weights, calling APIs or consuming GPU time.
+- Add a fixed, ten-item native 768x1024 generation-only manifest, guarded ComfyUI profile and equivalent synthetic demo profile. Extend the bundled synthetic adapter's capability contract to allow exact native 1K generation without changing fal.ai tiers.
+- Test the existing local batch engine offline on all ten items and replay for idempotent outputs. Add a read-only ten-image scorer with image SHA/geometry checks, explicit human accept/reject rubric, truthful generation failures, observed timing/VRAM/RAM coverage, rejected-yield and no real-hardware acceptance claim from simulated data. Separate operator-reported values from independent acceptance.
+- Physical P08-A03 and the actual ten-image run still need separate scoped owner authorization and local hardware access; no v2 progress gate is advanced on preparation alone.
+
+
 ### Product progress and README recovery (2026-10-19)
 
 - Restore the other **37 verified implementation capabilities** plus **17 distinct completed atomic subtasks** to the same canonical v2 roadmap alongside the six original foundation units. Current task evidence becomes **60/80 (75.0%)**, while strict physical/user-accepted product milestones remain **1/9 (11.1%)**. Preserve parent and child IDs, original source PR/issue receipts, four folded S04 subtasks with zero duplicate credit, and fail-closed verification in the same source JSON, with no artificial model or visual-acceptance credit.

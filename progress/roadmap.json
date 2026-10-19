@@ -432,7 +432,7 @@
       "kind": "experiment",
       "owner": "Agent local",
       "issue": 24,
-      "acceptance": "With separate fresh permission, execute only the exact bounded one-startup/three-run P08-A03 contract; retain true machine/recipe/timing hashes and honest failure evidence.",
+      "acceptance": "With separate fresh owner authorization, run a bounded three-identical-prompt SDXL generation baseline on the reference 8 GiB laptop. Keep the same pinned model, graph, input, sampler, steps, seed, resolution and runtime revision; record a truthful preflight, three unique prompt/output receipts, cold/warm timing, sampled peak VRAM, minimum available host RAM, system commit, hashes, failure conditions and cleanup. The separate SAM2 P08-A03 cutout contract is not SDXL generation evidence.",
       "depends_on": [
         "P1-M01-R02"
       ],

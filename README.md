@@ -37,6 +37,8 @@ The goal is to make local image generation practical and portable, without recre
 
 Prehnite has existing code, tests and integrations behind these capabilities. It is not just a plan. The next work focuses on connecting them into a convenient, *measured* real-image experience.
 
+**First practical pilot:** [SDXL Base 1.0 on the existing 8 GiB laptop, fixed ten-image manifest, zero-cost synthetic dry run and real-output scoring protocol](docs/8G_SDXL_GENERATION_PILOT.md). The baseline is provisional until an independently accepted physical benchmark; no GPU execution is triggered by this documentation.
+
 ## Get started
 
 Python **3.11+** is required. This quick start generates synthetic demonstration images offline, without a GPU, model download or paid provider.

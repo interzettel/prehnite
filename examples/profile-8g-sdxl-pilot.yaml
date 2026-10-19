@@ -1,0 +1,26 @@
+# First-generation-only profile. Safe static example, not an installable model bundle.
+# Replace all placeholder node IDs using YOUR OWN exported SDXL ComfyUI API graph.
+# Model revision and exact weights are attested privately by operator, not by this YAML.
+variants: [native_1k]
+generation:
+  provider: comfyui
+  model: user-workflow
+  options:
+    base_url: http://127.0.0.1:8188
+    workflow: generation_api.json
+    prompt_node: "6"
+    seed_node: "3"
+    size_node: "5"
+    output_node: "9"
+upscale: {provider: disabled}
+segmentation: {provider: disabled}
+judge: {provider: demo, model: technical}
+policy:
+  maximum_attempts: 1
+  uncertain: accept_unverified
+cache: {enabled: false}
+costs:
+  allow_paid: false
+  allow_cloud_uploads: false
+  max_usd: 0
+  estimates_usd: {}

@@ -47,8 +47,10 @@ def validate_job(manifest: Manifest, profile: Profile, input_root: Path,
     # silently enlarged to 4K. Enforce both configured provider and output size.
     if "native_1k" in profile.variants:
         from .registry import MICRO_1K_DIMENSIONS
-        if profile.generation.provider != "comfyui":
-            raise ValueError("native_1k supports only local ComfyUI generation")
+        # The demo provider is allowed solely for synthetic contract testing.
+        # Paid/hosted adapters remain excluded; a demo is not local GPU evidence.
+        if profile.generation.provider not in ("comfyui", "demo"):
+            raise ValueError("native_1k supports only ComfyUI or offline synthetic demo")
         for asset in manifest.assets:
             if asset.prompt and asset.target_size != MICRO_1K_DIMENSIONS[asset.aspect_ratio]:
                 raise ValueError("native_1k requires exact native 1K target_size; no upscaling")

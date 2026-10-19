@@ -1,0 +1,16 @@
+# Only for synthetic dry-run of the SAME ten-image manifest.
+# No ComfyUI, CUDA, weights, API requests, images of real objects or performance evidence.
+variants: [native_1k]
+generation: {provider: demo, model: synthetic}
+upscale: {provider: disabled}
+segmentation: {provider: disabled}
+judge: {provider: demo, model: technical}
+policy:
+  maximum_attempts: 1
+  uncertain: accept_unverified
+cache: {enabled: false}
+costs:
+  allow_paid: false
+  allow_cloud_uploads: false
+  max_usd: 0
+  estimates_usd: {}
