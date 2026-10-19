@@ -1,0 +1,727 @@
+{
+  "schema_version": 2,
+  "plan_id": "prehnite-product-roadmap-v2",
+  "plan_status": "active",
+  "updated": "2026-10-19",
+  "primary_hardware": "owner RTX 4070 Laptop GPU 8 GiB, system RAM measured",
+  "excluded_hardware_campaigns": [
+    "4 GiB benchmarking",
+    "6 GiB benchmarking"
+  ],
+  "optional_portability": "larger machines and explicitly authorized hosted APIs; not an extra required phase",
+  "phases": [
+    {
+      "id": "P1",
+      "name": "Efficient 8 GiB image generation and useful batches",
+      "exit_milestone": "P1-M05",
+      "milestones": [
+        "P1-M00",
+        "P1-M01",
+        "P1-M02",
+        "P1-M03",
+        "P1-M04",
+        "P1-M05"
+      ]
+    },
+    {
+      "id": "P2",
+      "name": "Reproducible LoRA/style and private appearance experimentation",
+      "exit_milestone": "P2-M03",
+      "milestones": [
+        "P2-M01",
+        "P2-M02",
+        "P2-M03"
+      ]
+    }
+  ],
+  "milestones": [
+    {
+      "id": "P1-M00",
+      "phase": "P1",
+      "title": "Verified installable application foundation",
+      "objective": "Installable local Python CLI, validated input safety, synthetic zero-cost batch, persistent journal, reports and CI demonstration; NOT a verified local model-quality or GPU performance claim",
+      "depends_on": [],
+      "gate_tasks": [
+        "P1-M00-F01",
+        "P1-M00-F02",
+        "P1-M00-F03",
+        "P1-M00-F04",
+        "P1-M00-F05",
+        "P1-M00-F06"
+      ],
+      "state": "verified",
+      "evidence": [
+        {
+          "type": "merged_pr",
+          "url": "https://github.com/interzettel/prehnite/pull/1",
+          "legacy_unit": "F01"
+        },
+        {
+          "type": "merged_pr",
+          "url": "https://github.com/interzettel/prehnite/pull/1",
+          "legacy_unit": "F02"
+        },
+        {
+          "type": "merged_pr",
+          "url": "https://github.com/interzettel/prehnite/pull/1",
+          "legacy_unit": "F03"
+        },
+        {
+          "type": "merged_pr",
+          "url": "https://github.com/interzettel/prehnite/pull/1",
+          "legacy_unit": "F04"
+        },
+        {
+          "type": "merged_pr",
+          "url": "https://github.com/interzettel/prehnite/pull/1",
+          "legacy_unit": "F05"
+        },
+        {
+          "type": "merged_pr",
+          "url": "https://github.com/interzettel/prehnite/pull/1",
+          "legacy_unit": "F06"
+        }
+      ]
+    },
+    {
+      "id": "P1-M01",
+      "phase": "P1",
+      "title": "Research decision: model and runtime on 8 GiB",
+      "objective": "Choose one lawful real model/graph and reproducible comparison plan; no claim of model compatibility before an observed run.",
+      "depends_on": [],
+      "gate_tasks": [
+        "P1-M01-R01",
+        "P1-M01-R02"
+      ],
+      "state": "planned",
+      "evidence": []
+    },
+    {
+      "id": "P1-M02",
+      "phase": "P1",
+      "title": "8 GiB reproducible baseline",
+      "objective": "Obtain correctly authorized, independently inspected repeatability evidence on the current laptop; no generic GPU-tier claim.",
+      "depends_on": [
+        "P1-M01"
+      ],
+      "gate_tasks": [
+        "P1-M02-E01",
+        "P1-M02-A01"
+      ],
+      "state": "planned",
+      "evidence": []
+    },
+    {
+      "id": "P1-M03",
+      "phase": "P1",
+      "title": "Measure one useful optimization",
+      "objective": "Determine whether one backend-supported change improves a predeclared memory/time objective without unacceptable image loss.",
+      "depends_on": [
+        "P1-M02"
+      ],
+      "gate_tasks": [
+        "P1-M03-R01",
+        "P1-M03-B01",
+        "P1-M03-E01"
+      ],
+      "state": "planned",
+      "evidence": []
+    },
+    {
+      "id": "P1-M04",
+      "phase": "P1",
+      "title": "Useful 10-image batch",
+      "objective": "Install and run a local generation -> inspect/select -> export path on the owner's real system with receipt-bound failure handling.",
+      "depends_on": [
+        "P1-M02"
+      ],
+      "gate_tasks": [
+        "P1-M04-B01",
+        "P1-M04-B02",
+        "P1-M04-E01"
+      ],
+      "state": "planned",
+      "evidence": []
+    },
+    {
+      "id": "P1-M05",
+      "phase": "P1",
+      "title": "Human-accepted local workflow",
+      "objective": "Demonstrate a reviewed accepted-image yield and clear resource/recovery report with realistic install instructions and licence boundaries.",
+      "depends_on": [
+        "P1-M04",
+        "P1-M03"
+      ],
+      "gate_tasks": [
+        "P1-M05-A01",
+        "P1-M05-A02"
+      ],
+      "state": "planned",
+      "evidence": []
+    },
+    {
+      "id": "P2-M01",
+      "phase": "P2",
+      "title": "Research: LoRA and conditioning options",
+      "objective": "Choose legal, locally feasible LoRA and subject-conditioning methods from actual backend capabilities.",
+      "depends_on": [
+        "P1-M02"
+      ],
+      "gate_tasks": [
+        "P2-M01-R01",
+        "P2-M01-R02"
+      ],
+      "state": "planned",
+      "evidence": []
+    },
+    {
+      "id": "P2-M02",
+      "phase": "P2",
+      "title": "Reproducible style and LoRA variation",
+      "objective": "Produce a pinned, controllable experiment grid where each variation has traceable model/LoRA state and measured memory cost.",
+      "depends_on": [
+        "P2-M01",
+        "P1-M04"
+      ],
+      "gate_tasks": [
+        "P2-M02-B01",
+        "P2-M02-B02",
+        "P2-M02-E01"
+      ],
+      "state": "planned",
+      "evidence": []
+    },
+    {
+      "id": "P2-M03",
+      "phase": "P2",
+      "title": "Private appearance experimentation",
+      "objective": "Safely create and review controlled personal-reference variations locally without claiming accurate real-life prediction.",
+      "depends_on": [
+        "P2-M02"
+      ],
+      "gate_tasks": [
+        "P2-M03-B01",
+        "P2-M03-E01",
+        "P2-M03-A01"
+      ],
+      "state": "planned",
+      "evidence": []
+    }
+  ],
+  "tasks": [
+    {
+      "id": "P1-M00-F01",
+      "milestone": "P1-M00",
+      "kind": "implementation",
+      "owner": "Agent cloud",
+      "issue": 1,
+      "acceptance": "MIT repository and installable Python package; original evidenced v1 work scoped to installable synthetic foundation, not real generation quality",
+      "depends_on": [],
+      "state": "verified",
+      "evidence": [
+        {
+          "type": "merged_pr",
+          "url": "https://github.com/interzettel/prehnite/pull/1",
+          "legacy_unit": "F01"
+        }
+      ]
+    },
+    {
+      "id": "P1-M00-F02",
+      "milestone": "P1-M00",
+      "kind": "implementation",
+      "owner": "Agent cloud",
+      "issue": 1,
+      "acceptance": "Strict manifest/output path validation; original evidenced v1 work scoped to installable synthetic foundation, not real generation quality",
+      "depends_on": [
+        "P1-M00-F01"
+      ],
+      "state": "verified",
+      "evidence": [
+        {
+          "type": "merged_pr",
+          "url": "https://github.com/interzettel/prehnite/pull/1",
+          "legacy_unit": "F02"
+        }
+      ]
+    },
+    {
+      "id": "P1-M00-F03",
+      "milestone": "P1-M00",
+      "kind": "implementation",
+      "owner": "Agent cloud",
+      "issue": 1,
+      "acceptance": "Free synthetic batch generator and 2-tier orchestration; original evidenced v1 work scoped to installable synthetic foundation, not real generation quality",
+      "depends_on": [
+        "P1-M00-F02"
+      ],
+      "state": "verified",
+      "evidence": [
+        {
+          "type": "merged_pr",
+          "url": "https://github.com/interzettel/prehnite/pull/1",
+          "legacy_unit": "F03"
+        }
+      ]
+    },
+    {
+      "id": "P1-M00-F04",
+      "milestone": "P1-M00",
+      "kind": "implementation",
+      "owner": "Agent cloud",
+      "issue": 1,
+      "acceptance": "SQLite stage journal and basic resume; original evidenced v1 work scoped to installable synthetic foundation, not real generation quality",
+      "depends_on": [
+        "P1-M00-F03"
+      ],
+      "state": "verified",
+      "evidence": [
+        {
+          "type": "merged_pr",
+          "url": "https://github.com/interzettel/prehnite/pull/1",
+          "legacy_unit": "F04"
+        }
+      ]
+    },
+    {
+      "id": "P1-M00-F05",
+      "milestone": "P1-M00",
+      "kind": "implementation",
+      "owner": "Agent cloud",
+      "issue": 1,
+      "acceptance": "JSON/CSV/HTML reports and checked ZIP export; original evidenced v1 work scoped to installable synthetic foundation, not real generation quality",
+      "depends_on": [
+        "P1-M00-F03"
+      ],
+      "state": "verified",
+      "evidence": [
+        {
+          "type": "merged_pr",
+          "url": "https://github.com/interzettel/prehnite/pull/1",
+          "legacy_unit": "F05"
+        }
+      ]
+    },
+    {
+      "id": "P1-M00-F06",
+      "milestone": "P1-M00",
+      "kind": "implementation",
+      "owner": "Agent cloud",
+      "issue": 1,
+      "acceptance": "Offline pytest + CLI validation on GitHub Actions; original evidenced v1 work scoped to installable synthetic foundation, not real generation quality",
+      "depends_on": [
+        "P1-M00-F05"
+      ],
+      "state": "verified",
+      "evidence": [
+        {
+          "type": "merged_pr",
+          "url": "https://github.com/interzettel/prehnite/pull/1",
+          "legacy_unit": "F06"
+        }
+      ]
+    },
+    {
+      "id": "P1-M01-R01",
+      "milestone": "P1-M01",
+      "kind": "research",
+      "owner": "Agent cloud",
+      "issue": 132,
+      "acceptance": "Compare a pinned lawful model, stock ComfyUI, other applicable runtimes and opt-in image APIs with source-linked applicability/rights and explicit unknowns.",
+      "depends_on": [],
+      "state": "planned",
+      "evidence": []
+    },
+    {
+      "id": "P1-M01-R02",
+      "milestone": "P1-M01",
+      "kind": "decision",
+      "owner": "Owner",
+      "issue": 134,
+      "acceptance": "Approve model, image size, objective quality criteria, host-RAM/VRAM stops and apples-to-apples benchmark protocol; no inference implied.",
+      "depends_on": [
+        "P1-M01-R01"
+      ],
+      "state": "planned",
+      "evidence": []
+    },
+    {
+      "id": "P1-M02-E01",
+      "milestone": "P1-M02",
+      "kind": "experiment",
+      "owner": "Agent local",
+      "issue": 24,
+      "acceptance": "With separate fresh permission, execute only the exact bounded one-startup/three-run P08-A03 contract; retain true machine/recipe/timing hashes and honest failure evidence.",
+      "depends_on": [
+        "P1-M01-R02"
+      ],
+      "state": "blocked",
+      "evidence": [],
+      "blocker": "Separate owner authorization and a real-machine evidence receipt required"
+    },
+    {
+      "id": "P1-M02-A01",
+      "milestone": "P1-M02",
+      "kind": "acceptance",
+      "owner": "Owner",
+      "issue": 134,
+      "acceptance": "Independent review of real receipt, run provenance, outcomes, peak sampling limitations, safety/rights and whether the specific 8 GiB configuration is actually repeatable.",
+      "depends_on": [
+        "P1-M02-E01"
+      ],
+      "state": "planned",
+      "evidence": []
+    },
+    {
+      "id": "P1-M03-R01",
+      "milestone": "P1-M03",
+      "kind": "research",
+      "owner": "Agent cloud",
+      "issue": 136,
+      "acceptance": "Choose ONE supported optimization after baseline, with hypothesized memory/time impact and downside/quality test plan; do not pretend it is already faster.",
+      "depends_on": [
+        "P1-M02-A01"
+      ],
+      "state": "planned",
+      "evidence": []
+    },
+    {
+      "id": "P1-M03-B01",
+      "milestone": "P1-M03",
+      "kind": "implementation",
+      "owner": "Agent cloud",
+      "issue": 136,
+      "acceptance": "Implement reversible opt-in scheduling/offload/tiling configuration with capability checks, synthetic tests and no hidden GPU/API work.",
+      "depends_on": [
+        "P1-M03-R01"
+      ],
+      "state": "planned",
+      "evidence": []
+    },
+    {
+      "id": "P1-M03-E01",
+      "milestone": "P1-M03",
+      "kind": "experiment",
+      "owner": "Agent local",
+      "issue": 136,
+      "acceptance": "Compare unchanged model/seed/size/steps on actual 8 GiB laptop before/after; report VRAM, host RAM/commit, elapsed time, failures and blinded quality judgment.",
+      "depends_on": [
+        "P1-M03-B01"
+      ],
+      "state": "blocked",
+      "evidence": [],
+      "blocker": "Separate owner authorization and a real-machine evidence receipt required"
+    },
+    {
+      "id": "P1-M04-B01",
+      "milestone": "P1-M04",
+      "kind": "implementation",
+      "owner": "Agent cloud",
+      "issue": 132,
+      "acceptance": "Expose minimal pip-installable local recipe run -> manual selection -> ZIP/report for 10 real generated images without manual source edits or a new graph editor.",
+      "depends_on": [
+        "P1-M02-A01"
+      ],
+      "state": "planned",
+      "evidence": []
+    },
+    {
+      "id": "P1-M04-B02",
+      "milestone": "P1-M04",
+      "kind": "implementation",
+      "owner": "Agent cloud",
+      "issue": 15,
+      "acceptance": "Implement/verify bounded journal resume, interruption handling, model/source identity and no silent re-generation of completed items for this small batch.",
+      "depends_on": [
+        "P1-M04-B01"
+      ],
+      "state": "planned",
+      "evidence": []
+    },
+    {
+      "id": "P1-M04-E01",
+      "milestone": "P1-M04",
+      "kind": "experiment",
+      "owner": "Agent local",
+      "issue": 134,
+      "acceptance": "Run a separately authorized 10-image local batch on 8 GiB laptop; retain exact recipe, failures/retries, time, peak sampled resource use, output hashes and candidate gallery.",
+      "depends_on": [
+        "P1-M04-B02"
+      ],
+      "state": "blocked",
+      "evidence": [],
+      "blocker": "Separate owner authorization and a real-machine evidence receipt required"
+    },
+    {
+      "id": "P1-M05-A01",
+      "milestone": "P1-M05",
+      "kind": "acceptance",
+      "owner": "Owner",
+      "issue": 28,
+      "acceptance": "Human-score the real 10-image batch against success criteria recorded before its run; disclose accepted yield, quality failure modes and seconds per accepted image. Compare practical Prehnite value against the same ComfyUI-only work (manual steps, reproducible selection/resume), without claiming image quality speedups that actually come from changed model settings.",
+      "depends_on": [
+        "P1-M04-E01"
+      ],
+      "state": "planned",
+      "evidence": []
+    },
+    {
+      "id": "P1-M05-A02",
+      "milestone": "P1-M05",
+      "kind": "acceptance",
+      "owner": "Owner",
+      "issue": 40,
+      "acceptance": "Accept/reject documented local install instructions, checkpoint/LoRA rights and honest limitations; explicitly separate this local product acceptance from the old 90-image/paid-billing release obligations.",
+      "depends_on": [
+        "P1-M05-A01"
+      ],
+      "state": "planned",
+      "evidence": []
+    },
+    {
+      "id": "P2-M01-R01",
+      "milestone": "P2-M01",
+      "kind": "research",
+      "owner": "Agent cloud",
+      "issue": 135,
+      "acceptance": "Choose one legal compatible local base model and LoRA combination; research scale/order/loading, measured-memory requirements, provenance and source license.",
+      "depends_on": [],
+      "state": "planned",
+      "evidence": []
+    },
+    {
+      "id": "P2-M01-R02",
+      "milestone": "P2-M01",
+      "kind": "decision",
+      "owner": "Owner",
+      "issue": 132,
+      "acceptance": "Approve controlled style and user-reference editing experiments and privacy boundaries; identify what identity consistency tests can and cannot prove.",
+      "depends_on": [
+        "P2-M01-R01"
+      ],
+      "state": "planned",
+      "evidence": []
+    },
+    {
+      "id": "P2-M02-B01",
+      "milestone": "P2-M02",
+      "kind": "implementation",
+      "owner": "Agent cloud",
+      "issue": 132,
+      "acceptance": "Pin base/LoRA hashes, scales, prompt/seeds and backend compatibility in recipe/journal; refuse missing/changed adapter files.",
+      "depends_on": [
+        "P2-M01-R02"
+      ],
+      "state": "planned",
+      "evidence": []
+    },
+    {
+      "id": "P2-M02-B02",
+      "milestone": "P2-M02",
+      "kind": "implementation",
+      "owner": "Agent cloud",
+      "issue": 132,
+      "acceptance": "Generate a controlled local parameter grid/contact sheet where one studied dimension changes at a time; preserve all provenance.",
+      "depends_on": [
+        "P2-M02-B01"
+      ],
+      "state": "planned",
+      "evidence": []
+    },
+    {
+      "id": "P2-M02-E01",
+      "milestone": "P2-M02",
+      "kind": "experiment",
+      "owner": "Agent local",
+      "issue": 136,
+      "acceptance": "Run owner-authorized multiple-seed style experiments on 8 GiB GPU; measure memory/load latency and blind human consistency rating.",
+      "depends_on": [
+        "P2-M02-B02"
+      ],
+      "state": "blocked",
+      "evidence": [],
+      "blocker": "Separate owner authorization and a real-machine evidence receipt required"
+    },
+    {
+      "id": "P2-M03-B01",
+      "milestone": "P2-M03",
+      "kind": "implementation",
+      "owner": "Agent cloud",
+      "issue": 132,
+      "acceptance": "Provide local-only opt-in self-owned reference import, no implicit uploads, no mandatory external account and explicit original-image retention policy.",
+      "depends_on": [
+        "P2-M01-R02"
+      ],
+      "state": "planned",
+      "evidence": []
+    },
+    {
+      "id": "P2-M03-E01",
+      "milestone": "P2-M03",
+      "kind": "experiment",
+      "owner": "Agent local",
+      "issue": 132,
+      "acceptance": "Run a small approved set of haircut/beard/hair-color variations with locally stored inputs; preserve source model/LoRA/edit-strength/seed provenance.",
+      "depends_on": [
+        "P2-M03-B01",
+        "P2-M02-E01"
+      ],
+      "state": "blocked",
+      "evidence": [],
+      "blocker": "Separate owner authorization and a real-machine evidence receipt required"
+    },
+    {
+      "id": "P2-M03-A01",
+      "milestone": "P2-M03",
+      "kind": "acceptance",
+      "owner": "Owner",
+      "issue": 28,
+      "acceptance": "User reviews requested variation adherence and identity consistency; outputs labeled simulations, never predicted actual changes; verify no external transmission.",
+      "depends_on": [
+        "P2-M03-E01"
+      ],
+      "state": "planned",
+      "evidence": []
+    }
+  ],
+  "legacy_crosswalk": [
+    {
+      "legacy_unit": "C06",
+      "product_milestone": "P1-M05",
+      "relationship": "legacy_release_only",
+      "note": "Actual billed quote reconciliation is separate from optional-free local use."
+    },
+    {
+      "legacy_unit": "C08",
+      "product_milestone": "P1-M04",
+      "relationship": "partial_overlap",
+      "note": "10-image interruption test does not satisfy the legacy 90-image gate."
+    },
+    {
+      "legacy_unit": "C09",
+      "product_milestone": "P1-M05",
+      "relationship": "legacy_release_only",
+      "note": "Real-provider billed cost evidence still required for legacy release."
+    },
+    {
+      "legacy_unit": "P08",
+      "product_milestone": "P1-M02",
+      "relationship": "direct",
+      "note": "Actual 8 GiB local baseline; original P08 criteria remain independent."
+    },
+    {
+      "legacy_unit": "P09",
+      "product_milestone": "P1-M05",
+      "relationship": "legacy_release_only",
+      "note": "Hosted paid live pilot remains a separate authorized release gate."
+    },
+    {
+      "legacy_unit": "P10",
+      "product_milestone": "P1-M01",
+      "relationship": "partial_overlap",
+      "note": "Research helps provider-choice plan; original acceptance separately assessed."
+    },
+    {
+      "legacy_unit": "Q05",
+      "product_milestone": "P1-M05",
+      "relationship": "partial_overlap",
+      "note": "Human selection does not magically certify optional local AI judges."
+    },
+    {
+      "legacy_unit": "Q06",
+      "product_milestone": "P1-M05",
+      "relationship": "partial_overlap",
+      "note": "Ten-image real references do not necessarily fulfill rights-cleared diverse reference-set contract."
+    },
+    {
+      "legacy_unit": "Q07",
+      "product_milestone": "P1-M05",
+      "relationship": "partial_overlap",
+      "note": "Human batch acceptance differs from calibrated quality thresholds."
+    },
+    {
+      "legacy_unit": "Q08",
+      "product_milestone": "P1-M05",
+      "relationship": "partial_overlap",
+      "note": "Batch review not sufficient for robust cross-judge/repair validation."
+    },
+    {
+      "legacy_unit": "S03",
+      "product_milestone": "P1-M04",
+      "relationship": "partial_overlap",
+      "note": "Soft matte real hard-material solution remains distinct from generation/batching."
+    },
+    {
+      "legacy_unit": "S05",
+      "product_milestone": "P1-M04",
+      "relationship": "partial_overlap",
+      "note": "10-image interruption does not prove full targeted repair acceptance."
+    },
+    {
+      "legacy_unit": "S06",
+      "product_milestone": "P1-M05",
+      "relationship": "partial_overlap",
+      "note": "Alpha scoring gold references remain separate evidence."
+    },
+    {
+      "legacy_unit": "S07",
+      "product_milestone": "P1-M05",
+      "relationship": "partial_overlap",
+      "note": "One batch cannot guarantee acceptance of all difficult materials."
+    },
+    {
+      "legacy_unit": "R06",
+      "product_milestone": "P1-M05",
+      "relationship": "partial_overlap",
+      "note": "Final rights audit must still be accepted against original unit."
+    },
+    {
+      "legacy_unit": "R08",
+      "product_milestone": "P1-M05",
+      "relationship": "legacy_release_only",
+      "note": "Original 90-image live pilot is not replaced by a 10-image local pilot."
+    },
+    {
+      "legacy_unit": "R09",
+      "product_milestone": "P1-M05",
+      "relationship": "legacy_release_only",
+      "note": "Package tag/first release always requires explicit owner approval."
+    },
+    {
+      "legacy_unit": "R10",
+      "product_milestone": null,
+      "relationship": "separate_administration",
+      "note": "GitHub Projects synchronization is non-product-critical but stays in legacy 61-unit ledger."
+    }
+  ],
+  "adopted_from": "owner instruction 2026-10-19: one canonical product roadmap and preserved historical evidence",
+  "canonical_source": "progress/roadmap.json",
+  "historical_archive": {
+    "ledger": "progress/archive/v1/ledger.json",
+    "atomic": "progress/archive/v1/atomic.json",
+    "snapshot_release": {
+      "done": 43,
+      "total": 61
+    },
+    "snapshot_atomic": {
+      "done": 21,
+      "total": 73
+    },
+    "original_milestone_gates": 7,
+    "note": "immutable v1 baseline; read-only heritage, not competing active scores"
+  },
+  "retired_planning_file": "progress/product_milestones.v2.proposed.json",
+  "migration_integrity": {
+    "carried_forward_v1_unit_ids": [
+      "F01",
+      "F02",
+      "F03",
+      "F04",
+      "F05",
+      "F06"
+    ],
+    "carried_forward_policy": "Only the 6 verified runnable-foundation units satisfy P1-M00 directly; all other original v1 done work stays in immutable v1 archive until explicitly checked against v2 gate acceptance; no progress credit transferred by name similarity",
+    "unfinished_unit_crosswalk": 18
+  },
+  "completion_rule": "Only verified tasks with auditable merged PR/research approval/authorized experiment/human acceptance evidence count; milestone requires all listed gate tasks verified and its dependencies verified. Progress numbers refer ONLY to current v2 outcome milestones and tasks."
+}
