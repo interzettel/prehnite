@@ -8,7 +8,7 @@ This project follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) an
 
 ### Proposed product focus clarification (2026-10-19)
 
-- Add [low-VRAM-first product strategy proposal](docs/PRODUCT_STRATEGY_LOW_VRAM.md): Phase 1 measured low-memory image-generation/batch usability and Phase 2 reproducible LoRA, visual variation and privacy-first appearance experiments. Reuse ComfyUI and existing runtimes instead of replacing their inference engines; research InvokeAI/Diffusers/sd.cpp as comparators and Higgsfield as an optional, separately consented hosted image API. Documentation only; no model execution, new API credentials, changes to approved resource ceilings, ledger credit or accepted release-scope migration.
+- Add [8 GiB laptop-first product strategy proposal](docs/PRODUCT_STRATEGY_LOW_VRAM.md): Phase 1 measured efficient image generation/batching on the existing RTX 4070 laptop (with system-RAM constraints; no 4/6 GiB test program) and Phase 2 reproducible LoRA, visual variation and privacy-first appearance experiments. Reuse ComfyUI and existing runtimes instead of replacing their inference engines; research InvokeAI/Diffusers/sd.cpp as comparators and Higgsfield as an optional, separately consented hosted image API. Documentation only; no model execution, new API credentials, changes to approved resource ceilings, ledger credit or accepted release-scope migration.
 
 
 ### First real local image/cutout and source productization (2026-10-18)
