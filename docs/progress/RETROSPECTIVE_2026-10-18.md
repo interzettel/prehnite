@@ -1,6 +1,6 @@
 # Retrospective reconciliation — original frozen 73 atomic tasks
 
-**Evidence cut:** 2026-10-18. Source baseline: `progress/atomic.json` and its original 2026-10-17 frozen scope. This is **an audit, not a reset or new progress metric**. Review window: relevant merged repository PRs #119–#161 (especially #139–#161), plus the dated private-lab lamp case indexed by PR #160.
+**Evidence cut:** 2026-10-18. Historical source baseline (now archived): `progress/archive/v1/atomic.json` and its original 2026-10-17 frozen scope. This is **an audit, not a reset or new progress metric**. Review window: relevant merged repository PRs #119–#161 (especially #139–#161), plus the dated private-lab lamp case indexed by PR #160.
 
 **Audit classification across all 73 original tasks:** 14 criterion met and already counted, 20 partially met, 39 not applicable to scoped new work. **Newly justified completions from retrospective: 0.** The original **14/73** remains unchanged pending exact acceptance evidence.
 
@@ -91,7 +91,7 @@
 
 ## Decisions
 
-1. Do not change `progress/atomic.json` based on a new 'implementation' workstream or the fact that a new public module exists.
+1. Do not rewrite archived `progress/archive/v1/atomic.json` based on a new 'implementation' workstream or the fact that a new public module exists.
 2. Complete **S03-A03** within the original issue [#29](https://github.com/interzettel/prehnite/issues/29): an explicit, opt-in, conservative color-spill correction with mathematically specified pixels, independent synthetic compositing references and negative/collision tests; keep user RGB and accepted artifacts immutable.
 3. When S03-A03 has passed exact pixel tests, merge-reviewed code and CI evidence, update only **S03-A03** to `done` with the actual merged PR and regenerate the canonical atomic outputs. The permitted next target will then be **15/73**, not a new denominator.
 4. Stop treating P08/S06/S07 live-model/reference cohorts as ready while GPU memory, permitted images or gold-reference masks are missing. Those remain blocked without new inference.
