@@ -7,7 +7,7 @@ segmentation: {provider: disabled}
 judge: {provider: demo, model: technical}
 policy:
   maximum_attempts: 1
-  uncertain: reject
+  uncertain: accept_unverified
 cache: {enabled: false}
 costs:
   allow_paid: false
