@@ -6,6 +6,12 @@ This project follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) an
 
 ## [Unreleased]
 
+### S03-A04 experimental trusted soft-alpha evidence (2026-10-19)
+
+- Add an opt-in, SHA256-bound **straight-foreground RGB + 8-bit soft-alpha** cutout candidate path, preserving fine fractional alpha without silently converting it into a feathered binary silhouette. Existing default candidates remain unchanged. Operator-declared foreground-RGB provenance is **not independently verified**, and candidates remain review-pending.
+- Add independent synthetic oracle matte measurements: full/edge alpha MAE and composited transition RGB error against black, white and checkerboard, including deliberate strand loss / fringe regressions. This is **not** automatic glass refraction, genuine photography matting, model-run evidence, calibrated perceptual quality or full S03-A04 milestone closure. See [soft-matte evidence contract](docs/S03_A04_SOFT_MATTE_EVIDENCE.md).
+
+
 ### First real local image/cutout and source productization (2026-10-18)
 
 - Record one local owner-authorized **768×1024 SDXL lamp source**, real GroundingDINO/SAM2 segmentation (8.994 s including load/inference; 2,533 MiB sampled peak VRAM), CPU-only alpha refinement and **independent artifact-specific visual acceptance of Candidate A**. Original rejected-generation and failed-segmentation history is intact. No private weights/images/reports were committed ([dated public evidence](docs/LOCAL_LAB_MILESTONE_2026-10-18.md)).
