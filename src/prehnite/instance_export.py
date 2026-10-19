@@ -262,8 +262,10 @@ def export_bound_instances(
                         os.link(staged, output)
                     except FileExistsError as exc:
                         raise InstanceExportRefused("output_appeared_during_publication") from exc
-                    if on_checkpoint:
-                        on_checkpoint("after_publish", instance_id)
+            # The sibling is already removed here. Simulated process death
+            # cannot leave an unnecessary stale staging file after publication.
+            if on_checkpoint:
+                on_checkpoint("after_publish", instance_id)
             journal["outputs"][instance_id] = {"status": "written", "sha256": digest}
             atomic_text(journal_path, _canonical(journal) + "\n")
             if on_checkpoint:
