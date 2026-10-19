@@ -135,10 +135,12 @@
       "parent": "P08",
       "title": "Record local GPU environment and free VRAM",
       "acceptance": "Reproducible OS, CUDA, driver and installed weight licensing record",
-      "state": "planned",
+      "state": "done",
       "issue": 24,
       "owner": "Agent local",
-      "dependsOn": []
+      "dependsOn": [],
+      "evidence": "https://github.com/interzettel/prehnite/pull/166",
+      "verified_at": "2026-10-19"
     },
     {
       "id": "P08-A02",
