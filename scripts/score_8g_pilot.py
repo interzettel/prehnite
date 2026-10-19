@@ -114,6 +114,8 @@ def evaluate(manifest: Path, root: Path, receipt: Path) -> dict:
         raise ValueError("missing, duplicate or unexpected image id")
     root = root.resolve(strict=True)
     accepted = 0
+    generated_count = 0
+    failure_count = 0
     durations = []
     vram = []
     available_ram = []
@@ -121,39 +123,61 @@ def evaluate(manifest: Path, root: Path, receipt: Path) -> dict:
     seen_hashes: set[str] = set()
     for record in records:
         original = observed[record["id"]]
-        if record.get("relative_output") != original["output"]:
-            raise ValueError("output does not match manifest")
-        result = (root / original["output"]).resolve(strict=True)
-        if not result.is_relative_to(root) or not result.is_file():
-            raise ValueError("output must remain inside the approved batch output root")
-        declared = record.get("sha256")
-        if not _digest(declared) or _sha256(result) != declared:
-            raise ValueError("file digest missing or mismatched")
-        if declared in seen_hashes:
-            raise ValueError("two pilot images have identical output bytes")
-        seen_hashes.add(declared)
-        with Image.open(result) as image:
-            image.verify()
-        with Image.open(result) as image:
-            if image.format != "PNG" or image.size != tuple(original["size"]):
-                raise ValueError("image format or native resolution mismatch")
+        outcome = record.get("outcome")
+        if outcome not in ("generated", "failed"):
+            raise ValueError("each job requires explicit generated/failed outcome")
         decision = record.get("decision")
         if decision not in _ALLOWED:
-            raise ValueError("each item needs explicit accept/reject human judgment")
+            raise ValueError("each item needs explicit accept/reject result")
+        if outcome == "failed":
+            failure_count += 1
+            if decision != "reject":
+                raise ValueError("failed generation cannot be accepted")
+            if record.get("sha256") is not None or record.get("relative_output") is not None:
+                raise ValueError("failed generation cannot falsely claim an artifact")
+            if record.get("rubric") not in (None, {}):
+                raise ValueError("no visual rating of a nonexistent image")
+        else:
+            generated_count += 1
+            if record.get("relative_output") != original["output"]:
+                raise ValueError("output does not match manifest")
+            result = (root / original["output"]).resolve(strict=True)
+            if not result.is_relative_to(root) or not result.is_file():
+                raise ValueError("output must remain inside approved root")
+            declared = record.get("sha256")
+            if not _digest(declared) or _sha256(result) != declared:
+                raise ValueError("file digest missing or mismatched")
+            if declared in seen_hashes:
+                raise ValueError("two pilot images have identical output bytes")
+            seen_hashes.add(declared)
+            with Image.open(result) as image:
+                image.verify()
+            with Image.open(result) as image:
+                if image.format != "PNG" or image.size != tuple(original["size"]):
+                    raise ValueError("image format or native resolution mismatch")
+            rubric = record.get("rubric")
+            if not isinstance(rubric, dict):
+                raise ValueError("an actual image needs a human rubric")
+            for dimension in spec["review_dimensions"]:
+                value = rubric.get(dimension)
+                if type(value) is not int or not 1 <= value <= 5:
+                    raise ValueError("four integer human scores (1..5) required")
         if decision == "accept":
             accepted += 1
         else:
             cause = record.get("failure_reason")
             if not isinstance(cause, str) or not cause.strip():
-                raise ValueError("rejected items require a reason")
+                raise ValueError("rejected items need a failure reason")
             causes[cause] = causes.get(cause, 0) + 1
-        for dimension in spec["review_dimensions"]:
-            value = record.get("rubric", {}).get(dimension)
-            if type(value) is not int or not 1 <= value <= 5:
-                raise ValueError("four explicit integer human rubric scores (1..5) required")
         durations.append(_finite(record.get("elapsed_seconds"), zero=False))
-        vram.append(_finite(record.get("sampled_peak_vram_mib"), zero=False))
-        available_ram.append(_finite(record.get("min_available_ram_mib"), zero=False))
+        # A missing sample is UNKNOWN, never fabricated as zero.
+        peak = record.get("sampled_peak_vram_mib")
+        minimum = record.get("min_available_ram_mib")
+        if (peak is None) != (minimum is None):
+            raise ValueError("both resource samples must be present or absent")
+        if peak is not None:
+            vram.append(_finite(peak, zero=False))
+            available_ram.append(_finite(minimum, zero=False))
     durations.sort()
     p95 = durations[math.ceil(0.95 * len(durations)) - 1]
     total_seconds = sum(durations)
@@ -161,20 +185,23 @@ def evaluate(manifest: Path, root: Path, receipt: Path) -> dict:
         "schema_version": SCHEMA_VERSION,
         "batch_id": spec["batch_id"],
         "origin": batch["origin"],
-        "reviewed_images": 10,
+        "reviewed_items": 10,
+        "generated_images_checked": generated_count,
+        "failed_generation_attempts": failure_count,
         "accepted": accepted,
         "rejected": 10 - accepted,
         "accepted_yield_percent": round(accepted * 10, 1),
         "elapsed_total_seconds": round(total_seconds, 3),
-        "median_seconds_per_image": round(median(durations), 3),
-        "p95_seconds_per_image": round(p95, 3),
+        "median_seconds_per_item": round(median(durations), 3),
+        "p95_seconds_per_item": round(p95, 3),
         "seconds_per_accepted_image": (
             round(total_seconds / accepted, 3) if accepted else None
         ),
-        "sampled_peak_vram_mib": max(vram),
-        "sampled_min_available_ram_mib": min(available_ram),
+        "resource_sample_count": len(vram),
+        "sampled_peak_vram_mib": max(vram) if vram else None,
+        "sampled_min_available_ram_mib": min(available_ram) if vram else None,
         "rejection_reasons": causes,
-        "synthetic_eligible_for_product_acceptance": False,
+        "eligible_as_accepted_real_batch": False,
         "independently_verified": False,
         "outcome": "operator_report_only; requires independent physical and human review",
         "model_workflow_provenance": "declared; local file hashes not independently attested",
