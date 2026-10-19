@@ -6,6 +6,11 @@ This project follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) an
 
 ## [Unreleased]
 
+### Proposed product focus clarification (2026-10-19)
+
+- Add [low-VRAM-first product strategy proposal](docs/PRODUCT_STRATEGY_LOW_VRAM.md): Phase 1 measured low-memory image-generation/batch usability and Phase 2 reproducible LoRA, visual variation and privacy-first appearance experiments. Reuse ComfyUI and existing runtimes instead of replacing their inference engines; research InvokeAI/Diffusers/sd.cpp as comparators and Higgsfield as an optional, separately consented hosted image API. Documentation only; no model execution, new API credentials, changes to approved resource ceilings, ledger credit or accepted release-scope migration.
+
+
 ### First real local image/cutout and source productization (2026-10-18)
 
 - Record one local owner-authorized **768×1024 SDXL lamp source**, real GroundingDINO/SAM2 segmentation (8.994 s including load/inference; 2,533 MiB sampled peak VRAM), CPU-only alpha refinement and **independent artifact-specific visual acceptance of Candidate A**. Original rejected-generation and failed-segmentation history is intact. No private weights/images/reports were committed ([dated public evidence](docs/LOCAL_LAB_MILESTONE_2026-10-18.md)).
