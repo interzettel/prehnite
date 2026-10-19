@@ -20,3 +20,5 @@ The report does not enumerate local checkpoint files, hash model weights, inspec
 3. Compare accepted outputs against human-reviewed references; never equate synthetic technical pass rates with real cutout quality, or infer supported hardware tiers without physical measurements.
 
 See [architecture epic #132](https://github.com/interzettel/prehnite/issues/132), [hardware issue #134](https://github.com/interzettel/prehnite/issues/134), and [model/weight rights #40](https://github.com/interzettel/prehnite/issues/40).
+
+For the local, evidence-classified P08-A04 decision table (one observed 8 GiB run, one system-RAM refusal, and explicit unknowns), see [COMPATIBILITY_PROFILE.md](COMPATIBILITY_PROFILE.md). It is not a generic hardware-tier certification.
