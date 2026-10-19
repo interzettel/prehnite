@@ -98,4 +98,4 @@ weights remain private.
 3. **Next new evidence:** under separate operator authorization, verify the merged optional Engine→CPU QA workflow on a **different real object** with provenance-bound execution receipts and independent visual review.
 4. **Later quality/release work:** gold-reference diverse masks, model and weight rights, long-running batch safety, reviewed owner journal promotion and representative hardware-tier measurements. One accepted lamp and passing synthetic CI do not complete these tasks.
 
-See [delivery readiness](PROGRESS.md), [roadmap](ROADMAP.md), [61-unit tracker](progress/STATUS.md), [atomic task tracker](progress/ATOMIC.md), and [first-real-asset operator guide](FIRST_REAL_ASSET.md).
+See [delivery readiness](PROGRESS.md), [roadmap](ROADMAP.md), [historical v1 migration archive](ROADMAP_MIGRATION_V2.md), [current v2 roadmap](progress/STATUS.md), and [first-real-asset operator guide](FIRST_REAL_ASSET.md).
