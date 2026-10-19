@@ -493,6 +493,8 @@ def _candidate_image(source: Image.Image, mask: Image.Image, spec: AlphaCandidat
         # byte- and straight-foreground declaration; no visual approval follows.
         if mask.mode != "L" or mask.size != source.size or alpha.tobytes() != mask.tobytes():
             raise CutoutContractError("soft_alpha_must_be_exact_L_PNG")
+        if not any(alpha.histogram()[1:255]):
+            raise CutoutContractError("trusted_soft_alpha_has_no_fractional_transitions")
         candidate = source.convert("RGB").convert("RGBA")
         candidate.putalpha(alpha)
         return candidate, alpha, {
