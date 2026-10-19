@@ -1,6 +1,6 @@
 # P08-A02 final cold/warm benchmark evidence
 
-**Status:** READY FOR INDEPENDENT REVIEW — no tracker credit until reviewed and merged
+**Status:** original narrow benchmark criterion independently reviewed as met; **completion credit awaits evidence PR merge and separate frozen-ledger reconciliation**
 
 **Issue:** [#24](https://github.com/interzettel/prehnite/issues/24)
 
@@ -99,10 +99,6 @@ claimed.
 
 ## Acceptance boundary
 
-This evidence supports **ready for independent review**, not completion credit.
-The atomic tracker remains unchanged at **19/73 (26.03%)**, P08-A03 is not
-started, and no release, model/package change or historical artifact was
-modified. Cold post-load latency is derived from observable timestamps, not a
-separate instrumented measurement.
+This evidence has been **independently reviewed for P08-A02's narrow original metric criterion**, but it earns no completion credit before the evidence PR merges and a separate accounting PR passes CI. The original atomic tracker was **19/73 (26.03%) when the laptop report was prepared**. Unrelated [S04-A04 accounting PR #178](https://github.com/interzettel/prehnite/pull/178) subsequently moved public `main` to **20/73 (27.40%)**. P08-A02 remains blocked in the current register until credited against that latest baseline; P08-A03 is not started, and no release, model/package change or historical artifact was modified. Cold post-load latency is derived from observable timestamps, not a separately instrumented measurement.
 
 [![](https://img.shields.io/badge/powered_by-dsh-4D6BFE?style=flat-square&logo=deepseek&logoColor=white)](https://github.com/deepseek-ai/deepseek-harness)
