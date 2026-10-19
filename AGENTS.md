@@ -14,6 +14,7 @@ Deliver reliable, quality-gated visual assets at low cost. This repository is an
 - Never mark an atomic child done before a merged, verifiable PR. Use in_review for an open PR (zero done credit). Run python scripts/atomic_progress.py --write in the same PR as a register edit.
 - Keep progress/ledger.json as the authoritative 61-unit evidence contract. Run python scripts/progress.py --write only after all original parent acceptance and dependency requirements are proven. Do not claim real image quality or paid inference from a synthetic subtask.
 - The 73-task October 17 baseline denominator is frozen. New child scope needs an explicit reviewed scope/version migration, not silent deletion of blocked items.
+- For future product priorities, also read [docs/PRODUCT_MILESTONES.md](docs/PRODUCT_MILESTONES.md) and its versioned proposed register. **It is not yet adopted**: research, code, experiments and human acceptance have separate evidence gates, and no product completion or old-ledger credit may be inferred from a proposal, draft PR or synthetic evidence.
 - The native organization Project #1 exists, but automatic field synchronization is not implemented: compare live cards before claiming agreement.
 
 ## Visual identity rules
