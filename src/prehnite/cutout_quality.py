@@ -148,6 +148,24 @@ class AlphaCandidateSpec(Strict):
     decontaminate: Literal[True] = True
     preserve_core_px: int = Field(default=1, ge=0, le=4)
     color_spill: KnownBackgroundSpill | None = None
+    # Default binary feathering remains unchanged. Opt-in soft mode requires
+    # a byte-identified matte and an operator-declared *straight* RGB plate.
+    # The declaration is not proof of true foreground recovery from a photo.
+    transition_mode: Literal["binary_feather", "preserve_trusted_soft"] = "binary_feather"
+    soft_alpha_sha256: str | None = None
+    foreground_rgb_origin: Literal["straight_foreground_rgb"] | None = None
+
+    @model_validator(mode="after")
+    def soft_matte_contract(self) -> AlphaCandidateSpec:
+        if self.transition_mode == "preserve_trusted_soft":
+            if not self.soft_alpha_sha256 or not self.foreground_rgb_origin:
+                raise ValueError("Trusted soft alpha needs SHA256 and straight RGB declaration")
+            _sha(self.soft_alpha_sha256)
+            if self.color_spill is not None:
+                raise ValueError("Soft alpha preservation cannot apply uniform spill unmixing")
+        elif self.soft_alpha_sha256 is not None or self.foreground_rgb_origin is not None:
+            raise ValueError("Binary feather mode must not claim soft matte provenance")
+        return self
 
     @field_validator("id")
     @classmethod
@@ -464,6 +482,22 @@ def _alpha_metrics(alpha: Image.Image, original: Image.Image,
 def _candidate_image(source: Image.Image, mask: Image.Image, spec: AlphaCandidateSpec
                      ) -> tuple[Image.Image, Image.Image, dict]:
     alpha = _mask_alpha(mask, source.size)
+    if spec.transition_mode == "preserve_trusted_soft":
+        # Never synthesize fine strands or transmission from a hard SAM mask.
+        # Passing through user-supplied alpha is valid only under an explicit
+        # byte- and straight-foreground declaration; no visual approval follows.
+        if mask.mode != "L" or mask.size != source.size or alpha.tobytes() != mask.tobytes():
+            raise CutoutContractError("soft_alpha_must_be_exact_L_PNG")
+        candidate = source.convert("RGB").convert("RGBA")
+        candidate.putalpha(alpha)
+        return candidate, alpha, {
+            "soft_alpha_preserved": True,
+            "foreground_rgb_origin": "operator_declared_straight_foreground_rgb",
+            "straight_foreground_rgb_verified": False,
+            "foreground_rgb_expansion_applied": False,
+            "color_spill_unmix_applied": False,
+            "source_alpha_modified_pixels": 0,
+        }
     hard = _hard_alpha(alpha)
     filtered = hard.filter(ImageFilter.GaussianBlur(radius=spec.sigma_px))
     core = hard.filter(ImageFilter.MinFilter(size=2 * spec.preserve_core_px + 1))
@@ -620,6 +654,20 @@ def run_cutout_qa(recipe_path: Path, *, source: Path, mask: Path,
         destination = output_dir / "cutout-quality.json"
         _write_json_exclusive(destination, report.model_dump(mode="json"))
         return destination
+    if any(spec.transition_mode == "preserve_trusted_soft"
+           for spec in recipe.alpha_candidates):
+        # Guard the raw declared image, not just its normalized grayscale
+        # interpretation. No rescaling, RGB conversion or EXIF rotation.
+        with Image.open(mask_path) as matte_image:
+            if (matte_image.format != "PNG" or matte_image.mode != "L"
+                    or matte_image.size != source_rgba.size
+                    or matte_image.getexif().get(274, 1) != 1):
+                raise CutoutContractError("soft_alpha_must_be_exact_L_PNG")
+        actual_matte_sha = sha256(mask_path)
+        for spec in recipe.alpha_candidates:
+            if (spec.transition_mode == "preserve_trusted_soft"
+                    and spec.soft_alpha_sha256 != actual_matte_sha):
+                raise CutoutContractError("soft_alpha_sha256_mismatch")
     hard = _hard_alpha(alpha)
     hard_count = sum(1 for value in hard.tobytes() if value)
     border = _border_fraction(hard)
