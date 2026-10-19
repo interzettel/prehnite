@@ -20,6 +20,7 @@ STATES = {"planned", "active", "in_review", "blocked", "verified"}
 EVIDENCE_TYPES = {
     "merged_pr", "research_review", "owner_decision",
     "observed_experiment", "independent_review", "human_acceptance",
+    "historical_receipt",
 }
 REPO_PREFIX = "https://github.com/interzettel/prehnite/"
 
@@ -130,7 +131,9 @@ def validate(data: dict, root: Path = ROOT) -> dict:
             expected = {
                 "research": {"research_review"},
                 "decision": {"owner_decision"},
-                "implementation": {"merged_pr"},
+                "implementation": ({"merged_pr", "historical_receipt"}
+                                   if task.get("source") == "v1_verified"
+                                   else {"merged_pr"}),
                 "experiment": {"observed_experiment", "independent_review"},
                 "acceptance": {"human_acceptance", "owner_decision"},
             }[task["kind"]]
@@ -167,22 +170,58 @@ def validate(data: dict, root: Path = ROOT) -> dict:
             raise ValueError("legacy crosswalk references missing milestone")
         if not ref.get("note") or not ref.get("relationship"):
             raise ValueError("unexplained legacy obligation")
+    historical_done = {u["id"]: u for u in old_units if u["state"] == "done"}
     carried = data.get("migration_integrity", {}).get("carried_forward_v1_unit_ids")
-    if carried != ["F01", "F02", "F03", "F04", "F05", "F06"]:
-        raise ValueError("evidence migration changed without explicit review")
-    for old_id in carried:
-        old = next(x for x in old_units if x["id"] == old_id)
-        new = tasks.get("P1-M00-" + old_id)
-        if (old["state"] != "done" or new is None or new["state"] != "verified"
-                or not any(e.get("url") == old["evidence"] and e.get("legacy_unit") == old_id
-                           for e in new["evidence"])):
-            raise ValueError("foundation evidence provenance lost")
-    if not set(carried).issubset(original_ids):
-        raise ValueError("missing original evidence")
+    if not isinstance(carried, list) or set(carried) != set(historical_done) or len(carried) != 43:
+        raise ValueError("all 43 originally verified capabilities must be carried exactly once")
+    inherited = [t for t in tasks.values() if any(
+        e.get("legacy_unit") for e in t.get("evidence", [])
+    )]
+    if len(inherited) != 43:
+        raise ValueError("v2 inherited verification count must equal 43")
+    received: set[str] = set()
+    for task in inherited:
+        if task.get("state") != "verified":
+            raise ValueError("historical evidence lost from active roadmap")
+        for proof in task["evidence"]:
+            unit_id = proof.get("legacy_unit")
+            if not unit_id:
+                continue
+            if unit_id not in historical_done or unit_id in received:
+                raise ValueError("duplicate or unverified historical capability")
+            received.add(unit_id)
+            old = historical_done[unit_id]
+            if proof.get("url") != old.get("evidence"):
+                raise ValueError("foundation evidence provenance lost")
+            expected_kind = ("merged_pr" if "/pull/" in old["evidence"]
+                             else "historical_receipt")
+            if proof.get("type") != expected_kind:
+                raise ValueError("historical proof classification mismatch")
+            if task.get("issue") != old.get("issue"):
+                raise ValueError("historical unit issue mismatch")
+            if not task["id"].endswith("-" + unit_id):
+                raise ValueError("historical unit mapping mismatch")
+    if received != set(historical_done):
+        raise ValueError("all original completed work must remain represented")
+    for task in tasks.values():
+        if task.get("source") == "v1_verified" and not any(
+            e.get("legacy_unit") for e in task.get("evidence", [])
+        ):
+            raise ValueError("inherited task has no original evidence")
+        if task.get("source") != "v1_verified" and any(
+            e.get("type") == "historical_receipt" for e in task.get("evidence", [])
+        ):
+            raise ValueError("new work cannot claim a historical receipt")
+    for m in milestones.values():
+        if type(m.get("priority")) is not int or m["priority"] not in range(5):
+            raise ValueError("priority ranking must be P0 through P4")
+        if not m.get("workstream") or not m.get("next_action"):
+            raise ValueError("workstream and next action required")
     return {
         "phases": len(phases), "milestones": len(milestones),
         "milestones_verified": sum(m["state"] == "verified" for m in milestones.values()),
         "tasks": len(tasks), "tasks_verified": sum(t["state"] == "verified" for t in tasks.values()),
+        "transferred_verified_capabilities": len(received),
         "archived_release_units": 61, "archived_atomic_tasks": 73,
     }
 
