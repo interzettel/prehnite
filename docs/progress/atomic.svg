@@ -6,9 +6,9 @@
 <text x="32" y="43" font-size="27" font-weight="700" fill="#075231">PREHNITE / DELIVERY EVIDENCE</text>
 <text x="32" y="70" font-size="14" fill="#384F45">Two independent meters: merged proof only, not visual acceptance or estimated effort.</text>
 <text x="32" y="105" font-size="16" font-weight="600" fill="#075231">Release roadmap / original 61 units</text>
-<text x="1060" y="105" font-size="18" font-weight="700" text-anchor="end" fill="#075231">42/61 · 68.85%</text>
+<text x="1060" y="105" font-size="18" font-weight="700" text-anchor="end" fill="#075231">43/61 · 70.49%</text>
 <rect x="32" y="118" width="810" height="18" rx="5" fill="#D5DCD5"/>
-<rect x="32" y="118" width="557.7" height="18" rx="5" fill="#075231"/>
+<rect x="32" y="118" width="571.0" height="18" rx="5" fill="#075231"/>
 <text x="32" y="190" font-size="16" font-weight="600" fill="#075231">Atomic delivery / initially unfinished 19 units</text>
 <text x="1060" y="190" font-size="18" font-weight="700" text-anchor="end" fill="#075231">21/73 · 28.77%</text>
 <rect x="32" y="203" width="810" height="18" rx="5" fill="#D5DCD5"/>

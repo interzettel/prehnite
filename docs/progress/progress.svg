@@ -2,17 +2,17 @@
 <rect width="1200" height="1029" fill="#f6f7f4"/>
 <g font-family="system-ui,Segoe UI,sans-serif">
 <text x="35" y="48" font-size="27" font-weight="700" fill="#182a27">PREHNITE / DEVELOPMENT PROGRESS</text>
-<text x="35" y="79" font-size="16" fill="#5c6c65">42 / 61 scoped units done · 68.9%</text>
+<text x="35" y="79" font-size="16" fill="#5c6c65">43 / 61 scoped units done · 70.5%</text>
 <text x="1160" y="49" text-anchor="end" font-size="17" fill="#277e74">2/7 milestone gates</text>
 <text x="35" y="106" font-size="13" fill="#5c6c65">Unweighted work units · evidence required for completion · not a product quality score</text>
 <rect x="35" y="126" width="13" height="13" rx="2" fill="#277e74"/>
-<text x="56" y="138" font-size="13" fill="#283832">Done 42</text>
+<text x="56" y="138" font-size="13" fill="#283832">Done 43</text>
 <rect x="223" y="126" width="13" height="13" rx="2" fill="#c28b4a"/>
 <text x="244" y="138" font-size="13" fill="#283832">Active 0</text>
 <rect x="411" y="126" width="13" height="13" rx="2" fill="#b8534e"/>
 <text x="432" y="138" font-size="13" fill="#283832">Blocked 10</text>
 <rect x="599" y="126" width="13" height="13" rx="2" fill="#dce0dd"/>
-<text x="620" y="138" font-size="13" fill="#283832">Planned 9</text>
+<text x="620" y="138" font-size="13" fill="#283832">Planned 8</text>
 <rect x="35" y="171" width="1130" height="103" rx="10" fill="#fff" stroke="#d8ddd7"/>
 <text x="55" y="196" font-size="17" font-weight="650" fill="#1d302b">M0 · Runnable foundation</text>
 <text x="1140" y="196" font-size="16" text-anchor="end" font-weight="650" fill="#277e74">6/6 · 100.0%</text>
@@ -69,12 +69,12 @@
 <text x="1140" y="602" text-anchor="end" font-size="11" fill="#6b7972">Open gate: Q07, Q08</text>
 <rect x="35" y="619" width="1130" height="103" rx="10" fill="#fff" stroke="#d8ddd7"/>
 <text x="55" y="644" font-size="17" font-weight="650" fill="#1d302b">M4 · Cutouts and corrections</text>
-<text x="1140" y="644" font-size="16" text-anchor="end" font-weight="650" fill="#277e74">2/7 · 28.6%</text>
+<text x="1140" y="644" font-size="16" text-anchor="end" font-weight="650" fill="#277e74">3/7 · 42.9%</text>
 <text x="55" y="667" font-size="12" fill="#65756e">Extract requested subjects cleanly, detect common mask failures and repair failed cuts without repeating good images.</text>
 <g><title>S01: Demo mask-to-RGBA conversion and coverage checks [done] issue/PR #1</title><rect x="55" y="684" width="152" height="16" rx="2" fill="#277e74"/></g>
 <g><title>S02: Hosted SAM image/mask dimensional conformance [done] issue/PR #20</title><rect x="210" y="684" width="152" height="16" rx="2" fill="#277e74"/></g>
 <g><title>S03: Foreground matte cleanup and edge decontamination [planned] issue/PR #29</title><rect x="365" y="684" width="152" height="16" rx="2" fill="#dce0dd"/></g>
-<g><title>S04: Multiple-instance selection and named outputs [planned] issue/PR #30</title><rect x="520" y="684" width="152" height="16" rx="2" fill="#dce0dd"/></g>
+<g><title>S04: Multiple-instance selection and named outputs [done] issue/PR #30</title><rect x="520" y="684" width="152" height="16" rx="2" fill="#277e74"/></g>
 <g><title>S05: Failure classification and bounded targeted repair [planned] issue/PR #31</title><rect x="675" y="684" width="152" height="16" rx="2" fill="#dce0dd"/></g>
 <g><title>S06: Transparent cutout benchmark with alpha metrics [blocked] issue/PR #32</title><rect x="830" y="684" width="152" height="16" rx="2" fill="#b8534e"/></g>
 <g><title>S07: Human-accepted cutout samples across tricky materials [blocked] issue/PR #32</title><rect x="985" y="684" width="152" height="16" rx="2" fill="#b8534e"/></g>
@@ -109,6 +109,6 @@
 <g><title>R09: Owner-approved version tag and first release [blocked] issue/PR #42</title><rect x="919" y="908" width="105" height="16" rx="2" fill="#b8534e"/></g>
 <g><title>R10: Native GitHub Projects issue/PR state sync [planned] issue/PR #44</title><rect x="1027" y="908" width="105" height="16" rx="2" fill="#dce0dd"/></g>
 <text x="1140" y="938" text-anchor="end" font-size="11" fill="#6b7972">Open gate: R08, R09</text>
-<text x="35" y="997" font-size="12" fill="#52665e">Details: docs/progress/STATUS.md · Canonical data: progress/ledger.json · 2026-10-16</text>
+<text x="35" y="997" font-size="12" fill="#52665e">Details: docs/progress/STATUS.md · Canonical data: progress/ledger.json · 2026-10-19</text>
 </g>
 </svg>

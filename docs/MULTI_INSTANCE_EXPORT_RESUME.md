@@ -101,10 +101,14 @@ for these tests.
 This proves only the frozen **S04-A04** export/resume criterion. It does not
 establish the quality of matting, correct automatic semantic selection, actual
 GPU segmentation or independent owner visual acceptance. Existing `prehnite
-run` remains single-target. The S04 release parent cannot be closed solely by
-these CPU contracts without checking its own broader issue #30 objective and
-acceptance (multi-object output/unique named files, explicit selection and
-ambiguous assignment refusal).
+run` remains single-target. The S04 release parent required an independent
+review of its own original issue #30 objective and acceptance: the synthetic
+overlapping-object fixture must return distinct cutouts to unique filenames
+and reject ambiguous assignment. That narrow parent criterion is supported
+by merged S04-A01/A02/A03/A04 evidence and was separately reviewed on
+[issue #30](https://github.com/interzettel/prehnite/issues/30#issuecomment-6269969576).
+It does **not** establish real-model multi-instance segmentation or perceptual
+quality; M4's quality acceptance gates remain open.
 
 Do not infer that real-model multi-instance segmentation has been demonstrated
 by synthetic PNG fixtures.
