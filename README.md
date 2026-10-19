@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="assets/prehnite-riso-green-coral.png" alt="Prehnite — forest-green and coral Risograph artwork on warm paper" width="680" />
+<img src="assets/prehnite-riso-green-coral.png" alt="Prehnite — forest-green and coral Risograph artwork on warm paper" width="680" style="border-radius: 16px; clip-path: inset(0 round 16px);" />
 
 ### Make the images. Keep the experiments.
 
