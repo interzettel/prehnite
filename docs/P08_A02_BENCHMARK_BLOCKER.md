@@ -1,8 +1,11 @@
 # P08-A02 — bounded GPU benchmark blocked at startup
 
-**Task:** P08-A02 — Run bounded 8 GB model load and forward pass  
-**Original acceptance:** “Measure peak VRAM, cold/warm latency and failure behavior on actual laptop.”  
-**Status:** **BLOCKED at startup; acceptance not met**  
+**Task:** P08-A02 — Run bounded 8 GB model load and forward pass
+
+**Original acceptance:** “Measure peak VRAM, cold/warm latency and failure behavior on actual laptop.”
+
+**Status:** **BLOCKED at startup; acceptance not met**
+
 **Progress:** no atomic completion credit; frozen tracker remains at its current value until independent review of any future complete benchmark. This page does not change `progress/atomic.json`.
 
 ## What was attempted
