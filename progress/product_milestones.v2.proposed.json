@@ -118,7 +118,8 @@
       "title": "Human-accepted local workflow",
       "objective": "Demonstrate a reviewed accepted-image yield and clear resource/recovery report with realistic install instructions and licence boundaries.",
       "depends_on": [
-        "P1-M04"
+        "P1-M04",
+        "P1-M03"
       ],
       "gate_tasks": [
         "P1-M05-A01",
@@ -311,7 +312,7 @@
       "kind": "acceptance",
       "owner": "Owner",
       "issue": 28,
-      "acceptance": "Human-score the real 10-image batch against success criteria recorded before its run; disclose accepted yield, quality failure modes and seconds per accepted image.",
+      "acceptance": "Human-score the real 10-image batch against success criteria recorded before its run; disclose accepted yield, quality failure modes and seconds per accepted image. Compare practical Prehnite value against the same ComfyUI-only work (manual steps, reproducible selection/resume), without claiming image quality speedups that actually come from changed model settings.",
       "depends_on": [
         "P1-M04-E01"
       ],
