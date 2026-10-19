@@ -45,6 +45,12 @@ def test_planning_register_has_distinct_work_kinds(kind):
     assert any(t["kind"] == kind for t in plan["tasks"])
 
 
+def test_phase1_exit_depends_on_optimization_and_batch_evidence():
+    plan, _, _ = data()
+    exit_gate = next(x for x in plan["milestones"] if x["id"] == "P1-M05")
+    assert set(exit_gate["depends_on"]) == {"P1-M03", "P1-M04"}
+
+
 def test_no_phantom_milestone_completion():
     plan, ledger, atomic = data()
     plan = deepcopy(plan)
