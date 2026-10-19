@@ -2,7 +2,7 @@
 
 **Date:** 2026-10-19  
 **Status:** proposed for owner review, not yet an approved change to release scope or progress accounting  
-**Planning home:** [architecture epic #132](https://github.com/interzettel/prehnite/issues/132)  
+**Planning home:** [architecture epic #132](https://github.com/interzettel/prehnite/issues/132) · [proposed product milestones](PRODUCT_MILESTONES.md) · [v2 register](../progress/product_milestones.v2.proposed.json)  
 **Other current work:** [local P08-A03 PR #181](https://github.com/interzettel/prehnite/pull/181), [soft alpha PR #182](https://github.com/interzettel/prehnite/pull/182)
 
 ## The product decision
