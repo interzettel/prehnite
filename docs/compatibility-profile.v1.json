@@ -1,0 +1,290 @@
+{
+  "schema_version": 1,
+  "profile_version": "1.0.0",
+  "profile_id": "p08-a04-local-compatibility",
+  "published_at": "2026-10-19",
+  "task": "P08-A04",
+  "acceptance": "Decision table states actually measured versus unknown VRAM configurations",
+  "scope": "Local GroundingDINO SwinT OGC + SAM 2.1 Hiera Base Plus + BERT base uncased segmentation stack on the operator RTX 4070 Laptop GPU. This is not a general GPU support matrix.",
+  "evidence_classes": {
+    "observed_success": "Backed by a successful historical execution receipt.",
+    "observed_blocked": "Backed by a real preflight or execution refusal.",
+    "estimated_unverified": "Derived from checkpoint sizes or architecture only; never treated as measured.",
+    "unknown": "No trustworthy local runtime evidence.",
+    "unsupported": "Only where actual technical incompatibility was demonstrated."
+  },
+  "hardware": {
+    "device": "NVIDIA GeForce RTX 4070 Laptop GPU",
+    "reported_dedicated_vram_mib": 8188,
+    "windows": "Windows 11 Home 26300.9711 / 26H2, 64-bit; registry also reports Windows 10 Home for the same build",
+    "wsl": "WSL 2.5.7.0, Ubuntu 24.04.5 LTS, kernel 6.6.87.1; no PyTorch or CUDA toolkit installed",
+    "driver": "617.42",
+    "driver_cuda_umd": "13.4",
+    "pytorch": "2.7.0+cu128",
+    "pytorch_compiled_cuda": "12.8",
+    "local_cuda_toolkit": null
+  },
+  "tested_configuration": {
+    "id": "groundingdino-swint-sam2.1-baseplus-bert",
+    "model_size_class": "base",
+    "total_installed_bytes": 1458753441,
+    "components": [
+      {
+        "role": "detector_weights",
+        "identity": "GroundingDINO SwinT OGC",
+        "bytes": 693997677,
+        "sha256": "3b3ca2563c77c69f651d7bd133e97139c186df06231157a64c507099c52bc799",
+        "source_revision": "a94c9b567a2a374598f05c584e96798a170c56fb",
+        "license": "Apache-2.0"
+      },
+      {
+        "role": "detector_config",
+        "identity": "GroundingDINO SwinT OGC inference config",
+        "bytes": 1006,
+        "sha256": "172e80017f9395668a9cb5d1b8bd9d061c0e360471c6ed673c83b69bb14399f1",
+        "source_revision": "a94c9b567a2a374598f05c584e96798a170c56fb",
+        "license": "Apache-2.0"
+      },
+      {
+        "role": "segmenter_weights",
+        "identity": "SAM 2.1 Hiera Base Plus",
+        "bytes": 323606802,
+        "sha256": "a2345aede8715ab1d5d31b4a509fb160c5a4af1970f199d9054ccfb746c004c5",
+        "source_revision": "b7320756a13354e7530a63935656d35b2f91a290",
+        "license": "Apache-2.0"
+      },
+      {
+        "role": "text_encoder_weights",
+        "identity": "BERT base uncased",
+        "bytes": 440449768,
+        "sha256": "68d45e234eb4a928074dfd868cead0219ab85354cc53d20e772753c6bb9169d3",
+        "source_revision": "86b5e0934494bd15c9632b12f734a8a67f723594",
+        "license": "Apache-2.0"
+      },
+      {
+        "role": "text_encoder_config",
+        "identity": "BERT base uncased config.json",
+        "bytes": 570,
+        "sha256": "7160e1553ad2ca51d8c1cb066be533db31826e12d173824c1bb0cb1a4f187d20",
+        "source_revision": "86b5e0934494bd15c9632b12f734a8a67f723594",
+        "license": "Apache-2.0"
+      },
+      {
+        "role": "tokenizer",
+        "identity": "BERT base uncased tokenizer.json",
+        "bytes": 466062,
+        "sha256": "ce64fce797c24f68df90b40a3f74f579b336a493db14bd583fd520ea0d8c9a98",
+        "source_revision": "86b5e0934494bd15c9632b12f734a8a67f723594",
+        "license": "Apache-2.0"
+      },
+      {
+        "role": "tokenizer_config",
+        "identity": "BERT base uncased tokenizer_config.json",
+        "bytes": 48,
+        "sha256": "a025160ef0431f1a392f6f050c1310f4c5d9fb6f275932dbccba73c4d214bf10",
+        "source_revision": "86b5e0934494bd15c9632b12f734a8a67f723594",
+        "license": "Apache-2.0"
+      },
+      {
+        "role": "vocabulary",
+        "identity": "BERT base uncased vocab.txt",
+        "bytes": 231508,
+        "sha256": "07eced375cec144d27c900241f3e339478dec958f92fddbc551f295c992038a3",
+        "source_revision": "86b5e0934494bd15c9632b12f734a8a67f723594",
+        "license": "Apache-2.0"
+      }
+    ],
+    "execution_environment": "Windows ComfyUI 0.41.0; Python 3.12.9; torch 2.7.0+cu128; torchvision 0.22.0+cu128; Transformers 4.57.6 compatibility overlay"
+  },
+  "observations": [
+    {
+      "id": "observed-success-tested-stack-8188",
+      "evidence_class": "observed_success",
+      "configuration_id": "groundingdino-swint-sam2.1-baseplus-bert",
+      "model_size_class": "base",
+      "device": "NVIDIA GeForce RTX 4070 Laptop GPU",
+      "gpu_vram_mib": 8188,
+      "resource_policy": {
+        "min_available_ram_mb": 3000,
+        "max_commit_percent": 85,
+        "min_free_vram_mib": 2000
+      },
+      "measured": {
+        "job_start_to_success_seconds": 8.994,
+        "cold_startup_seconds": 9.25,
+        "sampled_peak_vram_used_mib": 2533,
+        "minimum_free_vram_mib": 5416,
+        "minimum_available_ram_mb": 3338,
+        "ram_unit": "MB as recorded by the historical supervisor",
+        "peak_commit_percent": 57.6,
+        "prompt_count": 1,
+        "batch_id": "lamp-autonomous-20261018T1819",
+        "prompt_id": "ab4cb4d3-3b87-4cab-9ad9-666112f12236"
+      },
+      "outcome": "Observed successful: one prompt completed; no OOM; model load and inference included in 8.994 s.",
+      "limits": [
+        "One successful run only; not a repeatability result.",
+        "Sampled peak VRAM is not a minimum hardware requirement.",
+        "Model-load and inference time were not separately instrumented."
+      ],
+      "evidence": {
+        "kind": "historical_private_execution_receipt",
+        "receipt_sha256": "ed47cffc00342f53820ffc028387fbcc8ecf67099f09cf766b2cc6a5e224f355",
+        "report_sha256": "9ecb5927c8700459d43ef7537549b41a917c1fa821b1993a1f290edb56fc3f38",
+        "public_context": "docs/LOCAL_LAB_MILESTONE_2026-10-18.md"
+      },
+      "not_a_minimum_vram_requirement": true
+    },
+    {
+      "id": "observed-blocked-tested-stack-8188-system-ram",
+      "evidence_class": "observed_blocked",
+      "configuration_id": "groundingdino-swint-sam2.1-baseplus-bert",
+      "model_size_class": "base",
+      "device": "NVIDIA GeForce RTX 4070 Laptop GPU",
+      "gpu_vram_mib": 8188,
+      "resource_policy": {
+        "min_available_ram_mib": 6000,
+        "max_commit_percent": 80,
+        "min_free_vram_mib": 5000
+      },
+      "measured": {
+        "available_ram_mib_samples": [5759, 5741, 5737],
+        "commit_percent_samples": [54.255, 54.275, 54.27],
+        "free_vram_mib": 7353,
+        "prompt_count": 0,
+        "batch_id": null
+      },
+      "outcome": "Observed blocked: three preflight samples failed the 6,000 MiB available system-RAM floor; ComfyUI was not started and no /prompt was submitted.",
+      "limits": [
+        "This is a system-RAM readiness refusal, not a demonstrated VRAM incompatibility.",
+        "The 6,000 MiB floor is a current preflight policy; the historical successful run used a 3,000 MB supervisor floor."
+      ],
+      "evidence": {
+        "kind": "private_resource_preflight",
+        "receipt_sha256": "2b9ca01eceb560d077a3cc5840324248644d3561aadc12b1e267dad9c21775a1",
+        "report_sha256": "bd3b82a9c47a69b97dff4ec25e7d66efadeda9ef5fd60c333fad6a7aad915496",
+        "public_context": "docs/P08_A01_ENVIRONMENT_AND_RIGHTS.md"
+      }
+    },
+    {
+      "id": "unknown-sam2.1-large-8188",
+      "evidence_class": "unknown",
+      "configuration_id": "groundingdino-swint-sam2.1-large-bert",
+      "model_size_class": "larger",
+      "device": "NVIDIA GeForce RTX 4070 Laptop GPU",
+      "gpu_vram_mib": 8188,
+      "measured": null,
+      "outcome": "Unknown: SAM 2.1 Hiera Large is not installed or referenced by any local execution receipt.",
+      "limits": ["No checkpoint, no execution and no VRAM measurement."],
+      "evidence": {"kind": "none"}
+    },
+    {
+      "id": "unknown-sam2.1-small-tiny-8188",
+      "evidence_class": "unknown",
+      "configuration_id": "groundingdino-swint-sam2.1-small-or-tiny-bert",
+      "model_size_class": "smaller",
+      "device": "NVIDIA GeForce RTX 4070 Laptop GPU",
+      "gpu_vram_mib": 8188,
+      "measured": null,
+      "outcome": "Unknown: SAM 2.1 Small/Tiny variants are not installed or referenced by any local execution receipt.",
+      "limits": ["No checkpoint, no execution and no VRAM measurement."],
+      "evidence": {"kind": "none"}
+    },
+    {
+      "id": "unknown-groundingdino-swinb-8188",
+      "evidence_class": "unknown",
+      "configuration_id": "groundingdino-swinb-sam2.1-baseplus-bert",
+      "model_size_class": "larger",
+      "device": "NVIDIA GeForce RTX 4070 Laptop GPU",
+      "gpu_vram_mib": 8188,
+      "measured": null,
+      "outcome": "Unknown: no installed SwinB or alternate detector configuration has been executed.",
+      "limits": ["No checkpoint, no execution and no VRAM measurement."],
+      "evidence": {"kind": "none"}
+    },
+    {
+      "id": "unknown-quantized-tested-stack-8188",
+      "evidence_class": "unknown",
+      "configuration_id": "quantized-groundingdino-sam2.1-bert",
+      "model_size_class": "quantized",
+      "device": "NVIDIA GeForce RTX 4070 Laptop GPU",
+      "gpu_vram_mib": 8188,
+      "measured": null,
+      "outcome": "Unknown: no quantized checkpoint was installed or executed.",
+      "limits": ["Quantization quality, compatibility and VRAM are not measured."],
+      "evidence": {"kind": "none"}
+    },
+    {
+      "id": "unknown-sdxl-segmentation-8188",
+      "evidence_class": "unknown",
+      "configuration_id": "sdxl-segmentation-configuration",
+      "model_size_class": "other",
+      "device": "NVIDIA GeForce RTX 4070 Laptop GPU",
+      "gpu_vram_mib": 8188,
+      "measured": null,
+      "outcome": "Unknown: SDXL is a generation checkpoint and no SDXL segmentation configuration has been measured.",
+      "limits": ["Do not infer segmentation feasibility from generation or from other workflows."],
+      "evidence": {"kind": "none"}
+    },
+    {
+      "id": "unknown-other-vram-tiers",
+      "evidence_class": "unknown",
+      "configuration_id": "tested-stack-on-other-gpu-tiers",
+      "model_size_class": "base",
+      "device": "4/6/12/16/24 GiB GPU tiers (not tested)",
+      "gpu_vram_mib": null,
+      "measured": null,
+      "outcome": "Unknown: no other GPU tier has been tested with this stack.",
+      "limits": ["No claim that the tested 8 GiB result generalizes to smaller or larger cards."],
+      "evidence": {"kind": "none"}
+    },
+    {
+      "id": "unknown-wsl-tested-stack",
+      "evidence_class": "unknown",
+      "configuration_id": "groundingdino-swint-sam2.1-baseplus-bert-wsl",
+      "model_size_class": "base",
+      "device": "WSL 2 / Ubuntu 24.04.5 on the same host",
+      "gpu_vram_mib": 8188,
+      "measured": null,
+      "outcome": "Unknown: WSL has no PyTorch or CUDA toolkit installed; no WSL execution exists.",
+      "limits": ["WSL GPU visibility through nvidia-smi is not execution evidence."],
+      "evidence": {"kind": "none"}
+    },
+    {
+      "id": "unknown-repeated-batch-throughput",
+      "evidence_class": "unknown",
+      "configuration_id": "tested-stack-repeated-or-batch",
+      "model_size_class": "base",
+      "device": "NVIDIA GeForce RTX 4070 Laptop GPU",
+      "gpu_vram_mib": 8188,
+      "measured": null,
+      "outcome": "Unknown: only one prompt was submitted; P08-A03 repeatability remains blocked.",
+      "limits": ["No p50/p95, warm-run, batch or throughput figure."],
+      "evidence": {"kind": "none"}
+    }
+  ],
+  "estimated_compatibility": null,
+  "file_size_context": {
+    "total_installed_bytes": 1458753441,
+    "note": "Sum of the installed checkpoint/config/tokenizer file bytes. This is a file-size fact, not a VRAM estimate or minimum requirement."
+  },
+  "unsupported": [],
+  "decision": {
+    "tested_8gb_stack": "observed_success_once",
+    "current_6000_mib_system_ram_preflight": "observed_blocked_on_system_ram_not_vram",
+    "larger_models": "unknown",
+    "other_vram_tiers": "unknown",
+    "quantization": "unknown",
+    "sdxl_segmentation": "unknown",
+    "wsl_execution": "unknown",
+    "repeated_runs": "unknown",
+    "no_measured_minimum_vram": true,
+    "not_a_general_8gb_support_claim": true
+  },
+  "notes": [
+    "One successful run is not a minimum hardware requirement or a support certification.",
+    "System RAM readiness and GPU VRAM feasibility are separate; the 6,000 MiB RAM floor blocked before model load.",
+    "No compatibility estimate is promoted to observed status.",
+    "No configuration has demonstrated a technical incompatibility; absence of evidence is recorded as unknown, not unsupported."
+  ]
+}
