@@ -39,7 +39,10 @@ can explicitly select a candidate with:
 - The optional uniform-background `color_spill` operation cannot be combined
   with this mode. It belongs to S03-A03 and has distinct assumptions.
 - The original hard-component/holes/coverage safeguards still evaluate
-  candidates; the normal `qa.max_partial_alpha_fraction` default may need an
+  candidates. For this specific trusted-soft mode, coverage drift is measured
+  against the original fractional alpha (not a thresholded binary mask);
+  binary-feather candidates retain their existing hard-mask coverage baseline.
+  The normal `qa.max_partial_alpha_fraction` default may need an
   **explicit recipe value** appropriate to a validated, highly translucent
   asset. Never loosen the value globally or silently.
 - `candidate.status == passed` is only technical consistency, while
