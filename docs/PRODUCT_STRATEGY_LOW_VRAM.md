@@ -1,4 +1,4 @@
-# Prehnite — low-VRAM-first product strategy (proposal)
+# Prehnite — 8 GB laptop-first image workbench strategy (proposal)
 
 **Date:** 2026-10-19  
 **Status:** proposed for owner review, not yet an approved change to release scope or progress accounting  
@@ -7,13 +7,13 @@
 
 ## The product decision
 
-Prehnite is an **installable, local-first image-generation and experimentation workbench optimized for limited GPU VRAM and limited system RAM**. It helps people produce useful images and controlled variations on hardware they already own, while preserving reproducibility and using optional bigger machines or paid APIs without having to reinvent the workflow.
+Prehnite is an **installable, local-first image-generation and experimentation workbench optimized first for an 8 GiB laptop GPU and the system RAM it actually has available**. It helps people produce useful images and controlled variations on hardware they already own, while preserving reproducibility and using optional bigger machines or paid APIs without having to reinvent the workflow.
 
 Batching is important, but this is **not** an AI video factory, YouTube automation tool, Higgsfield clone, general-purpose graph editor, or bespoke foundation-model training suite.
 
-The primary unmet job is: **“I have a 4–8 GB graphics card, modest host RAM, and models/LoRAs I want to try. Tell me what is likely to fit, run it safely, compare configurations, recover failures, and give me consistent, usable images without requiring cloud accounts.”**
+The primary unmet job is: **“I have an 8 GB laptop GPU, sometimes limited free system RAM, and models/LoRAs I want to try. Help me use this machine efficiently, run it safely, compare actual configurations, recover failures, and get consistent, usable images without requiring cloud accounts.”**
 
-A modest machine is the product's design center, not an unfortunate compatibility exception. A stronger GPU should make the *same* workflow faster and allow bigger models; an API is an optional backend, never a prerequisite.
+The owner's actual 8 GiB RTX 4070 laptop is the design center, not an unfortunate compatibility exception. **There is no planned 4 GiB or 6 GiB optimization, support certification or hardware procurement campaign.** A stronger GPU should run compatible versions of the *same* workflow faster and allow bigger models when verified; an API is an optional backend, never a prerequisite.
 
 ### Two phases, and no automatic third phase
 
@@ -24,7 +24,7 @@ Do **not** add a third “media pipeline”, audio/TTS, editing timeline, video 
 
 ## Users and jobs to be done
 
-- **Low-VRAM hobbyist/developer:** has 4, 6 or 8 GiB dedicated VRAM and constrained host RAM; wants to know *whether* an exact pinned local model/workflow can run, which measured trade-offs apply and why a job refuses. No invented GPU-tier support promises.
+- **8 GiB laptop experimenter:** uses the owner's RTX 4070-class 8 GiB GPU and constrained host RAM; wants to know whether an exact pinned local model/workflow can run, what measured trade-offs apply and why a job refuses. No unsupported model/hardware promises.
 - **Batch experimenter:** varies prompts, seeds, samplers, LoRAs, resolutions or backends; wants organized comparison, provenance, repeatable outputs and time/energy/memory measurements, not a spreadsheet of forgotten image files.
 - **Creative practitioner:** wants 10–50 “good enough” images at consistent style and known elapsed time, with retries/repair bounded to avoid wasting scarce local compute; cost per **human-accepted image**, not just raw throughput.
 - **Private self-image experimenter:** opts into local reference photos and controlled hairstyle, beard, hair-color, clothing and appearance variations; original photos stay local by default, and outputs are **visual simulations**, not predictions of physical outcomes. Subject identity and appearance consistency require human evaluation.
@@ -57,9 +57,9 @@ A packaging goal, **not a present claim**: Python users can install Prehnite, in
 
 ### P1.0 — reconcile existing work, not another infrastructure detour
 
-Finish independent CI/reviews for #181 and #182 without automatic atomic credit; leave the 8 GB hardware benchmark blocked until freshly authorized. Preserve 43/61 release and 21/73 frozen atomic numbers on the proposal branch. Existing P08-A03 preflight RAM >= 6,000 MiB and free VRAM >= 5,000 MiB are **that specific experiment's fixed stop conditions, not universal product minimum requirements**. A 4 GiB target requires a different separately reviewed, model-specific safe experiment with evidence and different resource policy.
+Finish independent CI/reviews for #181 and #182 without automatic atomic credit; leave the 8 GiB hardware benchmark blocked until freshly authorized. Preserve 43/61 release and 21/73 frozen atomic numbers on the proposal branch. Existing P08-A03 preflight available RAM >= 6,000 MiB and free VRAM >= 5,000 MiB are **that specific proposed experiment's fixed stop conditions**; do not relax them for convenience or present them as universal product minimums.
 
-### P1.1 — characterize 4/6/8 GiB and constrained host RAM, *without fake compatibility*
+### P1.1 — characterize the actual 8 GiB laptop and constrained host RAM, *without fake compatibility*
 
 Extend [#134](https://github.com/interzettel/prehnite/issues/134): implement an offline read-only **eligibility/estimated footprint report** with clear “unknown” and “untested” states; require owner-authorized opt-in real runs for benchmark receipts. Explicitly measure host RAM free/available, commit/pagefile/disk pressure, driver/runtime versions, occupied VRAM and model/LoRA weights separately. Our first lab showed host RAM pressure can block a session even with nominal 8 GiB VRAM.
 
@@ -72,7 +72,7 @@ Use at least two lawful, pinned model families as candidates *only after verifie
 5. One-item sequential batching vs compatible warm-model group batching.
 6. Alternative runtime only if expected performance warrants an integration experiment.
 
-Never assume an optimization is faster or produces equivalent quality. If memory savings consume huge amounts of system RAM or wall time, classify them as trade-offs or refusals. Explicitly distinguish *GPU working space*, model residency, PyTorch reservations, OS GPU telemetry, host commit and disk offload. On 4 GiB cards, **successful feasibility may be slow and limited to certain models**; mark untested hardware honestly.
+Never assume an optimization is faster or produces equivalent quality. If memory savings consume huge amounts of system RAM or wall time, classify them as trade-offs or refusals. Explicitly distinguish *GPU working space*, model residency, PyTorch reservations, OS GPU telemetry, host commit and disk offload. Benchmark only the actual 8 GiB laptop unless another platform is later explicitly requested; do not create smaller-GPU experiments to satisfy a marketing matrix.
 
 ### P1.2 — make measured optimizations user-selectable and explainable
 
@@ -91,7 +91,7 @@ First proof: a **ten-image, local-only real batch** on a separately authorized, 
 - Installer/doctor identifies actual configuration and clearly refuses unknown/unsafe profiles.
 - One independently reviewed real GPU profile can generate an accepted, repeatable 10-image batch from a pinned lawful model, within its **declared** resource/time budget.
 - Outcomes include accepted/total images, latency (cold and warm), memory telemetry, output/recipe integrity, failures and honest uncertainty; another operator can repeat the exact instructions.
-- 4/6 GiB compatibility is advertised **only for individually tested model+version+resolution+backend combinations**; otherwise report unverified.
+- Tested 8 GiB compatibility applies **only to individually measured model+version+resolution+backend combinations**. Other VRAM tiers remain **untested/out of scope**, with no promise or plan to certify them.
 - Optional provider use remains zero by default. No required cloud account or model-weight bundle.
 - Demonstrate measurable added value over a **ComfyUI-only baseline on the same hardware and fixed workload**: e.g. fewer manual steps or better reproducible resume/selection. Do not claim speedups that actually arise from changing model/quality settings.
 
@@ -133,7 +133,7 @@ Benchmark receipts should be machine-readable, content-addressed and distinguish
 
 **Next engineering slices (create/reuse narrowly scoped tickets, do not expand the frozen 73 tasks):**
 
-1. #134 — measured model+hardware compatibility matrix and baseline benchmark receipt; **4/6/8 GiB as separate evidence sets**.
+1. #134 — measured compatibility and a baseline benchmark receipt for the **actual 8 GiB RTX 4070 laptop**, including the separate host-RAM bottleneck. No 4/6 GiB test matrix.
 2. #136 — one bounded backend-aware memory option, benchmark against ComfyUI default using same model and image conditions.
 3. #135 — safe rights-acknowledged local model and LoRA import, no silent download; constrained system RAM/disk handling.
 4. #132 — smallest reproducible generation → inspection/selection → export workflow in public code with independently reviewed real evidence.
@@ -143,7 +143,7 @@ Benchmark receipts should be machine-readable, content-addressed and distinguish
 
 ## Decision risks
 
-- **Low-VRAM does not mean low-RAM.** CPU offload can make system commit worse; a 4 GiB GPU with 8 GiB total RAM may be unable to run some large models at acceptable speed. Refuse rather than thrash or claim success.
+- **8 GiB of VRAM does not imply abundant available host RAM.** CPU offload can make system commit worse on the actual laptop; measure free RAM and refuse configurations that would thrash rather than claiming a VRAM-only optimization worked.
 - **Memory-optimized image quality may differ.** Quantization, image size, model/LoRA swaps and tiled decoding can alter results; measure acceptance relative to a fixed baseline.
 - **A model catalog is not a rights grant.** SDXL, FLUX, LoRAs, third-party custom nodes and API outputs have separate current licensing and commercial-use conditions. Never redistribute weights as MIT package assets.
 - **The API boundary is real.** Higgsfield provides a paid developer API today, but no provider is integrated or authorized by writing this document; private photos must never leak from a local job through fallback.
@@ -154,7 +154,7 @@ Benchmark receipts should be machine-readable, content-addressed and distinguish
 
 1. Is the north-star **“usable images and reproducible creative experiments on modest GPUs”** approved?
 2. Is Phase 2 explicitly **LoRA / controlled variations / private appearance experiments**, and is media/video automation out of scope?
-3. Should the first hardware benchmark prioritize the known 8 GiB laptop + low available host RAM, followed by a borrowed/CI-connected 6 GiB and 4 GiB physical device (only when available)?
+3. Use **only the existing 8 GiB laptop** for near-term hardware benchmarks, with explicit host-RAM measurements and no campaign to source/test smaller GPUs? (The owner's direction is **yes**.)
 4. Keep ComfyUI as the first runtime and treat InvokeAI, Diffusers and sd.cpp as baselines/optional future adapters; Higgsfield only as an opt-in paid image endpoint?
 
 **No approval is implied by this document, and no runtime or hardware test is authorized.**
