@@ -41,7 +41,7 @@ def test_owner_decision_needs_owner_receipt():
     target["state"] = "verified"
     target["evidence"] = [{"type": "merged_pr",
                            "url": "https://github.com/interzettel/prehnite/pull/183"}]
-    with pytest.raises(ValueError, match="prerequisite|required evidence kind"):
+    with pytest.raises(ValueError, match="premature task credit|required evidence kind"):
         m.validate(data)
 
 
