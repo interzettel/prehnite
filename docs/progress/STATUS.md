@@ -1,6 +1,6 @@
 # Prehnite | Product progress
 
-**Engineering tasks verified: 43/63 (68.3%).**  
+**Engineering tasks verified: 60/80 (75.0%).**  
 **Outcome milestones accepted: 1/9 (11.1%).**
 
 Engineering task completion includes original reviewed implementation receipts. Outcome acceptance additionally requires real laptop tests, usable images, and human review. Neither percentage alone is a product-quality certificate.
@@ -10,10 +10,10 @@ Engineering task completion includes original reviewed implementation receipts. 
 | Priority | Workstream | Work evidenced | Completion | Outcome | Next missing task |
 | --- | --- | ---: | ---: | --- | --- |
 | P0 | P1-M01: Model and provider selection | 4/6 | 66.7% | Open | P1-M01-R01 |
-| P1 | P1-M02: Real 8 GiB inference evidence | 3/5 | 60.0% | Open | P1-M02-E01 |
-| P1 | P1-M04: Batch and recovery | 18/21 | 85.7% | Open | P1-M04-B01 |
+| P1 | P1-M02: Real 8 GiB inference evidence | 6/8 | 75.0% | Open | P1-M02-E01 |
+| P1 | P1-M04: Batch and recovery | 22/25 | 88.0% | Open | P1-M04-B01 |
 | P2 | P1-M03: Memory and throughput | 0/3 | 0.0% | Open | P1-M03-R01 |
-| P2 | P1-M05: Quality and delivery | 7/9 | 77.8% | Open | P1-M05-A01 |
+| P2 | P1-M05: Quality and delivery | 17/19 | 89.5% | Open | P1-M05-A01 |
 | P3 | P2-M01: LoRA research | 0/2 | 0.0% | Open | P2-M01-R01 |
 | P3 | P2-M02: Controlled style variants | 0/3 | 0.0% | Open | P2-M02-B01 |
 | P3 | P2-M03: Private appearance trials | 0/3 | 0.0% | Open | P2-M03-B01 |
@@ -63,10 +63,13 @@ Each row is one work item counted once. Imported technical achievements are scop
 | P1-M01-R01 | research | planned | Compare a pinned lawful model, stock ComfyUI, other applicable runtimes and opt-in image APIs with source-linked applicability/rights and explicit unknowns. |
 | P1-M01-R02 | decision | planned | Approve model, image size, objective quality criteria, host-RAM/VRAM stops and apples-to-apples benchmark protocol; no inference implied. |
 
-### P1-M02 · 8 GiB reproducible baseline (3/5; 60.0%)
+### P1-M02 · 8 GiB reproducible baseline (6/8; 75.0%)
 
 | Task | Kind | State | Evidence / required outcome |
 | --- | --- | --- | --- |
+| P1-M02-VA-P08-A04 | implementation | verified | Original atomic work P08-A04: Publish compatibility profile by model size. Decision table states actually measured versus unknown VRAM configurations. Previously independently accepted under its original narrow v1 task criteria, not proof that the parent product outcome or current real-image acceptance is complete.: [evidence](https://github.com/interzettel/prehnite/pull/170) |
+| P1-M02-VA-P08-A02 | implementation | verified | Original atomic work P08-A02: Run bounded 8GB model load and forward pass. Measure peak VRAM, cold/warm latency and failure behavior on actual laptop. Previously independently accepted under its original narrow v1 task criteria, not proof that the parent product outcome or current real-image acceptance is complete.: [evidence](https://github.com/interzettel/prehnite/pull/177) |
+| P1-M02-VA-P08-A01 | implementation | verified | Original atomic work P08-A01: Record local GPU environment and free VRAM. Reproducible OS, CUDA, driver and installed weight licensing record. Previously independently accepted under its original narrow v1 task criteria, not proof that the parent product outcome or current real-image acceptance is complete.: [evidence](https://github.com/interzettel/prehnite/pull/166) |
 | P1-M02-V1-P07 | implementation | verified | Previously verified source unit P07: [evidence](https://github.com/interzettel/prehnite/pull/59) |
 | P1-M02-V1-P06 | implementation | verified | Previously verified source unit P06: [evidence](https://github.com/interzettel/prehnite/pull/57) |
 | P1-M02-V1-P02 | implementation | verified | Previously verified source unit P02: [evidence](https://github.com/interzettel/prehnite/pull/1) |
@@ -81,10 +84,14 @@ Each row is one work item counted once. Imported technical achievements are scop
 | P1-M03-B01 | implementation | planned | Implement reversible opt-in scheduling/offload/tiling configuration with capability checks, synthetic tests and no hidden GPU/API work. |
 | P1-M03-E01 | experiment | blocked | Compare unchanged model/seed/size/steps on actual 8 GiB laptop before/after; report VRAM, host RAM/commit, elapsed time, failures and blinded quality judgment. |
 
-### P1-M04 · Useful 10-image batch (18/21; 85.7%)
+### P1-M04 · Useful 10-image batch (22/25; 88.0%)
 
 | Task | Kind | State | Evidence / required outcome |
 | --- | --- | --- | --- |
+| P1-M04-VA-S05-A04 | implementation | verified | Original atomic work S05-A04: Wire the bounded repair into production Engine.cutout. Real stage transition uses journal, protects selected artifacts and can abstain. Previously independently accepted under its original narrow v1 task criteria, not proof that the parent product outcome or current real-image acceptance is complete.: [evidence](https://github.com/interzettel/prehnite/pull/129) |
+| P1-M04-VA-S05-A03 | implementation | verified | Original atomic work S05-A03: Hard-case refusal and one-attempt coverage. Oversized leak, multiple objects and material uncertainty safely refuse. Previously independently accepted under its original narrow v1 task criteria, not proof that the parent product outcome or current real-image acceptance is complete.: [evidence](https://github.com/interzettel/prehnite/pull/120) |
+| P1-M04-VA-S05-A02 | implementation | verified | Original atomic work S05-A02: Idempotent journal-backed local repair executor. Stable operation receipt, atomic candidate, integrity-verified crash replay. Previously independently accepted under its original narrow v1 task criteria, not proof that the parent product outcome or current real-image acceptance is complete.: [evidence](https://github.com/interzettel/prehnite/pull/119) |
+| P1-M04-VA-S05-A01 | implementation | verified | Original atomic work S05-A01: Typed zero-spend repair decision plan. Policy authorizes local repair separately from uncertain paid submission. Previously independently accepted under its original narrow v1 task criteria, not proof that the parent product outcome or current real-image acceptance is complete.: [evidence](https://github.com/interzettel/prehnite/pull/117) |
 | P1-M04-V1-R07 | implementation | verified | Previously verified source unit R07: [evidence](https://github.com/interzettel/prehnite/pull/84) |
 | P1-M04-V1-D10 | implementation | verified | Previously verified source unit D10: [evidence](https://github.com/interzettel/prehnite/pull/84) |
 | P1-M04-V1-D09 | implementation | verified | Previously verified source unit D09: [evidence](https://github.com/interzettel/prehnite/pull/72) |
@@ -107,10 +114,20 @@ Each row is one work item counted once. Imported technical achievements are scop
 | P1-M04-B02 | implementation | planned | Implement/verify bounded journal resume, interruption handling, model/source identity and no silent re-generation of completed items for this small batch. |
 | P1-M04-E01 | experiment | blocked | Run a separately authorized 10-image local batch on 8 GiB laptop; retain exact recipe, failures/retries, time, peak sampled resource use, output hashes and candidate gallery. |
 
-### P1-M05 · Human-accepted local workflow (7/9; 77.8%)
+### P1-M05 · Human-accepted local workflow (17/19; 89.5%)
 
 | Task | Kind | State | Evidence / required outcome |
 | --- | --- | --- | --- |
+| P1-M05-VA-R06-A02 | implementation | verified | Original atomic work R06-A02: Audit optional model checkpoints and training restrictions. Separate weight/source terms recorded; no implicit MIT relicensing. Previously independently accepted under its original narrow v1 task criteria, not proof that the parent product outcome or current real-image acceptance is complete.: [evidence](https://github.com/interzettel/prehnite/pull/131) |
+| P1-M05-VA-R06-A01 | implementation | verified | Original atomic work R06-A01: Inventory Python dependencies and transitive licenses. CycloneDX SBOM, exact installed-version snapshot (not hashed lock), and named unresolved license exceptions. Previously independently accepted under its original narrow v1 task criteria, not proof that the parent product outcome or current real-image acceptance is complete.: [evidence](https://github.com/interzettel/prehnite/pull/130) |
+| P1-M05-VA-S07-A02 | implementation | verified | Original atomic work S07-A02: Implement strict human-review feedback ingestion. Import approved/needs-work/skip plus RGBA edits without gold-label claims. Previously independently accepted under its original narrow v1 task criteria, not proof that the parent product outcome or current real-image acceptance is complete.: [evidence](https://github.com/interzettel/prehnite/pull/125) |
+| P1-M05-VA-S06-A03 | implementation | verified | Original atomic work S06-A03: Inspect owner-provided 84-image source-only pilot. 50 front images get unreviewed baseline masks without false accuracy claims. Previously independently accepted under its original narrow v1 task criteria, not proof that the parent product outcome or current real-image acceptance is complete.: [evidence](https://github.com/interzettel/prehnite/pull/123) |
+| P1-M05-VA-S06-A02 | implementation | verified | Original atomic work S06-A02: Add private RGB/mask reference scoring CLI. WebP/JPEG source and PNG alpha validated with SHA, geometry and rights attestation. Previously independently accepted under its original narrow v1 task criteria, not proof that the parent product outcome or current real-image acceptance is complete.: [evidence](https://github.com/interzettel/prehnite/pull/122) |
+| P1-M05-VA-S06-A01 | implementation | verified | Original atomic work S06-A01: Build withheld-reference synthetic alpha challenge suite. 20 deterministic cases report independent alpha IoU and boundary MAE. Previously independently accepted under its original narrow v1 task criteria, not proof that the parent product outcome or current real-image acceptance is complete.: [evidence](https://github.com/interzettel/prehnite/pull/120) |
+| P1-M05-VA-S03-A03 | implementation | verified | Original atomic work S03-A03: Implement true color spill edge decontamination. Pixel-level tests prove removal without deleting background-colored product regions. Previously independently accepted under its original narrow v1 task criteria, not proof that the parent product outcome or current real-image acceptance is complete.: [evidence](https://github.com/interzettel/prehnite/pull/164) |
+| P1-M05-VA-S03-A02 | implementation | verified | Original atomic work S03-A02: Prove unsafe scene/material abstention. 20-case challenge matrix verifies transparent, hair, gradient and multi-object refusal. Previously independently accepted under its original narrow v1 task criteria, not proof that the parent product outcome or current real-image acceptance is complete.: [evidence](https://github.com/interzettel/prehnite/pull/120) |
+| P1-M05-VA-S03-A01 | implementation | verified | Original atomic work S03-A01: Demonstrate bounded synthetic product alpha correction. Offline flat-background leak pixels removed against withheld reference. Previously independently accepted under its original narrow v1 task criteria, not proof that the parent product outcome or current real-image acceptance is complete.: [evidence](https://github.com/interzettel/prehnite/pull/119) |
+| P1-M05-VA-Q06-A01 | implementation | verified | Original atomic work Q06-A01: Register owner-authorized product photo cohort. 84 private AI-generated JPEGs inventoried and source privacy preserved. Previously independently accepted under its original narrow v1 task criteria, not proof that the parent product outcome or current real-image acceptance is complete.: [evidence](https://github.com/interzettel/prehnite/pull/123) |
 | P1-M05-V1-S04 | implementation | verified | Previously verified source unit S04: [evidence](https://github.com/interzettel/prehnite/pull/176) |
 | P1-M05-V1-S02 | implementation | verified | Previously verified source unit S02: [evidence](https://github.com/interzettel/prehnite/pull/53) |
 | P1-M05-V1-S01 | implementation | verified | Previously verified source unit S01: [evidence](https://github.com/interzettel/prehnite/pull/1) |
