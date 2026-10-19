@@ -24,7 +24,7 @@ def oracle_fixture(tmp_path):
     draw.rectangle((19, 35, 85, 114), fill=255)
     draw.rectangle((40, 28, 62, 35), fill=170)
     draw.line((60, 28, 98, 28), fill=96, width=1)
-    draw.line((62, 29, 109, 32), fill=184, width=1)
+    draw.line((62, 29, 109, 32), fill=110, width=1)
     draw.rectangle((86, 50, 117, 100), fill=144)
     draw.rectangle((24, 45, 51, 91), fill=162)
     for x in (28, 36, 44):
