@@ -422,7 +422,8 @@ def _fill_foreground_rgb(rgba: Image.Image, hard: Image.Image, radius: int) -> I
 
 
 def _alpha_metrics(alpha: Image.Image, original: Image.Image,
-                   operation: dict | None = None) -> dict:
+                   operation: dict | None = None,
+                   *, trusted_soft_alpha: bool = False) -> dict:
     hard = _hard_alpha(alpha)
     orig = _hard_alpha(original)
     hard_bytes = hard.tobytes()
@@ -452,6 +453,10 @@ def _alpha_metrics(alpha: Image.Image, original: Image.Image,
     histogram = alpha.histogram()
     coverage = sum(index * count for index, count in enumerate(histogram)) / (
         255 * max(1, alpha.width * alpha.height))
+    # Binary-feather candidates historically compare against the hard mask's
+    # coverage. Preserved soft mattes must instead compare against the supplied
+    # soft alpha; otherwise authentic translucency appears as a false delta.
+    coverage_reference = original if trusted_soft_alpha else orig
     return {
         "alpha_coverage": round(coverage, 6),
         "hard_iou": round(intersect / union if union else 1.0, 6),
@@ -460,8 +465,8 @@ def _alpha_metrics(alpha: Image.Image, original: Image.Image,
         "removed_fraction": round(removed / orig_count, 6),
         "added_fraction": round(added / orig_count, 6),
         "coverage_delta": round(abs(coverage - (
-            sum(index * count for index, count in enumerate(orig.histogram())) / (
-                255 * max(1, orig.width * orig.height)))), 6),
+            sum(index * count for index, count in enumerate(coverage_reference.histogram())) / (
+                255 * max(1, coverage_reference.width * coverage_reference.height)))), 6),
         "bbox_xyxy": list(bbox) if bbox else [],
         "components": components,
         "original_components": original_components,
@@ -693,7 +698,10 @@ def run_cutout_qa(recipe_path: Path, *, source: Path, mask: Path,
             candidate, _, operation = _candidate_image(source_rgba, mask_image, spec)
             destination = output_dir / f"{spec.id}.png"
             _save_png_atomic(candidate, destination)
-            metrics = _alpha_metrics(candidate.getchannel("A"), alpha, operation)
+            metrics = _alpha_metrics(
+                candidate.getchannel("A"), alpha, operation,
+                trusted_soft_alpha=(spec.transition_mode == "preserve_trusted_soft"),
+            )
             reasons = []
             if metrics["hard_iou"] < recipe.qa.min_hard_iou:
                 reasons.append("hard_silhouette_iou_below_threshold")
