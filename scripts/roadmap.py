@@ -212,6 +212,38 @@ def validate(data: dict, root: Path = ROOT) -> dict:
             e.get("type") == "historical_receipt" for e in task.get("evidence", [])
         ):
             raise ValueError("new work cannot claim a historical receipt")
+    old_atomic_done = {t["id"]: t for t in old_atomic["tasks"] if t["state"] == "done"}
+    original_folded = {key for key, t in old_atomic_done.items() if t["parent"] == "S04"}
+    receipt_ids = data.get("migration_integrity", {}).get("carried_forward_atomic_ids")
+    folded = data.get("migration_integrity", {}).get("folded_atomic_ids")
+    if (not isinstance(receipt_ids, list) or not isinstance(folded, list)
+            or len(receipt_ids) != 17 or len(folded) != 4
+            or set(receipt_ids) != set(old_atomic_done) - original_folded
+            or set(folded) != original_folded):
+        raise ValueError("atomic receipts must carry 17 distinct and fold 4 overlapping tasks")
+    actual = set()
+    for task in tasks.values():
+        atomic_proofs = [p for p in task["evidence"] if p.get("legacy_atomic_id")]
+        if task.get("source") == "v1_atomic_verified" and len(atomic_proofs) != 1:
+            raise ValueError("atomic source requires one original receipt")
+        if task.get("source") != "v1_atomic_verified" and atomic_proofs:
+            raise ValueError("only original atomic sources may claim original receipt")
+        for proof in atomic_proofs:
+            id_ = proof["legacy_atomic_id"]
+            if id_ in actual or id_ not in old_atomic_done or id_ in original_folded:
+                raise ValueError("duplicate or missing original atomic task")
+            actual.add(id_)
+            old = old_atomic_done[id_]
+            if (proof.get("url") != old.get("evidence")
+                    or proof.get("type") != "merged_pr"
+                    or task.get("issue") != old["issue"]
+                    or task["id"][-len(id_):] != id_):
+                raise ValueError("original atomic evidence provenance lost")
+    if actual != set(receipt_ids):
+        raise ValueError("atomic subtask evidence missing")
+    parent_s04 = next((t for t in tasks.values() if t.get("original_unit") == "S04"), None)
+    if parent_s04 is None or set(parent_s04.get("folded_atomic_subtasks", [])) != original_folded:
+        raise ValueError("overlapping S04 work must be folded into its verified parent")
     for m in milestones.values():
         if type(m.get("priority")) is not int or m["priority"] not in range(5):
             raise ValueError("priority ranking must be P0 through P4")
@@ -222,6 +254,8 @@ def validate(data: dict, root: Path = ROOT) -> dict:
         "milestones_verified": sum(m["state"] == "verified" for m in milestones.values()),
         "tasks": len(tasks), "tasks_verified": sum(t["state"] == "verified" for t in tasks.values()),
         "transferred_verified_capabilities": len(received),
+        "transferred_distinct_atomic": len(actual),
+        "folded_duplicate_atomic": len(original_folded),
         "archived_release_units": 61, "archived_atomic_tasks": 73,
     }
 
