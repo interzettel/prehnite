@@ -50,9 +50,12 @@ def test_unknown_prerequisite_is_rejected():
 def test_dependency_cycle_is_rejected():
     module = progress_module()
     data = ledger()
-    # Two planned units with otherwise valid prerequisites may not depend on each other.
-    a = data["milestones"][4]["units"][2]  # S03 planned
-    b = data["milestones"][4]["units"][3]  # S04 planned
+    # Pick two *currently planned* units. Closing a previously planned
+    # parent must not turn this cycle test into premature-completion failure.
+    planned = [unit for milestone in data["milestones"]
+               for unit in milestone["units"] if unit["state"] == "planned"]
+    assert len(planned) >= 2
+    a, b = planned[:2]
     a["dependsOn"] = [b["id"]]
     b["dependsOn"] = [a["id"]]
     with pytest.raises(ValueError, match="Dependency cycle"):
