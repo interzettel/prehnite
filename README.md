@@ -110,7 +110,7 @@ The second command checks a local ComfyUI server at the specified loopback addre
 
 ## Development progress
 
-**Engineering evidence: 43/63 tasks verified (68.3%). Outcome acceptance: 1/9 milestones (11.1%).**
+**Engineering evidence: 60/80 tasks verified (75.0%). Outcome acceptance: 1/9 milestones (11.1%).**
 
 Both numbers come from the **same** [canonical roadmap](progress/roadmap.json). The first counts independently evidenced implementation and new task work; the second requires full research, real-machine and user-acceptance gates. Neither is a claim that 68% of all possible images are production-ready.
 
@@ -119,10 +119,10 @@ Both numbers come from the **same** [canonical roadmap](progress/roadmap.json). 
 | Priority | Workstream | Supporting work evidenced | Missing outcome |
 | --- | --- | ---: | --- |
 | **P0** | Model and provider selection | 4/6 (66.7%) | Decide on one pinned, lawful model and an apples-to-apples benchmark |
-| **P1** | Local 8 GiB inference evidence | 3/5 (60.0%) | Perform an authorized repeatability experiment and independent review |
-| **P1** | Batch and recovery | 18/21 (85.7%) | Complete a real ten-image batch, selection, recovery and export pilot |
+| **P1** | Local 8 GiB inference evidence | 6/8 (75.0%) | Perform an authorized repeatability experiment and independent review |
+| **P1** | Batch and recovery | 22/25 (88.0%) | Complete a real ten-image batch, selection, recovery and export pilot |
 | **P2** | Memory and throughput | 0/3 (0.0%) | Measure an optimization against the unchanged runtime baseline |
-| **P2** | Quality and delivery | 7/9 (77.8%) | Review real images and accepted-image yield |
+| **P2** | Quality and delivery | 17/19 (89.5%) | Review real images and accepted-image yield |
 | **P3** | LoRA and appearance experiments | 0/8 (0.0%) | Research and implement consistent style/reference workflows |
 
 The already accepted foundation and project tooling account for another **11/11 verified tasks**. Phase 1 is about making generation and useful batches reliable on an existing 8 GiB laptop. Phase 2 adds controlled LoRA experiments, consistent styling, and private reference-based appearance changes.
