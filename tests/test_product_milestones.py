@@ -25,14 +25,14 @@ def test_canonical_v2_has_research_code_experiment_and_acceptance():
     m.validate(data)
     kinds = Counter(t["kind"] for t in data["tasks"])
     assert kinds == {
-        "research": 3, "decision": 2, "implementation": 49,
+        "research": 3, "decision": 2, "implementation": 66,
         "experiment": 5, "acceptance": 4,
     }
     assert data["phases"][0]["exit_milestone"] == "P1-M05"
     assert data["phases"][1]["exit_milestone"] == "P2-M03"
     assert data["milestones"][0]["id"] == "P1-M00"
     assert data["milestones"][0]["state"] == "verified"
-    assert len([t for t in data["tasks"] if t["state"] == "verified"]) == 43
+    assert len([t for t in data["tasks"] if t["state"] == "verified"]) == 60
     assert len(data["migration_integrity"]["carried_forward_v1_unit_ids"]) == 43
 
 
@@ -84,7 +84,19 @@ def test_legacy_implementation_receipts_cannot_be_fabricated():
 
 def test_progress_not_awarded_from_untested_provider_code():
     data = module().load()
-    assert len(data["tasks"]) == 63
-    assert sum(t["state"] == "verified" for t in data["tasks"]) == 43
+    assert len(data["tasks"]) == 80
+    assert sum(t["state"] == "verified" for t in data["tasks"]) == 60
     assert all(t["state"] != "verified" for t in data["tasks"] if t["kind"] == "experiment")
     assert next(m for m in data["milestones"] if m["id"] == "P1-M02")["state"] != "verified"
+
+
+def test_distinct_atomic_receipts_preserved_and_s04_folded():
+    m = module()
+    data = deepcopy(m.load())
+    assert len(data["migration_integrity"]["carried_forward_atomic_ids"]) == 17
+    assert len(data["migration_integrity"]["folded_atomic_ids"]) == 4
+    assert m.validate(data)["transferred_distinct_atomic"] == 17
+    item = next(t for t in data["tasks"] if t.get("original_atomic_id") == "P08-A02")
+    item["evidence"][0]["url"] = "https://github.com/interzettel/prehnite/pull/999999"
+    with pytest.raises(ValueError, match="original atomic evidence provenance"):
+        m.validate(data)
