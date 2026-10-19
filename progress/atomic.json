@@ -169,10 +169,12 @@
       "parent": "P08",
       "title": "Publish compatibility profile by model size",
       "acceptance": "Decision table states actually measured versus unknown VRAM configurations",
-      "state": "planned",
+      "state": "done",
       "issue": 24,
       "owner": "Agent local",
-      "dependsOn": []
+      "dependsOn": [],
+      "evidence": "https://github.com/interzettel/prehnite/pull/170",
+      "verified_at": "2026-10-19"
     },
     {
       "id": "P09-A01",
