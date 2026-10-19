@@ -60,6 +60,38 @@ Run python scripts/atomic_progress.py --write to regenerate [the dual-metric SVG
 
 One human maintainer owns priorities, provider spend and final acceptance; agents own isolated implementation changes and write #9 handoffs. Hardware-heavy work stays in a local lane so a cloud agent cannot fabricate GPU measurements.
 
+## Proposed product milestone planning — distinct from release accounting
+
+[The proposed 8 GiB product milestones](PRODUCT_MILESTONES.md) and
+[their machine-readable v2 register](../progress/product_milestones.v2.proposed.json)
+separate **research**, **owner decision**, **implementation**,
+**real-world experiment**, and **human acceptance**. They are an
+**owner-review proposal** in PR #183, not yet adopted, and never change the
+canonical 61-unit or frozen 73-task progress percentages.
+
+- A research ticket is done when a dated, reviewed, source-linked decision
+  record compares alternatives, constraints and remaining uncertainty. It
+  does **not** need to produce code and does not prove an actual hardware run.
+- An implementation ticket is done with a reviewed merged PR and head-specific
+  tests; it does not certify useful physical model quality.
+- An experiment ticket is done with separately authorized and observed
+  real-machine evidence, a fair fixed baseline, resource/failure receipts and
+  independent review. Synthetic CI is necessary but not physical proof.
+- An acceptance ticket is done with a recorded human decision about useful
+  outputs, safety, rights and quality criteria set before the experiment.
+- A product milestone is only achieved when **every specified gate** is
+  independently verified. A PR count or partial task count is not a milestone.
+- The owner may re-order research, coding, benchmarking and review at planning
+  checkpoints; no scheduling plan or roadmap approval by itself authorizes
+  GPU execution, paid inference, download or public release.
+
+The offline proposed-register validator is
+`python scripts/check_product_milestones.py`. Tests reject false
+verification, missing legacy-unit crosswalks and task dependency cycles.
+To **adopt** the plan, require a new owner-approved, reviewed state/schema
+migration and governance rules for actual evidence receipts; do not silently
+flip this proposal to an active scoreboard.
+
 ## Version and releases
 
 Do not conflate the current *working tree version* with a shipped release. See [VERSIONING.md](VERSIONING.md), [RELEASING.md](RELEASING.md), and [CHANGELOG.md](../CHANGELOG.md). Tags, public release pages and PyPI uploads require a separate owner-approved release PR.
