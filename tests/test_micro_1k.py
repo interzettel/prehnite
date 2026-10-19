@@ -68,6 +68,7 @@ def test_1k_fal_remains_excluded_but_named_synthetic_demo_is_allowed(tmp_path):
     synthetic = profile.model_copy(deep=True)
     synthetic.generation.provider = "demo"
     synthetic.generation.model = "synthetic"
+    synthetic.generation.options = {}  # No ComfyUI node hints in the demo contract.
     validate_job(manifest, synthetic, tmp_path)
 
     with pytest.raises(ValueError, match="resolution tier"):
