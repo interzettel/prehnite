@@ -147,11 +147,12 @@
       "parent": "P08",
       "title": "Run bounded 8GB model load and forward pass",
       "acceptance": "Measure peak VRAM, cold/warm latency and failure behavior on actual laptop",
-      "state": "blocked",
+      "state": "done",
       "issue": 24,
       "owner": "Agent local",
       "dependsOn": [],
-      "blocker": "Requires owner/local GPU access and accepted model weights"
+      "evidence": "https://github.com/interzettel/prehnite/pull/177",
+      "verified_at": "2026-10-19"
     },
     {
       "id": "P08-A03",
