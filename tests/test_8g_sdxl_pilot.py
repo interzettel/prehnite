@@ -171,3 +171,12 @@ def test_forger_and_invalid_review_fields_fail_closed(tmp_path):
         receipt_path.write_text(json.dumps(tampered), encoding="utf-8")
         with pytest.raises(ValueError):
             source.evaluate(MANIFEST, root, receipt_path)
+
+
+def test_generation_repeatability_not_confused_with_sam2_cutout_contract():
+    roadmap = json.loads((ROOT / "progress/roadmap.json").read_text())
+    run = next(t for t in roadmap["tasks"] if t["id"] == "P1-M02-E01")
+    acceptance = run["acceptance"]
+    assert "three-identical-prompt SDXL generation" in acceptance
+    assert "SAM2 P08-A03 cutout contract is not SDXL generation evidence" in acceptance
+    assert run["state"] == "blocked"
