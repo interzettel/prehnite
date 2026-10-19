@@ -227,73 +227,86 @@ def validate(data: dict, root: Path = ROOT) -> dict:
 
 
 def render(data: dict) -> str:
-    milestone_by_id = {m["id"]: m for m in data["milestones"]}
-    task_by_id = {t["id"]: t for t in data["tasks"]}
-    done = sum(m["state"] == "verified" for m in data["milestones"])
+    """Render the one active progress view with granular task and outcome scores."""
+    by_id = {t["id"]: t for t in data["tasks"]}
+    total = len(by_id)
+    done = sum(t["state"] == "verified" for t in by_id.values())
+    m_done = sum(m["state"] == "verified" for m in data["milestones"])
+    milestones = sorted(data["milestones"], key=lambda m: (m["priority"], m["id"]))
     lines = [
-        "# Prehnite — one canonical product roadmap",
-        "",
-        "> Generated from progress/roadmap.json by scripts/roadmap.py. The original",
-        "> 61-unit release scope and 73-task register are archived historical evidence,",
-        "> not competing active project percentages.",
-        "",
-        f"**Product outcomes:** {done}/{len(data['milestones'])} milestones verified.  ",
-        f"**Scope:** 8 GiB RTX 4070 laptop, measured host RAM; two phases; no 4/6 GiB program.  ",
-        "**Evidence rule:** research != code != GPU observations != owner acceptance.",
-        "",
-        "| Phase | Milestone | State | Evidence gates | Next work |",
-        "| --- | --- | --- | ---: | --- |",
+        "# Prehnite | Product progress", "",
+        f"**Engineering tasks verified: {done}/{total} ({100 * done / total:.1f}%).**  ",
+        f"**Outcome milestones accepted: {m_done}/{len(milestones)} "
+        f"({100 * m_done / len(milestones):.1f}%).**", "",
+        "Engineering task completion includes original reviewed implementation receipts. "
+        "Outcome acceptance additionally requires real laptop tests, usable images, "
+        "and human review. Neither percentage alone is a product-quality certificate.", "",
+        "## Prioritized workstreams", "",
+        "| Priority | Workstream | Work evidenced | Completion | Outcome | Next missing task |",
+        "| --- | --- | ---: | ---: | --- | --- |",
     ]
-    for phase in data["phases"]:
-        for mid in phase["milestones"]:
-            m = milestone_by_id[mid]
-            count = sum(task_by_id[t]["state"] == "verified" for t in m["gate_tasks"])
-            next_ = next((t for t in m["gate_tasks"] if task_by_id[t]["state"] != "verified"), None)
-            state = m["state"].replace("_", " ")
-            lines.append(
-                f"| {escape(phase['id'])} | {escape(mid)} — {escape(m['title'])} "
-                f"| {state} | {count}/{len(m['gate_tasks'])} "
-                f"| {escape(next_ or 'Milestone evidenced')} |"
-            )
+    for m in milestones:
+        gate = [by_id[t] for t in m["gate_tasks"]]
+        count = sum(t["state"] == "verified" for t in gate)
+        next_task = next((t["id"] for t in gate if t["state"] != "verified"), "All gates evidenced")
+        state = "Accepted" if m["state"] == "verified" else (
+            "Blocked" if m["state"] == "blocked" else "Open"
+        )
+        lines.append(
+            f"| P{m['priority']} | {m['id']}: {m['workstream']} | "
+            f"{count}/{len(gate)} | {100 * count / len(gate):.1f}% | "
+            f"{state} | {next_task} |"
+        )
     lines += [
-        "",
-        "## Research, implementation, experiment, acceptance",
-        "",
-        "Every gate task has one question to answer and one accepted evidence type.",
-        "The kinds are not interchangeable; an offline CI success cannot prove visual quality.",
-        "",
+        "", "## What is needed next", "",
+        "Listed by priority, not by number of commits or the size of a previous release.",
+        ""
     ]
-    for phase in data["phases"]:
-        lines.extend([f"### {escape(phase['id'])} — {escape(phase['name'])}", ""])
-        for mid in phase["milestones"]:
-            m = milestone_by_id[mid]
-            lines.extend([f"#### {escape(mid)} — {escape(m['title'])}", "", m["objective"], ""])
-            lines.extend(["| Task | Kind | State | Owner | Acceptance / evidence |",
-                          "| --- | --- | --- | --- | --- |"])
-            for tid in m["gate_tasks"]:
-                task = task_by_id[tid]
-                proof = task["acceptance"].replace("|", "/").replace("\n", " ")
-                if task["state"] == "verified":
-                    proof += "; " + ", ".join(
-                        f"[evidence]({entry['url']})" for entry in task["evidence"]
-                    )
-                lines.append(
-                    f"| {tid} | {task['kind']} | {task['state'].replace('_',' ')} "
-                    f"| {task['owner']} | {proof} |"
+    for m in milestones:
+        if m["state"] == "verified":
+            continue
+        pending = [by_id[t] for t in m["gate_tasks"] if by_id[t]["state"] != "verified"]
+        lines.append(
+            f"- **P{m['priority']} · {m['id']} · {m['title']}**: "
+            f"{m['next_action']}. "
+            f"Next: {pending[0]['id']} ({pending[0]['kind']}); "
+            f"{len(pending)} outstanding."
+        )
+    lines += ["", "## Detailed task evidence", "",
+              "Each row is one work item counted once. Imported technical achievements "
+              "are scoped to the originally verified implementation, never to new "
+              "physical or human acceptance.", ""]
+    for m in sorted(data["milestones"], key=lambda v: (v["phase"], v["id"])):
+        gates = [by_id[t] for t in m["gate_tasks"]]
+        count = sum(t["state"] == "verified" for t in gates)
+        lines += [
+            f"### {m['id']} · {m['title']} ({count}/{len(gates)}; "
+            f"{100 * count / len(gates):.1f}%)", "",
+            "| Task | Kind | State | Evidence / required outcome |",
+            "| --- | --- | --- | --- |"
+        ]
+        for t in gates:
+            if t.get("original_unit"):
+                proof = "Previously verified source unit " + t["original_unit"]
+            else:
+                proof = t["acceptance"]
+            proof = proof.replace("|", "/").replace("\n", " ")
+            if t["state"] == "verified":
+                proof += ": " + ", ".join(
+                    f"[evidence]({e['url']})" for e in t["evidence"]
                 )
-            lines.append("")
+            lines.append(
+                f"| {t['id']} | {t['kind']} | "
+                f"{t['state'].replace('_', ' ')} | {proof} |"
+            )
+        lines.append("")
     lines += [
-        "## Historical evidence (archive only)",
-        "",
-        "The previous 43/61 released-scope evidence and 21/73 atomic evidence",
-        "remain preserved without being counted as parallel active progress.",
-        "[Original 61-unit ledger](../../progress/archive/v1/ledger.json) ·",
-        "[Original 73-task ledger](../../progress/archive/v1/atomic.json) ·",
-        "[Migration notes](../ROADMAP_MIGRATION_V2.md).",
-        "",
-        "The old 90-image/paid-provider/licensing/administration obligations remain",
-        "traceable in the crosswalk. A ten-image local test does not falsely close them.",
-        "",
+        "## Evidence and permission rules", "",
+        "A research review, merged implementation, hardware experiment, and human "
+        "quality decision are different types of evidence. An unapproved CUDA run, "
+        "unverified API billing, and a synthetic image cannot complete those gates.", "",
+        "[Canonical machine-readable roadmap](../../progress/roadmap.json) · "
+        "[Milestone acceptance definitions](../PRODUCT_MILESTONES.md).", ""
     ]
     return "\n".join(lines)
 
