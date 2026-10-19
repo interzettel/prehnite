@@ -13,7 +13,7 @@ import math
 import re
 from collections.abc import Mapping
 from dataclasses import dataclass, field
-from datetime import datetime
+from datetime import UTC, datetime
 from typing import Any
 
 SCHEMA_VERSION = 1
@@ -44,7 +44,17 @@ PREFLIGHT_LIMITS = {
 STARTUP_LIMIT_SECONDS = 120
 RUN_LIMIT_SECONDS = 300
 TOTAL_WORKLOAD_LIMIT_SECONDS = 900
+CLEANUP_LIMIT_SECONDS = 60
+DURATION_TOLERANCE_SECONDS = 1.5
 RUN_STATUSES = frozenset({"success", "failed", "terminated", "unknown"})
+HASH_PROVENANCE = frozenset({
+    "declared",
+    "operator_measured",
+    "independently_rehashed",
+    "unverified",
+    "synthetic",
+})
+TRUSTED_HASH_PROVENANCE = frozenset({"operator_measured", "independently_rehashed"})
 _HEX64 = re.compile(r"^[0-9a-f]{64}$")
 
 
@@ -61,22 +71,40 @@ def profile_digest(profile: Mapping[str, Any]) -> str:
     return canonical_digest({name: profile[name] for name in PROFILE_FIELDS})
 
 
-def _finite_nonnegative(value: Any) -> bool:
-    try:
-        number = float(value)
-    except (TypeError, ValueError):
-        return False
-    return math.isfinite(number) and number >= 0
+def _number(value: Any, *, allow_zero: bool = True) -> float | None:
+    """Return a finite non-negative number; reject bools, strings, NaN and inf."""
+    if isinstance(value, bool) or not isinstance(value, (int, float)):
+        return None
+    number = float(value)
+    if not math.isfinite(number) or number < 0:
+        return None
+    if not allow_zero and number == 0:
+        return None
+    return number
 
 
-def _valid_iso(value: Any) -> bool:
+def _integer(value: Any) -> int | None:
+    if isinstance(value, bool) or not isinstance(value, int):
+        return None
+    return value
+
+
+def _timestamp(value: Any) -> datetime | None:
+    """Parse an ISO-8601 timestamp only when it carries an explicit timezone."""
     if not isinstance(value, str) or not value.strip():
-        return False
+        return None
     try:
-        datetime.fromisoformat(value)
+        parsed = datetime.fromisoformat(value)
     except ValueError:
-        return False
-    return True
+        return None
+    if parsed.tzinfo is None:
+        return None
+    return parsed.astimezone(UTC)
+
+
+def _duration_matches(reported: float, start: datetime, finish: datetime) -> bool:
+    observed = (finish - start).total_seconds()
+    return observed >= 0 and abs(reported - observed) <= DURATION_TOLERANCE_SECONDS
 
 
 def classify_run_failure(run: Mapping[str, Any]) -> str:
@@ -114,13 +142,45 @@ def _incomplete(errors: list[str]) -> dict[str, Any]:
     }
 
 
+def _validate_integrity(data: Mapping[str, Any]) -> dict[str, Any] | None:
+    integrity = data.get("integrity")
+    if not isinstance(integrity, Mapping):
+        return _incomplete(["integrity must be an object"])
+    profile_provenance = integrity.get("profile_hashes")
+    output_provenance = integrity.get("output_hashes")
+    if profile_provenance not in HASH_PROVENANCE:
+        return _incomplete(["integrity.profile_hashes is missing or invalid"])
+    if output_provenance not in HASH_PROVENANCE:
+        return _incomplete(["integrity.output_hashes is missing or invalid"])
+    if profile_provenance not in TRUSTED_HASH_PROVENANCE:
+        return _incomplete([
+            "integrity.profile_hashes must be operator_measured or independently_rehashed"
+        ])
+    if output_provenance not in TRUSTED_HASH_PROVENANCE:
+        return _incomplete([
+            "integrity.output_hashes must be operator_measured or independently_rehashed"
+        ])
+    if output_provenance == "independently_rehashed":
+        manifest = integrity.get("independent_rehash_manifest")
+        if not isinstance(manifest, Mapping):
+            return _incomplete(["independent_rehash_manifest is required"])
+        if not (isinstance(manifest.get("verifier"), str) and manifest["verifier"].strip()):
+            return _incomplete(["independent_rehash_manifest.verifier is required"])
+        if not _HEX64.fullmatch(str(manifest.get("manifest_sha256") or "")):
+            return _incomplete(["independent_rehash_manifest.manifest_sha256 is invalid"])
+        if not _timestamp(manifest.get("verified_at")):
+            return _incomplete(["independent_rehash_manifest.verified_at is invalid"])
+    return None
+
+
 def validate_evidence(data: Mapping[str, Any]) -> dict[str, Any]:
     """Validate a complete P08-A03 evidence object.
 
-    A pass requires one successful startup, exactly three successful runs with
-    one identical profile digest, no retries/duplicates, distinct output paths
-    and hashes, and complete cleanup. Preflight failure, startup failure, any
-    run failure/termination/unknown outcome, or incomplete cleanup is blocked.
+    A pass requires one successful supervised startup and three successful runs
+    with one identical profile, measured preflight samples inside the floors,
+    observed durations inside every ceiling, no retries/duplicates, distinct
+    output paths and complete cleanup. Hash strings are never treated as proof
+    of independently rehashed private bytes.
     """
     if not isinstance(data, Mapping):
         return _incomplete(["evidence must be a JSON object"])
@@ -140,6 +200,10 @@ def validate_evidence(data: Mapping[str, Any]) -> dict[str, Any]:
         if not _HEX64.fullmatch(str(profile.get(name, ""))):
             return _incomplete([f"{name} must be 64 lowercase hex characters"])
 
+    integrity_error = _validate_integrity(data)
+    if integrity_error is not None:
+        return integrity_error
+
     preflight = data.get("preflight")
     if not isinstance(preflight, Mapping):
         return _incomplete(["preflight must be an object"])
@@ -149,15 +213,63 @@ def validate_evidence(data: Mapping[str, Any]) -> dict[str, Any]:
         if checks:
             detail = f"preflight blocked: {checks}"
         return _blocked("insufficient_resources", detail)
+    samples = preflight.get("samples")
+    if not isinstance(samples, list) or not samples:
+        return _incomplete(["preflight.samples must contain measured observations"])
+    for position, sample in enumerate(samples, start=1):
+        if not isinstance(sample, Mapping):
+            return _incomplete([f"preflight sample {position} must be an object"])
+        ram = _number(sample.get("available_ram_mib"))
+        commit = _number(sample.get("system_commit_percent"))
+        vram = _number(sample.get("free_vram_mib"))
+        if ram is None or commit is None or vram is None:
+            return _incomplete([f"preflight sample {position} has invalid measurements"])
+        if ram < PREFLIGHT_LIMITS["min_available_ram_mib"]:
+            return _blocked(
+                "insufficient_resources",
+                f"preflight sample {position} available RAM below floor",
+            )
+        if commit > PREFLIGHT_LIMITS["max_commit_percent"]:
+            return _blocked(
+                "insufficient_resources",
+                f"preflight sample {position} commit above ceiling",
+            )
+        if vram < PREFLIGHT_LIMITS["min_free_vram_mib"]:
+            return _blocked(
+                "insufficient_resources",
+                f"preflight sample {position} free VRAM below floor",
+            )
 
     startup = data.get("startup")
     if not isinstance(startup, Mapping):
         return _incomplete(["startup must be an object"])
+    startup_count = _integer(startup.get("count"))
+    if startup_count != 1:
+        return _blocked("startup_count_invalid", "exactly one supervised startup is required")
+    if startup.get("supervised") is not True:
+        return _blocked("startup_not_supervised", "startup supervision is required")
     if startup.get("ready") is not True:
-        reason = str(startup.get("reason") or "startup_failed").strip().lower()
-        code = "startup_timeout" if "timeout" in reason else "startup_failed"
-        return _blocked(code, f"startup did not become ready: {reason}")
-    if startup.get("prompts_submitted_before_ready", 0) != 0:
+        reason = startup.get("reason")
+        if reason is None:
+            return _incomplete(["startup.reason is required when not ready"])
+        reason_text = str(reason).strip().lower()
+        code = "startup_timeout" if "timeout" in reason_text else "startup_failed"
+        return _blocked(code, f"startup did not become ready: {reason_text}")
+    startup_start = _timestamp(startup.get("started_at"))
+    startup_finish = _timestamp(startup.get("finished_at"))
+    startup_elapsed = _number(startup.get("elapsed_seconds"), allow_zero=False)
+    if startup_start is None or startup_finish is None or startup_elapsed is None:
+        return _incomplete(["startup timestamps/elapsed_seconds are required and valid"])
+    if startup_finish < startup_start:
+        return _incomplete(["startup timestamps are reversed"])
+    if not _duration_matches(startup_elapsed, startup_start, startup_finish):
+        return _incomplete(["startup.elapsed_seconds does not match timestamps"])
+    if startup_elapsed > STARTUP_LIMIT_SECONDS:
+        return _blocked("startup_limit_exceeded", "startup exceeded 120 seconds")
+    before_ready = _integer(startup.get("prompts_submitted_before_ready"))
+    if before_ready is None:
+        return _incomplete(["startup.prompts_submitted_before_ready is required"])
+    if before_ready != 0:
         return _blocked("startup_contract_violation", "prompt submitted before readiness")
     if startup.get("required_nodes_present") is not True:
         return _blocked("required_nodes_missing", "required segmentation nodes unavailable")
@@ -171,17 +283,19 @@ def validate_evidence(data: Mapping[str, Any]) -> dict[str, Any]:
 
     prompt_ids: set[str] = set()
     output_paths: dict[str, str] = {}
-    run_indexes: set[int] = set()
+    previous_finish = startup_finish
     for position, run in enumerate(runs, start=1):
         if not isinstance(run, Mapping):
             return _incomplete([f"run {position} must be an object"])
-        index = run.get("run_index")
-        if not isinstance(index, int) or isinstance(index, bool) or index < 1:
-            return _incomplete([f"run {position} has invalid run_index"])
-        run_indexes.add(index)
+        index = _integer(run.get("run_index"))
+        if index != position:
+            return _incomplete([f"run {position} must have run_index {position}"])
         if run.get("profile_digest") != digest:
             return _blocked("profile_mismatch", f"run {position} profile digest differs")
-        if run.get("retry_count", 0) != 0:
+        retry_count = _integer(run.get("retry_count"))
+        if retry_count is None:
+            return _incomplete([f"run {position} retry_count is required"])
+        if retry_count != 0:
             return _blocked("retry_attempted", f"run {position} reports a retry")
         prompt_id = run.get("prompt_id")
         if not isinstance(prompt_id, str) or not prompt_id.strip():
@@ -189,15 +303,20 @@ def validate_evidence(data: Mapping[str, Any]) -> dict[str, Any]:
         if prompt_id in prompt_ids:
             return _blocked("duplicate_prompt", f"run {position} reuses a prompt id")
         prompt_ids.add(prompt_id)
-        if not _valid_iso(run.get("started_at")) or not _valid_iso(run.get("finished_at")):
-            return _incomplete([f"run {position} timestamps are invalid"])
-        if not _finite_nonnegative(run.get("latency_seconds")) or float(
-            run["latency_seconds"]
-        ) <= 0:
-            return _incomplete([f"run {position} latency_seconds is invalid"])
+        run_start = _timestamp(run.get("started_at"))
+        run_finish = _timestamp(run.get("finished_at"))
+        latency = _number(run.get("latency_seconds"), allow_zero=False)
+        if run_start is None or run_finish is None or latency is None:
+            return _incomplete([f"run {position} timestamps/latency are invalid"])
+        if run_finish < run_start or run_start < previous_finish:
+            return _incomplete([f"run {position} chronology is invalid"])
+        if not _duration_matches(latency, run_start, run_finish):
+            return _incomplete([f"run {position} latency does not match timestamps"])
+        if latency > RUN_LIMIT_SECONDS:
+            return _blocked("run_limit_exceeded", f"run {position} exceeded 300 seconds")
         for metric in ("peak_vram_mib", "min_free_vram_mib",
                        "min_available_ram_mib", "max_commit_percent"):
-            if not _finite_nonnegative(run.get(metric)):
+            if _number(run.get(metric)) is None:
                 return _incomplete([f"run {position} {metric} is invalid"])
         status = run.get("status")
         if status not in RUN_STATUSES:
@@ -208,6 +327,8 @@ def validate_evidence(data: Mapping[str, Any]) -> dict[str, Any]:
                 f"run {position} did not complete successfully",
                 prompts=position,
             )
+        if "cuda_error" not in run:
+            return _incomplete([f"run {position} cuda_error field is required"])
         if run.get("cuda_error"):
             return _blocked(
                 "cuda_error", f"run {position} reports a CUDA error", prompts=position
@@ -226,32 +347,52 @@ def validate_evidence(data: Mapping[str, Any]) -> dict[str, Any]:
                 f"run {position} reuses an output path with hash {output_hash}",
             )
         output_paths[output_path] = str(output_hash)
-
-    if run_indexes != {1, 2, 3}:
-        return _incomplete([f"run indexes must be 1..{EXPECTED_RUNS}"])
+        previous_finish = run_finish
 
     cleanup = data.get("cleanup")
     if not isinstance(cleanup, Mapping):
         return _incomplete(["cleanup must be an object"])
-    remaining = cleanup.get("remaining_processes")
-    if remaining not in ([], ()):
+    cleanup_start = _timestamp(cleanup.get("started_at"))
+    cleanup_finish = _timestamp(cleanup.get("finished_at"))
+    cleanup_elapsed = _number(cleanup.get("elapsed_seconds"), allow_zero=False)
+    if cleanup_start is None or cleanup_finish is None or cleanup_elapsed is None:
+        return _incomplete(["cleanup timestamps/elapsed_seconds are required and valid"])
+    if cleanup_finish < cleanup_start or cleanup_start < previous_finish:
+        return _incomplete(["cleanup chronology is invalid"])
+    if not _duration_matches(cleanup_elapsed, cleanup_start, cleanup_finish):
+        return _incomplete(["cleanup.elapsed_seconds does not match timestamps"])
+    if cleanup_elapsed > CLEANUP_LIMIT_SECONDS:
+        return _blocked("cleanup_limit_exceeded", "cleanup exceeded 60 seconds")
+    if "remaining_processes" not in cleanup:
+        return _incomplete(["cleanup.remaining_processes is required"])
+    remaining = cleanup["remaining_processes"]
+    if not isinstance(remaining, list) or remaining:
         return _blocked(
             "cleanup_incomplete", "owned processes remain", prompts=EXPECTED_RUNS
         )
-    if cleanup.get("listener_open") is not False:
+    for name in ("listener_open", "cache_removed", "environment_restored"):
+        if name not in cleanup:
+            return _incomplete([f"cleanup.{name} is required"])
+    if cleanup["listener_open"] is not False:
         return _blocked(
             "cleanup_incomplete", "listener still open", prompts=EXPECTED_RUNS
         )
-    if cleanup.get("cache_removed") is not True:
+    if cleanup["cache_removed"] is not True:
         return _blocked(
             "cleanup_incomplete", "disposable cache removal not proven",
             prompts=EXPECTED_RUNS,
         )
-    if cleanup.get("environment_restored") is not True:
+    if cleanup["environment_restored"] is not True:
         return _blocked(
             "cleanup_incomplete", "child environment restoration not proven",
             prompts=EXPECTED_RUNS,
         )
+
+    total_workload = (cleanup_finish - startup_start).total_seconds()
+    if total_workload > TOTAL_WORKLOAD_LIMIT_SECONDS:
+        return _blocked("workload_limit_exceeded", "total workload exceeded 900 seconds")
+    if total_workload <= 0:
+        return _incomplete(["total workload timestamps are inconsistent"])
 
     return {
         "verdict": "pass",
@@ -259,7 +400,19 @@ def validate_evidence(data: Mapping[str, Any]) -> dict[str, Any]:
         "run_count": EXPECTED_RUNS,
         "prompts_submitted": EXPECTED_RUNS,
         "outputs_distinct": len(output_paths) == EXPECTED_RUNS,
-        "acceptance": "3-run identical profile evidence and fallback path",
+        "startup_count": 1,
+        "observed_total_workload_seconds": round(total_workload, 3),
+        "total_workload_includes": ["startup", "three_runs", "cleanup"],
+        "integrity": {
+            "profile_hashes": data["integrity"]["profile_hashes"],
+            "output_hashes": data["integrity"]["output_hashes"],
+            "independently_verified": False,
+            "note": (
+                "Public validator checks provenance declarations only; private bytes "
+                "must be independently rehashed separately."
+            ),
+        },
+        "acceptance": "3-run identical profile evidence and fallback path (operator-reported)",
         "fallback_required": False,
         "note": "Observed evidence only; sampled peak VRAM is not an absolute peak.",
     }
@@ -324,8 +477,15 @@ def experiment_plan() -> dict[str, Any]:
             "retries": 0,
             "per_run_limit_seconds": RUN_LIMIT_SECONDS,
             "total_workload_limit_seconds": TOTAL_WORKLOAD_LIMIT_SECONDS,
+            "total_workload_includes": ["startup", "three_runs", "cleanup"],
+            "cleanup_limit_seconds": CLEANUP_LIMIT_SECONDS,
         },
         "preflight": dict(PREFLIGHT_LIMITS),
+        "integrity": {
+            "required_provenance": "operator_measured",
+            "independently_verified": False,
+            "private_rehash_required_for_independent_acceptance": True,
+        },
         "profile": {
             "identical_for_all_runs": True,
             "required_fields": list(PROFILE_FIELDS),
@@ -349,14 +509,15 @@ def experiment_plan() -> dict[str, Any]:
             "cleanup_ok",
         ],
         "stop_conditions": [
-            "preflight does not pass",
+            "preflight does not pass or a measured floor is violated",
             "disposable YAPF cache validation fails",
             "startup timeout or readiness failure",
+            "more than one startup or missing supervision receipt",
             "required segmentation nodes absent",
             "any run fails, terminates, reports CUDA/OOM, or has unknown outcome",
             "duplicate prompt id or reused output path",
             "cleanup incomplete, listener open, or resources remain",
-            "workload budget exhausted",
+            "startup/run/cleanup/workload limit exceeded",
             "owner interrupt",
         ],
         "cleanup": {
@@ -371,6 +532,7 @@ def experiment_plan() -> dict[str, Any]:
             "Three successful runs are required before any fallback interpretation.",
             "One laptop and one profile only; this is not a general compatibility claim.",
             "Output hashes may differ unless determinism is separately established.",
+            "Public validator cannot independently rehash private bytes.",
         ],
     }
 

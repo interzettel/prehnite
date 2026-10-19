@@ -31,8 +31,9 @@ The exact proposal, requiring fresh owner authorization, is:
   service;
 - unchanged preflight floors: available RAM **≥6,000 MiB**, commit **≤80%**,
   free VRAM **≥5,000 MiB**;
-- startup limit **120 s**, per-run limit **300 s**, total workload limit
-  **900 s**, and cleanup within **60 s**;
+- startup limit **120 s**, per-run limit **300 s**, cleanup limit **60 s**;
+- **total workload limit 900 s, measured from startup start through cleanup
+  finish; it therefore includes the startup, all three runs and cleanup**;
 - stop immediately on preflight/cache-validation/startup/required-node failure,
   any run failure, termination, CUDA/OOM error, unknown outcome, duplicate prompt,
   reused output path, exhausted budget or owner interrupt;
@@ -47,31 +48,74 @@ python scripts/p08_a03_offline.py validate <evidence.json>
 ```
 
 `plan` and `simulate-fallbacks` are hardware-free. `validate` is read-only and
-fails closed unless the three-run evidence is complete.
+fails closed unless the complete evidence bundle satisfies every measured limit.
 
 ## Evidence contract
 
-Each run must record:
+### Measured preflight
 
-- profile: input, model, workflow and parameters SHA256, profile id and target;
-- the identical profile digest across all three runs;
-- prompt id, run index, retry count and status;
-- start/finish timestamps and wall latency;
-- sampled peak VRAM, minimum free VRAM, minimum available RAM and maximum commit;
-- output path and SHA256, with distinct paths per run;
-- CUDA/OOM/failure classification and cleanup status.
+`preflight.status` must be `pass`, and `preflight.samples` must contain at least
+one typed observation. Every sample must provide finite numeric:
 
-The bundle additionally records preflight status, startup readiness and required
-node presence, remaining processes, listener state, disposable-cache removal and
-child-environment restoration.
+- `available_ram_mib` ≥ **6,000**;
+- `system_commit_percent` ≤ **80**;
+- `free_vram_mib` ≥ **5,000**.
 
-Rules:
+A reported pass with an unsafe or missing measurement is rejected. Booleans,
+strings, negatives, NaN and infinity are invalid; values are not coerced from
+defaults.
 
-- observed measurements are distinguished from derived values;
-- sampled peak VRAM is not an absolute peak or a minimum requirement;
-- output hashes need not be identical unless determinism is separately proven;
-- exactly three successful runs are required for a pass;
-- any missing or malformed field is `incomplete`, not a pass.
+### Startup receipt
+
+The startup object must record exactly one supervised startup (`count: 1`,
+`supervised: true`), `ready: true`, timezone-aware `started_at`/`finished_at`,
+`elapsed_seconds` ≤ **120**, explicit `prompts_submitted_before_ready: 0`, and
+`required_nodes_present: true`. Timestamps must be chronologically consistent
+with the reported duration.
+
+### Three runs
+
+Exactly three run records are required, with ordered `run_index` values `1..3`.
+Each must record:
+
+- the identical profile digest;
+- a unique prompt id and `retry_count: 0`;
+- timezone-aware start/finish timestamps and a matching latency ≤ **300 s**;
+- finite sampled peak VRAM, minimum free VRAM, minimum available RAM and maximum
+  commit;
+- `status: success`, an explicit null/empty `cuda_error`, and `cleanup_ok: true`;
+- a unique output path and a 64-character SHA256 declaration.
+
+Missing `retry_count`, a missing CUDA field, duplicate/reordered indexes, reversed
+or naive timestamps, booleans in numeric fields, NaN/infinity and a fourth run are
+all rejected.
+
+### Cleanup and total workload
+
+Cleanup must include timezone-aware `started_at`/`finished_at`,
+`elapsed_seconds` ≤ **60 s**, an empty `remaining_processes` list,
+`listener_open: false`, `cache_removed: true`, and
+`environment_restored: true`. Its start must follow the final run.
+
+The observed total workload is computed from startup start to cleanup finish and
+must be ≤ **900 s**. This explicitly includes startup, the three runs and cleanup.
+
+### Hash provenance
+
+A SHA256-shaped string is not proof that a file was rehashed. Evidence must
+declare:
+
+- `integrity.profile_hashes` and `integrity.output_hashes` provenance;
+- declared/unverified/synthetic provenance is not accepted as verified evidence;
+- `operator_measured` is accepted as operator-reported, not independently
+  verified;
+- an `independently_rehashed` declaration requires an independent manifest
+  declaration, but the public offline validator still reports
+  `independently_verified: false` because it cannot access or rehash private
+  bytes.
+
+The synthetic fixture is a schema/control-path fixture only. It is not hardware
+evidence.
 
 ## Simulated fallback coverage
 
@@ -88,22 +132,25 @@ The offline tests cover:
 - CUDA/OOM classification;
 - duplicate prompt submission;
 - reused/overwritten artifact path;
+- corrupt output hash;
 - incomplete cleanup, listener, cache removal and environment restoration;
-- exactly three runs, no fourth run and no retry.
+- exactly three runs, no fourth run and no retry;
+- equality and one-unit-beyond tests for every resource threshold and clock
+  ceiling;
+- missing-field/default, boolean/NaN/infinity, chronology and integrity
+  provenance cases.
 
 These are **control-path safety tests only**. They do not show that a real CUDA
 OOM recovers successfully or that a real hardware fallback occurred.
 
 ## Offline validation
 
-The focused suite is:
-
 ```text
 pytest -q tests/test_p08_a03_offline.py
 ```
 
-It uses a synthetic fixture with deliberately different output hashes. The
-fixture is not hardware evidence and its profile hashes are synthetic.
+The current focused suite has **88 tests**, plus a synthetic fixture whose output
+hashes intentionally differ. The fixture does not contain real hardware results.
 
 ## Remaining unverified / limitations
 
@@ -113,6 +160,8 @@ fixture is not hardware evidence and its profile hashes are synthetic.
 - One laptop model and one segmentation profile only; not a broader compatibility
   claim.
 - Output determinism is unknown and is not required by the contract.
+- Operator-reported hashes require separate private-byte rehashing for independent
+  artifact-integrity acceptance.
 - The real runtime runner and private evidence remain under separate hardware
   authorization.
 

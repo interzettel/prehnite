@@ -1,14 +1,34 @@
 {
   "cleanup": {
     "cache_removed": true,
+    "elapsed_seconds": 1.0,
     "environment_restored": true,
+    "finished_at": "2026-10-19T16:45:11+00:00",
     "listener_open": false,
-    "remaining_processes": []
+    "remaining_processes": [],
+    "started_at": "2026-10-19T16:45:10+00:00"
   },
   "experiment": "P08-A03",
   "fixture_kind": "synthetic_offline",
+  "integrity": {
+    "independent_rehash_manifest": null,
+    "output_hashes": "operator_measured",
+    "profile_hashes": "operator_measured"
+  },
   "preflight": {
     "blocked_checks": [],
+    "samples": [
+      {
+        "available_ram_mib": 8000.0,
+        "free_vram_mib": 7000.0,
+        "system_commit_percent": 45.0
+      },
+      {
+        "available_ram_mib": 7900.0,
+        "free_vram_mib": 6900.0,
+        "system_commit_percent": 46.0
+      }
+    ],
     "status": "pass"
   },
   "profile": {
@@ -24,7 +44,7 @@
       "cleanup_ok": true,
       "cuda_error": null,
       "failure_code": null,
-      "finished_at": "2026-10-19T16:45:02+00:00",
+      "finished_at": "2026-10-19T16:45:03+00:00",
       "latency_seconds": 2.0,
       "max_commit_percent": 45.0,
       "min_available_ram_mib": 8000.0,
@@ -36,15 +56,15 @@
       "prompt_id": "synthetic-prompt-1",
       "retry_count": 0,
       "run_index": 1,
-      "started_at": "2026-10-19T16:45:00+00:00",
+      "started_at": "2026-10-19T16:45:01+00:00",
       "status": "success"
     },
     {
       "cleanup_ok": true,
       "cuda_error": null,
       "failure_code": null,
-      "finished_at": "2026-10-19T16:45:05+00:00",
-      "latency_seconds": 2.1,
+      "finished_at": "2026-10-19T16:45:06+00:00",
+      "latency_seconds": 2.0,
       "max_commit_percent": 46.0,
       "min_available_ram_mib": 7900.0,
       "min_free_vram_mib": 5900.0,
@@ -55,15 +75,15 @@
       "prompt_id": "synthetic-prompt-2",
       "retry_count": 0,
       "run_index": 2,
-      "started_at": "2026-10-19T16:45:03+00:00",
+      "started_at": "2026-10-19T16:45:04+00:00",
       "status": "success"
     },
     {
       "cleanup_ok": true,
       "cuda_error": null,
       "failure_code": null,
-      "finished_at": "2026-10-19T16:45:08+00:00",
-      "latency_seconds": 2.2,
+      "finished_at": "2026-10-19T16:45:09+00:00",
+      "latency_seconds": 2.0,
       "max_commit_percent": 47.0,
       "min_available_ram_mib": 7800.0,
       "min_free_vram_mib": 5800.0,
@@ -74,16 +94,20 @@
       "prompt_id": "synthetic-prompt-3",
       "retry_count": 0,
       "run_index": 3,
-      "started_at": "2026-10-19T16:45:06+00:00",
+      "started_at": "2026-10-19T16:45:07+00:00",
       "status": "success"
     }
   ],
   "schema_version": 1,
   "startup": {
+    "count": 1,
     "elapsed_seconds": 10.0,
+    "finished_at": "2026-10-19T16:45:00+00:00",
     "prompts_submitted_before_ready": 0,
     "ready": true,
     "reason": "ready",
-    "required_nodes_present": true
+    "required_nodes_present": true,
+    "started_at": "2026-10-19T16:44:50+00:00",
+    "supervised": true
   }
 }
