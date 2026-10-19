@@ -97,7 +97,7 @@ MODELS = (
               licensing="External Anthropic API/model terms apply.",
               price_status="user_estimate_required"),
     ModelInfo("demo", "synthetic", "generate", False, "Offline synthetic images",
-              "prompt", aspect_ratios=ASPECTS, resolution_tiers=TIERS,
+              "prompt", aspect_ratios=ASPECTS, resolution_tiers=TIERS + ("1k",),
               licensing="Bundled synthetic Python/Pillow adapter; MIT project code.",
               adapter_status="offline_tested"),
     ModelInfo("demo", "pillow", "upscale", False, "Pillow interpolation, not AI",
