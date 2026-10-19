@@ -26,8 +26,9 @@ can explicitly select a candidate with:
 
 - The `mask` argument must be a same-size, unrotated **8-bit grayscale PNG
   (`L`)** with a matching SHA256. This is a *provenance declaration*, not
-  proof the matte is physically correct. RGB/grayscale-converted masks and
-  resampling are refused for the trusted mode.
+  proof the matte is physically correct. RGB/grayscale-converted masks,
+  binary-only masks without any fractional transmission and resampling are
+  refused for the trusted mode.
 - The input `source` image, bound by the recipe's existing SHA256, must contain
   **unassociated straight foreground RGB** at partly transparent pixels. A
   normal photograph already composited against an unknown background is **not
