@@ -1,8 +1,6 @@
 # P08-A01 — environment and installed-weight rights record
 
-> **Review status:** evidence prepared for independent review. This page is not a
-> completion claim, not a legal opinion, and does not change the frozen atomic
-> progress register. Issue: [#24](https://github.com/interzettel/prehnite/issues/24).
+> **Review status:** evidence independently reviewed and merged as [PR #166](https://github.com/interzettel/prehnite/pull/166). P08-A01 was then credited in the original frozen atomic register. This is not a legal opinion, live benchmark certification or P08 parent completion. Issue: [#24](https://github.com/interzettel/prehnite/issues/24).
 
 ## Scope
 
@@ -163,6 +161,6 @@ checkpoints into RAM. Compare against the table above.
 | Inventory reproducible by another engineer | met |
 | Private data excluded from this public page | met |
 
-**Local assessment: `P08-A01: READY FOR INDEPENDENT REVIEW`.**
+**Independent review verdict: `P08-A01 original acceptance criterion met`.** The private checkpoint hashes were computed and preserved by the laptop agent, not rehashed on GitHub. The private report's uploaded SHA256 and the upstream model-card licence declarations were independently checked. This does not certify full downstream redistribution or model execution.
 
-At the time of local evidence capture, the atomic register was **15/73**. Separately, [S04-A02](https://github.com/interzettel/prehnite/pull/167) has since been merged and credited through [PR #168](https://github.com/interzettel/prehnite/pull/168), so current development `main` is **16/73**. P08-A01 is **not yet counted**. Only after independent review, merge of this evidence PR, and a separate original-register reconciliation may it become **17/73**. No P08-A02 work is authorized by this documentation.
+At the time of local evidence capture, the atomic register was **15/73**. Later [S04-A02](https://github.com/interzettel/prehnite/pull/168) credit brought it to **16/73**. The independently reviewed P08-A01 evidence subsequently merged through [PR #166](https://github.com/interzettel/prehnite/pull/166), and its original-register reconciliation raises the current tracker to **17/73 (23.29%)**. P08-A02 remains blocked; no additional GPU work is authorized by this evidence.
