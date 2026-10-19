@@ -10,11 +10,11 @@
 <rect x="32" y="118" width="810" height="18" rx="5" fill="#D5DCD5"/>
 <rect x="32" y="118" width="557.7" height="18" rx="5" fill="#075231"/>
 <text x="32" y="190" font-size="16" font-weight="600" fill="#075231">Atomic delivery / initially unfinished 19 units</text>
-<text x="1060" y="190" font-size="18" font-weight="700" text-anchor="end" fill="#075231">17/73 · 23.29%</text>
+<text x="1060" y="190" font-size="18" font-weight="700" text-anchor="end" fill="#075231">18/73 · 24.66%</text>
 <rect x="32" y="203" width="810" height="18" rx="5" fill="#D5DCD5"/>
-<rect x="32" y="203" width="188.6" height="18" rx="5" fill="#075231"/>
+<rect x="32" y="203" width="199.7" height="18" rx="5" fill="#075231"/>
 <text x="32" y="249" font-size="13" fill="#53675A">Second measure covers only frozen open-unit tasks, never an overall completion estimate.</text>
-<text x="32" y="273" font-size="13" fill="#53675A">Review 0 · Active 0 · Blocked 27 · Planned 29 · baseline 2026-10-17</text>
+<text x="32" y="273" font-size="13" fill="#53675A">Review 0 · Active 0 · Blocked 27 · Planned 28 · baseline 2026-10-17</text>
 <text x="32" y="305" font-size="16" font-weight="600" fill="#075231">PR-SIZED TASKS BY UNFINISHED UNIT</text>
 <text x="32" y="333" font-size="14" font-weight="700" fill="#075231">C06</text>
 <text x="120" y="333" font-size="12" fill="#384F45">Versioned pricing quotes and bill reconcili</text>
@@ -118,9 +118,9 @@
 <text x="120" y="918" font-size="12" fill="#384F45">Multiple-instance selection and named outpu</text>
 <g><title>S04-A01 / done / Fail closed on disconnected product instances</title><rect x="565.00" y="904" width="100.75" height="17" rx="2" fill="#075231"/></g>
 <g><title>S04-A02 / done / Define stable target instance identity and hierarchy</title><rect x="668.75" y="904" width="100.75" height="17" rx="2" fill="#075231"/></g>
-<g><title>S04-A03 / planned / Implement owner-selected region to instance binding</title><rect x="772.50" y="904" width="100.75" height="17" rx="2" fill="#D5DCD5"/></g>
+<g><title>S04-A03 / done / Implement owner-selected region to instance binding</title><rect x="772.50" y="904" width="100.75" height="17" rx="2" fill="#075231"/></g>
 <g><title>S04-A04 / planned / Round-trip multi-object export and resume</title><rect x="876.25" y="904" width="100.75" height="17" rx="2" fill="#D5DCD5"/></g>
-<text x="1060" y="918" font-size="13" text-anchor="end" fill="#075231">2/4</text>
+<text x="1060" y="918" font-size="13" text-anchor="end" fill="#075231">3/4</text>
 <text x="32" y="957" font-size="14" font-weight="700" fill="#075231">S05</text>
 <text x="120" y="957" font-size="12" fill="#384F45">Failure classification and bounded targeted</text>
 <g><title>S05-A01 / done / Typed zero-spend repair decision plan</title><rect x="565.00" y="943" width="80.00" height="17" rx="2" fill="#075231"/></g>
