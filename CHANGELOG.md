@@ -8,6 +8,8 @@ This project follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) an
 
 ### Proposed product focus clarification (2026-10-19)
 
+- Add [separate research/build/experiment/acceptance milestone proposal](docs/PRODUCT_MILESTONES.md) and a versioned machine-readable [v2 register](progress/product_milestones.v2.proposed.json), guarded by offline consistency tests. Original 61/73 ledgers, completion evidence, releases and authorizations remain unchanged; no new milestone is claimed verified.
+
 - Add [8 GiB laptop-first product strategy proposal](docs/PRODUCT_STRATEGY_LOW_VRAM.md): Phase 1 measured efficient image generation/batching on the existing RTX 4070 laptop (with system-RAM constraints; no 4/6 GiB test program) and Phase 2 reproducible LoRA, visual variation and privacy-first appearance experiments. Reuse ComfyUI and existing runtimes instead of replacing their inference engines; research InvokeAI/Diffusers/sd.cpp as comparators and Higgsfield as an optional, separately consented hosted image API. Documentation only; no model execution, new API credentials, changes to approved resource ceilings, ledger credit or accepted release-scope migration.
 
 
