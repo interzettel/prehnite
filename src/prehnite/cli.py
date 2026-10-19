@@ -7,7 +7,19 @@ from .registry import list_models
 from .store import Journal
 from .reporting import export_report, package
 
-app = typer.Typer(help="Batch-first, quality-gated visual asset production.")
+app = typer.Typer(help="Local-first image generation and reproducible batches.")
+
+
+@app.callback(invoke_without_command=True)
+def entrypoint(ctx: typer.Context):
+    """Show the Prehnite start screen on bare launch, without changing command output."""
+    if ctx.invoked_subcommand is not None:
+        return
+    from .banner import allow_ansi, banner
+    typer.echo(banner(color=allow_ansi()), nl=False)
+    typer.echo("Start: prehnite init --destination my-first-batch")
+    typer.echo("Help:  prehnite --help")
+
 
 @app.command()
 def init(destination: Path = typer.Option(Path("."), "--destination",

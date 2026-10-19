@@ -6,6 +6,14 @@ This project follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) an
 
 ## [Unreleased]
 
+### CLI identity and README diagrams (2026-10-19)
+
+- Remove all em dashes from the README and add accurate editable, zero-network SVG diagrams for the runtime workflow and one canonical two-phase product roadmap. Use the Prehnite paper, forest, and coral brand tokens.
+- Add ASCII startup art on bare `prehnite` invocation without contaminating subcommand outputs, with tests and a color-safe opt-out.
+- Add a project-scoped, MIT-attributed Diagram Design skill with pinned upstream instructions and relevant references; the requested `npx skills add` installer was unavailable due to network DNS. Its complete optional gallery/toolchain is not claimed installed.
+- Add an offline, deterministic animation generator for the owner-selected desktop hero. The actual GIF and source art were created in the chat working container and remain pending a binary upload to GitHub; the README intentionally retains the existing approved hero until then. Do not confuse the local GIF artifact with a committed GitHub asset.
+
+
 ### Recalibration README and experimental soft-alpha integration (2026-10-19)
 
 - Rewrite [the project README](README.md) around an actual 8 GiB laptop, user-controlled ComfyUI workflows, useful images, local LoRA research, simple no-cost quick start and candid separation of demonstrated features from ambitions. Keep the owner-selected forest-green/coral Risograph hero. Surface **one canonical v2 roadmap**, not the retired 61/73 percentages as current progress.

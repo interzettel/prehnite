@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="rtitle rdesc" viewBox="0 0 1350 530">
+<title id="rtitle">Prehnite two-phase product roadmap</title><desc id="rdesc">Phase 1 contains the verified foundation followed by five planned milestones. Phase 2 has three planned LoRA and private appearance milestones. Only foundation is complete.</desc>
+<rect width="1350" height="530" fill="#F6EFE2"/>
+<text x="43" y="55" font-family="Arial,Helvetica,sans-serif" font-size="25" font-weight="700" fill="#075231">PRODUCT MILESTONES</text>
+<text x="43" y="84" font-family="Arial,Helvetica,sans-serif" font-size="16" font-weight="400" fill="#53675A">One roadmap. Outcomes verified by evidence.</text>
+<rect x="43" y="103" width="72" height="4" rx="2" fill="#F7655B"/>
+<rect x="42" y="130" width="1266" height="185" rx="8" fill="#FFF9EC" stroke="#D8CBB8" stroke-width="1.5"/>
+<text x="62" y="161" font-family="Arial,Helvetica,sans-serif" font-size="14" font-weight="700" fill="#A63D35">PHASE 1</text>
+<text x="178" y="161" font-family="Arial,Helvetica,sans-serif" font-size="20" font-weight="700" fill="#075231">Efficient 8 GiB image generation and useful batches</text>
+<rect x="60" y="181" width="190" height="104" rx="8" fill="#EAF1E6" stroke="#075231" stroke-width="1.5"/>
+<circle cx="79" cy="201" r="6" fill="#075231"/>
+<text x="75" y="231" font-family="Arial,Helvetica,sans-serif" font-size="17" font-weight="700" fill="#075231">P1-M00</text><text x="75" y="255" font-family="Arial,Helvetica,sans-serif" font-size="15" font-weight="400" fill="#53675A">Foundation</text><text x="176" y="202" font-family="Arial,Helvetica,sans-serif" font-size="10" font-weight="700" fill="#075231">VERIFIED</text><rect x="268" y="181" width="190" height="104" rx="8" fill="#FFF9EC" stroke="#D8CBB8" stroke-width="1.5"/>
+<circle cx="287" cy="201" r="6" fill="#D8CBB8"/>
+<text x="283" y="231" font-family="Arial,Helvetica,sans-serif" font-size="17" font-weight="700" fill="#075231">P1-M01</text><text x="283" y="255" font-family="Arial,Helvetica,sans-serif" font-size="15" font-weight="400" fill="#53675A">Model decision</text><rect x="476" y="181" width="190" height="104" rx="8" fill="#FFF9EC" stroke="#D8CBB8" stroke-width="1.5"/>
+<circle cx="495" cy="201" r="6" fill="#D8CBB8"/>
+<text x="491" y="231" font-family="Arial,Helvetica,sans-serif" font-size="17" font-weight="700" fill="#075231">P1-M02</text><text x="491" y="255" font-family="Arial,Helvetica,sans-serif" font-size="15" font-weight="400" fill="#53675A">8 GiB baseline</text><rect x="684" y="181" width="190" height="104" rx="8" fill="#FFF9EC" stroke="#D8CBB8" stroke-width="1.5"/>
+<circle cx="703" cy="201" r="6" fill="#D8CBB8"/>
+<text x="699" y="231" font-family="Arial,Helvetica,sans-serif" font-size="17" font-weight="700" fill="#075231">P1-M03</text><text x="699" y="255" font-family="Arial,Helvetica,sans-serif" font-size="15" font-weight="400" fill="#53675A">Optimization</text><rect x="892" y="181" width="190" height="104" rx="8" fill="#FFF9EC" stroke="#D8CBB8" stroke-width="1.5"/>
+<circle cx="911" cy="201" r="6" fill="#D8CBB8"/>
+<text x="907" y="231" font-family="Arial,Helvetica,sans-serif" font-size="17" font-weight="700" fill="#075231">P1-M04</text><text x="907" y="255" font-family="Arial,Helvetica,sans-serif" font-size="15" font-weight="400" fill="#53675A">Ten-image batch</text><rect x="1100" y="181" width="190" height="104" rx="8" fill="#FFF9EC" stroke="#D8CBB8" stroke-width="1.5"/>
+<circle cx="1119" cy="201" r="6" fill="#D8CBB8"/>
+<text x="1115" y="231" font-family="Arial,Helvetica,sans-serif" font-size="17" font-weight="700" fill="#075231">P1-M05</text><text x="1115" y="255" font-family="Arial,Helvetica,sans-serif" font-size="15" font-weight="400" fill="#53675A">Human acceptance</text>
+<rect x="42" y="335" width="1266" height="157" rx="8" fill="#FFF9EC" stroke="#D8CBB8" stroke-width="1.5"/>
+<text x="62" y="366" font-family="Arial,Helvetica,sans-serif" font-size="14" font-weight="700" fill="#A63D35">PHASE 2</text>
+<text x="178" y="366" font-family="Arial,Helvetica,sans-serif" font-size="20" font-weight="700" fill="#075231">LoRA consistency and private appearance experiments</text>
+<rect x="60" y="382" width="392" height="104" rx="8" fill="#FFF9EC" stroke="#D8CBB8" stroke-width="1.5"/>
+<circle cx="79" cy="402" r="6" fill="#D8CBB8"/>
+<text x="75" y="432" font-family="Arial,Helvetica,sans-serif" font-size="17" font-weight="700" fill="#075231">P2-M01</text><text x="75" y="456" font-family="Arial,Helvetica,sans-serif" font-size="15" font-weight="400" fill="#53675A">LoRA research</text><rect x="476" y="382" width="392" height="104" rx="8" fill="#FFF9EC" stroke="#D8CBB8" stroke-width="1.5"/>
+<circle cx="495" cy="402" r="6" fill="#D8CBB8"/>
+<text x="491" y="432" font-family="Arial,Helvetica,sans-serif" font-size="17" font-weight="700" fill="#075231">P2-M02</text><text x="491" y="456" font-family="Arial,Helvetica,sans-serif" font-size="15" font-weight="400" fill="#53675A">Style variations</text><rect x="892" y="382" width="392" height="104" rx="8" fill="#FFF9EC" stroke="#D8CBB8" stroke-width="1.5"/>
+<circle cx="911" cy="402" r="6" fill="#D8CBB8"/>
+<text x="907" y="432" font-family="Arial,Helvetica,sans-serif" font-size="17" font-weight="700" fill="#075231">P2-M03</text><text x="907" y="456" font-family="Arial,Helvetica,sans-serif" font-size="15" font-weight="400" fill="#53675A">Private appearance</text>
+<text x="44" y="519" font-family="Arial,Helvetica,sans-serif" font-size="13" font-weight="400" fill="#075231">Filled dot: verified</text>
+<text x="220" y="519" font-family="Arial,Helvetica,sans-serif" font-size="13" font-weight="400" fill="#53675A">Pale dot: planned</text>
+</svg>

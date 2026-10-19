@@ -1,8 +1,10 @@
 <div align="center">
 
-<img src="assets/prehnite-riso-green-coral.png" alt="Prehnite — forest-green and coral Risograph artwork on warm paper" width="680" style="border-radius: 16px; clip-path: inset(0 round 16px);" />
+<img src="assets/prehnite-riso-green-coral.png" alt="Prehnite : forest-green and coral Risograph artwork on warm paper" width="680" style="border-radius: 16px; clip-path: inset(0 round 16px);" />
 
 ### Make the images. Keep the experiments.
+
+<sub>Prehnite's terminal greeting and the owner-selected laptop artwork are prepared as an animated GIF; see [the CLI animation production guide](docs/CLI_HERO.md). The published README continues using the canonical Riso bitmap until the selected GIF asset is committed.</sub>
 
 **A local-first Python workbench for image generation, controlled variation, quality checks, and repeatable batches.**
 
@@ -18,11 +20,17 @@ Designed around a real **8 GB laptop GPU**, not a requirement to own a workstati
 
 ---
 
+## At a glance
+
+![How Prehnite connects inputs, the runtime and human review](assets/diagrams/workflow.svg)
+
+The diagram shows responsibilities, not a claim that every runtime and visual-quality pathway is production-ready.
+
 ## Why Prehnite?
 
 Having an 8 GB graphics card should not mean that experimenting with image models is a luxury. But getting something useful out of local inference involves more than clicking Generate: managing memory pressure, changing models, keeping the right settings, resuming an interrupted batch, comparing results, and figuring out which image is worth keeping.
 
-**Prehnite is the operator around existing image runtimes.** It aims to make those jobs reproducible, inspectable and less wasteful—on the hardware you already have.
+**Prehnite is the operator around existing image runtimes.** It aims to make those jobs reproducible, inspectable and less wasteful:on the hardware you already have.
 
 This is *not* an attempt to build another diffusion model, replace ComfyUI's node editor, or create a Higgsfield-style media publishing suite. Prehnite uses existing model ecosystems where they do the job well and adds the parts needed for **reliable experimentation and useful output**.
 
@@ -35,7 +43,7 @@ This is *not* an attempt to build another diffusion model, replace ComfyUI's nod
 | Try hairstyles, beards or other appearance variations privately | Local-only reference workflows with identity/attribute evaluation | **Phase 2 goal; not currently available as a turnkey workflow** |
 | Move a workflow to a stronger GPU or use a paid image API | Preserve the same job intent while explicitly choosing compatible backends | **Architectural goal; provider-by-provider verification required** |
 
-**The metric we care about is useful images per unit of time, memory and money—not raw generations or a perfect-looking demo.** We have not yet established a benchmark advantage over ordinary ComfyUI.
+**The metric we care about is useful images per unit of time, memory and money:not raw generations or a perfect-looking demo.** We have not yet established a benchmark advantage over ordinary ComfyUI.
 
 ## Try Prehnite without a GPU
 
@@ -152,21 +160,24 @@ Technical tests passing should not be mistaken for those missing real-world proo
 
 ## One product roadmap
 
+![Two-phase Prehnite roadmap with the foundation verified and remaining milestones planned](assets/diagrams/roadmap.svg)
+
+
 We've retired the competing progress ledgers. The **only active product roadmap** is [`progress/roadmap.json`](progress/roadmap.json), with one [generated status dashboard](docs/progress/STATUS.md).
 
 **Current accepted product outcomes: 1 of 9 milestones.** The verified milestone is the installable synthetic foundation, not the entire image engine.
 
 | | Milestone | Outcome |
 | --- | --- | --- |
-| Phase 1 | **P1-M00 — Foundation** | Verified: installable offline/synthetic engine |
-| Phase 1 | **P1-M01 — Choose a model/runtime** | Research and benchmark decision for the existing 8 GB laptop |
-| Phase 1 | **P1-M02 — Reproducible baseline** | Authorized physical repeatability and independent review |
-| Phase 1 | **P1-M03 — Useful optimization** | Same-workload memory/time comparison with quality trade-offs |
-| Phase 1 | **P1-M04 — Ten-image local batch** | Generate, inspect, resume, select and package actual images |
-| Phase 1 | **P1-M05 — Product acceptance** | Human-reviewed quality, usefulness, installation and resource report |
-| Phase 2 | **P2-M01 — LoRA research** | Choose compatible methods with rights and 8 GB constraints |
-| Phase 2 | **P2-M02 — Style variations** | Reproducible controlled model/LoRA/seed experiments |
-| Phase 2 | **P2-M03 — Private appearance sandbox** | Local reference variations with human consistency assessment |
+| Phase 1 | **P1-M00 : Foundation** | Verified: installable offline/synthetic engine |
+| Phase 1 | **P1-M01 : Choose a model/runtime** | Research and benchmark decision for the existing 8 GB laptop |
+| Phase 1 | **P1-M02 : Reproducible baseline** | Authorized physical repeatability and independent review |
+| Phase 1 | **P1-M03 : Useful optimization** | Same-workload memory/time comparison with quality trade-offs |
+| Phase 1 | **P1-M04 : Ten-image local batch** | Generate, inspect, resume, select and package actual images |
+| Phase 1 | **P1-M05 : Product acceptance** | Human-reviewed quality, usefulness, installation and resource report |
+| Phase 2 | **P2-M01 : LoRA research** | Choose compatible methods with rights and 8 GB constraints |
+| Phase 2 | **P2-M02 : Style variations** | Reproducible controlled model/LoRA/seed experiments |
+| Phase 2 | **P2-M03 : Private appearance sandbox** | Local reference variations with human consistency assessment |
 
 A milestone is only complete after its **research, code, real experiment and/or human-acceptance gates** are actually satisfied. There is no automatic Phase 3 for audio, videos, social publishing or another UI.
 
@@ -205,4 +216,4 @@ Prehnite is developed with agents, but the owner chooses priorities, model/asset
 
 ---
 
-<div align="center"><sub>Prehnite — local experiments should stay yours.</sub></div>
+<div align="center"><sub>Prehnite : local experiments should stay yours.</sub></div>
