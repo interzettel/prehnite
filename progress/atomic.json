@@ -474,10 +474,12 @@
       "parent": "S04",
       "title": "Round-trip multi-object export and resume",
       "acceptance": "Tests confirm named output hashes across interruption and restart",
-      "state": "planned",
+      "state": "done",
       "issue": 30,
       "owner": "Agent cloud",
-      "dependsOn": []
+      "dependsOn": [],
+      "evidence": "https://github.com/interzettel/prehnite/pull/176",
+      "verified_at": "2026-10-19"
     },
     {
       "id": "S05-A01",
