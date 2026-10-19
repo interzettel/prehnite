@@ -1,5 +1,8 @@
 # Style Guide
 
+> **Prehnite brand override (2026-10-19).** This vendored guide is intentionally customized, derived from `src/prehnite/brand.py` and `docs/BRAND_PALETTE.md`. Coral `#F7655B` is decorative, `#A63D35` serves as readable accent text on paper. Use system/local fonts only. For new project illustrations, prefer no external font requests, trackers, scripts, or media embeds. Upstream guidance on typography/layout still applies. Some upstream default explanatory text below refers to the original default skin as history, not the effective tokens.
+
+
 **The single source of truth for colors, typography, and tokens.** Every diagram draws from this — not from hex values inlined in other reference files. If you want to change the visual skin of Diagram Design, change this file.
 
 Default skin is a cool editorial palette — white-smoke paper, jet-black ink, burnt-tangerine accent, blue-slate muted. It's designed to look good out of the box; swap these values (or run [`onboarding.md`](onboarding.md)) and every new diagram inherits the new skin without touching any type-specific logic.
@@ -16,17 +19,17 @@ Every token is referred to by **semantic role**, not by its hex value. Type refe
 
 | Role | Purpose | Default (light) | Default (dark) |
 |---|---|---|---|
-| `paper` | Page background, default node fill | `#f5f5f5` (white-smoke) | `#2d3142` (jet-black) |
-| `paper-2` | Diagram container bg, secondary fill | `#ececec` | `#393e53` |
-| `ink` | Primary text, primary stroke | `#2d3142` (jet-black) | `#f5f5f5` (white-smoke) |
-| `ink-strong` | High-contrast text on warm accent fills | `#111111` | `#111111` |
-| `muted` | Secondary text, default arrow stroke | `#4f5d75` (blue-slate) | `#bfc0c0` (silver) |
-| `soft` | Sublabels, boundary labels | `#5a6580` | `#949eb2` |
-| `rule` | Hairline borders | `rgba(45,49,66,0.12)` | `rgba(245,245,245,0.12)` |
-| `rule-solid` | Stronger borders, baselines | `#bfc0c0` (silver) | `rgba(191,192,192,0.25)` |
-| `accent` | Focal / 1–2 max per diagram | `#bf4520` (burnt-tangerine) | `#f08a59` |
-| `accent-tint` | Fill for accent-bordered boxes | `rgba(191,69,32,0.08)` | `rgba(240,138,89,0.10)` |
-| `link` | HTTP/API calls, external arrows | `#2e5aa8` | `#739fdf` |
+| `paper` | Page background, default node fill | `#F6EFE2` (Prehnite warm paper) | `#132820` (Prehnite midnight forest) |
+| `paper-2` | Diagram container bg, secondary fill | `#FFF9EC` | `#203A2E` |
+| `ink` | Primary text, primary stroke | `#075231` (Prehnite forest) | `#F6EFE2` (Prehnite paper) |
+| `ink-strong` | High-contrast text on warm accent fills | `#075231` | `#132820` |
+| `muted` | Secondary text, default arrow stroke | `#53675A` (Prehnite muted green) | `#CED4C2` |
+| `soft` | Sublabels, boundary labels | `#53675A` | `#CED4C2` |
+| `rule` | Hairline borders | `rgba(7,82,49,0.12)` | `rgba(246,239,226,0.15)` |
+| `rule-solid` | Stronger borders, baselines | `#D8CBB8` (border only) | `#465C4E` |
+| `accent` | Focal / 1–2 max per diagram | `#A63D35` (accessible coral text) | `#FD8276` (coral on dark) |
+| `accent-tint` | Fill for accent-bordered boxes | `rgba(247,101,91,0.09)` | `rgba(253,130,118,0.13)` |
+| `link` | HTTP/API calls, external arrows | `#075231` | `#F6EFE2` |
 
 > **Brand palette source:** this skin maps to a five-color brand palette: `jet-black #2d3142`, `silver #bfc0c0`, `white-smoke #f5f5f5`, `atomic-tangerine`, `blue-slate #4f5d75`. The light `accent` is not the raw brand tangerine. Raw atomic-tangerine reads 2.86:1 on `paper`, too faint for an arrow or a label, so the skin uses `#bf4520`, the same hue darkened until it clears 4.5:1 as text. The `soft`, `rule`, and `link` tokens are derived (a darker slate, ink at opacity, and a saturated variant in the blue-slate hue family) to cover roles the brand palette doesn't name directly. Every derived value is held to the contrast contract below.
 
