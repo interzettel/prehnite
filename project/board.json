@@ -260,10 +260,10 @@
       "type": "issue",
       "number": 29,
       "title": "Transparent alpha matting and halo removal",
-      "lane": "Backlog",
+      "lane": "In review",
       "priority": "P1",
       "stream": "Cutouts",
-      "note": "Merged #120 synthetic safety matrix; full S03 real-photo matte/color decontamination still open for separate implementation."
+      "note": "S03-A04 opt-in trusted soft-alpha synthetic evidence in draft PR #182; owner-reviewed genuine material mattes remain unverified."
     },
     {
       "type": "issue",
