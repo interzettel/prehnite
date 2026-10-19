@@ -18,8 +18,7 @@ jobs:
       - run: python -m compileall -q src
       - run: python scripts/check_governance.py
       - run: python scripts/board.py --check
-      - run: python scripts/progress.py --check
-      - run: python scripts/atomic_progress.py --check
+      - run: python scripts/roadmap.py --check
       - run: python scripts/model_rights.py --check
       - run: python scripts/recipe_plan.py --recipe recipes/prehnite-micro/0.1.0-preview.1.json
       - run: python scripts/recipe_plan.py --recipe recipes/prehnite-macro/0.1.0-preview.1.json
