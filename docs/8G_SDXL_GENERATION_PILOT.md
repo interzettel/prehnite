@@ -54,7 +54,7 @@ The last command runs **synthetic/demo generation only**. It exercises the exist
 
 ## Before any real physical run
 
-A local operator must receive **new explicit scoped permission** that fixes which model/checkpoint and exact hashes, ComfyUI revision/graph, sampler/steps, stop conditions, RAM/commit/VRAM preflight floors, time budget, output privacy, no additional installation or retries, and cleanup. The earlier P08-A03 proposal has its own stricter one-startup, three-identical-run constraints. There is no implied approval to reuse that authorization for ten distinct images.
+A local operator must receive **new explicit scoped permission** that fixes which model/checkpoint and exact hashes, ComfyUI revision/graph, sampler/steps, stop conditions, RAM/commit/VRAM preflight floors, time budget, output privacy, no additional installation or retries, and cleanup. The prior P08-A03 proposal governs SAM2 segmentation, not SDXL generation. Generation-specific timing, inputs, resource sampling and stop limits must be approved separately; no permission from one can be reused for the other.
 
 Check the [micro recipe execution contract](RECIPE_EXECUTION.md) and [first real asset guide](FIRST_REAL_ASSET.md). This generation-only manifest **does not satisfy the existing three-stage recipe's cutout graph requirements**. Do not falsely label a generation-only engine run as recipe-attested unless an appropriate generation-only recipe schema is separately implemented and reviewed.
 
