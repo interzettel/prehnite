@@ -1,7 +1,9 @@
 # P08-A03 offline preparation — repeated local inference
 
-**Status:** preparation only; **P08-A03 remains blocked**  
-**Hardware execution:** not authorized and not performed  
+**Status:** preparation only; **P08-A03 remains blocked**
+
+**Hardware execution:** not authorized and not performed
+
 **Tracker:** 21/73 unchanged; no completion credit requested
 
 ## Purpose
