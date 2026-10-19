@@ -51,7 +51,7 @@ def test_prevent_synthetic_only_real_hardware_credit():
         "type": "merged_pr",
         "url": "https://github.com/interzettel/prehnite/pull/181",
     }]
-    with pytest.raises(ValueError, match="prerequisite|required evidence kind"):
+    with pytest.raises(ValueError, match="premature task credit|required evidence kind"):
         module.validate(data)
 
 
