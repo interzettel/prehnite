@@ -165,6 +165,4 @@ checkpoints into RAM. Compare against the table above.
 
 **Local assessment: `P08-A01: READY FOR INDEPENDENT REVIEW`.**
 
-The atomic register remains **15/73**. P08-A01 must not be marked done and the
-tracker must not be regenerated until this evidence is independently reviewed
-and a supporting public PR is merged. No P08-A02 work is started here.
+At the time of local evidence capture, the atomic register was **15/73**. Separately, [S04-A02](https://github.com/interzettel/prehnite/pull/167) has since been merged and credited through [PR #168](https://github.com/interzettel/prehnite/pull/168), so current development `main` is **16/73**. P08-A01 is **not yet counted**. Only after independent review, merge of this evidence PR, and a separate original-register reconciliation may it become **17/73**. No P08-A02 work is authorized by this documentation.
