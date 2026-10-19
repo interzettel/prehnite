@@ -79,7 +79,7 @@ additional materials, independent reference masks, operational repeatability
 and signed journal approval remain outstanding. Documentation [#160](https://github.com/interzettel/prehnite/pull/160)
 is the final status-reconciliation merge.
 
-**Counting impact:** the first accepted lamp and PRs #159/#161 alone did not satisfy a remaining original atomic completion criterion. The subsequent, separately reviewed and merged [S03-A03](https://github.com/interzettel/prehnite/pull/164) explicitly proved its original bounded color-spill acceptance and advances the **original frozen register to 15/73 (20.55%)**. The 61-unit release tracker remains **42/61 (68.9%)**, its seven milestone gates remain **2/7**. For example, P08 still
+**Counting impact:** the first accepted lamp and PRs #159/#161 alone did not satisfy a remaining original atomic completion criterion. The subsequent, separately reviewed and merged [S03-A03](https://github.com/interzettel/prehnite/pull/164) explicitly proved its original bounded color-spill acceptance and initially advanced the **original frozen register to 15/73**. The subsequently merged [S04-A02](https://github.com/interzettel/prehnite/pull/167) supplies reproducible, order-independent instance IDs and intended output paths, taking the same original register to **16/73 (21.92%)** without claiming region selection or multi-object export. The 61-unit release tracker remains **42/61 (68.9%)**, its seven milestone gates remain **2/7**. For example, P08 still
 requires repeatable 8 GiB recipe feasibility evidence, and S06/S07 still
 require diverse, independently reviewed real masks. This is **new verified
 case-study progress**, not proof those broader contracts have passed.
