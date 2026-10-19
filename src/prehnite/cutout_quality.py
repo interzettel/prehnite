@@ -148,6 +148,24 @@ class AlphaCandidateSpec(Strict):
     decontaminate: Literal[True] = True
     preserve_core_px: int = Field(default=1, ge=0, le=4)
     color_spill: KnownBackgroundSpill | None = None
+    # Default binary feathering remains unchanged. Opt-in soft mode requires
+    # a byte-identified matte and an operator-declared *straight* RGB plate.
+    # The declaration is not proof of true foreground recovery from a photo.
+    transition_mode: Literal["binary_feather", "preserve_trusted_soft"] = "binary_feather"
+    soft_alpha_sha256: str | None = None
+    foreground_rgb_origin: Literal["straight_foreground_rgb"] | None = None
+
+    @model_validator(mode="after")
+    def soft_matte_contract(self) -> AlphaCandidateSpec:
+        if self.transition_mode == "preserve_trusted_soft":
+            if not self.soft_alpha_sha256 or not self.foreground_rgb_origin:
+                raise ValueError("Trusted soft alpha needs SHA256 and straight RGB declaration")
+            _sha(self.soft_alpha_sha256)
+            if self.color_spill is not None:
+                raise ValueError("Soft alpha preservation cannot apply uniform spill unmixing")
+        elif self.soft_alpha_sha256 is not None or self.foreground_rgb_origin is not None:
+            raise ValueError("Binary feather mode must not claim soft matte provenance")
+        return self
 
     @field_validator("id")
     @classmethod
@@ -404,7 +422,8 @@ def _fill_foreground_rgb(rgba: Image.Image, hard: Image.Image, radius: int) -> I
 
 
 def _alpha_metrics(alpha: Image.Image, original: Image.Image,
-                   operation: dict | None = None) -> dict:
+                   operation: dict | None = None,
+                   *, trusted_soft_alpha: bool = False) -> dict:
     hard = _hard_alpha(alpha)
     orig = _hard_alpha(original)
     hard_bytes = hard.tobytes()
@@ -434,6 +453,10 @@ def _alpha_metrics(alpha: Image.Image, original: Image.Image,
     histogram = alpha.histogram()
     coverage = sum(index * count for index, count in enumerate(histogram)) / (
         255 * max(1, alpha.width * alpha.height))
+    # Binary-feather candidates historically compare against the hard mask's
+    # coverage. Preserved soft mattes must instead compare against the supplied
+    # soft alpha; otherwise authentic translucency appears as a false delta.
+    coverage_reference = original if trusted_soft_alpha else orig
     return {
         "alpha_coverage": round(coverage, 6),
         "hard_iou": round(intersect / union if union else 1.0, 6),
@@ -442,8 +465,8 @@ def _alpha_metrics(alpha: Image.Image, original: Image.Image,
         "removed_fraction": round(removed / orig_count, 6),
         "added_fraction": round(added / orig_count, 6),
         "coverage_delta": round(abs(coverage - (
-            sum(index * count for index, count in enumerate(orig.histogram())) / (
-                255 * max(1, orig.width * orig.height)))), 6),
+            sum(index * count for index, count in enumerate(coverage_reference.histogram())) / (
+                255 * max(1, coverage_reference.width * coverage_reference.height)))), 6),
         "bbox_xyxy": list(bbox) if bbox else [],
         "components": components,
         "original_components": original_components,
@@ -464,6 +487,24 @@ def _alpha_metrics(alpha: Image.Image, original: Image.Image,
 def _candidate_image(source: Image.Image, mask: Image.Image, spec: AlphaCandidateSpec
                      ) -> tuple[Image.Image, Image.Image, dict]:
     alpha = _mask_alpha(mask, source.size)
+    if spec.transition_mode == "preserve_trusted_soft":
+        # Never synthesize fine strands or transmission from a hard SAM mask.
+        # Passing through user-supplied alpha is valid only under an explicit
+        # byte- and straight-foreground declaration; no visual approval follows.
+        if mask.mode != "L" or mask.size != source.size or alpha.tobytes() != mask.tobytes():
+            raise CutoutContractError("soft_alpha_must_be_exact_L_PNG")
+        if not any(alpha.histogram()[1:255]):
+            raise CutoutContractError("trusted_soft_alpha_has_no_fractional_transitions")
+        candidate = source.convert("RGB").convert("RGBA")
+        candidate.putalpha(alpha)
+        return candidate, alpha, {
+            "soft_alpha_preserved": True,
+            "foreground_rgb_origin": "operator_declared_straight_foreground_rgb",
+            "straight_foreground_rgb_verified": False,
+            "foreground_rgb_expansion_applied": False,
+            "color_spill_unmix_applied": False,
+            "source_alpha_modified_pixels": 0,
+        }
     hard = _hard_alpha(alpha)
     filtered = hard.filter(ImageFilter.GaussianBlur(radius=spec.sigma_px))
     core = hard.filter(ImageFilter.MinFilter(size=2 * spec.preserve_core_px + 1))
@@ -620,6 +661,20 @@ def run_cutout_qa(recipe_path: Path, *, source: Path, mask: Path,
         destination = output_dir / "cutout-quality.json"
         _write_json_exclusive(destination, report.model_dump(mode="json"))
         return destination
+    if any(spec.transition_mode == "preserve_trusted_soft"
+           for spec in recipe.alpha_candidates):
+        # Guard the raw declared image, not just its normalized grayscale
+        # interpretation. No rescaling, RGB conversion or EXIF rotation.
+        with Image.open(mask_path) as matte_image:
+            if (matte_image.format != "PNG" or matte_image.mode != "L"
+                    or matte_image.size != source_rgba.size
+                    or matte_image.getexif().get(274, 1) != 1):
+                raise CutoutContractError("soft_alpha_must_be_exact_L_PNG")
+        actual_matte_sha = sha256(mask_path)
+        for spec in recipe.alpha_candidates:
+            if (spec.transition_mode == "preserve_trusted_soft"
+                    and spec.soft_alpha_sha256 != actual_matte_sha):
+                raise CutoutContractError("soft_alpha_sha256_mismatch")
     hard = _hard_alpha(alpha)
     hard_count = sum(1 for value in hard.tobytes() if value)
     border = _border_fraction(hard)
@@ -645,7 +700,10 @@ def run_cutout_qa(recipe_path: Path, *, source: Path, mask: Path,
             candidate, _, operation = _candidate_image(source_rgba, mask_image, spec)
             destination = output_dir / f"{spec.id}.png"
             _save_png_atomic(candidate, destination)
-            metrics = _alpha_metrics(candidate.getchannel("A"), alpha, operation)
+            metrics = _alpha_metrics(
+                candidate.getchannel("A"), alpha, operation,
+                trusted_soft_alpha=(spec.transition_mode == "preserve_trusted_soft"),
+            )
             reasons = []
             if metrics["hard_iou"] < recipe.qa.min_hard_iou:
                 reasons.append("hard_silhouette_iou_below_threshold")

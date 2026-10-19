@@ -4,7 +4,7 @@
 
 **Hardware execution:** not authorized and not performed
 
-**Tracker:** 21/73 unchanged; no completion credit requested
+**Progress:** This originally belonged to the frozen v1 atomic register (historical snapshot: 21/73). The [single active v2 roadmap](../progress/roadmap.json) keeps the physical repeatability benchmark unverified; no completion credit is requested.
 
 ## Purpose
 
@@ -180,7 +180,6 @@ Owner authorization is requested for **one** session with **one** startup and
 above, with no retry and no fourth prompt. Any failure ends the session and is
 reported with evidence rather than retried.
 
-Until that grant and an independently reviewed evidence PR exist, P08-A03 stays
-**blocked** and the atomic tracker remains **21/73 (28.77%)**.
+Until that grant and independently reviewed physical evidence exist, the P08-A03 **historical criterion remains unverified** and the v2 [8 GiB reproducible baseline (P1-M02)](progress/STATUS.md) remains **unverified**. The archived [21/73 v1 atomic snapshot](../progress/archive/v1/atomic.json) is read-only, not an active product completion score.
 
 [![](https://img.shields.io/badge/powered_by-dsh-4D6BFE?style=flat-square&logo=deepseek&logoColor=white)](https://github.com/deepseek-ai/deepseek-harness)

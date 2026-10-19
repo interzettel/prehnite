@@ -6,6 +6,13 @@ This project follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) an
 
 ## [Unreleased]
 
+### Recalibration README and experimental soft-alpha integration (2026-10-19)
+
+- Rewrite [the project README](README.md) around an actual 8 GiB laptop, user-controlled ComfyUI workflows, useful images, local LoRA research, simple no-cost quick start and candid separation of demonstrated features from ambitions. Keep the owner-selected forest-green/coral Risograph hero. Surface **one canonical v2 roadmap**, not the retired 61/73 percentages as current progress.
+- Integrate the **experimental opt-in soft-alpha preservation and synthetic reference-matte diagnostics** originally developed in [draft PR #182](https://github.com/interzettel/prehnite/pull/182), without mutating its agent branch. An exact-hash grayscale soft alpha, declared straight-foreground RGB and fraction-preserving path remain **review pending**; full hair/glass decontamination, real-photo acceptance and v2 image-quality milestone credit are explicitly **not** claimed. Original binary-feather default remains unchanged.
+- Maintain the separately merged [P08-A03 offline preparation](docs/P08_A03_OFFLINE_PREPARATION.md) as a validator and simulated fallback contract, **not** a live repeatability benchmark. No ComfyUI execution, GPU testing, model download, billable API submission, version tag or PyPI release was performed by this integration.
+
+
 ### Canonical product roadmap migration (2026-10-19)
 
 - Replace overlapping active 61-unit, 73-task, and proposed product trackers with **one evidence-gated v2 roadmap** in [progress/roadmap.json](progress/roadmap.json), rendered and validated by [scripts/roadmap.py](scripts/roadmap.py). Two phases and 9 outcome milestones (including the verified foundation) contain 26 typed research/decision/implementation/experiment/acceptance tasks; existing F01–F06 merge evidence carries forward without fabricated GPU or image-quality credit.
