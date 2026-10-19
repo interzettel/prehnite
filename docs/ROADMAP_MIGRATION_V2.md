@@ -1,7 +1,7 @@
 # v1 → v2 roadmap migration — single canonical product scoreboard
 
 **Migration intent authorized:** 2026-10-19 (owner requested one canonical product roadmap).  
-**Implementation:** reviewable [PR #183](https://github.com/interzettel/prehnite/pull/183); becomes authoritative on merge, not before.  
+**Implementation:** initial adoption [PR #183](https://github.com/interzettel/prehnite/pull/183), repaired evidence mapping proposed in [PR #186](https://github.com/interzettel/prehnite/pull/186).  
 **Active source after merge:** [progress/roadmap.json](../progress/roadmap.json).  
 **Generated dashboard:** [docs/progress/STATUS.md](progress/STATUS.md), by `python scripts/roadmap.py --write`.
 
@@ -24,9 +24,11 @@ These original exact v1 artifacts have been frozen by Git blob identity, not sil
 | [docs/archive/v1/progress.svg](archive/v1/progress.svg) and [atomic.svg](archive/v1/atomic.svg) | Original generated charts |
 | [scripts/archive/v1/progress.py](../scripts/archive/v1/progress.py) and [atomic_progress.py](../scripts/archive/v1/atomic_progress.py) | Original generators retained for provenance, no longer run as active CI progress |
 
-**Transfer policy:** The six original F01–F06 units independently verify an installable, safe **synthetic** foundation. They are carried to **P1-M00**, with the unchanged linked merged PR evidence. This yields **1/9 verified product milestones and 6/26 verified tasks**. Those values are *not* numerical conversions of 43/61 or 21/73.
+**Transfer policy:** All **43 independently verified original release units** are represented as scope-limited verified engineering tasks in the current roadmap, with their original PR/issue evidence and unit IDs. The original foundation F01-F06 plus project workflow tasks make P1-M00 an 11/11 accepted implementation outcome. In addition, the original atomic register contains **21 completed child tasks**. Of those, **17** under unfinished parent units represent distinct previously accepted implementation evidence and are transferred individually. The remaining **four S04 children** expand a parent unit that was already completed; they are attached as provenance to the single S04 parent task, **not counted again**.
 
-The other 37 previously done v1 units are **not discarded**: their merged PR evidence persists in the archive and live code. They are also **not automatically credited** as full new outcomes just because their IDs sound similar. As the team reaches a new gate, it may evaluate and reference the old work, alongside any new real-machine and human-acceptance evidence the gate requires.
+This gives the canonical v2 register **60/80 verified engineering tasks (75.0%)**: 43 original parent capability receipts + 17 nonoverlapping verified atomic tasks + 20 new outcome-specific tasks still open. **Outcome acceptance remains 1/9 milestones (11.1%)**. Every transferred evidence record preserves the exact original URL and original ID. No imported contract proves a new GPU benchmark, live provider invoice, model improvement or human image-quality decision.
+
+The original 18 unfinished parent requirements remain traceable in the crosswalk below. Their unverified states are not made complete merely because some technical subtasks were merged.
 
 A ten-image local batch is a useful v2 acceptance target. It does **not** silently close the original 90-image live pilot, cost reconciliation or full release criteria.
 
