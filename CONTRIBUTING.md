@@ -6,7 +6,7 @@ Keep the Python core independent from image inference packages. Add providers be
 
 Workflow and versions: [docs/AGILE.md](docs/AGILE.md), [docs/SPRINT.md](docs/SPRINT.md), [docs/VERSIONING.md](docs/VERSIONING.md), [CHANGELOG.md](CHANGELOG.md). Follow the pull request template; never tag or publish from an ordinary feature PR.
 
-For ledger-backed work, name the stable unit IDs, link the scoped GitHub issue and include evidence in the PR. Run `python scripts/progress.py --write` after verified changes (or `--check` when unchanged). Follow one-human/multiple-agent ownership boundaries and document local-only GPU results separately.
+For v2 roadmap work, claim a task in `progress/roadmap.json`, state whether it is research, implementation, experiment or human acceptance, link the existing GitHub issue and attach the matching evidence. Run `python scripts/roadmap.py --write` after reviewed changes (or `--check` when unchanged). The original 61-unit and 73-task ledgers are immutable historical archives. Physical GPU tests require separate authorization.
 
 Before opening a PR:
 - Run unit tests and bytecode compilation.
