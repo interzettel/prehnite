@@ -6,7 +6,7 @@
 
 **Original acceptance:** “Decision table states actually measured versus unknown VRAM configurations.”
 
-**Status:** ready for independent review; **not** a completion claim and **not** a general GPU support certification.
+**Status:** independently reviewed against the original P08-A04 criterion; public evidence merge and original-ledger reconciliation are separate actions. **Not** a general GPU support certification.
 
 This page records what was actually executed or refused on one local Windows host. It is intentionally narrow. The machine-readable table is [`compatibility-profile.v1.json`](compatibility-profile.v1.json); the environment and installed-weight evidence is in [`P08_A01_ENVIRONMENT_AND_RIGHTS.md`](P08_A01_ENVIRONMENT_AND_RIGHTS.md). The existing hardware doctor remains the generic read-only probe ([HARDWARE_DOCTOR.md](HARDWARE_DOCTOR.md)). Issue: [#24](https://github.com/interzettel/prehnite/issues/24).
 
@@ -68,4 +68,4 @@ The historical successful receipt is preserved in the private lab and cited by S
 - CPU-only consistency tests: [`tests/test_compatibility_profile.py`](../tests/test_compatibility_profile.py)
 - Test rule: only an `observed_success` row may carry successful runtime measurements; every unknown row must have no measured values; no unmeasured configuration may be labelled successful.
 - The profile is not a runtime probe. Use the read-only [hardware doctor](HARDWARE_DOCTOR.md) for current host observations; no model is loaded.
-- Atomic tracker: **17/73** at publication. P08-A04 is not marked complete until this profile is independently reviewed and the supporting PR is merged; P08-A02/A03 remain blocked.
+- Atomic tracker: **17/73** when this profile was first prepared. The unrelated [S04-A03 completion](https://github.com/interzettel/prehnite/pull/172) subsequently advanced development `main` to **18/73**. P08-A04 must not receive credit until its own public evidence merges and the **same frozen atomic register** is reconciled; only then could it reach **19/73**. P08-A02/A03 and the P08 parent remain blocked.
