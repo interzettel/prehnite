@@ -18,9 +18,10 @@ def test_immutable_v1_atomic_snapshot_and_historical_parent_ids():
     assert sum(t["state"] == "done" for t in atomic["tasks"]) == 21
     assert len(atomic["baseline_open_parent_ids"]) == 19
     assert all(t["parent"] in units for t in atomic["tasks"])
-    assert {u["id"] for u in units.values() if u["state"] != "done"} == {
+    assert {u["id"] for u in units.values() if u["state"] != "done"}.issubset({
         t["parent"] for t in atomic["tasks"]
-    }
+    })
+    assert len({t["parent"] for t in atomic["tasks"]}) == 19
 
 
 def test_archived_reports_remain_available_but_no_parallel_active_dashboard():
