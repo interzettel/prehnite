@@ -1,7 +1,9 @@
 # P08-A02 bounded benchmark — startup blocked in SAM2/yapf import
 
-**Task:** P08-A02 — bounded 8 GB model load and forward pass  
-**Status:** **BLOCKED — no prompt, model load or inference occurred**  
+**Task:** P08-A02 — bounded 8 GB model load and forward pass
+
+**Status:** **BLOCKED — no prompt, model load or inference occurred**
+
 **Issue:** [#24](https://github.com/interzettel/prehnite/issues/24)
 
 ## What was attempted
