@@ -1,5 +1,8 @@
 # Roadmap (issues should reference acceptance tests)
 
+**Proposed product retargeting (owner review pending, 2026-10-19):** [Low-VRAM-first two-phase image-workbench strategy](PRODUCT_STRATEGY_LOW_VRAM.md). This proposes Phase 1 practical low-memory generation/batching and Phase 2 LoRA/appearance-consistency experiments, with ComfyUI reused as first runtime and hosted image APIs optional. **It does not change the 61-unit release ledger, frozen 73-task register, acceptance gates, completed features, task ownership, current priorities or hardware authorization until separately approved.** Existing model-recipe epic [#132](https://github.com/interzettel/prehnite/issues/132) is the discussion home.
+
+
 **Progress and agent tasks:** [Verified 61-unit release ledger](progress/STATUS.md) · [Atomic task dashboard and acceptance criteria](progress/ATOMIC.md) · [Frozen PR-sized register](../progress/atomic.json) · [Current iteration board](SPRINT.md). The atomic percentage is scoped only to the 19 unfinished release units from its initial baseline, not overall project progress.
 
 ## Latest real-machine and integration evidence (2026-10-18)
