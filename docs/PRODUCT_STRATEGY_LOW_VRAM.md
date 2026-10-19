@@ -1,8 +1,8 @@
-# Prehnite — 8 GB laptop-first image workbench strategy (proposal)
+# Prehnite — 8 GiB laptop-first image workbench strategy
 
 **Date:** 2026-10-19  
-**Status:** proposed for owner review, not yet an approved change to release scope or progress accounting  
-**Planning home:** [architecture epic #132](https://github.com/interzettel/prehnite/issues/132) · [proposed product milestones](PRODUCT_MILESTONES.md) · [v2 register](../progress/product_milestones.v2.proposed.json)  
+**Status:** v2 strategy adopted by the single-roadmap migration when PR #183 merges; milestones remain independently evidence-gated  
+**Planning home:** [architecture epic #132](https://github.com/interzettel/prehnite/issues/132) · [canonical product milestones](PRODUCT_MILESTONES.md) · [v2 register](../progress/roadmap.json)  
 **Other current work:** [local P08-A03 PR #181](https://github.com/interzettel/prehnite/pull/181), [soft alpha PR #182](https://github.com/interzettel/prehnite/pull/182)
 
 ## The product decision
@@ -57,7 +57,7 @@ A packaging goal, **not a present claim**: Python users can install Prehnite, in
 
 ### P1.0 — reconcile existing work, not another infrastructure detour
 
-Finish independent CI/reviews for #181 and #182 without automatic atomic credit; leave the 8 GiB hardware benchmark blocked until freshly authorized. Preserve 43/61 release and 21/73 frozen atomic numbers on the proposal branch. Existing P08-A03 preflight available RAM >= 6,000 MiB and free VRAM >= 5,000 MiB are **that specific proposed experiment's fixed stop conditions**; do not relax them for convenience or present them as universal product minimums.
+Finish independent CI/reviews for #181 and #182 without automatic atomic credit; leave the 8 GiB hardware benchmark blocked until freshly authorized. Preserve historical 43/61 release and 21/73 atomic evidence in the immutable v1 archive, without advertising both as active completion scores. Existing P08-A03 preflight available RAM >= 6,000 MiB and free VRAM >= 5,000 MiB are **that specific proposed experiment's fixed stop conditions**; do not relax them for convenience or present them as universal product minimums.
 
 ### P1.1 — characterize the actual 8 GiB laptop and constrained host RAM, *without fake compatibility*
 
@@ -129,7 +129,7 @@ Benchmark receipts should be machine-readable, content-addressed and distinguish
 
 ## Work order: what to prioritize and what to postpone
 
-**Immediate / next reviews:** independently close #181 and #182 review outcomes as appropriate; publish this strategy as a proposal; obtain an explicit decision about priorities. No GPU starts or release credit from a planning PR.
+**Immediate / next reviews:** independently review #181 and #182; use the single canonical v2 research/implementation/measurement milestones as planning priorities. No GPU startup or release credit from roadmap adoption.
 
 **Next engineering slices (create/reuse narrowly scoped tickets, do not expand the frozen 73 tasks):**
 
@@ -148,7 +148,7 @@ Benchmark receipts should be machine-readable, content-addressed and distinguish
 - **A model catalog is not a rights grant.** SDXL, FLUX, LoRAs, third-party custom nodes and API outputs have separate current licensing and commercial-use conditions. Never redistribute weights as MIT package assets.
 - **The API boundary is real.** Higgsfield provides a paid developer API today, but no provider is integrated or authorized by writing this document; private photos must never leak from a local job through fallback.
 - **Overengineering is a delivery risk.** Don't create another 1000-line abstract controller before measuring a 10-image real workload.
-- **Frozen completion accounting survives reprioritization.** 43/61, 21/73 and original parent acceptance definitions remain unchanged until an explicitly reviewed migration.
+- **Archived accounting survives reprioritization.** The historical 43/61 and 21/73 acceptance data is preserved in v1 archives, while the adopted v2 roadmap alone tracks present product outcomes.
 
 ## Approval questions for the owner
 
