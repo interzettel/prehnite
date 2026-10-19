@@ -47,6 +47,7 @@ TOTAL_WORKLOAD_LIMIT_SECONDS = 900
 CLEANUP_LIMIT_SECONDS = 60
 DURATION_TOLERANCE_SECONDS = 1.5
 RUN_STATUSES = frozenset({"success", "failed", "terminated", "unknown"})
+EVIDENCE_ORIGINS = frozenset({"real_hardware_run", "synthetic_fixture"})
 HASH_PROVENANCE = frozenset({
     "declared",
     "operator_measured",
@@ -142,6 +143,33 @@ def _incomplete(errors: list[str]) -> dict[str, Any]:
     }
 
 
+def _validate_origin(data: Mapping[str, Any]) -> dict[str, Any] | None:
+    origin = data.get("evidence_origin")
+    if origin not in EVIDENCE_ORIGINS:
+        return _incomplete([
+            "evidence_origin must be real_hardware_run or synthetic_fixture"
+        ])
+    if origin == "synthetic_fixture":
+        return None
+    attestation = data.get("real_run_attestation")
+    if not isinstance(attestation, Mapping):
+        return _incomplete([
+            "real_run_attestation is required for real_hardware_run evidence"
+        ])
+    if not (isinstance(attestation.get("operator"), str) and attestation["operator"].strip()):
+        return _incomplete(["real_run_attestation.operator is required"])
+    if not (isinstance(attestation.get("receipt_id"), str)
+            and attestation["receipt_id"].strip()):
+        return _incomplete(["real_run_attestation.receipt_id is required"])
+    if not _HEX64.fullmatch(str(attestation.get("private_evidence_sha256") or "")):
+        return _incomplete([
+            "real_run_attestation.private_evidence_sha256 is invalid"
+        ])
+    if not _timestamp(attestation.get("attested_at")):
+        return _incomplete(["real_run_attestation.attested_at is invalid"])
+    return None
+
+
 def _validate_integrity(data: Mapping[str, Any]) -> dict[str, Any] | None:
     integrity = data.get("integrity")
     if not isinstance(integrity, Mapping):
@@ -199,6 +227,10 @@ def validate_evidence(data: Mapping[str, Any]) -> dict[str, Any]:
     for name in ("model_sha256", "workflow_sha256", "input_sha256", "parameters_sha256"):
         if not _HEX64.fullmatch(str(profile.get(name, ""))):
             return _incomplete([f"{name} must be 64 lowercase hex characters"])
+
+    origin_error = _validate_origin(data)
+    if origin_error is not None:
+        return origin_error
 
     integrity_error = _validate_integrity(data)
     if integrity_error is not None:
@@ -394,8 +426,11 @@ def validate_evidence(data: Mapping[str, Any]) -> dict[str, Any]:
     if total_workload <= 0:
         return _incomplete(["total workload timestamps are inconsistent"])
 
+    origin = data["evidence_origin"]
     return {
         "verdict": "pass",
+        "evidence_origin": origin,
+        "hardware_acceptance_eligible": origin == "real_hardware_run",
         "profile_digest": digest,
         "run_count": EXPECTED_RUNS,
         "prompts_submitted": EXPECTED_RUNS,
@@ -412,7 +447,11 @@ def validate_evidence(data: Mapping[str, Any]) -> dict[str, Any]:
                 "must be independently rehashed separately."
             ),
         },
-        "acceptance": "3-run identical profile evidence and fallback path (operator-reported)",
+        "acceptance": (
+            "3-run identical profile evidence and fallback path (operator-reported)"
+            if origin == "real_hardware_run"
+            else "offline contract fixture only; not hardware acceptance"
+        ),
         "fallback_required": False,
         "note": "Observed evidence only; sampled peak VRAM is not an absolute peak.",
     }
@@ -485,6 +524,10 @@ def experiment_plan() -> dict[str, Any]:
             "required_provenance": "operator_measured",
             "independently_verified": False,
             "private_rehash_required_for_independent_acceptance": True,
+        },
+        "evidence_origin": {
+            "synthetic_fixture_hardware_eligible": False,
+            "real_hardware_run_requires_attestation": True,
         },
         "profile": {
             "identical_for_all_runs": True,

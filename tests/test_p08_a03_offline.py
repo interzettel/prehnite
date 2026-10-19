@@ -66,6 +66,8 @@ def test_plan_is_bounded_and_not_authorized():
     }
     assert plan["profile"]["deterministic_output_required"] is False
     assert plan["profile"]["sampled_peak_is_absolute_peak"] is False
+    assert plan["evidence_origin"]["synthetic_fixture_hardware_eligible"] is False
+    assert plan["evidence_origin"]["real_hardware_run_requires_attestation"] is True
 
 
 def test_fixture_profile_digest_matches():
@@ -83,6 +85,9 @@ def test_valid_synthetic_evidence_passes_without_identical_outputs():
     assert report["outputs_distinct"] is True
     assert report["fallback_required"] is False
     assert report["integrity"]["independently_verified"] is False
+    assert report["evidence_origin"] == "synthetic_fixture"
+    assert report["hardware_acceptance_eligible"] is False
+    assert report["acceptance"] == "offline contract fixture only; not hardware acceptance"
 
 
 def test_preflight_equality_at_all_floors_passes():
@@ -501,6 +506,53 @@ def test_independent_rehash_manifest_is_declared_but_not_verified():
 def test_missing_integrity_is_incomplete():
     bundle = synthetic_bundle()
     bundle.pop("integrity")
+    assert validate_evidence(bundle)["verdict"] == "incomplete"
+
+
+@pytest.mark.parametrize("origin", [None, "", "unknown", True])
+def test_invalid_evidence_origin_is_incomplete(origin):
+    bundle = synthetic_bundle()
+    if origin is None:
+        bundle.pop("evidence_origin")
+    else:
+        bundle["evidence_origin"] = origin
+    assert validate_evidence(bundle)["verdict"] == "incomplete"
+
+
+def test_real_run_requires_separate_attestation():
+    bundle = synthetic_bundle()
+    bundle["evidence_origin"] = "real_hardware_run"
+    assert validate_evidence(bundle)["verdict"] == "incomplete"
+
+
+def test_real_run_attestation_makes_hardware_acceptance_eligible_but_not_verified():
+    bundle = synthetic_bundle()
+    bundle["evidence_origin"] = "real_hardware_run"
+    bundle["real_run_attestation"] = {
+        "operator": "synthetic-operator",
+        "receipt_id": "synthetic-receipt-1",
+        "private_evidence_sha256": "e" * 64,
+        "attested_at": "2026-10-19T17:10:00+00:00",
+    }
+    report = validate_evidence(bundle)
+    assert report["verdict"] == "pass"
+    assert report["hardware_acceptance_eligible"] is True
+    assert report["integrity"]["independently_verified"] is False
+
+
+@pytest.mark.parametrize("field", ["operator", "receipt_id",
+                                    "private_evidence_sha256", "attested_at"])
+def test_real_run_attestation_fields_are_required(field):
+    bundle = synthetic_bundle()
+    bundle["evidence_origin"] = "real_hardware_run"
+    attestation = {
+        "operator": "synthetic-operator",
+        "receipt_id": "synthetic-receipt-1",
+        "private_evidence_sha256": "e" * 64,
+        "attested_at": "2026-10-19T17:10:00+00:00",
+    }
+    attestation.pop(field)
+    bundle["real_run_attestation"] = attestation
     assert validate_evidence(bundle)["verdict"] == "incomplete"
 
 

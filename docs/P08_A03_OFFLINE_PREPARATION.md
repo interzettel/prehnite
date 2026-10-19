@@ -114,8 +114,15 @@ declare:
   `independently_verified: false` because it cannot access or rehash private
   bytes.
 
+The bundle must also declare `evidence_origin`. A `synthetic_fixture` can validate
+the schema/control path but is **never hardware-acceptance eligible**. A
+`real_hardware_run` requires a separate `real_run_attestation` (operator, unique
+receipt id, private-evidence SHA256 and aware attestation timestamp); even then
+the public validator reports the hashes as operator-reported, not independently
+rehashed.
+
 The synthetic fixture is a schema/control-path fixture only. It is not hardware
-evidence.
+evidence and is ineligible for hardware acceptance.
 
 ## Simulated fallback coverage
 
@@ -149,8 +156,9 @@ OOM recovers successfully or that a real hardware fallback occurred.
 pytest -q tests/test_p08_a03_offline.py
 ```
 
-The current focused suite has **88 tests**, plus a synthetic fixture whose output
-hashes intentionally differ. The fixture does not contain real hardware results.
+The current focused suite has **98 tests**, plus a synthetic fixture whose output
+hashes intentionally differ. The fixture does not contain real hardware results;
+its validator verdict is explicitly hardware-ineligible.
 
 ## Remaining unverified / limitations
 
