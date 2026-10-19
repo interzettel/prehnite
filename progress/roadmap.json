@@ -120,6 +120,9 @@
         "P1-M01"
       ],
       "gate_tasks": [
+        "P1-M02-VA-P08-A04",
+        "P1-M02-VA-P08-A02",
+        "P1-M02-VA-P08-A01",
         "P1-M02-V1-P07",
         "P1-M02-V1-P06",
         "P1-M02-V1-P02",
@@ -160,6 +163,10 @@
         "P1-M02"
       ],
       "gate_tasks": [
+        "P1-M04-VA-S05-A04",
+        "P1-M04-VA-S05-A03",
+        "P1-M04-VA-S05-A02",
+        "P1-M04-VA-S05-A01",
         "P1-M04-V1-R07",
         "P1-M04-V1-D10",
         "P1-M04-V1-D09",
@@ -198,6 +205,16 @@
         "P1-M03"
       ],
       "gate_tasks": [
+        "P1-M05-VA-R06-A02",
+        "P1-M05-VA-R06-A01",
+        "P1-M05-VA-S07-A02",
+        "P1-M05-VA-S06-A03",
+        "P1-M05-VA-S06-A02",
+        "P1-M05-VA-S06-A01",
+        "P1-M05-VA-S03-A03",
+        "P1-M05-VA-S03-A02",
+        "P1-M05-VA-S03-A01",
+        "P1-M05-VA-Q06-A01",
         "P1-M05-V1-S04",
         "P1-M05-V1-S02",
         "P1-M05-V1-S01",
@@ -1088,7 +1105,13 @@
         }
       ],
       "source": "v1_verified",
-      "original_unit": "S04"
+      "original_unit": "S04",
+      "folded_atomic_subtasks": [
+        "S04-A01",
+        "S04-A02",
+        "S04-A03",
+        "S04-A04"
+      ]
     },
     {
       "id": "P1-M04-V1-D01",
@@ -1426,6 +1449,329 @@
       ],
       "source": "v1_verified",
       "original_unit": "R07"
+    },
+    {
+      "id": "P1-M02-VA-P08-A01",
+      "milestone": "P1-M02",
+      "kind": "implementation",
+      "owner": "Agent local",
+      "issue": 24,
+      "acceptance": "Original atomic work P08-A01: Record local GPU environment and free VRAM. Reproducible OS, CUDA, driver and installed weight licensing record. Previously independently accepted under its original narrow v1 task criteria, not proof that the parent product outcome or current real-image acceptance is complete.",
+      "depends_on": [],
+      "state": "verified",
+      "evidence": [
+        {
+          "type": "merged_pr",
+          "url": "https://github.com/interzettel/prehnite/pull/166",
+          "legacy_atomic_id": "P08-A01"
+        }
+      ],
+      "source": "v1_atomic_verified",
+      "original_atomic_id": "P08-A01"
+    },
+    {
+      "id": "P1-M02-VA-P08-A02",
+      "milestone": "P1-M02",
+      "kind": "implementation",
+      "owner": "Agent local",
+      "issue": 24,
+      "acceptance": "Original atomic work P08-A02: Run bounded 8GB model load and forward pass. Measure peak VRAM, cold/warm latency and failure behavior on actual laptop. Previously independently accepted under its original narrow v1 task criteria, not proof that the parent product outcome or current real-image acceptance is complete.",
+      "depends_on": [],
+      "state": "verified",
+      "evidence": [
+        {
+          "type": "merged_pr",
+          "url": "https://github.com/interzettel/prehnite/pull/177",
+          "legacy_atomic_id": "P08-A02"
+        }
+      ],
+      "source": "v1_atomic_verified",
+      "original_atomic_id": "P08-A02"
+    },
+    {
+      "id": "P1-M02-VA-P08-A04",
+      "milestone": "P1-M02",
+      "kind": "implementation",
+      "owner": "Agent local",
+      "issue": 24,
+      "acceptance": "Original atomic work P08-A04: Publish compatibility profile by model size. Decision table states actually measured versus unknown VRAM configurations. Previously independently accepted under its original narrow v1 task criteria, not proof that the parent product outcome or current real-image acceptance is complete.",
+      "depends_on": [],
+      "state": "verified",
+      "evidence": [
+        {
+          "type": "merged_pr",
+          "url": "https://github.com/interzettel/prehnite/pull/170",
+          "legacy_atomic_id": "P08-A04"
+        }
+      ],
+      "source": "v1_atomic_verified",
+      "original_atomic_id": "P08-A04"
+    },
+    {
+      "id": "P1-M05-VA-Q06-A01",
+      "milestone": "P1-M05",
+      "kind": "implementation",
+      "owner": "Owner",
+      "issue": 28,
+      "acceptance": "Original atomic work Q06-A01: Register owner-authorized product photo cohort. 84 private AI-generated JPEGs inventoried and source privacy preserved. Previously independently accepted under its original narrow v1 task criteria, not proof that the parent product outcome or current real-image acceptance is complete.",
+      "depends_on": [],
+      "state": "verified",
+      "evidence": [
+        {
+          "type": "merged_pr",
+          "url": "https://github.com/interzettel/prehnite/pull/123",
+          "legacy_atomic_id": "Q06-A01"
+        }
+      ],
+      "source": "v1_atomic_verified",
+      "original_atomic_id": "Q06-A01"
+    },
+    {
+      "id": "P1-M05-VA-S03-A01",
+      "milestone": "P1-M05",
+      "kind": "implementation",
+      "owner": "Agent cloud",
+      "issue": 29,
+      "acceptance": "Original atomic work S03-A01: Demonstrate bounded synthetic product alpha correction. Offline flat-background leak pixels removed against withheld reference. Previously independently accepted under its original narrow v1 task criteria, not proof that the parent product outcome or current real-image acceptance is complete.",
+      "depends_on": [],
+      "state": "verified",
+      "evidence": [
+        {
+          "type": "merged_pr",
+          "url": "https://github.com/interzettel/prehnite/pull/119",
+          "legacy_atomic_id": "S03-A01"
+        }
+      ],
+      "source": "v1_atomic_verified",
+      "original_atomic_id": "S03-A01"
+    },
+    {
+      "id": "P1-M05-VA-S03-A02",
+      "milestone": "P1-M05",
+      "kind": "implementation",
+      "owner": "Agent cloud",
+      "issue": 29,
+      "acceptance": "Original atomic work S03-A02: Prove unsafe scene/material abstention. 20-case challenge matrix verifies transparent, hair, gradient and multi-object refusal. Previously independently accepted under its original narrow v1 task criteria, not proof that the parent product outcome or current real-image acceptance is complete.",
+      "depends_on": [],
+      "state": "verified",
+      "evidence": [
+        {
+          "type": "merged_pr",
+          "url": "https://github.com/interzettel/prehnite/pull/120",
+          "legacy_atomic_id": "S03-A02"
+        }
+      ],
+      "source": "v1_atomic_verified",
+      "original_atomic_id": "S03-A02"
+    },
+    {
+      "id": "P1-M05-VA-S03-A03",
+      "milestone": "P1-M05",
+      "kind": "implementation",
+      "owner": "Agent cloud",
+      "issue": 29,
+      "acceptance": "Original atomic work S03-A03: Implement true color spill edge decontamination. Pixel-level tests prove removal without deleting background-colored product regions. Previously independently accepted under its original narrow v1 task criteria, not proof that the parent product outcome or current real-image acceptance is complete.",
+      "depends_on": [],
+      "state": "verified",
+      "evidence": [
+        {
+          "type": "merged_pr",
+          "url": "https://github.com/interzettel/prehnite/pull/164",
+          "legacy_atomic_id": "S03-A03"
+        }
+      ],
+      "source": "v1_atomic_verified",
+      "original_atomic_id": "S03-A03"
+    },
+    {
+      "id": "P1-M04-VA-S05-A01",
+      "milestone": "P1-M04",
+      "kind": "implementation",
+      "owner": "Agent cloud",
+      "issue": 31,
+      "acceptance": "Original atomic work S05-A01: Typed zero-spend repair decision plan. Policy authorizes local repair separately from uncertain paid submission. Previously independently accepted under its original narrow v1 task criteria, not proof that the parent product outcome or current real-image acceptance is complete.",
+      "depends_on": [],
+      "state": "verified",
+      "evidence": [
+        {
+          "type": "merged_pr",
+          "url": "https://github.com/interzettel/prehnite/pull/117",
+          "legacy_atomic_id": "S05-A01"
+        }
+      ],
+      "source": "v1_atomic_verified",
+      "original_atomic_id": "S05-A01"
+    },
+    {
+      "id": "P1-M04-VA-S05-A02",
+      "milestone": "P1-M04",
+      "kind": "implementation",
+      "owner": "Agent cloud",
+      "issue": 31,
+      "acceptance": "Original atomic work S05-A02: Idempotent journal-backed local repair executor. Stable operation receipt, atomic candidate, integrity-verified crash replay. Previously independently accepted under its original narrow v1 task criteria, not proof that the parent product outcome or current real-image acceptance is complete.",
+      "depends_on": [],
+      "state": "verified",
+      "evidence": [
+        {
+          "type": "merged_pr",
+          "url": "https://github.com/interzettel/prehnite/pull/119",
+          "legacy_atomic_id": "S05-A02"
+        }
+      ],
+      "source": "v1_atomic_verified",
+      "original_atomic_id": "S05-A02"
+    },
+    {
+      "id": "P1-M04-VA-S05-A03",
+      "milestone": "P1-M04",
+      "kind": "implementation",
+      "owner": "Agent cloud",
+      "issue": 31,
+      "acceptance": "Original atomic work S05-A03: Hard-case refusal and one-attempt coverage. Oversized leak, multiple objects and material uncertainty safely refuse. Previously independently accepted under its original narrow v1 task criteria, not proof that the parent product outcome or current real-image acceptance is complete.",
+      "depends_on": [],
+      "state": "verified",
+      "evidence": [
+        {
+          "type": "merged_pr",
+          "url": "https://github.com/interzettel/prehnite/pull/120",
+          "legacy_atomic_id": "S05-A03"
+        }
+      ],
+      "source": "v1_atomic_verified",
+      "original_atomic_id": "S05-A03"
+    },
+    {
+      "id": "P1-M04-VA-S05-A04",
+      "milestone": "P1-M04",
+      "kind": "implementation",
+      "owner": "Agent cloud",
+      "issue": 31,
+      "acceptance": "Original atomic work S05-A04: Wire the bounded repair into production Engine.cutout. Real stage transition uses journal, protects selected artifacts and can abstain. Previously independently accepted under its original narrow v1 task criteria, not proof that the parent product outcome or current real-image acceptance is complete.",
+      "depends_on": [],
+      "state": "verified",
+      "evidence": [
+        {
+          "type": "merged_pr",
+          "url": "https://github.com/interzettel/prehnite/pull/129",
+          "legacy_atomic_id": "S05-A04"
+        }
+      ],
+      "source": "v1_atomic_verified",
+      "original_atomic_id": "S05-A04"
+    },
+    {
+      "id": "P1-M05-VA-S06-A01",
+      "milestone": "P1-M05",
+      "kind": "implementation",
+      "owner": "Owner",
+      "issue": 32,
+      "acceptance": "Original atomic work S06-A01: Build withheld-reference synthetic alpha challenge suite. 20 deterministic cases report independent alpha IoU and boundary MAE. Previously independently accepted under its original narrow v1 task criteria, not proof that the parent product outcome or current real-image acceptance is complete.",
+      "depends_on": [],
+      "state": "verified",
+      "evidence": [
+        {
+          "type": "merged_pr",
+          "url": "https://github.com/interzettel/prehnite/pull/120",
+          "legacy_atomic_id": "S06-A01"
+        }
+      ],
+      "source": "v1_atomic_verified",
+      "original_atomic_id": "S06-A01"
+    },
+    {
+      "id": "P1-M05-VA-S06-A02",
+      "milestone": "P1-M05",
+      "kind": "implementation",
+      "owner": "Owner",
+      "issue": 32,
+      "acceptance": "Original atomic work S06-A02: Add private RGB/mask reference scoring CLI. WebP/JPEG source and PNG alpha validated with SHA, geometry and rights attestation. Previously independently accepted under its original narrow v1 task criteria, not proof that the parent product outcome or current real-image acceptance is complete.",
+      "depends_on": [],
+      "state": "verified",
+      "evidence": [
+        {
+          "type": "merged_pr",
+          "url": "https://github.com/interzettel/prehnite/pull/122",
+          "legacy_atomic_id": "S06-A02"
+        }
+      ],
+      "source": "v1_atomic_verified",
+      "original_atomic_id": "S06-A02"
+    },
+    {
+      "id": "P1-M05-VA-S06-A03",
+      "milestone": "P1-M05",
+      "kind": "implementation",
+      "owner": "Owner",
+      "issue": 32,
+      "acceptance": "Original atomic work S06-A03: Inspect owner-provided 84-image source-only pilot. 50 front images get unreviewed baseline masks without false accuracy claims. Previously independently accepted under its original narrow v1 task criteria, not proof that the parent product outcome or current real-image acceptance is complete.",
+      "depends_on": [],
+      "state": "verified",
+      "evidence": [
+        {
+          "type": "merged_pr",
+          "url": "https://github.com/interzettel/prehnite/pull/123",
+          "legacy_atomic_id": "S06-A03"
+        }
+      ],
+      "source": "v1_atomic_verified",
+      "original_atomic_id": "S06-A03"
+    },
+    {
+      "id": "P1-M05-VA-S07-A02",
+      "milestone": "P1-M05",
+      "kind": "implementation",
+      "owner": "Owner",
+      "issue": 32,
+      "acceptance": "Original atomic work S07-A02: Implement strict human-review feedback ingestion. Import approved/needs-work/skip plus RGBA edits without gold-label claims. Previously independently accepted under its original narrow v1 task criteria, not proof that the parent product outcome or current real-image acceptance is complete.",
+      "depends_on": [],
+      "state": "verified",
+      "evidence": [
+        {
+          "type": "merged_pr",
+          "url": "https://github.com/interzettel/prehnite/pull/125",
+          "legacy_atomic_id": "S07-A02"
+        }
+      ],
+      "source": "v1_atomic_verified",
+      "original_atomic_id": "S07-A02"
+    },
+    {
+      "id": "P1-M05-VA-R06-A01",
+      "milestone": "P1-M05",
+      "kind": "implementation",
+      "owner": "Agent cloud",
+      "issue": 40,
+      "acceptance": "Original atomic work R06-A01: Inventory Python dependencies and transitive licenses. CycloneDX SBOM, exact installed-version snapshot (not hashed lock), and named unresolved license exceptions. Previously independently accepted under its original narrow v1 task criteria, not proof that the parent product outcome or current real-image acceptance is complete.",
+      "depends_on": [],
+      "state": "verified",
+      "evidence": [
+        {
+          "type": "merged_pr",
+          "url": "https://github.com/interzettel/prehnite/pull/130",
+          "legacy_atomic_id": "R06-A01"
+        }
+      ],
+      "source": "v1_atomic_verified",
+      "original_atomic_id": "R06-A01"
+    },
+    {
+      "id": "P1-M05-VA-R06-A02",
+      "milestone": "P1-M05",
+      "kind": "implementation",
+      "owner": "Agent cloud",
+      "issue": 40,
+      "acceptance": "Original atomic work R06-A02: Audit optional model checkpoints and training restrictions. Separate weight/source terms recorded; no implicit MIT relicensing. Previously independently accepted under its original narrow v1 task criteria, not proof that the parent product outcome or current real-image acceptance is complete.",
+      "depends_on": [],
+      "state": "verified",
+      "evidence": [
+        {
+          "type": "merged_pr",
+          "url": "https://github.com/interzettel/prehnite/pull/131",
+          "legacy_atomic_id": "R06-A02"
+        }
+      ],
+      "source": "v1_atomic_verified",
+      "original_atomic_id": "R06-A02"
     }
   ],
   "legacy_crosswalk": [
@@ -1603,7 +1949,33 @@
     ],
     "carried_forward_policy": "All 43 originally verified v1 unit-level engineering receipts are carried into the one active roadmap as scope-limited verified tasks. This does not satisfy new, stricter research, real-GPU, paid-provider, LoRA or human image-acceptance gates. Original evidence URLs and original unit IDs are checked against immutable v1.",
     "unfinished_unit_crosswalk": 18,
-    "inherited_only_verification": "Previously accepted original contract, not new product usability certification."
+    "inherited_only_verification": "Previously accepted original contract, not new product usability certification.",
+    "carried_forward_atomic_ids": [
+      "P08-A01",
+      "P08-A02",
+      "P08-A04",
+      "Q06-A01",
+      "S03-A01",
+      "S03-A02",
+      "S03-A03",
+      "S05-A01",
+      "S05-A02",
+      "S05-A03",
+      "S05-A04",
+      "S06-A01",
+      "S06-A02",
+      "S06-A03",
+      "S07-A02",
+      "R06-A01",
+      "R06-A02"
+    ],
+    "folded_atomic_ids": [
+      "S04-A01",
+      "S04-A02",
+      "S04-A03",
+      "S04-A04"
+    ],
+    "atomic_transfer_policy": "The 17 independently verified atomic tasks under unfinished original parents are counted as distinct narrow implementation receipts. The four completed S04 children are linked to the already-verified S04 parent and never counted twice."
   },
-  "completion_rule": "One canonical 63-task register: 43 verified inherited implementation receipts plus 20 proposed v2-specific research/experiment/acceptance tasks. Every unit counted once. Task % expresses evidence-gated engineering work, NOT independently accepted image capability; milestone % expresses verified outcome gates. Both come from this same JSON and are shown by priority/workstream."
+  "completion_rule": "One canonical 80-task evidence plan: 43 original verified parent capabilities, 17 distinct narrow verified atomic subtasks under incomplete parents, and 20 v2 outcome-specific work tasks. Four S04 atomic subtasks are folded into its already-counted completed parent. Each recorded unit counts once; this task score is technical task coverage, not user-accepted product quality. 9 outcome gates remain independently acceptance-bound."
 }
