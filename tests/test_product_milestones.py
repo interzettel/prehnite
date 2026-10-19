@@ -25,13 +25,15 @@ def test_canonical_v2_has_research_code_experiment_and_acceptance():
     m.validate(data)
     kinds = Counter(t["kind"] for t in data["tasks"])
     assert kinds == {
-        "research": 3, "decision": 2, "implementation": 12,
+        "research": 3, "decision": 2, "implementation": 49,
         "experiment": 5, "acceptance": 4,
     }
     assert data["phases"][0]["exit_milestone"] == "P1-M05"
     assert data["phases"][1]["exit_milestone"] == "P2-M03"
     assert data["milestones"][0]["id"] == "P1-M00"
     assert data["milestones"][0]["state"] == "verified"
+    assert len([t for t in data["tasks"] if t["state"] == "verified"]) == 43
+    assert len(data["migration_integrity"]["carried_forward_v1_unit_ids"]) == 43
 
 
 def test_owner_decision_needs_owner_receipt():
@@ -69,3 +71,20 @@ def test_product_plan_does_not_authorize_model_execution():
                if t["kind"] == "experiment")
     assert "4 GiB benchmarking" in data["excluded_hardware_campaigns"]
     assert "6 GiB benchmarking" in data["excluded_hardware_campaigns"]
+
+
+def test_legacy_implementation_receipts_cannot_be_fabricated():
+    m = module()
+    data = deepcopy(m.load())
+    legacy = next(t for t in data["tasks"] if t.get("original_unit") == "P07")
+    legacy["evidence"][0]["url"] = "https://github.com/interzettel/prehnite/pull/999999"
+    with pytest.raises(ValueError, match="foundation evidence provenance"):
+        m.validate(data)
+
+
+def test_progress_not_awarded_from_untested_provider_code():
+    data = module().load()
+    assert len(data["tasks"]) == 63
+    assert sum(t["state"] == "verified" for t in data["tasks"]) == 43
+    assert all(t["state"] != "verified" for t in data["tasks"] if t["kind"] == "experiment")
+    assert next(m for m in data["milestones"] if m["id"] == "P1-M02")["state"] != "verified"
