@@ -127,6 +127,8 @@ def bind_owner_region(
                 raise InstanceBindingRefused("unsupported_source_geometry")
             if image.getexif().get(274, 1) != 1:
                 raise InstanceBindingRefused("unresolved_source_orientation")
+    except InstanceBindingRefused:
+        raise
     except (OSError, ValueError, Image.DecompressionBombError) as exc:
         raise InstanceBindingRefused("invalid_source_image") from exc
     if not isinstance(region, OwnerRegion):
@@ -154,6 +156,8 @@ def bind_owner_region(
                     raise InstanceBindingRefused("ambiguous_or_invalid_candidate_components")
                 if opened.getpixel((region.seed_x, region.seed_y)) > 127:
                     seed_matches.append(digest)
+        except InstanceBindingRefused:
+            raise
         except (OSError, ValueError, Image.DecompressionBombError) as exc:
             raise InstanceBindingRefused("invalid_candidate_mask") from exc
 
