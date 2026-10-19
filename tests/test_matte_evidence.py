@@ -69,7 +69,10 @@ def test_preserves_hair_mesh_glass_like_fractional_alpha_and_measured_zero_halo(
     report = json.loads(report_path.read_text(encoding="utf-8"))
     assert len(report["candidates"]) == 1
     row = report["candidates"][0]
-    assert row["status"] == "passed", {"reasons": row["rejection_reasons"], "metrics": row["metrics"]}
+    assert row["status"] == "passed", {
+        "reasons": row["rejection_reasons"],
+        "metrics": row["metrics"],
+    }
     assert row["review_status"] == "review_pending"
     assert report["visual_acceptance"] == "not_recorded"
     assert report["owner_final_acceptance"] == "not_recorded"
