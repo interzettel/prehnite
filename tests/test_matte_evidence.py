@@ -7,7 +7,7 @@ import json
 import pytest
 from PIL import Image, ImageDraw
 
-from prehnite.cutout_quality import CutoutContractError, run_cutout_qa
+from prehnite.cutout_quality import CutoutContractError, _alpha_metrics, run_cutout_qa
 from prehnite.matte_evidence import MatteEvidenceRefused, evaluate_reference_matte
 from test_cutout_quality import write_fixture
 
@@ -45,6 +45,19 @@ def oracle_fixture(tmp_path):
     recipe["qa"]["max_partial_alpha_fraction"] = 0.50
     recipe_path.write_text(json.dumps(recipe, sort_keys=True), encoding="utf-8")
     return source, mask, recipe, recipe_path, foreground, alpha
+
+
+def test_soft_alpha_coverage_baseline_preserves_transmission_without_weakening_binary_policy(tmp_path):
+    _, _, _, _, _, original_alpha = oracle_fixture(tmp_path)
+    # Legacy binary-feather QA deliberately compares against a hard silhouette.
+    legacy = _alpha_metrics(original_alpha, original_alpha)
+    assert legacy["coverage_delta"] > 0.05
+    # Trusted soft-alpha preservation has its own explicit reference mode and
+    # measures identical supplied alpha against itself, including transmission.
+    trusted = _alpha_metrics(original_alpha, original_alpha, trusted_soft_alpha=True)
+    assert trusted["coverage_delta"] == 0.0
+    assert trusted["hard_iou"] == legacy["hard_iou"] == 1.0
+    assert trusted["hole_components"] == legacy["hole_components"]
 
 
 def test_preserves_hair_mesh_glass_like_fractional_alpha_and_measured_zero_halo(tmp_path):
