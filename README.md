@@ -1,317 +1,208 @@
 <div align="center">
-  <img src="assets/prehnite-riso-green-coral.png" alt="Prehnite — Make the batch. Keep the best. Forest-green and coral Riso identity on warm paper." width="680" style="border-radius: 16px; clip-path: inset(0 round 16px);" />
-  <p><strong>Batch image production without the platform tax.</strong><br />
-  An open-source Python engine for generating, checking, refining and exporting visual assets.</p>
-  <p>
-    <a href="https://github.com/interzettel/prehnite/actions/workflows/ci.yml"><img alt="Tests" src="https://github.com/interzettel/prehnite/actions/workflows/ci.yml/badge.svg" /></a>
-    <a href="LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-075231" /></a>
-    <img alt="Python 3.11 or newer" src="https://img.shields.io/badge/python-3.11%2B-53675a" />
-    <img alt="Development version" src="https://img.shields.io/badge/status-development-a63d35" />
-    <img alt="Mandatory platform fees: zero" src="https://img.shields.io/badge/platform%20fees-%240-075231" />
-  </p>
-  <p>
-    <a href="#try-it-in-two-minutes">Quick start</a> ·
-    <a href="#how-it-works">How it works</a> ·
-    <a href="#where-things-stand">Project status</a> ·
-    <a href="docs/progress/STATUS.md">Progress</a> ·
-    <a href="CHANGELOG.md">Changelog</a> ·
-    <a href="docs/VERSIONING.md">Versioning</a> ·
-    <a href="https://github.com/orgs/interzettel/projects/1">Project board</a>
-  </p>
+
+<img src="assets/prehnite-riso-green-coral.png" alt="Prehnite — forest-green and coral Risograph artwork on warm paper" width="680" />
+
+### Make the images. Keep the experiments.
+
+**A local-first Python workbench for image generation, controlled variation, quality checks, and repeatable batches.**
+
+Designed around a real **8 GB laptop GPU**, not a requirement to own a workstation.
+
+[![CI](https://github.com/interzettel/prehnite/actions/workflows/ci.yml/badge.svg)](https://github.com/interzettel/prehnite/actions/workflows/ci.yml)
+[![MIT](https://img.shields.io/badge/license-MIT-075231)](LICENSE)
+[![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-53675a)](pyproject.toml)
+
+[Quick start](#try-prehnite-without-a-gpu) · [Real local models](#using-your-own-models) · [What's working](#what-actually-works-today) · [Roadmap](#one-product-roadmap) · [Development](#project-and-development-links)
+
 </div>
 
 ---
 
-## Ninety images is a different problem from one image
+## Why Prehnite?
 
-Generating a single good picture is easy to demonstrate. Making a *batch* of assets to a brief, with the correct dimensions, cutouts, filenames, and a predictable bill, is a different job.
+Having an 8 GB graphics card should not mean that experimenting with image models is a luxury. But getting something useful out of local inference involves more than clicking Generate: managing memory pressure, changing models, keeping the right settings, resuming an interrupted batch, comparing results, and figuring out which image is worth keeping.
 
-Prehnite is an attempt to automate the boring, expensive middle: keeping track of prompts and seeds, trying variants, checking what worked, doing targeted repairs instead of blindly starting over, and handing back exactly the files you asked for.
+**Prehnite is the operator around existing image runtimes.** It aims to make those jobs reproducible, inspectable and less wasteful—on the hardware you already have.
 
-The ambition is simple: **spend less per *usable* asset, not merely less per generation.** It is a design target, not a claim we've already established with real-world benchmarks.
+This is *not* an attempt to build another diffusion model, replace ComfyUI's node editor, or create a Higgsfield-style media publishing suite. Prehnite uses existing model ecosystems where they do the job well and adds the parts needed for **reliable experimentation and useful output**.
 
-**Free orchestration is non-negotiable.** Prehnite is MIT licensed, runs locally, and has no required account, hosted workflow subscription, or per-seat platform fee. Use a local model where practical; connect to a paid image API *only when you choose to*, with a budget you set.
+| If you want to… | Prehnite's role | Status |
+| --- | --- | --- |
+| Produce a batch, keep the right images and preserve their settings | Manifest, journal, selection/reporting and checked exports | **Offline engine implemented**; end-to-end real-model batch unverified |
+| Run a model on an 8 GB laptop | Inspect resources, bind an existing ComfyUI workflow and report failures | **Experimental integration**; one private local-lab success, no general hardware certification |
+| Test whether offloading or another option genuinely helps | Measure VRAM **and host RAM**, latency, failures, output quality, accepted-image yield | **Planned experimental milestone** |
+| Reuse local LoRAs and compare controlled variations | Pin model/adapter hashes, seeds, strengths and visual experiment grids | **Phase 2 goal; not a finished capability** |
+| Try hairstyles, beards or other appearance variations privately | Local-only reference workflows with identity/attribute evaluation | **Phase 2 goal; not currently available as a turnkey workflow** |
+| Move a workflow to a stronger GPU or use a paid image API | Preserve the same job intent while explicitly choosing compatible backends | **Architectural goal; provider-by-provider verification required** |
 
-## Start with a zero-cost local batch
+**The metric we care about is useful images per unit of time, memory and money—not raw generations or a perfect-looking demo.** We have not yet established a benchmark advantage over ordinary ComfyUI.
 
-Run `prehnite init --destination my-first-batch` to get two safe sample
-YAML files, then `prehnite doctor` to inspect your Python environment
-without revealing any keys or contacting a service. For details, see
-[the first-run guide](docs/ONBOARDING.md). These commands do not run AI
-image generation or incur any inference costs.
+## Try Prehnite without a GPU
 
-For measured-versus-unknown OS/RAM/GPU inventory, run `prehnite hardware`.
-This **offline, read-only** command can query local `nvidia-smi`; it never
-certifies a GPU memory tier or recipe feasibility. See
-[hardware doctor limitations](docs/HARDWARE_DOCTOR.md) (issue #134).
-The **read-only `prehnite resource-preflight`** command is now available in
-development `main` via [merged PR #159](https://github.com/interzettel/prehnite/pull/159),
-but not in released PyPI `0.1.0a1`. It evaluates explicit operator-set RAM,
-commit and VRAM thresholds; passing observations **never authorize inference**.
+The following example is real, executable and costs **zero inference credits**. It uses **synthetic demo images**, not AI photographs, so you can inspect the engine and its outputs without first installing models.
 
-## Try it in two minutes
-
-You can test the complete workflow without a GPU, credentials, subscription, or inference charge. **The demo creates simple synthetic test images, not AI photographs.**
-
-Clone the repo, create a Python 3.11+ environment, and install:
+Requires Python 3.11 or newer. The most complete commands are in the development checkout:
 
 ```bash
 git clone https://github.com/interzettel/prehnite.git
 cd prehnite
 python -m venv .venv
-# Windows PowerShell: .\.venv\Scripts\Activate.ps1
-# macOS/Linux:        source .venv/bin/activate
+```
+
+Activate the environment and install:
+
+<details>
+<summary><strong>Windows PowerShell</strong></summary>
+
+```powershell
+.\.venv\Scripts\Activate.ps1
 python -m pip install -e .
 ```
 
-Run a preflight estimate, then the zero-cost sample batch:
-
-```bash
-prehnite validate examples/manifest.yaml --profile examples/profile-demo.yaml
-prehnite estimate examples/manifest.yaml --profile examples/profile-demo.yaml
-prehnite run examples/manifest.yaml --profile examples/profile-demo.yaml --workspace workspace
-```
-
-Look under `workspace/batches/portrait-pilot/`. You'll find the selected images, the state journal, JSON/CSV reports, an [offline visual gallery](docs/OFFLINE_GALLERY.md) (`gallery.html`), a [local provenance record](docs/PROVENANCE.md) (`provenance.json`), and a ZIP with the requested output paths. A second run reuses completed stages.
+</details>
 
 <details>
-<summary><strong>What the output looks like</strong></summary>
+<summary><strong>Linux / macOS</strong></summary>
 
-```text
-workspace/
-└── batches/
-    └── portrait-pilot/
-        ├── state.sqlite3
-        ├── intermediates/
-        ├── selected/
-        │   └── photos/
-        │       ├── street-001.jpg
-        │       └── interior-001.jpg
-        ├── report.json
-        ├── operations.csv
-        ├── report.html
-        ├── gallery.html
-        ├── provenance.json
-        └── prehnite-portrait-pilot.zip
+```bash
+source .venv/bin/activate
+python -m pip install -e .
 ```
-
-The ZIP preserves your requested relative filenames. Accepted cutouts, when configured, are transparent PNGs. Internally generated files stay separate from the deliverables.
 
 </details>
 
-## How it works
-
-| | Stage | What Prehnite does |
-| :--- | :--- | :--- |
-| 01 | **Describe** | Read a structured manifest: prompts or existing images, exact sizes, targets and output filenames |
-| 02 | **Plan** | Choose model providers and variants; estimate request counts and spend before starting |
-| 03 | **Make** | Run generation and optional upscaling; preserve seeds, inputs and intermediate artifacts |
-| 04 | **Check** | Apply technical checks, and optional model-based judgments when configured |
-| 05 | **Repair** | Retry selectively under a hard attempt limit; cutout errors needn't regenerate accepted photos |
-| 06 | **Deliver** | Export accepted images, named cutouts, a ZIP and an inspectable report |
-
-A small manifest can describe a portrait batch with precise delivery requirements:
-
-```yaml
-id: street-pilot
-assets:
-  - id: rainy-street
-    prompt: "A candid smartphone photograph of a rainy street at dusk"
-    aspect_ratio: "9:16"
-    target_size: [2160, 3840]
-    output:
-      image: photos/rainy-street.jpg
-      cutouts: {}
-```
-
-The **manifest** says *what* to make. A separate **profile** says *how*: which provider/model to use, whether to compare 2K-upscaled and 4K variants, what to accept, the retry limit, and whether cloud calls may cost money. See the [working examples](examples/).
-
-### First real local cutout — one independently accepted artifact (2026-10-18)
-
-**First hardware milestone achieved in the private local lab:** An RTX 4070
-Laptop GPU produced a real **768×1024** SDXL desk-lamp source, followed by one
-successful local **GroundingDINO + SAM2** segmentation submission. The raw
-binary mask was refined on CPU; **Candidate A (σ = 0.65 px)** received
-independent visual approval at the presented comparison scale. Approved
-derivative SHA256: `5e925240e2c527a9922ffad2729fcb9111ed25251f3c2aedfba8c87903bd6450`.
-
-The successful segmentation job completed in **8.994 s** including model loading
-and inference, with **2,533 MiB sampled peak VRAM**. It used a short-lived
-ComfyUI child process and a private Transformers 4.57.6 compatibility overlay,
-without cloud calls, inference retries or changing the existing ComfyUI
-environment. The original source generation took ~46.04 s, separately, with
-7,763/8,188 MiB sampled peak VRAM; these are **one-off measurements**, not
-sustained benchmark or 4K feasibility figures.
-
-The original generation journal's quality rejection, initial failed
-segmentation attempt and all historical evidence remain intact. The accepted
-candidate has a private local-lab approval record, **not** an owner-signed
-Prehnite journal acceptance or a certification of other scenes and materials.
-The **public package does not yet ship this combined launcher/refinement
-workflow or model weights**. See the [full dated evidence and limitations](docs/LOCAL_LAB_MILESTONE_2026-10-18.md)
-and [current delivery matrix](docs/PROGRESS.md).
-
-### Reusable cutout QA and resource observations — merged into development main
-
-**[PR #159](https://github.com/interzettel/prehnite/pull/159) and
-[PR #161](https://github.com/interzettel/prehnite/pull/161) are merged into
-`main`.** Prehnite now has an opt-in, CPU-only `cutout-qa` and
-`cutout-accept` workflow, backed by source/target/workflow/model hashes,
-conservative configurable alpha candidates, separate file integrity and
-execution-evidence states, topology checks and create-only independent visual
-review records. `resource-preflight` provides independent, observation-only
-resource evidence. None of these commands starts ComfyUI or automatically
-authorizes a GPU job.
-
-The cross-module **pass/blocked/unknown** regression tests from
-[closed, unmerged integration PR #162](https://github.com/interzettel/prehnite/pull/162) were preserved in
-`tests/test_resource_cutout_integration.py` through #161. GitHub CI for
-the combined code passed **25/25 jobs** on #161's updated branch; post-merge
-`main` [CI run 39153867726](https://github.com/interzettel/prehnite/actions/runs/39153867726) also passed **25/25 jobs**. This is source code on development
-`main`, **not** a new PyPI release or a validated unattended Engine→cutout QA
-pipeline. The short-lived local ComfyUI launcher, dependency overlay and model
-weights remain private. The new alpha-refinement implementation is not
-byte-identical to the originally accepted lamp candidate, and that approval
-has not been transferred. See [the dated evidence and scope](docs/LOCAL_LAB_MILESTONE_2026-10-18.md).
-
-### Model Recipe status: micro / macro
-
-Prehnite now has **versioned model-workflow blueprints** rather than a single hard-coded model. `prehnite-micro` targets operator-configured, local-first ComfyUI runs; `prehnite-macro` explores later high-capability/hybrid workflows. The checked-in JSON recipes **do not contain models or execute on their own**.
-
-| Capability | `prehnite-micro` | `prehnite-macro` |
-| --- | --- | --- |
-| Versioned manifest / capability graph | Implemented | Implemented |
-| Local model/input hash resolver | Implemented, operator-supplied | Not implemented |
-| Recipe-bound engine/journal execution path | Experimental, opt-in | Not implemented |
-| Checkpoint installer and rights review | Planned | Planned |
-| Real GPU & human-cutout-quality benchmark | **One local lamp cutout visually accepted; general benchmark open** | Unverified |
-
-**Read the [recipe roadmap](docs/ROADMAP.md#model-recipes-workstream--versioned-micromacro-october-2026) and [recipe architecture](docs/MODEL_RECIPES.md)** for completed code, the single local-lab cutout demonstration and the still-open release gates. Neither mode claims a certified 4/6/8/12 GB laptop tier or preinstalled models.
-
-### Multi-file local model identity (static, not runtime certification)
-
-The new [schema-v2 model bindings](docs/MULTIFILE_PROVENANCE.md) hash every explicitly declared graph-loaded transformer/text-encoder/VAE/auxiliary weight file under the operator-controlled model root, and refuse undeclared file-style model references or changed bytes on resume. Legacy single-file receipts remain compatible. File-level SHA256 **cannot establish** which weights ComfyUI actually loaded in memory or whether model licenses permit use.
-
-### True 1K laptop micro preview (no fake 4K resize)
-
-A separate [native-1K local preview](docs/FIRST_REAL_ASSET.md#8-gb-laptop-smoke-test--genuine-native-1k) now requests **768×1024** pixels at 3:4 for one small smoke test. It refuses to upscale undersized model output silently and does not change the legacy native-4K preview or any hosted pricing and schemas. One later owner-authorized native-1K SDXL lamp generation and an independent local
-cutout have now been demonstrated; the original **preview recipe's general hardware
-compatibility, quality thresholds and third-party licensing** remain unverified.
-
-### Implicit segmentation model-file attestation (opt-in)
-
-Reviewed-source cutout batches can now pin a [private dependency manifest](docs/IMPLICIT_DEPENDENCIES.md) for GroundingDINO/SAM2/BERT model weights, tokenizer/config files and declared custom-node source files. SHA256 is rechecked before local execution and resume; this does **not** prove custom-node runtime loads, permissions or model quality. Existing reviewed-source packets remain compatible and never silently acquire a "verified" claim.
-
-### Human-reviewed source → new cutout batch (opt-in, local only)
-
-The [reviewed-source handoff](docs/REVIEWED_SOURCE_HANDOFF.md) hashes the original generated PNG, its human review and an explicit structured attestation before opening a **new source-only batch**. Segmentation produces a `review_pending/` candidate and never converts the original rejected generation batch to accepted, runs generation again, changes `uncertain: reject`, or claims the cutout passed human review. Requires separately installed/licensed local segmentation graphs/weights; this development feature is not in PyPI `0.1.0a1`.
-
-### First real model test — local or opt-in fal.ai
-
-The development CLI offers **`prehnite trial-evidence`** to produce a private, hash-bound technical receipt for a real generated image and transparent cutout without uploading or mutating either image. A valid image receipt is not proof of a human-accepted mask or measured GPU performance.\n\nThe development CLI offers **`prehnite micro-setup`** for create-only, hash-verified local graph/weight bindings and **`prehnite trial-plan`** for a one-asset, zero-provider-call dry-run with explicit cost caps before any local ComfyUI or fal.ai inference. The [operator runbook](docs/FIRST_REAL_ASSET.md) includes platform setup, graph mapping, source-rights checks, error/evidence collection and carefully gated first API testing. These are **development changes**, not present in the already published immutable `0.1.0a1` wheel; use a current source checkout until a subsequent alpha is approved. No pretrained weights or live GPU/paid-provider results are supplied.
-
-### Explicit local ComfyUI recipe execution (experimental)
-
-The existing `prehnite run` command can now pin an operator-supplied micro recipe
-and exact local workflow/checkpoint SHA256 to a batch's SQLite journal using
-`--recipe --bindings --workflows --checkpoints`. Model/graph mismatches and
-unbound resumes fail closed; **actual ComfyUI execution requires the operator's
-separate local ComfyUI process, checkpoints and compatible graphs** and has not
-been GPU-benchmarked. See [recipe execution limitations](docs/RECIPE_EXECUTION.md).
-
-### Local micro recipe input verification (non-executable)
-
-`prehnite recipe-resolve` verifies explicitly supplied local ComfyUI API graphs and
-checkpoint bytes against SHA256 and operator-acknowledged terms without downloads,
-cloud calls, credentials or inferred GPU suitability. This **inspection command**
-produces a read-only, non-executable receipt; use the separate, opt-in
-`prehnite run` recipe bridge above to bind those inputs to a real batch.
-See the [operator setup and limitations](docs/LOCAL_MODEL_RESOLVER.md).
-
-### Bring your own models, not your own orchestration subscription
-
-| Route | What it means today |
-| --- | --- |
-| **Demo (no-cost)** | Synthetic generator + Pillow resize and technical checks. Runs offline and is covered by CI. |
-| **Local ComfyUI** | Operator-supplied ComfyUI workflows and model weights on localhost. One pinned SDXL → GroundingDINO/SAM2 lamp case was run locally and its refined derivative independently accepted; **that private setup is not yet bundled or validated as a general-purpose installable workflow**. |
-| **fal.ai (optional paid)** | Opt-in hosted image generation/upscaling/segmentation adapter. Interfaces exist, but real endpoint schemas, pricing and image results still require live integration tests. |
-| **Anthropic judge (optional paid)** | An opt-in image comparison/rubric adapter. It is not a calibrated or production-validated quality benchmark. |
-
-No paid stage can be enabled by simply running the demo. Real cloud profiles require explicit `allow_paid` and, where images leave your machine, `allow_cloud_uploads`. They also require per-stage cost estimates and a positive `max_usd` cap. **Reserved amounts are estimates, not provider invoices or guaranteed billing ceilings.**
-
-You can inspect what each adapter is actually prepared to run using
-`prehnite models`. The [typed capability catalogue](docs/PROVIDER_CONTRACTS.md)
-lists operation/input types, supported tiers and formats, upload requirements,
-schema references, licensing cautions, and unimplemented candidates. Preflight
-checks unsupported paid models and incompatible options **before an API call**;
-custom ComfyUI graphs remain user-defined. The catalogue never supplies a
-live price: all paid quotes in example profiles must be verified and updated
-by you.
-
-For the locally hosted route, start with [the ComfyUI example profile](examples/profile-comfyui.yaml). For pay-per-use hosting, review [the fal profile](examples/profile-fal.yaml), verify endpoint contracts and current prices, and provide your own `FAL_KEY`. Do not use the sample prices as a quote.
-
-### Inspect detail without paying a judge
-
-Image previews can hide important 4K defects. You can create **native-pixel detail crops** and an annotated overview entirely offline:
+Then create and run a demonstration batch:
 
 ```bash
-prehnite crops my-photo.png --output detail-evidence --edge 1024
+prehnite init --destination my-first-batch --batch-id sample-one
+prehnite doctor
+prehnite validate my-first-batch/manifest.yaml --profile my-first-batch/profile.yaml
+prehnite estimate my-first-batch/manifest.yaml --profile my-first-batch/profile.yaml
+prehnite run my-first-batch/manifest.yaml --profile my-first-batch/profile.yaml --workspace workspace
 ```
 
-The output includes five lossless corner/center crops and a SHA256 manifest. Add `--anchor-x 0.45 --anchor-y 0.35` for one manually chosen area. This creates review evidence, **not an automated quality score**. [Read the crop guide](docs/CROP_EVIDENCE.md).
+The generated workspace contains the persistent stage journal, selected assets, JSON/CSV/HTML reports and a checked ZIP export. Run the same batch again to see completed work recovered rather than blindly repeated.
 
-### Opt-in reuse for repeatable stages
+Want to use the checked-in demo files instead? Start with `examples/manifest.yaml` and `examples/profile-demo.yaml`. See the [first-run guide](docs/ONBOARDING.md) and [offline gallery](docs/OFFLINE_GALLERY.md).
 
-Prehnite can keep locally verified stage outputs in a
-[private, content-addressed cache](docs/CACHING.md). It is disabled unless
-you specify an explicit owner namespace; prompts, seeds, input hashes,
-model options, version and model revision participate in the cache key.
-Cloud-model reuse requires a separate cache opt-in and a pinned model
-revision. A cache hit has no *new* provider request, but it does not erase
-historical charges or prove previously billed amounts.
+> **Installed alpha versus source:** The separately published [`prehnite==0.1.0a1`](https://pypi.org/project/prehnite/0.1.0a1/) is an early, immutable release. Many newer local-runtime, resource and cutout commands described in this repository are **development-source functionality**, not features of that PyPI wheel. Work from `main` to inspect the current implementation; a new package release requires separate approval.
 
-### Measure cost per usable asset, not raw generations
+## Using your own models
 
-The offline [economics report](docs/ECONOMICS.md) distinguishes
-**reserved/estimated spend** from **provider-reported partial amounts** and
-**verified invoices** (currently unavailable). It tracks accepted versus
-rejected assets, repeated stage invocations, local timing coverage and
-cost-per-accepted output. Failures still contribute to reserved cost; a
-batch with zero accepted assets has no meaningful cost-per-accepted figure.
+**Prehnite doesn't ship checkpoints, a ComfyUI installation, third-party custom nodes, or a ready-to-run model catalog.** Today the local integration expects you to supply a compatible ComfyUI installation, API-format graphs, checkpoints and their applicable rights.
 
-## Where things stand
+The intended boundary is deliberately small:
 
-**Latest public release: `0.1.0a1` — [published on PyPI](https://pypi.org/project/prehnite/0.1.0a1/) and [tagged on GitHub](https://github.com/interzettel/prehnite/releases/tag/v0.1.0a1) on 2026-10-17.** Current source development version: **`0.1.0a2.dev0` (unpublished)**. Install the released alpha with `python -m pip install prehnite==0.1.0a1`. See [Changelog](CHANGELOG.md), [Versioning](docs/VERSIONING.md) and [Release policy](docs/RELEASING.md). The core synthetic workflow works and **one native-1K local lamp cutout has independent artifact-level visual approval**; photorealistic quality across categories, 4K GPU feasibility, general segmentation accuracy and actual API billing have **not** been certified.
+```text
+you: prompts / references / batch goals
+                    |
+                    v
+         Prehnite: intent and policy
+         - manifest + recipe versions
+         - model / LoRA provenance
+         - resource / spend guards
+         - batch journal + recovery
+         - inspect / select / export
+                    |
+                    v
+    existing runtimes, currently ComfyUI
+    (or an explicitly chosen API adapter)
+                    |
+                    v
+       actual generated image files
+                    |
+                    v
+       human review + final package
+```
 
-**Evidence status (2026-10-18):** the private lab achieved one accepted
-real cutout; the optional source-code QA implementation and resource observations
-are now **merged into development `main`**, not yet independently
-live-validated on another object or released as a new PyPI version. See
-[the dated milestone](docs/LOCAL_LAB_MILESTONE_2026-10-18.md).
-This **does not silently convert** a frozen milestone parent, hardware tier,
-cross-category quality corpus or owner-signed journal gate to complete.
-**Canonical product roadmap v2:** [1/9 evidence-gated outcomes verified](docs/progress/STATUS.md) — the installable, offline/synthetic foundation. The next milestones focus on research, reliable measured generation on the existing 8 GiB RTX 4070 laptop, a genuine ten-image local batch, measured optimization, LoRA consistency and private appearance experiments. This does **not** certify model repeatability, high-quality generation across subjects, general GPU tiers, or human cutout acceptance. See the [product strategy](docs/PRODUCT_STRATEGY_LOW_VRAM.md) and [milestone acceptance definitions](docs/PRODUCT_MILESTONES.md).
+### Before you attempt real inference
 
-All 43 previously verified original release units and 21 originally verified atomic tasks are preserved as **read-only historical evidence** in the [v1 migration archive](docs/ROADMAP_MIGRATION_V2.md), not a second live completion percentage. Previously merged work remains in source; unverified real-model and API claims are not automatically credited to v2. The #159/#161 changes are development source only; they are not included in the published `0.1.0a1` package.
+1. Run `prehnite hardware` for read-only, source-labeled system/GPU observations. This does not certify model compatibility. To test just a running local ComfyUI server, `prehnite doctor --check-comfyui --comfyui-url http://127.0.0.1:8188` makes a short loopback-only status request; it does **not** load a model.
+2. Use [the local native-1K example](docs/FIRST_REAL_ASSET.md#8-gb-laptop-smoke-test--genuine-native-1k): the preview.2 recipe targets **768×1024**, not a 4K output disguised by resizing. Your own API graph, model files and terms acknowledgements are still required.
+3. Read [local recipe execution](docs/RECIPE_EXECUTION.md), [model and workflow resolver](docs/LOCAL_MODEL_RESOLVER.md), [model rights](docs/LICENSING.md) and the [source/alpha QA workflow](docs/LOCAL_LAB_MILESTONE_2026-10-18.md). The current engine can bind a ComfyUI graph/weights to a journal; it is **not** a universal one-click inference installer.
 
-The tracker distinguishes implemented scaffolding from independently evidenced completions, and records issues blocked by broader hardware validation, human calibration or paid-call authorization.
+Optional providers, including the existing fal.ai adapter, are separate from local use and require explicit provider configuration, upload permission and budget caps. Hosted schema support and actual billed charges still need verification. Higgsfield is an **investigated possible integration**, not an available Prehnite adapter. No fallback should silently transmit personal reference photos.
 
-**One active roadmap:** [Current product milestones and tasks](docs/progress/STATUS.md) · [Canonical v2 register](progress/roadmap.json) · [What milestones mean](docs/PRODUCT_MILESTONES.md) · [v1 historical evidence migration](docs/ROADMAP_MIGRATION_V2.md) · [90-asset no-cost benchmark](docs/OFFLINE_90_BENCHMARK.md) · [Historic technical release matrix](docs/PROGRESS.md) · [Offline production analytics](docs/OFFLINE_ANALYTICS.md) · [Current sprint](docs/SPRINT.md) · [Roadmap](docs/ROADMAP.md).
+## What actually works today?
 
-The [Produce / Explore / Experiment evaluation RFC](docs/BATCH_OBJECTIVES.md) describes future batch modes and a measurement framework; v0.1 implements neither a general exploration planner nor a Pareto dashboard.
+<details open>
+<summary><strong>Demonstrated and implemented</strong></summary>
 
-GitHub [Project #1](https://github.com/orgs/interzettel/projects/1) tracks workflow; the [one v2 roadmap](progress/roadmap.json) tracks accepted product outcomes. Project field synchronization is still [unimplemented](https://github.com/interzettel/prehnite/issues/44). Historical v1 trackers are available only in the archive.
+- **Offline production foundation:** validated manifests/profiles, zero-cost synthetic generation, stage journaling and replay, bounded retries, reports, gallery and ZIP integrity. Its tests run on Windows and Linux CI.
+- **Model-agnostic contracts:** typed adapter interfaces, optional API scaffolding, opt-in local ComfyUI workflow and checkpoint bindings, model-file checksums and reproducible recipe records.
+- **Hardware observations:** read-only GPU/OS/RAM reporting and resource preflight; a failed or unknown observation must not become a fabricated compatibility claim.
+- **Technical cutout tools:** source/mask bindings, multiple-instance export, alpha candidates, conservative QA, optional visual-review receipts. Experimental soft-alpha preservation and synthetic reference-matte diagnostics do **not** manufacture hair or glass transparency from binary masks.
+- **One real local-lab success:** on 2026-10-18, a laptop RTX 4070 generated one 768×1024 SDXL source in about **46.04 seconds**. A GroundingDINO/SAM2 cutout took **8.994 seconds**, including load and inference, with a sampled peak of **2,533 MiB** for that stage. One CPU-refined lamp cutout was independently accepted **for that artifact and viewing scale only**. Private weights, output pixels and launcher remain outside the public package. [Full observation and limitations](docs/LOCAL_LAB_MILESTONE_2026-10-18.md).
 
-## Built for a maintainer and their agents
+</details>
 
-Prehnite has a CLI first, optional [stdio MCP tools](src/prehnite/mcp_server.py) second. A person can run it directly; agents can submit preconfigured batches, check status, and request exports without being given arbitrary shell access. MCP workers now support [durable reconnect and cooperative pause/cancel/resume](docs/MCP_LIFECYCLE.md) on the main branch; a stop request does not immediately stop an in-flight provider request.
+<details>
+<summary><strong>Not yet demonstrated or generally available</strong></summary>
 
-The project itself is managed the same way: small issue scopes, PR-based delivery, offline tests, and a persistent [agent-to-agent handoff thread](https://github.com/interzettel/prehnite/issues/9). One maintainer sets direction and approves spend and releases. Agents do the repeatable engineering work and leave evidence—not inflated status reports.
+- A repeatable, independently verified 8 GB model profile across three identical real runs. The new [P08-A03 offline evidence contract](docs/P08_A03_OFFLINE_PREPARATION.md) validates proposed records and synthetic fallback behavior only. **No new GPU run was authorized or performed.**
+- Proven better speed, memory consumption, or human-accepted image yield versus a fair ComfyUI-only baseline; CPU offloading may make host RAM or latency worse.
+- An install-and-run, rights-cleared bundle that automatically obtains compatible model weights and LoRAs.
+- A fully reviewed ten-image **real-model** batch with honest accepted/rejected yield and memory/recovery receipts.
+- General-purpose photographic matting for difficult glass, hair and mesh, or calibrated automated aesthetic/identity judgments.
+- Turnkey LoRA experiment grids, private hairstyle/appearance editing, general 4K local performance or validated provider invoices.
 
-To contribute or extend the engine, start with [Contributing](CONTRIBUTING.md), [Architecture](docs/ARCHITECTURE.md), [Security](docs/SECURITY.md), and [Versioning](docs/VERSIONING.md). Issues are welcome, particularly for adapters that remain optional and testable without network access.
+</details>
 
-## License and boundaries
+Technical tests passing should not be mistaken for those missing real-world proofs.
 
-**[MIT](LICENSE)** for Prehnite's own code. Image models, checkpoints, external APIs, datasets, and other installed applications retain **their own** terms; nothing about this repository grants a license to third-party weights. See [Licensing](docs/LICENSING.md) and the [release policy](docs/RELEASING.md).
+## One product roadmap
 
-No model checkpoint ships with the repo. No mandatory hosted product or subscription. Further release tags and uploads require separate owner approval and verified gates.
+We've retired the competing progress ledgers. The **only active product roadmap** is [`progress/roadmap.json`](progress/roadmap.json), with one [generated status dashboard](docs/progress/STATUS.md).
+
+**Current accepted product outcomes: 1 of 9 milestones.** The verified milestone is the installable synthetic foundation, not the entire image engine.
+
+| | Milestone | Outcome |
+| --- | --- | --- |
+| Phase 1 | **P1-M00 — Foundation** | Verified: installable offline/synthetic engine |
+| Phase 1 | **P1-M01 — Choose a model/runtime** | Research and benchmark decision for the existing 8 GB laptop |
+| Phase 1 | **P1-M02 — Reproducible baseline** | Authorized physical repeatability and independent review |
+| Phase 1 | **P1-M03 — Useful optimization** | Same-workload memory/time comparison with quality trade-offs |
+| Phase 1 | **P1-M04 — Ten-image local batch** | Generate, inspect, resume, select and package actual images |
+| Phase 1 | **P1-M05 — Product acceptance** | Human-reviewed quality, usefulness, installation and resource report |
+| Phase 2 | **P2-M01 — LoRA research** | Choose compatible methods with rights and 8 GB constraints |
+| Phase 2 | **P2-M02 — Style variations** | Reproducible controlled model/LoRA/seed experiments |
+| Phase 2 | **P2-M03 — Private appearance sandbox** | Local reference variations with human consistency assessment |
+
+A milestone is only complete after its **research, code, real experiment and/or human-acceptance gates** are actually satisfied. There is no automatic Phase 3 for audio, videos, social publishing or another UI.
+
+The original **43/61 release units** and **21/73 atomic tasks** remain documented in [the historical v1 migration archive](docs/ROADMAP_MIGRATION_V2.md), with every old open obligation traceable. They are no longer rival active progress percentages. [Milestone definitions](docs/PRODUCT_MILESTONES.md) explain the evidence policy.
+
+## Design boundaries
+
+**Local first.** Ordinary synthetic workflows need neither a GPU nor an account; private references stay local unless a particular provider submission is explicitly authorized.
+
+**Existing runtimes first.** Prehnite orchestrates an image workflow; ComfyUI owns the graph execution and model ecosystem. InvokeAI, Diffusers, quantized model paths or other runtimes are research candidates, not proven speedups.
+
+**8 GB is the practical target.** We optimize against our actual laptop and **available host RAM**, not advertise unmeasured 4/6 GB hardware tiers. A larger GPU or an optional API should remain possible without redefining the entire product.
+
+**Reproducibility before marketing.** Jobs retain seeds, recipes, output identities and failure receipts. A hash proves byte integrity; it does not prove image quality or legal model rights.
+
+**No hidden costs.** Local GPU time consumes power, even with zero provider fees. Optional hosted calls require explicit spending/upload policies; estimates are not invoices.
+
+**Quality that meets a brief.** Human acceptance of useful images, not universal perfection, is the goal. Research and optimization hypotheses must survive actual comparison.
+
+## Project and development links
+
+| For | Read |
+| --- | --- |
+| Recalibrate project direction | [Two-phase strategy](docs/PRODUCT_STRATEGY_LOW_VRAM.md) · [Product milestone plan](docs/PRODUCT_MILESTONES.md) |
+| Inspect current facts | [Canonical status](docs/progress/STATUS.md) · [Full changelog](CHANGELOG.md) · [Recorded lab experiment](docs/LOCAL_LAB_MILESTONE_2026-10-18.md) |
+| Try the software | [First run](docs/ONBOARDING.md) · [Local first asset](docs/FIRST_REAL_ASSET.md) · [CLI / model recipes](docs/MODEL_RECIPES.md) |
+| Understand architecture | [Architecture](docs/ARCHITECTURE.md) · [Local engine bridge](docs/RECIPE_EXECUTION.md) · [Security](docs/SECURITY.md) |
+| Contribute or audit history | [Contributing](CONTRIBUTING.md) · [Agent governance](AGENTS.md) · [Legacy roadmap crosswalk](docs/ROADMAP_MIGRATION_V2.md) |
+| Track work | [Issues](https://github.com/interzettel/prehnite/issues) · [Project board](https://github.com/orgs/interzettel/projects/1) · [Agent coordination #9](https://github.com/interzettel/prehnite/issues/9) |
+
+Prehnite is developed with agents, but the owner chooses priorities, model/asset rights, hardware experiments, spending and releases. A passing PR does not authorize inference or release a new package.
+
+## License
+
+**[MIT](LICENSE)** applies to Prehnite's code. ComfyUI, model weights, LoRAs, custom nodes, training sets and hosted services each retain their own licenses and usage rules. **No third-party weights are included** and no right to redistribute them is implied. See [licensing](docs/LICENSING.md) and [release policy](docs/RELEASING.md).
+
+---
+
+<div align="center"><sub>Prehnite — local experiments should stay yours.</sub></div>
