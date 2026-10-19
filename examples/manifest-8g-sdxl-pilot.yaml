@@ -1,0 +1,65 @@
+# Fixed first local image batch, no private source photos, no segmentation required.
+# Native 768x1024 output from an operator-supplied SDXL ComfyUI API graph.
+# Replace batch id for each actual authorized physical trial; never rewrite an accepted job.
+id: sdxl-8g-pilot-001
+assets:
+  - id: lamp-coral
+    prompt: "Photograph of a minimalist ceramic desk lamp in muted coral on an off-white tabletop, soft daylight, clean backdrop"
+    aspect_ratio: "3:4"
+    target_size: [768, 1024]
+    seed: 1042
+    output: {image: "images/lamp-coral.png"}
+  - id: lamp-forest
+    prompt: "Photograph of a minimalist ceramic desk lamp in deep forest green on an off-white tabletop, soft daylight, clean backdrop"
+    aspect_ratio: "3:4"
+    target_size: [768, 1024]
+    seed: 1043
+    output: {image: "images/lamp-forest.png"}
+  - id: lamp-stone
+    prompt: "Studio photograph of a matte limestone desk lamp on a warm cream desk, balanced composition, soft daylight"
+    aspect_ratio: "3:4"
+    target_size: [768, 1024]
+    seed: 1044
+    output: {image: "images/lamp-stone.png"}
+  - id: chair-sage
+    prompt: "Studio photograph of a sculptural sage green wooden chair against a neutral paper backdrop, realistic texture"
+    aspect_ratio: "3:4"
+    target_size: [768, 1024]
+    seed: 1045
+    output: {image: "images/chair-sage.png"}
+  - id: chair-oak
+    prompt: "Product photograph of a simple oak chair with woven seat on a cream floor, soft side light, uncluttered setting"
+    aspect_ratio: "3:4"
+    target_size: [768, 1024]
+    seed: 1046
+    output: {image: "images/chair-oak.png"}
+  - id: vase-coral
+    prompt: "Editorial still life photograph of a coral ceramic vase with a single dried branch, warm paper background"
+    aspect_ratio: "3:4"
+    target_size: [768, 1024]
+    seed: 1047
+    output: {image: "images/vase-coral.png"}
+  - id: vase-forest
+    prompt: "Editorial still life photograph of a forest green glass vase on a pale wood shelf, gentle soft daylight"
+    aspect_ratio: "3:4"
+    target_size: [768, 1024]
+    seed: 1048
+    output: {image: "images/vase-forest.png"}
+  - id: book-paper
+    prompt: "Editorial photograph of a stack of clothbound design books on a warm cream table, natural shadows"
+    aspect_ratio: "3:4"
+    target_size: [768, 1024]
+    seed: 1049
+    output: {image: "images/book-paper.png"}
+  - id: crystal-prehnite
+    prompt: "Macro product photograph of a natural pale green prehnite mineral crystal on a neutral stone plinth, soft studio light"
+    aspect_ratio: "3:4"
+    target_size: [768, 1024]
+    seed: 1050
+    output: {image: "images/crystal-prehnite.png"}
+  - id: toolkit-stilllife
+    prompt: "Editorial photograph of a green notebook, graphite pencils and coral scissors on a warm paper desktop, overhead angle"
+    aspect_ratio: "3:4"
+    target_size: [768, 1024]
+    seed: 1051
+    output: {image: "images/toolkit-stilllife.png"}
