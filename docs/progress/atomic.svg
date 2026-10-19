@@ -10,11 +10,11 @@
 <rect x="32" y="118" width="810" height="18" rx="5" fill="#D5DCD5"/>
 <rect x="32" y="118" width="557.7" height="18" rx="5" fill="#075231"/>
 <text x="32" y="190" font-size="16" font-weight="600" fill="#075231">Atomic delivery / initially unfinished 19 units</text>
-<text x="1060" y="190" font-size="18" font-weight="700" text-anchor="end" fill="#075231">16/73 · 21.92%</text>
+<text x="1060" y="190" font-size="18" font-weight="700" text-anchor="end" fill="#075231">17/73 · 23.29%</text>
 <rect x="32" y="203" width="810" height="18" rx="5" fill="#D5DCD5"/>
-<rect x="32" y="203" width="177.5" height="18" rx="5" fill="#075231"/>
+<rect x="32" y="203" width="188.6" height="18" rx="5" fill="#075231"/>
 <text x="32" y="249" font-size="13" fill="#53675A">Second measure covers only frozen open-unit tasks, never an overall completion estimate.</text>
-<text x="32" y="273" font-size="13" fill="#53675A">Review 0 · Active 0 · Blocked 27 · Planned 30 · baseline 2026-10-17</text>
+<text x="32" y="273" font-size="13" fill="#53675A">Review 0 · Active 0 · Blocked 27 · Planned 29 · baseline 2026-10-17</text>
 <text x="32" y="305" font-size="16" font-weight="600" fill="#075231">PR-SIZED TASKS BY UNFINISHED UNIT</text>
 <text x="32" y="333" font-size="14" font-weight="700" fill="#075231">C06</text>
 <text x="120" y="333" font-size="12" fill="#384F45">Versioned pricing quotes and bill reconcili</text>
@@ -39,11 +39,11 @@
 <text x="1060" y="411" font-size="13" text-anchor="end" fill="#075231">0/4</text>
 <text x="32" y="450" font-size="14" font-weight="700" fill="#075231">P08</text>
 <text x="120" y="450" font-size="12" fill="#384F45">8GB VRAM local model feasibility benchmark</text>
-<g><title>P08-A01 / planned / Record local GPU environment and free VRAM</title><rect x="565.00" y="436" width="100.75" height="17" rx="2" fill="#D5DCD5"/></g>
+<g><title>P08-A01 / done / Record local GPU environment and free VRAM</title><rect x="565.00" y="436" width="100.75" height="17" rx="2" fill="#075231"/></g>
 <g><title>P08-A02 / blocked / Run bounded 8GB model load and forward pass</title><rect x="668.75" y="436" width="100.75" height="17" rx="2" fill="#A63D35"/></g>
 <g><title>P08-A03 / blocked / Verify repeated local inference without OOM</title><rect x="772.50" y="436" width="100.75" height="17" rx="2" fill="#A63D35"/></g>
 <g><title>P08-A04 / planned / Publish compatibility profile by model size</title><rect x="876.25" y="436" width="100.75" height="17" rx="2" fill="#D5DCD5"/></g>
-<text x="1060" y="450" font-size="13" text-anchor="end" fill="#075231">0/4</text>
+<text x="1060" y="450" font-size="13" text-anchor="end" fill="#075231">1/4</text>
 <text x="32" y="489" font-size="14" font-weight="700" fill="#075231">P09</text>
 <text x="120" y="489" font-size="12" fill="#384F45">User-approved end-to-end live inference pil</text>
 <g><title>P09-A01 / blocked / Select explicitly authorized hosted inference experiment</title><rect x="565.00" y="475" width="135.33" height="17" rx="2" fill="#A63D35"/></g>
