@@ -7,8 +7,10 @@ after retries."
 This S04-A02 contract defines **identity and intention only**. It never
 segments, binds or exports an image, or approves a candidate. Subsequent
 [S04-A03](OWNER_REGION_INSTANCE_BINDING.md) provides a separate opt-in,
-read-only owner-region to candidate-mask binding contract. **S04-A04
-(multi-object export/resume) and independent quality acceptance remain open.** The existing `prehnite run` reviewed-source path stays
+read-only owner-region to candidate-mask binding contract. The separate
+[merged S04-A04 API](MULTI_INSTANCE_EXPORT_RESUME.md) now performs actual
+owner-bound multi-object PNG exports and journal-backed restart verification.
+**Independent quality acceptance remains open.** The existing `prehnite run` reviewed-source path stays
 single-target; this change does not advertise new multi-instance inference.
 
 ## Namespace and identity
@@ -81,6 +83,8 @@ This is the **S04-A02 identity contract only**. The separate merged
 [S04-A03 owner binding](OWNER_REGION_INSTANCE_BINDING.md) handles explicit
 image-region/point selection of already available candidate masks and refuses
 ambiguous overlap. Automatic semantic matching remains unclaimed.
-**S04-A04's actual image export, interrupted/resumed named output hashes and
-parent S04 acceptance are not delivered by either contract**. The 61-unit
-release count must not move on the strength of these two atomic requirements.
+Actual export and interruption-safe named output hashes are now separately
+covered by [S04-A04](MULTI_INSTANCE_EXPORT_RESUME.md). These identity and
+binding contracts do not themselves publish any image. Parent S04 release
+acceptance remains a separately evidenced ledger decision, and none of these
+CPU tests demonstrates real-model multi-instance segmentation or visual quality.
