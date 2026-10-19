@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated": "2026-10-18",
+  "updated": "2026-10-19",
   "scope": "Only the 19 incomplete units in progress/ledger.json; never a project-wide completion score",
   "parent_ledger": "progress/ledger.json",
   "counting_rule": "Unweighted PR-sized scoped tasks. Only merged, evidenced done child tasks count. In-review, active, blocked and planned are not complete. Parent 61-unit delivery status and 7 release gates remain authoritative and independent.",
@@ -446,10 +446,12 @@
       "parent": "S04",
       "title": "Define stable target instance identity and hierarchy",
       "acceptance": "Per-instance IDs and intended outputs remain deterministic after retries",
-      "state": "planned",
+      "state": "done",
       "issue": 30,
       "owner": "Agent cloud",
-      "dependsOn": []
+      "dependsOn": [],
+      "evidence": "https://github.com/interzettel/prehnite/pull/167",
+      "verified_at": "2026-10-19"
     },
     {
       "id": "S04-A03",
