@@ -460,10 +460,12 @@
       "parent": "S04",
       "title": "Implement owner-selected region to instance binding",
       "acceptance": "Selection resolves requested target without destroying unrelated masks",
-      "state": "planned",
+      "state": "done",
       "issue": 30,
       "owner": "Agent cloud",
-      "dependsOn": []
+      "dependsOn": [],
+      "evidence": "https://github.com/interzettel/prehnite/pull/171",
+      "verified_at": "2026-10-19"
     },
     {
       "id": "S04-A04",
