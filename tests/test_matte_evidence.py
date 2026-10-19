@@ -112,14 +112,36 @@ def test_opt_in_soft_matte_fail_closed_before_publishing(tmp_path, bad):
     assert not (tmp_path / "out" / "oracle-preserve.png").exists()
 
 
-def test_soft_alpha_refuses_colorized_mask_or_wrong_resolution(tmp_path):
+@pytest.mark.parametrize("mutation", ["rgb_mask", "wrong_resolution"])
+def test_soft_alpha_refuses_colorized_mask_or_wrong_resolution(tmp_path, mutation):
     source, mask, _, recipe_path, _, _ = oracle_fixture(tmp_path)
+    # Close the read handle before rewriting: Windows does not permit replacing
+    # an open image file, and cross-platform correctness matters here.
     with Image.open(mask) as original:
-        original.convert("RGB").save(mask)
+        changed = original.copy()
+    if mutation == "rgb_mask":
+        changed = changed.convert("RGB")
+    else:
+        changed = changed.resize((64, 80))
+    changed.save(mask)
     with pytest.raises(CutoutContractError, match="soft_alpha_must_be_exact_L_PNG"):
         run_cutout_qa(recipe_path, source=source, mask=mask, workflow_root=tmp_path,
                       models_root=tmp_path, output_dir=tmp_path / "out")
     assert not (tmp_path / "out" / "oracle-preserve.png").exists()
+
+
+def test_reference_flags_premultiplied_rgb_misdeclared_as_straight(tmp_path):
+    *_, foreground, alpha = oracle_fixture(tmp_path)
+    reference = foreground.convert("RGBA")
+    reference.putalpha(alpha)
+    incorrect = reference.copy()
+    x, y = 92, 60  # partially transmissive glass-like panel
+    r, g, b, a = incorrect.getpixel((x, y))
+    incorrect.putpixel((x, y), (r * a // 255, g * a // 255, b * a // 255, a))
+    # Alpha can match exactly while RGB premultiplication causes a dark fringe.
+    measured = evaluate_reference_matte(incorrect, reference)
+    assert measured["alpha_mae_255"] == 0
+    assert measured["max_composited_transition_rgb_mae_255"] > 0
 
 
 def test_oracle_refuses_non_reference_or_non_partial_inputs():
