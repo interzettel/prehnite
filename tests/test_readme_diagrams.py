@@ -51,8 +51,8 @@ def test_readme_is_product_facing_and_backend_accurate():
     assert "owner-mandated" not in readme.lower()
     assert "fal.ai" in readme
     assert "ComfyUI" in readme
-    assert "43/63" in readme
-    assert "68.3%" in readme
+    assert "60/80" in readme
+    assert "75.0%" in readme
     assert "1/9" in readme
 
 
@@ -63,8 +63,8 @@ def test_diagram_coverage_matches_current_roadmap():
     diagram = (ROOT / "assets/diagrams/roadmap.svg").read_text()
     total = len(current["tasks"])
     done = sum(t["state"] == "verified" for t in current["tasks"])
-    assert (done, total) == (43, 63)
-    assert "Engineering evidence 43 / 63" in diagram
+    assert (done, total) == (60, 80)
+    assert "Engineering evidence 60 / 80" in diagram
     for m in current["milestones"]:
         assert m["id"] in diagram
         count = sum(
