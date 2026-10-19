@@ -52,6 +52,32 @@ prehnite run examples/manifest-8g-sdxl-pilot.yaml \
 
 The last command runs **synthetic/demo generation only**. It exercises the existing engine end to end, including a second run against the same workspace for recovery. Its outputs are not AI photographs, model performance samples or live GPU acceptance.
 
+## Inspect the existing API graph without execution
+
+Export the **actual SDXL generation graph** from ComfyUI in API format into a
+private directory on your own laptop. Update
+`examples/profile-8g-sdxl-pilot.yaml` **in a private copy**, setting
+`generation.options.workflow`, `prompt_node`, `seed_node`, `size_node`
+and `output_node` to the exported node identifiers. The example IDs are
+placeholders, not a working stock graph.
+
+```bash
+prehnite pilot-inspect examples/manifest-8g-sdxl-pilot.yaml \
+  --profile /private/profile-8g-sdxl-pilot.yaml \
+  --workflows /private/comfyui-api-workflows
+```
+
+This read-only command reports **candidate** node IDs and types, verifies
+configured text/seed/width/height/SaveImage fields, and shows the SHA256 of
+the inspected API JSON. Incorrect mappings return a nonzero exit code and
+candidate alternatives. It does **not** inspect or approve checkpoint
+licences, bytes, runtime-installed custom nodes, prompt interpretation,
+VRAM suitability, output quality, or an inference run. Even
+`status: static_mapping_valid` returns `execution_ready: false`.
+No private prompt/input values or model filenames are exported in the report.
+Never substitute this static diagnostic for the model/graph byte provenance
+or owner-approved hardware preflight.
+
 ## Before any real physical run
 
 A local operator must receive **new explicit scoped permission** that fixes which model/checkpoint and exact hashes, ComfyUI revision/graph, sampler/steps, stop conditions, RAM/commit/VRAM preflight floors, time budget, output privacy, no additional installation or retries, and cleanup. The prior P08-A03 proposal governs SAM2 segmentation, not SDXL generation. Generation-specific timing, inputs, resource sampling and stop limits must be approved separately; no permission from one can be reused for the other.

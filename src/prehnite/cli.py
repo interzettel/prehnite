@@ -222,6 +222,22 @@ def validate(manifest: Path, profile: Path = typer.Option(...),
     validate_job(m, p, inputs, dependencies_root)
     typer.echo(f"Valid: {m.id}, {len(m.assets)} assets")
 
+@app.command("pilot-inspect")
+def pilot_inspect_cli(
+        manifest: Path,
+        profile: Path = typer.Option(..., "--profile"),
+        workflows: Path = typer.Option(..., "--workflows")):
+    """Inspect a local generation API graph without GPU, weights or network."""
+    from .pilot_inspect import inspect_generation_pilot
+    try:
+        report = inspect_generation_pilot(manifest, profile, workflows)
+    except (ValueError, OSError, KeyError, TypeError, json.JSONDecodeError) as exc:
+        raise typer.BadParameter(f"Static pilot inspection refused: {exc}") from exc
+    typer.echo(json.dumps(report, indent=2, sort_keys=True))
+    if report["status"] != "static_mapping_valid":
+        raise typer.Exit(code=1)
+
+
 @app.command()
 def models():
     typer.echo(json.dumps(list_models(), indent=2))
