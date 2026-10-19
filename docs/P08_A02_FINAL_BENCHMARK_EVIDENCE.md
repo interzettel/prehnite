@@ -1,6 +1,6 @@
 # P08-A02 final cold/warm benchmark evidence
 
-**Status:** original narrow benchmark criterion independently reviewed as met; **completion credit awaits evidence PR merge and separate frozen-ledger reconciliation**
+**Status:** original narrow benchmark criterion independently reviewed as met; [evidence PR #177](https://github.com/interzettel/prehnite/pull/177) merged; original-task accounting separately credited. This is not a repeatability or cutout-quality certification.
 
 **Issue:** [#24](https://github.com/interzettel/prehnite/issues/24)
 
@@ -99,6 +99,6 @@ claimed.
 
 ## Acceptance boundary
 
-This evidence has been **independently reviewed for P08-A02's narrow original metric criterion**, but it earns no completion credit before the evidence PR merges and a separate accounting PR passes CI. The original atomic tracker was **19/73 (26.03%) when the laptop report was prepared**. Unrelated [S04-A04 accounting PR #178](https://github.com/interzettel/prehnite/pull/178) subsequently moved public `main` to **20/73 (27.40%)**. P08-A02 remains blocked in the current register until credited against that latest baseline; P08-A03 is not started, and no release, model/package change or historical artifact was modified. Cold post-load latency is derived from observable timestamps, not a separately instrumented measurement.
+This evidence has been **independently reviewed for P08-A02's narrow original metric criterion**, but it earns no completion credit before the evidence PR merges and a separate accounting PR passes CI. The original atomic tracker was **19/73 (26.03%) when the laptop report was prepared**. Unrelated [S04-A04 accounting PR #178](https://github.com/interzettel/prehnite/pull/178) subsequently moved public `main` to **20/73 (27.40%)**. The merged P08-A02 criterion has now been separately credited, bringing the same frozen register to **21/73 (28.77%)**; P08-A03 remains blocked and unstarted, and no release, model/package change or historical artifact was modified. Cold post-load latency is derived from observable timestamps, not a separately instrumented measurement.
 
 [![](https://img.shields.io/badge/powered_by-dsh-4D6BFE?style=flat-square&logo=deepseek&logoColor=white)](https://github.com/deepseek-ai/deepseek-harness)
