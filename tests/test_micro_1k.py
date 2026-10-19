@@ -51,16 +51,29 @@ def test_manifest_refuses_4k_target_disguised_as_1k(tmp_path):
         validate_job(manifest, profile, tmp_path)
 
 
-def test_1k_fal_and_demo_providers_not_allowed(tmp_path):
+def test_1k_fal_remains_excluded_but_named_synthetic_demo_is_allowed(tmp_path):
     manifest, profile = local()
-    for provider in ("fal", "demo"):
-        changed = profile.model_copy(deep=True)
-        changed.generation.provider = provider
-        with pytest.raises(ValueError, match="only local ComfyUI"):
-            validate_job(manifest, changed, tmp_path)
+    remote = profile.model_copy(deep=True)
+    remote.generation.provider = "fal"
+    with pytest.raises(ValueError, match="only ComfyUI or offline synthetic demo"):
+        validate_job(manifest, remote, tmp_path)
+
+    unspecified = profile.model_copy(deep=True)
+    unspecified.generation.provider = "demo"
+    # Merely switching the provider without the exact synthetic model contract
+    # is still invalid. No unverified local weights are treated as synthetic.
+    with pytest.raises(ValueError, match="Unsupported generate adapter"):
+        validate_job(manifest, unspecified, tmp_path)
+
+    synthetic = profile.model_copy(deep=True)
+    synthetic.generation.provider = "demo"
+    synthetic.generation.model = "synthetic"
+    validate_job(manifest, synthetic, tmp_path)
+
     with pytest.raises(ValueError, match="resolution tier"):
-        fal_generation_inputs(Endpoint(provider="fal", model="blackforestlabs/flux-3/klein/text-to-image"),
-                              "a lamp", "3:4", "1k", 7)
+        fal_generation_inputs(Endpoint(
+            provider="fal", model="blackforestlabs/flux-3/klein/text-to-image"
+        ), "a lamp", "3:4", "1k", 7)
 
 
 def test_comfyui_1k_updates_real_node_dimensions_without_network(tmp_path, monkeypatch):
