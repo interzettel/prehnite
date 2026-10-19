@@ -1,6 +1,9 @@
 # Roadmap (issues should reference acceptance tests)
 
-**Progress and agent tasks:** [Verified 61-unit release ledger](progress/STATUS.md) · [Atomic task dashboard and acceptance criteria](progress/ATOMIC.md) · [Frozen PR-sized register](../progress/atomic.json) · [Current iteration board](SPRINT.md). The atomic percentage is scoped only to the 19 unfinished release units from its initial baseline, not overall project progress.
+**Current canonical roadmap:** [Product status](progress/STATUS.md) · [One source-of-truth JSON](../progress/roadmap.json) · [Milestone criteria](PRODUCT_MILESTONES.md) · [8 GiB-first strategy](PRODUCT_STRATEGY_LOW_VRAM.md) · [Historical v1 migration crosswalk](ROADMAP_MIGRATION_V2.md). Two phases only: efficient local 8 GiB generation and batch outcomes, then LoRA/controlled appearance experiments. No 4/6 GiB test campaign; optional APIs remain explicitly consented.
+
+
+**Agent work:** [A2A issue #9](https://github.com/interzettel/prehnite/issues/9) · [Live sprint](SPRINT.md). Only the v2 roadmap contributes current milestone/task completion. Original 61-unit release and 73-task numbers are read-only historical baselines.
 
 ## Latest real-machine and integration evidence (2026-10-18)
 
@@ -70,7 +73,7 @@ require revisiting the accepted lamp or reopening the original Gate 3 batch.
 
 ## Model Recipes workstream — versioned micro/macro (October 2026)
 
-This is a **new, separately tracked architecture scope** under [issue #132](https://github.com/interzettel/prehnite/issues/132), not new credit in the frozen [61-unit release ledger](progress/STATUS.md) or [73-task atomic register](progress/ATOMIC.md). This checklist tracks implementation slices, **not** release readiness, demonstrated output quality or laptop VRAM compatibility. Details: [recipe specification](MODEL_RECIPES.md), [local execution contract](RECIPE_EXECUTION.md), [current board](SPRINT.md).
+This architecture epic [#132](https://github.com/interzettel/prehnite/issues/132) feeds the current [v2 research/implementation/experiment gates](PRODUCT_MILESTONES.md); the checked boxes below are engineering implementation evidence, **not** automatic completion of the new real-device and human-quality gates. Older 61/73 completion references are preserved in the [v1 historical archive](ROADMAP_MIGRATION_V2.md).
 
 **Completed engineering groundwork (not proof of real-model inference):**
 - [x] Versioned `prehnite-micro`/`prehnite-macro` blueprint schemas, capability DAG/cycle and policy validation, stable fingerprints ([#138](https://github.com/interzettel/prehnite/pull/138))

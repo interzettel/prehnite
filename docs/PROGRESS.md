@@ -1,10 +1,10 @@
-# Prehnite — delivery readiness and work limits
+# Prehnite — historical v1 technical release-gate audit and operational limits
 
-See also the [granular milestone tracker](progress/STATUS.md), generated from 61 independently verifiable work units. This 16-gate matrix is deliberately separate: passing small tasks does not prove release readiness.
+**Historical v1 audit, not a competing current progress score.** The [single canonical v2 product status](progress/STATUS.md) governs ongoing milestones. This 16-gate matrix records original legacy acceptance boundaries and must not be silently interpreted as active v2 progress.
 
 **Baseline:** 2026-10-16 · **Local evidence update:** 2026-10-18 ([first accepted lamp cutout](LOCAL_LAB_MILESTONE_2026-10-18.md)) · Source of truth: GitHub [issues](https://github.com/interzettel/prehnite/issues), [PRs](https://github.com/interzettel/prehnite/pulls), [CI](https://github.com/interzettel/prehnite/actions), and [A2A log #9](https://github.com/interzettel/prehnite/issues/9).
 
-![Delivery release-gate chart](./progress.svg)
+[Original archived milestone chart](archive/v1/progress.svg) · [Migration crosswalk](ROADMAP_MIGRATION_V2.md)
 
 ## Reading this chart
 

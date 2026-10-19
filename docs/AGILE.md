@@ -46,19 +46,25 @@ Suggested optional GitHub labels, once created by a repository maintainer:
 
 GitHub labels aren't provisioned automatically here. **Do not label an issue with an imaginary label or claim a native Projects board exists.** The checked-in board and live issue/PR links work without labels.
 
-## Evidence-ledger milestones
+## One canonical roadmap (v2)
 
-[progress/ledger.json](../progress/ledger.json) defines stable, independently completable units with dependencies, execution lanes and evidence. [scripts/progress.py](../scripts/progress.py) generates [the SVG dashboard and work report](progress/STATUS.md). **Only done with evidence counts; issue cards, active work and PRs under review do not.** A milestone is reached only when named gate units are done. CI rejects unknown/duplicate dependencies, cycles, false completion and generated-file drift. The separate [production-readiness gate matrix](PROGRESS.md) is not a release claim.
+**The single active source of truth is [progress/roadmap.json](../progress/roadmap.json).**
+[Generated current status](progress/STATUS.md) comes from
+`python scripts/roadmap.py --write` and CI checks it with `--check`.
+Phases contain outcome milestones; milestones contain independently evidenced tasks.
+A milestone is verified only when all its tasks and prerequisites are verified.
 
-### PR-sized atomic tasks and two progress counters
+Work kinds have different evidence gates:
 
-The 61-unit progress/ledger.json remains the authoritative verified release milestone counter. The independent progress/atomic.json lists **73 smaller tasks beneath 19 originally unfinished parent units**. Each has a stable ID, an objective PR-sized acceptance test, the linked issue and a blocker or evidence URL. This second percentage measures delivery **inside that frozen backlog scope only**; it is not another overall project-completion or quality estimate.
+- **Research:** primary-source comparison and independently reviewed conclusion (no code required).
+- **Owner decision:** an explicit recorded scope/configuration or quality acceptance decision.
+- **Implementation:** independently reviewed merged PR, final-head CI, scoped tests, changelog/docs.
+- **Experiment:** separately authorized physical model run, machine/recipe telemetry and independent review. Synthetic CI alone cannot satisfy it.
+- **Human acceptance:** owner-reviewed real outputs, preset quality criteria, rights/privacy checks and recorded outcome.
 
-Agents choose an ID such as S05-A04 from [the full atomic register](progress/ATOMIC.md), post an ownership claim on issue #9 and its linked issue, then complete one bounded PR. Record in_review for an open PR; only a merged PR and objective acceptance evidence can set done. Blocked tasks stay in the denominator. A parent can remain unfinished after one or several child tasks are done.
+One v2 task ID must be claimed on issue #9 and linked to an existing issue before implementation. No automatic GPU tests, image uploads, paid provider calls, restricted weights or releases from a roadmap approval. The current hardware benchmark target is the actual RTX 4070 Laptop 8 GiB with observed host RAM. There is no 4/6 GiB certification program. ComfyUI is reused rather than replaced.
 
-Run python scripts/atomic_progress.py --write to regenerate [the dual-metric SVG](progress/atomic.svg) and [task dashboard](progress/ATOMIC.md). CI checks these **and** the original 61-unit reports. The frozen 73-task denominator cannot be quietly reduced; scope migrations need explicit reviewed version changes. Native Projects v2 syncing remains a separate item #44.
-
-One human maintainer owns priorities, provider spend and final acceptance; agents own isolated implementation changes and write #9 handoffs. Hardware-heavy work stays in a local lane so a cloud agent cannot fabricate GPU measurements.
+**Historical v1 ledger:** [61-unit archive](../progress/archive/v1/ledger.json) and [73-task archive](../progress/archive/v1/atomic.json) are read-only snapshots, not active progress statistics. [Migration and all 18 unresolved v1 unit crosswalks](ROADMAP_MIGRATION_V2.md) retain provenance, original gates and deferred paid/90-asset obligations. No other active counter should be advertised.
 
 ## Version and releases
 

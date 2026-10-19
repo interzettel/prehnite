@@ -6,6 +6,13 @@ This project follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) an
 
 ## [Unreleased]
 
+### Canonical product roadmap migration (2026-10-19)
+
+- Replace overlapping active 61-unit, 73-task, and proposed product trackers with **one evidence-gated v2 roadmap** in [progress/roadmap.json](progress/roadmap.json), rendered and validated by [scripts/roadmap.py](scripts/roadmap.py). Two phases and 9 outcome milestones (including the verified foundation) contain 26 typed research/decision/implementation/experiment/acceptance tasks; existing F01–F06 merge evidence carries forward without fabricated GPU or image-quality credit.
+- Freeze the original **43/61** release and **21/73** atomic snapshots and their reports/charts/generators in immutable [v1 archives](docs/ROADMAP_MIGRATION_V2.md), preserving an explicit crosswalk for all 18 original unfinished obligations. Only v2 contributes current product milestones; historical paid-provider, 90-item pilot, licensing and admin obligations are not silently credited.
+- Update README, roadmap, AGENTS, AGILE, contributors, CI and offline tests to use one current register. No GPU run, paid inference, private images, new licence rights, new model downloads, release/tag or merge of independent agents' work is implied.
+- Retain the research-backed [8 GiB laptop-first strategy](docs/PRODUCT_STRATEGY_LOW_VRAM.md), with ComfyUI as first runtime, optional larger hardware/APIs, LoRA/appearance experimentation in phase 2, and no 4/6 GiB hardware certification campaign or video production phase.
+
 ### First real local image/cutout and source productization (2026-10-18)
 
 - Record one local owner-authorized **768×1024 SDXL lamp source**, real GroundingDINO/SAM2 segmentation (8.994 s including load/inference; 2,533 MiB sampled peak VRAM), CPU-only alpha refinement and **independent artifact-specific visual acceptance of Candidate A**. Original rejected-generation and failed-segmentation history is intact. No private weights/images/reports were committed ([dated public evidence](docs/LOCAL_LAB_MILESTONE_2026-10-18.md)).

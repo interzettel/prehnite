@@ -1,124 +1,130 @@
-# Prehnite — evidence-based delivery progress
+# Prehnite — one canonical product roadmap
 
-> Generated from `progress/ledger.json` by `scripts/progress.py`. A unit counts only when done with evidence; percentages are not estimates of engineering time or visual quality.
+> Generated from progress/roadmap.json by scripts/roadmap.py. The original
+> 61-unit release scope and 73-task register are archived historical evidence,
+> not competing active project percentages.
 
-**43 / 61 units done (70.5%)** · 0 active · 10 blocked · 8 planned.
-**Milestone gates reached:** 2 / 7.
+**Product outcomes:** 1/9 milestones verified.  
+**Scope:** 8 GiB RTX 4070 laptop, measured host RAM; two phases; no 4/6 GiB program.  
+**Evidence rule:** research != code != GPU observations != owner acceptance.
 
-![Milestone progress chart](progress.svg)
+| Phase | Milestone | State | Evidence gates | Next work |
+| --- | --- | --- | ---: | --- |
+| P1 | P1-M00 — Verified installable application foundation | verified | 6/6 | Milestone evidenced |
+| P1 | P1-M01 — Research decision: model and runtime on 8 GiB | planned | 0/2 | P1-M01-R01 |
+| P1 | P1-M02 — 8 GiB reproducible baseline | planned | 0/2 | P1-M02-E01 |
+| P1 | P1-M03 — Measure one useful optimization | planned | 0/3 | P1-M03-R01 |
+| P1 | P1-M04 — Useful 10-image batch | planned | 0/3 | P1-M04-B01 |
+| P1 | P1-M05 — Human-accepted local workflow | planned | 0/2 | P1-M05-A01 |
+| P2 | P2-M01 — Research: LoRA and conditioning options | planned | 0/2 | P2-M01-R01 |
+| P2 | P2-M02 — Reproducible style and LoRA variation | planned | 0/3 | P2-M02-B01 |
+| P2 | P2-M03 — Private appearance experimentation | planned | 0/3 | P2-M03-B01 |
 
-## Milestone roadmap
+## Research, implementation, experiment, acceptance
 
-| Milestone | Done | Active | Blocked | Planned | Gate |
-| --- | ---: | ---: | ---: | ---: | --- |
-| M0 · Runnable foundation | 6/6 (100.0%) | 0 | 0 | 0 | Reached |
-| M1 · Safe production engine | 7/10 (70.0%) | 0 | 2 | 1 | Open: C08, C09 |
-| M2 · Models and local compute | 7/10 (70.0%) | 0 | 2 | 1 | Open: P09 |
-| M3 · Photographic quality gates | 4/8 (50.0%) | 0 | 2 | 2 | Open: Q07, Q08 |
-| M4 · Cutouts and corrections | 3/7 (42.9%) | 0 | 2 | 2 | Open: S06, S07 |
-| M5 · Delivery and usability | 10/10 (100.0%) | 0 | 0 | 0 | Reached |
-| M6 · Community and first release | 6/10 (60.0%) | 0 | 2 | 2 | Open: R08, R09 |
+Every gate task has one question to answer and one accepted evidence type.
+The kinds are not interchangeable; an offline CI success cannot prove visual quality.
 
-## Work units
+### P1 — Efficient 8 GiB image generation and useful batches
 
-### M0 · Runnable foundation
+#### P1-M00 — Verified installable application foundation
 
-| ID | Work package | State | Lane | Depends on | Issue/evidence |
-| --- | --- | --- | --- | --- | --- |
-| `F01` | MIT repository and installable Python package | done | Agent cloud | — | [Evidence](https://github.com/interzettel/prehnite/pull/1) |
-| `F02` | Strict manifest/output path validation | done | Agent cloud | F01 | [Evidence](https://github.com/interzettel/prehnite/pull/1) |
-| `F03` | Free synthetic batch generator and 2-tier orchestration | done | Agent cloud | F02 | [Evidence](https://github.com/interzettel/prehnite/pull/1) |
-| `F04` | SQLite stage journal and basic resume | done | Agent cloud | F03 | [Evidence](https://github.com/interzettel/prehnite/pull/1) |
-| `F05` | JSON/CSV/HTML reports and checked ZIP export | done | Agent cloud | F03 | [Evidence](https://github.com/interzettel/prehnite/pull/1) |
-| `F06` | Offline pytest + CLI validation on GitHub Actions | done | Agent cloud | F05 | [Evidence](https://github.com/interzettel/prehnite/pull/1) |
+Installable local Python CLI, validated input safety, synthetic zero-cost batch, persistent journal, reports and CI demonstration; NOT a verified local model-quality or GPU performance claim
 
-### M1 · Safe production engine
+| Task | Kind | State | Owner | Acceptance / evidence |
+| --- | --- | --- | --- | --- |
+| P1-M00-F01 | implementation | verified | Agent cloud | MIT repository and installable Python package; original evidenced v1 work scoped to installable synthetic foundation, not real generation quality; [evidence](https://github.com/interzettel/prehnite/pull/1) |
+| P1-M00-F02 | implementation | verified | Agent cloud | Strict manifest/output path validation; original evidenced v1 work scoped to installable synthetic foundation, not real generation quality; [evidence](https://github.com/interzettel/prehnite/pull/1) |
+| P1-M00-F03 | implementation | verified | Agent cloud | Free synthetic batch generator and 2-tier orchestration; original evidenced v1 work scoped to installable synthetic foundation, not real generation quality; [evidence](https://github.com/interzettel/prehnite/pull/1) |
+| P1-M00-F04 | implementation | verified | Agent cloud | SQLite stage journal and basic resume; original evidenced v1 work scoped to installable synthetic foundation, not real generation quality; [evidence](https://github.com/interzettel/prehnite/pull/1) |
+| P1-M00-F05 | implementation | verified | Agent cloud | JSON/CSV/HTML reports and checked ZIP export; original evidenced v1 work scoped to installable synthetic foundation, not real generation quality; [evidence](https://github.com/interzettel/prehnite/pull/1) |
+| P1-M00-F06 | implementation | verified | Agent cloud | Offline pytest + CLI validation on GitHub Actions; original evidenced v1 work scoped to installable synthetic foundation, not real generation quality; [evidence](https://github.com/interzettel/prehnite/pull/1) |
 
-| ID | Work package | State | Lane | Depends on | Issue/evidence |
-| --- | --- | --- | --- | --- | --- |
-| `C01` | Paid call budget authorization gate | done | Agent cloud | F04 | [Evidence](https://github.com/interzettel/prehnite/pull/10) |
-| `C02` | Fail-closed uncertain request recovery | done | Agent cloud | F04 | [Evidence](https://github.com/interzettel/prehnite/pull/10) |
-| `C03` | Single-batch worker lock (offline test) | done | Agent cloud | F04 | [Evidence](https://github.com/interzettel/prehnite/pull/10) |
-| `C04` | Cross-process kill-and-restart fault matrix | done | Agent cloud | C02 | [Evidence](https://github.com/interzettel/prehnite/pull/49) |
-| `C05` | Atomic output writes and checksum replay checks | done | Agent cloud | C02 | [Evidence](https://github.com/interzettel/prehnite/pull/52) |
-| `C06` | Versioned pricing quotes and bill reconciliation | blocked | Owner | C01 | [#17](https://github.com/interzettel/prehnite/issues/17) |
-| `C07` | Content-addressed, privacy-scoped stage cache | done | Agent cloud | C05 | [Evidence](https://github.com/interzettel/prehnite/pull/80) |
-| `C08` | Resumable cross-platform interrupted 90-item batch | planned | Agent local | C04, C05 | [#15](https://github.com/interzettel/prehnite/issues/15) |
-| `C09` | Actual provider charges reconciled to reserves | blocked | Owner | C06 | [#17](https://github.com/interzettel/prehnite/issues/17) |
-| `C10` | Machine-readable stage-level failure taxonomy | done | Agent cloud | C04 | [Evidence](https://github.com/interzettel/prehnite/pull/87) |
+#### P1-M01 — Research decision: model and runtime on 8 GiB
 
-### M2 · Models and local compute
+Choose one lawful real model/graph and reproducible comparison plan; no claim of model compatibility before an observed run.
 
-| ID | Work package | State | Lane | Depends on | Issue/evidence |
-| --- | --- | --- | --- | --- | --- |
-| `P01` | Demo and optional hosted provider adapter scaffold | done | Agent cloud | F03 | [Evidence](https://github.com/interzettel/prehnite/pull/1) |
-| `P02` | Generic local ComfyUI graph/queue scaffold | done | Agent cloud | F03 | [Evidence](https://github.com/interzettel/prehnite/pull/1) |
-| `P03` | Offline FLUX tier/upscale contract fixtures | done | Agent cloud | P01 | [Evidence](https://github.com/interzettel/prehnite/pull/50) |
-| `P04` | SAM response-shape fixtures and validation | done | Agent cloud | P01 | [Evidence](https://github.com/interzettel/prehnite/pull/53) |
-| `P05` | Typed adapter capabilities and price-estimate provenance | done | Agent cloud | P03 | [Evidence](https://github.com/interzettel/prehnite/pull/55) |
-| `P06` | Offline ComfyUI graph mapping and mock queue fixtures | done | Agent cloud | P02 | [Evidence](https://github.com/interzettel/prehnite/pull/57) |
-| `P07` | ComfyUI queue/recovery without duplicate submits | done | Agent cloud | P06, C02 | [Evidence](https://github.com/interzettel/prehnite/pull/59) |
-| `P08` | 8GB VRAM local model feasibility benchmark | blocked | Agent local | P06 | [#24](https://github.com/interzettel/prehnite/issues/24) |
-| `P09` | User-approved end-to-end live inference pilot | blocked | Owner | P03, C09 | [#7](https://github.com/interzettel/prehnite/issues/7) |
-| `P10` | Provider-choice plan by cost, hardware and quality | planned | Agent cloud | P05 | [#21](https://github.com/interzettel/prehnite/issues/21) |
+| Task | Kind | State | Owner | Acceptance / evidence |
+| --- | --- | --- | --- | --- |
+| P1-M01-R01 | research | planned | Agent cloud | Compare a pinned lawful model, stock ComfyUI, other applicable runtimes and opt-in image APIs with source-linked applicability/rights and explicit unknowns. |
+| P1-M01-R02 | decision | planned | Owner | Approve model, image size, objective quality criteria, host-RAM/VRAM stops and apples-to-apples benchmark protocol; no inference implied. |
 
-### M3 · Photographic quality gates
+#### P1-M02 — 8 GiB reproducible baseline
 
-| ID | Work package | State | Lane | Depends on | Issue/evidence |
-| --- | --- | --- | --- | --- | --- |
-| `Q01` | Dimension and file-decodability technical checks | done | Agent cloud | F03 | [Evidence](https://github.com/interzettel/prehnite/pull/1) |
-| `Q02` | Judge schema + invalid response handling | done | Agent cloud | Q01 | [Evidence](https://github.com/interzettel/prehnite/pull/61) |
-| `Q03` | Controlled fixed-rubric A/B positional-bias measurement | done | Agent cloud | Q02 | [Evidence](https://github.com/interzettel/prehnite/pull/70) |
-| `Q04` | Lossless 4K crop panel comparisons | done | Agent cloud | Q02 | [Evidence](https://github.com/interzettel/prehnite/pull/65) |
-| `Q05` | Optional local quality judge plugin contract | planned | Agent local | Q02 | [#27](https://github.com/interzettel/prehnite/issues/27) |
-| `Q06` | Rights-cleared human-rated reference set | blocked | Owner | Q02 | [#28](https://github.com/interzettel/prehnite/issues/28) |
-| `Q07` | Calibration report for accepted/rejected quality | blocked | Owner | Q06, Q03 | [#28](https://github.com/interzettel/prehnite/issues/28) |
-| `Q08` | Rejection/repair behavior validated across judges | planned | Agent cloud | Q03, Q04 | [#31](https://github.com/interzettel/prehnite/issues/31) |
+Obtain correctly authorized, independently inspected repeatability evidence on the current laptop; no generic GPU-tier claim.
 
-### M4 · Cutouts and corrections
+| Task | Kind | State | Owner | Acceptance / evidence |
+| --- | --- | --- | --- | --- |
+| P1-M02-E01 | experiment | blocked | Agent local | With separate fresh permission, execute only the exact bounded one-startup/three-run P08-A03 contract; retain true machine/recipe/timing hashes and honest failure evidence. |
+| P1-M02-A01 | acceptance | planned | Owner | Independent review of real receipt, run provenance, outcomes, peak sampling limitations, safety/rights and whether the specific 8 GiB configuration is actually repeatable. |
 
-| ID | Work package | State | Lane | Depends on | Issue/evidence |
-| --- | --- | --- | --- | --- | --- |
-| `S01` | Demo mask-to-RGBA conversion and coverage checks | done | Agent cloud | F03 | [Evidence](https://github.com/interzettel/prehnite/pull/1) |
-| `S02` | Hosted SAM image/mask dimensional conformance | done | Agent cloud | S01, P04 | [Evidence](https://github.com/interzettel/prehnite/pull/53) |
-| `S03` | Foreground matte cleanup and edge decontamination | planned | Agent cloud | S02 | [#29](https://github.com/interzettel/prehnite/issues/29) |
-| `S04` | Multiple-instance selection and named outputs | done | Agent cloud | S02 | [Evidence](https://github.com/interzettel/prehnite/pull/176) |
-| `S05` | Failure classification and bounded targeted repair | planned | Agent cloud | S03, Q02 | [#31](https://github.com/interzettel/prehnite/issues/31) |
-| `S06` | Transparent cutout benchmark with alpha metrics | blocked | Owner | S03, S04 | [#32](https://github.com/interzettel/prehnite/issues/32) |
-| `S07` | Human-accepted cutout samples across tricky materials | blocked | Owner | S06 | [#32](https://github.com/interzettel/prehnite/issues/32) |
+#### P1-M03 — Measure one useful optimization
 
-### M5 · Delivery and usability
+Determine whether one backend-supported change improves a predeclared memory/time objective without unacceptable image loss.
 
-| ID | Work package | State | Lane | Depends on | Issue/evidence |
-| --- | --- | --- | --- | --- | --- |
-| `D01` | CLI validation, run, estimate and export commands | done | Agent cloud | F03 | [Evidence](https://github.com/interzettel/prehnite/pull/1) |
-| `D02` | Machine-readable JSON/CSV plus basic HTML report | done | Agent cloud | F05 | [Evidence](https://github.com/interzettel/prehnite/pull/1) |
-| `D03` | Interactive-free, static results gallery | done | Agent cloud | D02 | [Evidence](https://github.com/interzettel/prehnite/pull/67) |
-| `D04` | Accepted asset efficiency and latency breakdown | done | Agent cloud | D02 | [Evidence](https://github.com/interzettel/prehnite/pull/78) |
-| `D05` | Versioned provenance and exact input/output hashes | done | Agent cloud | C05 | [Evidence](https://github.com/interzettel/prehnite/pull/74) |
-| `D06` | Deterministic ZIP ordering and digest manifest | done | Agent cloud | D05 | [Evidence](https://github.com/interzettel/prehnite/pull/76) |
-| `D07` | Safe offline init and secret-safe doctor CLI | done | Agent cloud | D01 | [Evidence](https://github.com/interzettel/prehnite/pull/71) |
-| `D08` | Safe MCP pause/cancel/reconnect semantics | done | Agent cloud | C04 | [Evidence](https://github.com/interzettel/prehnite/pull/83) |
-| `D09` | Clean Windows and Linux wheel/sdist install smoke matrix | done | Agent local | D07 | [Evidence](https://github.com/interzettel/prehnite/pull/72) |
-| `D10` | 90-asset no-cost CLI/MCP fixture bundle | done | Agent cloud | D06, D08 | [Evidence](https://github.com/interzettel/prehnite/pull/84) |
+| Task | Kind | State | Owner | Acceptance / evidence |
+| --- | --- | --- | --- | --- |
+| P1-M03-R01 | research | planned | Agent cloud | Choose ONE supported optimization after baseline, with hypothesized memory/time impact and downside/quality test plan; do not pretend it is already faster. |
+| P1-M03-B01 | implementation | planned | Agent cloud | Implement reversible opt-in scheduling/offload/tiling configuration with capability checks, synthetic tests and no hidden GPU/API work. |
+| P1-M03-E01 | experiment | blocked | Agent local | Compare unchanged model/seed/size/steps on actual 8 GiB laptop before/after; report VRAM, host RAM/commit, elapsed time, failures and blinded quality judgment. |
 
-### M6 · Community and first release
+#### P1-M04 — Useful 10-image batch
 
-| ID | Work package | State | Lane | Depends on | Issue/evidence |
-| --- | --- | --- | --- | --- | --- |
-| `R01` | Keep a Changelog and canonical PEP 440 version | done | Agent cloud | F01 | [Evidence](https://github.com/interzettel/prehnite/pull/13) |
-| `R02` | Issue-driven Kanban, PR/issue templates and WIP limits | done | Agent cloud | F01 | [Evidence](https://github.com/interzettel/prehnite/pull/13) |
-| `R03` | Persistent A2A coordination and ownership handoffs | done | Agent cloud | F01 | [Evidence](https://github.com/interzettel/prehnite/issues/9) |
-| `R04` | Evidence-ledger, milestone roadmap and SVG chart | done | Agent cloud | R02 | [Evidence](https://github.com/interzettel/prehnite/pull/45) |
-| `R05` | Human-first README, badge and original mark | done | Agent cloud | R02 | [Evidence](https://github.com/interzettel/prehnite/pull/45) |
-| `R06` | Audit dependencies and model-weight licensing | planned | Agent cloud | R01 | [#40](https://github.com/interzettel/prehnite/issues/40) |
-| `R07` | 90-asset offline production dry run | done | Agent cloud | D10 | [Evidence](https://github.com/interzettel/prehnite/pull/84) |
-| `R08` | 90-asset live pilot and owner quality acceptance | blocked | Owner | R07, S07, P09 | [#42](https://github.com/interzettel/prehnite/issues/42) |
-| `R09` | Owner-approved version tag and first release | blocked | Owner | R08, R06 | [#42](https://github.com/interzettel/prehnite/issues/42) |
-| `R10` | Native GitHub Projects issue/PR state sync | planned | Agent cloud | R02 | [#44](https://github.com/interzettel/prehnite/issues/44) |
+Install and run a local generation -> inspect/select -> export path on the owner's real system with receipt-bound failure handling.
 
-## Counting rule
+| Task | Kind | State | Owner | Acceptance / evidence |
+| --- | --- | --- | --- | --- |
+| P1-M04-B01 | implementation | planned | Agent cloud | Expose minimal pip-installable local recipe run -> manual selection -> ZIP/report for 10 real generated images without manual source edits or a new graph editor. |
+| P1-M04-B02 | implementation | planned | Agent cloud | Implement/verify bounded journal resume, interruption handling, model/source identity and no silent re-generation of completed items for this small batch. |
+| P1-M04-E01 | experiment | blocked | Agent local | Run a separately authorized 10-image local batch on 8 GiB laptop; retain exact recipe, failures/retries, time, peak sampled resource use, output hashes and candidate gallery. |
 
-Each stable unit is independently completable. Progress counts done units only, not active/blocked work or story points. Done requires concrete merged PR, committed tests or owner-accepted evidence. Stage achievement requires every named gate done. Unit counts do not estimate equal engineering effort.
+#### P1-M05 — Human-accepted local workflow
 
-Done requires inspectable linked evidence and completed dependencies; milestone attainment requires every named gate. The separate [technical readiness report](../PROGRESS.md) evaluates release risks. Native [GitHub Project #1](https://github.com/orgs/interzettel/projects/1) tracks workflow, not quality. Agents hand off in [issue #9](https://github.com/interzettel/prehnite/issues/9).
+Demonstrate a reviewed accepted-image yield and clear resource/recovery report with realistic install instructions and licence boundaries.
+
+| Task | Kind | State | Owner | Acceptance / evidence |
+| --- | --- | --- | --- | --- |
+| P1-M05-A01 | acceptance | planned | Owner | Human-score the real 10-image batch against success criteria recorded before its run; disclose accepted yield, quality failure modes and seconds per accepted image. Compare practical Prehnite value against the same ComfyUI-only work (manual steps, reproducible selection/resume), without claiming image quality speedups that actually come from changed model settings. |
+| P1-M05-A02 | acceptance | planned | Owner | Accept/reject documented local install instructions, checkpoint/LoRA rights and honest limitations; explicitly separate this local product acceptance from the old 90-image/paid-billing release obligations. |
+
+### P2 — Reproducible LoRA/style and private appearance experimentation
+
+#### P2-M01 — Research: LoRA and conditioning options
+
+Choose legal, locally feasible LoRA and subject-conditioning methods from actual backend capabilities.
+
+| Task | Kind | State | Owner | Acceptance / evidence |
+| --- | --- | --- | --- | --- |
+| P2-M01-R01 | research | planned | Agent cloud | Choose one legal compatible local base model and LoRA combination; research scale/order/loading, measured-memory requirements, provenance and source license. |
+| P2-M01-R02 | decision | planned | Owner | Approve controlled style and user-reference editing experiments and privacy boundaries; identify what identity consistency tests can and cannot prove. |
+
+#### P2-M02 — Reproducible style and LoRA variation
+
+Produce a pinned, controllable experiment grid where each variation has traceable model/LoRA state and measured memory cost.
+
+| Task | Kind | State | Owner | Acceptance / evidence |
+| --- | --- | --- | --- | --- |
+| P2-M02-B01 | implementation | planned | Agent cloud | Pin base/LoRA hashes, scales, prompt/seeds and backend compatibility in recipe/journal; refuse missing/changed adapter files. |
+| P2-M02-B02 | implementation | planned | Agent cloud | Generate a controlled local parameter grid/contact sheet where one studied dimension changes at a time; preserve all provenance. |
+| P2-M02-E01 | experiment | blocked | Agent local | Run owner-authorized multiple-seed style experiments on 8 GiB GPU; measure memory/load latency and blind human consistency rating. |
+
+#### P2-M03 — Private appearance experimentation
+
+Safely create and review controlled personal-reference variations locally without claiming accurate real-life prediction.
+
+| Task | Kind | State | Owner | Acceptance / evidence |
+| --- | --- | --- | --- | --- |
+| P2-M03-B01 | implementation | planned | Agent cloud | Provide local-only opt-in self-owned reference import, no implicit uploads, no mandatory external account and explicit original-image retention policy. |
+| P2-M03-E01 | experiment | blocked | Agent local | Run a small approved set of haircut/beard/hair-color variations with locally stored inputs; preserve source model/LoRA/edit-strength/seed provenance. |
+| P2-M03-A01 | acceptance | planned | Owner | User reviews requested variation adherence and identity consistency; outputs labeled simulations, never predicted actual changes; verify no external transmission. |
+
+## Historical evidence (archive only)
+
+The previous 43/61 released-scope evidence and 21/73 atomic evidence
+remain preserved without being counted as parallel active progress.
+[Original 61-unit ledger](../../progress/archive/v1/ledger.json) ·
+[Original 73-task ledger](../../progress/archive/v1/atomic.json) ·
+[Migration notes](../ROADMAP_MIGRATION_V2.md).
+
+The old 90-image/paid-provider/licensing/administration obligations remain
+traceable in the crosswalk. A ten-image local test does not falsely close them.

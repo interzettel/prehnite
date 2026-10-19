@@ -14,7 +14,7 @@ Prehnite should be an **MIT-licensed, local-first visual production engine** tha
 
 These are **workflow policies, not different providers**. All must reuse manifest validation, typed adapters, journaling, provenance, fail-closed paid recovery, cache privacy boundaries, spend consent, retries and deterministic exports. No mandatory SaaS or platform fees.
 
-**What is real today:** a manifest lists distinct named assets; each generated asset may be compared as `enhanced_2k` versus `native_4k`, with bounded seed retries and optional two-rubric pair judgment. Candidates are chosen **within that asset**, and a final report tracks accepted deliverables. There is no general combinatorial exploration planner, multiobjective policy optimizer, calibrated aesthetic scoring, or comparative Pareto report. The demo is synthetic; the actual 90-asset live production benchmark is not certified. Refer to [architecture](ARCHITECTURE.md), [evaluation](EVALUATION.md), [economics](ECONOMICS.md), and [evidence ledger](progress/STATUS.md).
+**What is real today:** a manifest lists distinct named assets; each generated asset may be compared as `enhanced_2k` versus `native_4k`, with bounded seed retries and optional two-rubric pair judgment. Candidates are chosen **within that asset**, and a final report tracks accepted deliverables. There is no general combinatorial exploration planner, multiobjective policy optimizer, calibrated aesthetic scoring, or comparative Pareto report. The demo is synthetic; the actual 90-asset live production benchmark is not certified. Refer to [architecture](ARCHITECTURE.md), [evaluation](EVALUATION.md), [economics](ECONOMICS.md), and [current product roadmap](progress/STATUS.md).
 
 ### Positioning
 
