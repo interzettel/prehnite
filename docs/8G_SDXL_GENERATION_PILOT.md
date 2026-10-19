@@ -25,7 +25,7 @@ Why this choice:
 
 ## Batch contract
 
-The [manifest](../examples/manifest-8g-sdxl-pilot.yaml) has **10 fixed, seed-pinned text-to-image briefs** at **768 × 1024, 3:4**, including ceramics, furniture, a still life and prehnite mineral. They are distinct prompts, not repeated trials. Those ten assets are a small useful-image pilot; they do not substitute for the separately controlled three-identical-run **P08-A03** repeatability experiment.
+The [manifest](../examples/manifest-8g-sdxl-pilot.yaml) has **10 fixed, seed-pinned text-to-image briefs** at **768 × 1024, 3:4**, including ceramics, furniture, a still life and prehnite mineral. They are distinct prompts, not repeated trials. Those ten assets are a small useful-image pilot, not a repeatability experiment. The original **P08-A03** three-run benchmark targets **SAM2 segmentation**, with SAM2-specific nodes and image inputs. SDXL generation requires a **distinct** three-identical-generation-run protocol under P1-M02-E01; no SAM2 evidence can stand in for it.
 
 The [local profile](../examples/profile-8g-sdxl-pilot.yaml) is ComfyUI only, single variant `native_1k`, one attempt, no cloud uploads/spend, no segmentation/upscaling, no external AI judge and no cross-batch cache. It retains **visually unverified technical candidates for manual review** (`uncertain: accept_unverified`). Do not treat Prehnite's technical acceptance status as human quality acceptance. Its exported API graph node IDs are **examples** and must be replaced with IDs from the actual local graph before execution.
 
