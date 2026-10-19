@@ -49,6 +49,8 @@ A milestone is an **observable outcome** proven by all of its named gate tasksâ€
 | **P2-M02** | Build + experiment | Reproducible LoRA/seed/style variation grids, pinned adapter hashes and scales, measurable consistency and resource costs | [#132](https://github.com/interzettel/prehnite/issues/132), [#136](https://github.com/interzettel/prehnite/issues/136) |
 | **P2-M03** | Build + experiment + acceptance | Private personal-reference appearance variations with identity and requested-attribute review; no prediction-of-reality claim | [#132](https://github.com/interzettel/prehnite/issues/132), [#28](https://github.com/interzettel/prehnite/issues/28) |
 
+**Phase 1 exit requires both the measured optimization decision (P1-M03) and the real batch (P1-M04), followed by P1-M05 human acceptance.** A successful technical benchmark by itself is not a useful product, and a useful batch is not proof that its performance is optimized.
+
 This table shows **8 proposed milestones and 20 proposed gate tasks**. It does not mean 0/8 on an adopted scoreboard: the plan is not adopted yet. When accepted, newly verified gates require the specified actual evidence, independently reviewed. Work done previously may be cited as a prerequisite but does not automatically promote a gate.
 
 ### Phase 1 success: practical, not a perfect image benchmark
